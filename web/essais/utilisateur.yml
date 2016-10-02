@@ -1,0 +1,9 @@
+# src/AppBundle/dataFixtures/ORM/utilisateur.yml
+
+AppBundle\Entity\Utilisateur:
+    utilisateur_{1..9}:
+        email: <email()>
+        pwd: <1234>
+       
+    
+

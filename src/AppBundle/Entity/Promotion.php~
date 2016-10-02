@@ -1,0 +1,273 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Promotion
+ *
+ * @ORM\Table(name="promotion")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PromotionRepository")
+ */
+class Promotion {
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Prestataire")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $prestataire;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="CategService")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $categService;
+
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=100)
+     */
+    private $nom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pdf",type="string", length=255)
+     */
+    private $pdf;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateDebut", type="date")
+     */
+    private $dateDebut;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateFin", type="date")
+     */
+    private $dateFin;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="affichageDebut", type="date")
+     */
+    private $affichageDebut;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="affichageFin", type="date")
+     */
+    private $affichageFin;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * Set nom
+     *
+     * @param string $nom
+     *
+     * @return Promotion
+     */
+    public function setNom($nom) {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string
+     */
+    public function getNom() {
+        return $this->nom;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Promotion
+     */
+    public function setDescription($description) {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription() {
+        return $this->description;
+    }
+
+    /**
+     * Set pdf
+     *
+     * @param string $pdf
+     *
+     * @return Promotion
+     */
+    public function setPdf($pdf) {
+        $this->pdf = $pdf;
+
+        return $this;
+    }
+
+    /**
+     * Get pdf
+     *
+     * @return string
+     */
+    public function getPdf() {
+        return $this->pdf;
+    }
+
+    /**
+     * Set dateDebut
+     *
+     * @param \DateTime $dateDebut
+     *
+     * @return Promotion
+     */
+    public function setDateDebut($dateDebut) {
+        $this->dateDebut = $dateDebut;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDebut
+     *
+     * @return \DateTime
+     */
+    public function getDateDebut() {
+        return $this->dateDebut;
+    }
+
+    /**
+     * Set dateFin
+     *
+     * @param \DateTime $dateFin
+     *
+     * @return Promotion
+     */
+    public function setDateFin($dateFin) {
+        $this->dateFin = $dateFin;
+
+        return $this;
+    }
+
+    /**
+     * Get dateFin
+     *
+     * @return \DateTime
+     */
+    public function getDateFin() {
+        return $this->dateFin;
+    }
+
+    /**
+     * Set affichageDebut
+     *
+     * @param \DateTime $affichageDebut
+     *
+     * @return Promotion
+     */
+    public function setAffichageDebut($affichageDebut) {
+        $this->affichageDebut = $affichageDebut;
+
+        return $this;
+    }
+
+    /**
+     * Get affichageDebut
+     *
+     * @return \DateTime
+     */
+    public function getAffichageDebut() {
+        return $this->affichageDebut;
+    }
+
+    /**
+     * Set affichageFin
+     *
+     * @param \DateTime $affichageFin
+     *
+     * @return Promotion
+     */
+    public function setAffichageFin($affichageFin) {
+        $this->affichageFin = $affichageFin;
+
+        return $this;
+    }
+
+    /**
+     * Get affichageFin
+     *
+     * @return \DateTime
+     */
+    public function getAffichageFin() {
+        return $this->affichageFin;
+    }
+
+
+    /**
+     * Set prestataire
+     *
+     * @param \AppBundle\Entity\Prestataire $prestataire
+     *
+     * @return Promotion
+     */
+    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire)
+    {
+        $this->prestataire = $prestataire;
+
+        return $this;
+    }
+
+    /**
+     * Get prestataire
+     *
+     * @return \AppBundle\Entity\Prestataire
+     */
+    public function getPrestataire()
+    {
+        return $this->prestataire;
+    }
+}

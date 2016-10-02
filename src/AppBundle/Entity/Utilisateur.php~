@@ -1,0 +1,250 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Utilisateur
+ *
+ * @ORM\Table(name="utilisateur")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UtilisateurRepository")
+ */
+class Utilisateur {
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=150, unique=true)
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pwd", type="string", length=50)
+     */
+    private $pwd;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="adresseNumero", type="float")
+     */
+    private $adresseNumero;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="adresseRue", type="string", length=150)
+     */
+    private $adresseRue;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="inscription", type="date")
+     */
+    private $inscription;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="typeUtilisateur", type="string", length=50)
+     */
+    private $typeUtilisateur;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="essaiPwd", type="float")
+     */
+    private $essaiPwd;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="banni", type="boolean")
+     */
+    private $banni;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="inscriptionConf", type="boolean")
+     */
+    private $inscriptionConf;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Utilisateur
+     */
+    public function setEmail($email) {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail() {
+        return $this->email;
+    }
+
+    /**
+     * Set pwd
+     *
+     * @param string $pwd
+     *
+     * @return Utilisateur
+     */
+    public function setPwd($pwd) {
+        $this->pwd = $pwd;
+
+        return $this;
+    }
+
+    /**
+     * Get pwd
+     *
+     * @return string
+     */
+    public function getPwd() {
+        return $this->pwd;
+    }
+
+    /**
+     * Set adresseNumero
+     *
+     * @param float $adresseNumero
+     *
+     * @return Utilisateur
+     */
+    public function setAdresseNumero($adresseNumero) {
+        $this->adresseNumero = $adresseNumero;
+
+        return $this;
+    }
+
+    /**
+     * Get adresseNumero
+     *
+     * @return float
+     */
+    public function getAdresseNumero() {
+        return $this->adresseNumero;
+    }
+
+    /**
+     * Set adresseRue
+     *
+     * @param string $adresseRue
+     *
+     * @return Utilisateur
+     */
+    public function setAdresseRue($adresseRue) {
+        $this->adresseRue = $adresseRue;
+
+        return $this;
+    }
+
+    /**
+     * Get adresseRue
+     *
+     * @return string
+     */
+    public function getAdresseRue() {
+        return $this->adresseRue;
+    }
+
+    /**
+     * Set essaiPwd
+     *
+     * @param float $essaiPwd
+     *
+     * @return Utilisateur
+     */
+    public function setEssaiPwd($essaiPwd) {
+        $this->essaiPwd = $essaiPwd;
+
+        return $this;
+    }
+
+    /**
+     * Get essaiPwd
+     *
+     * @return float
+     */
+    public function getEssaiPwd() {
+        return $this->essaiPwd;
+    }
+
+    /**
+     * Set banni
+     *
+     * @param boolean $banni
+     *
+     * @return Utilisateur
+     */
+    public function setBanni($banni) {
+        $this->banni = $banni;
+
+        return $this;
+    }
+
+    /**
+     * Get banni
+     *
+     * @return bool
+     */
+    public function getBanni() {
+        return $this->banni;
+    }
+
+    /**
+     * Set inscriptionConf
+     *
+     * @param boolean $inscriptionConf
+     *
+     * @return Utilisateur
+     */
+    public function setInscriptionConf($inscriptionConf) {
+        $this->inscriptionConf = $inscriptionConf;
+
+        return $this;
+    }
+
+    /**
+     * Get inscriptionConf
+     *
+     * @return bool
+     */
+    public function getInscriptionConf() {
+        return $this->inscriptionConf;
+    }
+
+}
