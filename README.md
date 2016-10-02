@@ -3,7 +3,10 @@
 <h3>Etapes</h3>
 <ol>
 <li>Encodage des Entités
-<li>Fixtures 
+<li>Fixtures via Faker
+<ul>
+<li>
+</ul>
 </ol>
 
 
