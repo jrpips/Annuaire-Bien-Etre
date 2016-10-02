@@ -4,9 +4,7 @@
 <ol>
 <li>Encodage des Entités
 <li>Fixtures via Faker
-<ul>
-<li>
-</ul>
+
 </ol>
 
 
