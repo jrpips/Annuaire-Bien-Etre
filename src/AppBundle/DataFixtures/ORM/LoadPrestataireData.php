@@ -25,7 +25,6 @@ class LoadPrestataireData extends AbstractFixture implements OrderedFixtureInter
             $prestataire->setTelephone($faker->phoneNumber);
             $prestataire->setTva($faker->ean8);
 
-            //remplir table presta taire_categ_service
             $prestataire->setUtilisateur($this->getReference('user'.$i));
 
             $manager->persist($prestataire);
@@ -36,7 +35,7 @@ class LoadPrestataireData extends AbstractFixture implements OrderedFixtureInter
     }
 
     public function getOrder() {
-        // l'ordre ds lequel les fixtures seront chargées         
+          
         return 6;
     }
 
