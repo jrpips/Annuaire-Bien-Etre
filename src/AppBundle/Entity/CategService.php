@@ -93,6 +93,10 @@ class CategService {
         return $this->nom;
     }
 
+    public function __toString() {
+        return $this->nom . '';
+    }
+
     /**
      * Set description
      *
@@ -184,8 +188,7 @@ class CategService {
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->prestataires = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -196,8 +199,7 @@ class CategService {
      *
      * @return CategService
      */
-    public function addPrestataire(\AppBundle\Entity\Prestataire $prestataire)
-    {
+    public function addPrestataire(\AppBundle\Entity\Prestataire $prestataire) {
         $this->prestataires[] = $prestataire;
 
         return $this;
@@ -208,8 +210,7 @@ class CategService {
      *
      * @param \AppBundle\Entity\Prestataire $prestataire
      */
-    public function removePrestataire(\AppBundle\Entity\Prestataire $prestataire)
-    {
+    public function removePrestataire(\AppBundle\Entity\Prestataire $prestataire) {
         $this->prestataires->removeElement($prestataire);
     }
 
@@ -218,8 +219,8 @@ class CategService {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPrestataires()
-    {
+    public function getPrestataires() {
         return $this->prestataires;
     }
+
 }

@@ -1,0 +1,36 @@
+{# base.header.html.twig #}
+
+<header class="header header-transparent">
+    
+    <div class="header-wrapper" style="width:100%;">
+
+        <div class="container">
+
+            <div class="header-inner">
+
+                <div class="header-logo">
+                    
+                    <a href="">
+                        <img src="{{asset('image/gp_logo.png')}}" alt="Logo">
+                        <span >Galet</span>
+                    </a>
+                        
+                </div><!-- /.header-logo -->
+
+                <div class="header-content">
+
+                    <div class="header-bottom">
+
+                        {{ include("base.menu.html.twig") }}
+
+                    </div><!-- /.header-bottom -->
+
+                </div><!-- /.header-content-->                        
+
+            </div><!-- /.header-inner-->
+
+        </div><!-- /.container -->
+
+    </div><!-- /.header-wrapper -->
+
+</header><!-- /.header -->

@@ -1,0 +1,95 @@
+{# base.footer.html.twig #}
+
+<footer class="footer">
+
+    <div class="footer-top">
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-sm-6 col-md-3">
+                    
+                    <h2>Infos légales</h2>
+
+                    <p>numéro de T.V.A. 00123457880</p>
+                    <h3>Siège social</h3>
+                    <p><a href="#">GALET s.a.</a><br>
+                        rue du Commerce, 13<br>
+                        1000 Bruxelles<br>
+                        BELGIQUE</p>
+                    
+                </div><!-- /.col-* -->
+
+                <div class="col-sm-6 col-md-3">
+                    
+                    <h2>A propos de Bien-Être</h2>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a porttitor sem. 
+                        Morbi et lacinia.Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Fusce sit amet faucibus justo, vitae laoreet.<br><br>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Fusce sit amet faucibus justo, vitae laoreet.</p>
+                    
+                </div><!-- /.col-* -->
+
+                <div class="col-sm-6 col-md-3">
+                    
+                    <h2>Contact &amp; Information</h2>
+
+                    <p>
+                        La rue 123, Liège, Belgique<br>
+                        +32 04 247 15 00 <br><a href="#">Contactez-nous</a>
+                    </p>
+                    
+                </div><!-- /.col-* -->
+
+                <div class="col-sm-6 col-md-3">
+                    
+                    <h2>Réseaux sociaux</h2>
+
+                    <ul class="social-links nav nav-pills">
+
+                        {%set foo=['twitter','facebook','google-plus','linkedin']%} <!-- erzatz chargement DB -->
+
+                        {% for item in foo %}   
+                            <li>
+                                <a href="#"><i class="fa fa-{{item}}"></i></a>
+                            </li>                                  
+                        {%endfor%}
+
+                    </ul><!-- /.header-nav-social -->
+                    
+                </div><!-- /.col-* -->
+
+            </div><!-- /.row -->
+
+        </div><!-- /.container -->
+
+    </div><!-- /.footer-top -->
+
+    <div class="footer-bottom">
+
+        <div class="container">
+
+            <div class="footer-bottom-left">
+                &copy; 2016 All rights reserved. Created by <a href="#">Wargnier Christophe</a>.
+            </div><!-- /.footer-bottom-left -->
+
+            <div class="footer-bottom-right">
+
+                <ul class="nav nav-pills">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="pricing.html">FAQ</a></li>
+                    <li><a href="terms-conditions.html">Termes &amp; Conditions</a></li>
+                    <li><a href="contact-1.html">Contact</a></li>
+                </ul><!-- /.nav -->
+
+            </div><!-- /.footer-bottom-right -->
+
+        </div><!-- /.container -->
+
+    </div><!--/.footer-bottom -->
+
+</footer><!-- /.footer -->
+

@@ -1,8 +1,8 @@
 <?php
 
 namespace AppBundle\Entity;
-use Doctrine\Common\Collections\ArrayCollection;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,6 +47,10 @@ class Image {
      * @ORM\Column(name="url", type="string", length=255, nullable=true)
      */
     private $url;
+
+    public function __toString() {
+        return $this->url . '';
+    }
 
     /**
      * Get id
@@ -123,7 +127,6 @@ class Image {
         return $this->url;
     }
 
-
     /**
      * Set prestataire
      *
@@ -131,8 +134,7 @@ class Image {
      *
      * @return Image
      */
-    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire = null)
-    {
+    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire = null) {
         $this->prestataire = $prestataire;
 
         return $this;
@@ -143,8 +145,8 @@ class Image {
      *
      * @return \AppBundle\Entity\Prestataire
      */
-    public function getPrestataire()
-    {
+    public function getPrestataire() {
         return $this->prestataire;
     }
+
 }

@@ -1,0 +1,99 @@
+{# base.menu.html.twig #}
+
+{% set identifie = false %} {# simulation utilisateur non-identifié #}
+
+<ul class="header-nav-primary nav nav-pills collapse navbar-collapse" >
+
+    <li class="active">
+        
+        <a href="#">Accueil <i class="fa fa-chevron-down"></i></a>
+        
+    </li>
+
+    <li>       
+        <a href="#">Services <i class="fa fa-chevron-down"></i></a>
+
+        <ul class="sub-menu">
+            {% for service in services %}
+            <li><a href="">{{ service.nom }}</a></li>
+            {% endfor %}
+        </ul>       
+    </li>
+
+    <li class="has-mega-menu ">
+        
+        <a href="#">Prestataires <i class="fa fa-chevron-down"></i></a>
+
+        <ul class="mega-menu">
+
+            <li>
+                <a href="#">Prestataires Favoris</a>
+
+                <ul>
+                    {% for prestataire in p %}
+                    <li>
+                        <a href="">{{prestataire.nom}}</a>
+                    </li>    
+                    {%endfor%}
+                </ul>                
+            </li>
+
+            <li>
+                <a href="#">Promotions</a>
+
+                <ul>
+                    {% for promo in promos %}
+                    <li>
+                        <a href="">{{promo.nom}}</a><span> jusqu'au {{ promo.dateFin|date("d/m","Europe/Paris") }}</span>
+                    </li>
+                    {%endfor%}
+                </ul>
+            </li>
+
+            <li>
+                <a href="#">Stage</a>
+
+                <ul>
+                    {% for stage in stages %}
+                    <li>
+                        <a href="">{{ stage.nom }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+
+            <li class="hidden-xs">
+                <div class="special">
+                   <a href="">Sign Up Now</a>
+                </div><!-- /.special-->
+            </li>
+        </ul>
+    </li>
+
+    <li>
+        <a href="#">FAQ <i class="fa fa-chevron-down"></i></a>
+
+        <ul class="sub-menu">
+            <li>
+                <a href="">Standard Right Sidebar</a>
+            </li>
+            <li>
+                <a href="">Standard Left Sidebar</a>
+            </li>
+        </ul>
+    </li>       
+
+    <li>
+        <a href="#">Admin <i class="fa fa-chevron-down"></i></a>
+
+            <ul class="sub-menu">
+                <li>
+                    <a href="">Connection</a>
+                </li>
+           </ul>
+    </li>
+
+    <li>
+        <a href="#">Contact <i class="fa fa-chevron-down"></i></a>
+    </li>
+</ul> 

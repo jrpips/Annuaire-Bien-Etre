@@ -2,12 +2,48 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <title>{% block title %}Annuaire Bien-Être{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+        {% block stylesheets %}
+
+            <link href="http://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet" type="text/css">
+            <link href="{{asset('css/libraries/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+            {#             <link href="{{asset('css/libraries/owl.carousel/assets/owl.carousel.css')}}" rel="stylesheet" type="text/css" >#}
+            {#             <link href="assets/libraries/colorbox/example1/colorbox.css" rel="stylesheet" type="text/css" >#}
+            {#             <link href="{{asset('css/libraries/bootstrap-select/bootstrap-select.min.css')}}" rel="stylesheet" type="text/css">#}
+            {#             <link href="assets/libraries/bootstrap-fileinput/fileinput.min.css" rel="stylesheet" type="text/css">#}
+            <link href="{{asset('css/annuaire_bootstrap.css')}}" rel="stylesheet" type="text/css" >
+            <link href="{{asset('css/annuaire_off_gp.css')}}" rel="stylesheet" type="text/css" >
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+            {#            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>#}
+
+
+        {% endblock %}
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('image/gp_logo.png') }}" />
+
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+
+        <div class="page-wrapper">
+
+            {{ include("base.header.html.twig") }}
+
+            {% block body %}
+            {% endblock %}
+
+            {{ include("base.footer.html.twig") }}
+
+        </div><!-- /.page-wrapper -->
+
+        {% block javascripts %}
+        {% endblock %}
+
+        <script type="text/javascript" src="{{asset('js/jquery.js')}}" ></script>
+        <script type="text/javascript" src="{{asset('js/menu.js')}}"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        {#        <script type="text/javascript" src="{{asset('css/libraries/owl.carousel/owl.carousel.js')}}"></script>#}
     </body>
 </html>
