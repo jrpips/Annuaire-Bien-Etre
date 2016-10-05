@@ -21,11 +21,11 @@ class LoadImageData extends AbstractFixture implements OrderedFixtureInterface {
             $img = new Image();
             $img->setOrdre($i);
             $img->setUrl($faker->imageUrl(40, 40, 'business'));
-            if ($i < 10 && $i > 1) {
-                if ($i % 2 == 0) {
+            if ($i < 10) {
+                $img->setPrestataire($this->getReference('prestataire' . $j));
+                if ($i % 2 != 0) {
                     $j++;
                 }
-                $img->setPrestataire($this->getReference('prestataire' . $j));
             }
             $manager->persist($img);
 
