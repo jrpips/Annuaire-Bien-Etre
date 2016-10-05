@@ -122,9 +122,9 @@
                                             <div class="card-simple-background">
 
                                                 <div class="card-simple-content">
-{#{%for img in i.images%}{%set j=1%}#}
+
                                                     <h2><a href="listing-detail.html"></a>{{prestataire.nom}}</h2>
-{#{%endfor%}#}
+
                                                     <div class="card-simple-rating">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
@@ -140,7 +140,7 @@
                                                     </div><!-- /.card-simple-actions -->
 
                                                 </div><!-- /.card-simple-content -->
-{#{% set categ={{i.categServices|first}} %}#}
+
 {#                                                {{ dump(prestataire.categServices) }}#}
                                                 <div class="card-simple-label">{{(prestataire.categServices)|first}}</div>
 
