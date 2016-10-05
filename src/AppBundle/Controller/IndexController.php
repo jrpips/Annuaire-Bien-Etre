@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class IndexController extends Controller {
 
     /**
-     * @Route("/", name="accueil")
+     * @Route("/", name="home")
      */
     public function indexAction() {
         $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findAll();
@@ -18,11 +18,25 @@ class IndexController extends Controller {
         $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findAll();
         dump($prestataires);
         return $this->render('accueil/index.html.twig', array(
-            'p'=>$prestataires ,
-            'promos'=>$promos,
-            'stages'=>$stages,
-            'services'=>$services
+                    'p' => $prestataires,
+                    'promos' => $promos,
+                    'stages' => $stages,
+                    'services' => $services
         ));
+    }
+
+    /**
+     * @Route("/about",name="about")
+     */
+    public function aboutAction() {
+        
+    }
+
+    /**
+     * @Route("/contact",name="contact")
+     */
+    public function contactAction() {
+        
     }
 
 }
