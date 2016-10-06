@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Utilisateur
@@ -25,6 +26,7 @@ class Utilisateur {
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=150, unique=true)
+     * @Assert\NotBlank(message="Le champ est requis")
      */
     private $email;
 
