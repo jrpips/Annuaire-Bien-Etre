@@ -21,9 +21,7 @@
             <link rel="icon" type="image/x-icon" href="{{ asset('image/gp_logo.png') }}" />
 
         {% endblock %}
-
-
-
+        
     </head>
     <body>
 
@@ -45,5 +43,22 @@
         <script type="text/javascript" src="{{asset('js/menu.js')}}"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         {#        <script type="text/javascript" src="{{asset('css/libraries/owl.carousel/owl.carousel.js')}}"></script>#}
+        <script>
+            var gpAjax = function (e) {
+                e.preventDefault();
+                id = e.currentTarget.id;
+                inputVal = $('#subscribeForm #' + id).val();
+
+                $.ajax({
+                    type: "POST",
+{#                    data:{'value':inputVal},#}
+                    url: "{{ path('subscribeUser') }}",
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                    }
+                })               
+            };
+        </script>
     </body>
 </html>

@@ -14,42 +14,7 @@ var GpAnnuaire = GpAnnuaire || {
     }
 };
 var GpPopup = {
-    'construct': function () {
-        var html = [];
-        var i = 0;
-        var home = "'home'";
-        html[i++] = '<section id="popup">';
-
-        //titre Popup
-        html[i++] = '<header><h3>Connection<button type="button" id="cancel" class="close" data-dismiss="modal">&times;</button></h3></header>';
-        //content Popup
-        html[i++] = '<section id="body">';
-        html[i++] = '<form action="{{ path(' + home + ') }}" method="post">';
-        html[i++] = '<div>';
-        html[i++] = '<label for="mail">Email</label><input type="text" id="mail" class="required">';
-        html[i++] = '</div>';
-        html[i++] = '<div>';
-        html[i++] = '<label for="nom">Mot de passe</label><input type="password" id="pwd" >';
-        html[i++] = '</div>';
-//        html[i++] = '<div>';
-//        html[i++] = '<label for="sujet">Sujet *</label><input type="text" id="mail" class="required" data-minLength="5">';
-//        html[i++] = '</div>';
-//        html[i++] = '<div>';
-//        html[i++] = '<label for="msg">Message *</label><textarea id="msg" class="required" data-minLength="10"></textarea>';
-//        html[i++] = '</div>';
-        html[i++] = '<div>';
-        html[i++] = '<input type="submit" class="btn btn-default" id="cmdSend" value="Envoyer" />';
-        html[i++] = '</div>';
-        html[i++] = '</form>';
-        html[i++] = '</section>';
-
-        html[i++] = '</section>';
-
-        $('body').append(html.join(''));
-        $('body').append('<div id="modale"></div>');
-    },
-    'event': function () {
-    },
+    
     'display': function (e) {
 
         var event = e.currentTarget;
@@ -57,7 +22,7 @@ var GpPopup = {
         console.log(eventId);
 
         if (eventId == 'subscribe') {
-            var height = '500px';
+            var height = '400px';
             $('#popup h3').empty().prepend('Inscription');
             $('#subscribeForm').css('display', 'block');
             $('#connectForm').css('display', 'none');
@@ -84,18 +49,37 @@ var GpPopup = {
     'hide': function () {
         $('#modale').hide();
         $('#popup').hide('fast');
+    },
+    gpAjax: function () {
+        var inputVal = $('#subscribeForm #form_adresseRue').val();
+        console.log('ok');
+        $.ajax({
+            type: "POST",
+            data:inputVal,
+            url: generate('login'),
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
     }
 };
+
 $(function () {
     document.getElementsByTagName('body')[0].onscroll = GpAnnuaire.headerColor;
     setInterval(GpAnnuaire.headerColor, 2000);
-    $('#body form:eq(1)').attr('id','subscribeForm');
-    $('#gp_menu #subscribe').on('click', function (e) {
-        GpPopup.display(e)
-    });
-    $('#gp_menu #connection').on('click', function (e) {
-        GpPopup.display(e)
-    });
+    $('#body form:eq(1)').attr('id', 'subscribeForm');
+    
+    $('#gp_menu #subscribe').on('click', function (e) {GpPopup.display(e)});
+    $('#gp_menu #connection').on('click', function (e) {GpPopup.display(e)});
+    
+    $('#body form:eq(0)').attr('id', 'connectForm').append('<button id="cmdSend" class="btn btn-default">Envoyer</button>');
+    $('#body form:eq(1)').attr('id', 'subscribeForm').append('<button id="cmdSend" class="btn btn-default">Envoyer</button>');
+
+    $('#subscribeForm #form_adresseRue').on('keyup',function(e){gpAjax(e)});
+    $('#subscribeForm #form_adresseNumero').on('keyup',function(e){gpAjax(e)});
+    $('#subscribeForm #form_email').on('keyup',function(e){gpAjax(e)});
+    $('#subscribeForm').on('submit',function(e){gpAjax(e)});
 });
 
 
