@@ -26,7 +26,7 @@ class Utilisateur {
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=150, unique=true)
-     * @Assert\Length(min=2,minMessage="Minimun 2 caractères requis")
+     * @Assert\Length(min=2,minMessage="2 caract. minimum")
      * @Assert\NotBlank(message="requis")
      */
     private $email;
@@ -42,7 +42,7 @@ class Utilisateur {
      * @var float
      *
      * @ORM\Column(name="adresseNumero", type="float")
-     * @Assert\Length(min=2,minMessage="Minimun 2 caractères requis")
+     * @Assert\Length(min=2,minMessage="2 caract. minimum")
      * @Assert\NotBlank(message="requis")
      */
     private $adresseNumero;
@@ -51,7 +51,7 @@ class Utilisateur {
      * @var string
      *
      * @ORM\Column(name="adresseRue", type="string", length=150)
-     * @Assert\Length(min=2,minMessage="Minimun 2 caractères requis")
+     * @Assert\Length(min=2,minMessage="2 caract. minimum")
      * @Assert\NotBlank(message="requis")
      */
     private $adresseRue;

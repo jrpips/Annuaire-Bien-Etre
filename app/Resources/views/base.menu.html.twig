@@ -4,6 +4,14 @@
 
 <ul id="gp_menu" class="header-nav-primary nav nav-pills collapse navbar-collapse" >
 
+    <li>
+        <button id="subscribe" class="btn btn-default"  >S'inscrire</button>
+    </li>
+
+    <li>
+        <button id="connection" class="btn btn-default"  >Se connecter</button>
+    </li>
+
     <li class="active">
 
         <a href="#">Accueil <i class="fa fa-chevron-down"></i></a>
@@ -69,20 +77,6 @@
             </li>
         </ul>
     </li>
-
-    <li>
-        <a href="#">FAQ <i class="fa fa-chevron-down"></i></a>
-
-        <ul class="sub-menu">
-            <li>
-                <a href="">Standard Right Sidebar</a>
-            </li>
-            <li>
-                <a href="">Standard Left Sidebar</a>
-            </li>
-        </ul>
-    </li>       
-
     {# <li>
          <a href="#">Admin <i class="fa fa-chevron-down"></i></a>
  
@@ -96,19 +90,15 @@
     <li>
         <a href="#">Contact <i class="fa fa-chevron-down"></i></a>
     </li>
-
     <li>
-        <button id="subscribe" class="btn btn-default"  >Inscription</button>
+        <a id="prestataire-profil" ><i style='transform:scale(2)' class="fa fa-cubes"></i><span>Créer un profil prestataire</span></a>
     </li>
 
-    <li>
-        <button id="connection" class="btn btn-default"  >Connection</button>
-    </li>
 </ul> 
-    
+
 <div id="modale">
     <section id="popup">
-        {{ render(controller("AppBundle:Index:subscribeUser")) }}
-{#        {{ include("accueil/login.html.twig") }}#}
+        {{ render(controller("AppBundle:SignUp:signup")) }}
+        {#        {{ include("accueil/login.html.twig") }}#}
     </section>
 </div>

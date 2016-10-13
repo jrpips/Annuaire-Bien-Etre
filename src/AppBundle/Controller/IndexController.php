@@ -26,7 +26,7 @@ class IndexController extends Controller {
         $promos = $this->getDoctrine()->getManager()->getRepository('AppBundle:Promotion')->findAll();
         $stages = $this->getDoctrine()->getManager()->getRepository('AppBundle:Stage')->findAll();
         $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findAll();
-        dump($prestataires);
+        
         return $this->render('accueil/index.html.twig', array(
                     'p' => $prestataires,
                     'promos' => $promos,
@@ -47,84 +47,6 @@ class IndexController extends Controller {
      */
     public function contactAction() {
         
-    }
-
-    /**
-     * @Route("/login",name="login")
-     */
-    public function loginAction() {
-        $response = new JsonResponse;
-        $response->setData(array('data' => '$errors')); //$this->render('accueil/login.html.twig');
-        return $response;
-    }
-
-    /**
-     * @Route("/subscribe/user",name="subscribeUser")
-     */
-    public function subscribeUserAction(Request $request) {
-
-        $user = new Utilisateur();
-        $form = $this->createFormBuilder($user, ['action' => $this->generateUrl('subscribeUser')]);
-
-        $form = $form
-                ->add('adresseRue', TextType::class, array('required' => false))
-                ->add('adresseNumero', TextType::class, array('required' => false))
-                ->add('email', TextType::class, array('required' => false))
-                ->add('Envoyer', SubmitType::class)
-                ->getForm();
-        $form->handleRequest($request);
-        //ajax
-        if ($request->getMethod() == 'POST'){//if ($form->isSubmitted()) {
-//            $form->handleRequest($request);
-//            $val = $request->request->get('value');
-//            $form->submit($request->request->all());
-//            $form->submit($val);
-
-            if (!$form->isValid()) {
-
-                $errors = $this->getErrorMessages($form);
-
-                return new JsonResponse(array('errors' => $errors,));
-            }
-            if ($form->isValid()) {
-
-                return $this->redirectToRoute('home');
-            }
-            /*
-              $validator = $this->get('validator');
-              $listErrors = $validator->validate($user);
-              if (count($listErrors) > 0) {
-              return new JsonResponse(array("errors" => $listErrors,));
-              } else {
-              return new JsonResponse(["rep" => "L'annonce est valide !"]);
-              } */
-        }
-        if (!$form->isSubmitted()) {
-            return $this->render('accueil/login.html.twig', array(
-                        'form' => $form->createView(),
-                        'user' => $user
-            ));
-        }
-    }
-
-    protected function getErrorMessages(\Symfony\Component\Form\Form $form) {
-
-        $errors = array();
-
-        foreach ($form->getErrors() as $key => $error) {
-            $errors[] = $error->getMessage();
-        }
-        foreach ($form->all() as $child) {
-            if (!$child->isValid()) {
-                $errors[$child->getName()] = $this->getErrorMessages($child);
-            }
-        }
-        return $errors;
-//        foreach ($form->all() as $key => $child) {
-//            if ($err == $this->getErrorMessages($child))
-//                $errors[$key] = $err;
-//        }
-//        return $errors;
     }
 
 }

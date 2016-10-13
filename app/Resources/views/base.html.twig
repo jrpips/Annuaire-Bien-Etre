@@ -21,7 +21,7 @@
             <link rel="icon" type="image/x-icon" href="{{ asset('image/gp_logo.png') }}" />
 
         {% endblock %}
-        
+
     </head>
     <body>
 
@@ -46,18 +46,23 @@
         <script>
             var gpAjax = function (e) {
                 e.preventDefault();
+                var $form = $('form');
+                var values = {};
+                $.each($form.serializeArray(), function (i, field) {
+                    values[field.name] = field.value;
+                });
                 id = e.currentTarget.id;
                 inputVal = $('#subscribeForm #' + id).val();
 
                 $.ajax({
                     type: "POST",
-{#                    data:{'value':inputVal},#}
-                    url: "{{ path('subscribeUser') }}",
+                    data: values,
+                    url: "{{ path('signup') }}",
                     dataType: 'json',
                     success: function (data) {
-                        console.log(data);
+                        GpAnnuaire.subscribe(data);
                     }
-                })               
+                })
             };
         </script>
     </body>
