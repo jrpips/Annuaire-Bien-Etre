@@ -7,7 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\SignUp;
+use AppBundle\Entity\Internaute;
+use AppBundle\Entity\Utilisateur;
 use AppBundle\Form\SignUpType;
+use AppBundle\Form\InternauteType;
+use AppBundle\Form\UtilisateurType;
 
 class SignUpController extends Controller {
 
@@ -16,25 +20,31 @@ class SignUpController extends Controller {
      */
     public function loginAction() {
         $response = new JsonResponse;
-        $response->setData(array('data' => '$errors')); //$this->render('accueil/login.html.twig');
+        $response->setData(array('data' => '$errors'));
         return $response;
     }
 
     /**
-     * @Route("/signup/first/step",name="signup")
+     * @Route("/signup/first/step",options={"expose"=true},name="signup")
      */
     public function signupAction(Request $request) {
 
         $newUser = new SignUp();
 
         $form = $this->get('form.factory')->create(SignUpType::class, $newUser);
+
         $form->handleRequest($request);
         //ajax
         if ($request->getMethod() == 'POST' && $request->isXmlHttpRequest()) {
 
             if (!$form->isValid()) {
-                $errors = $this->getErrorMessages($form);
-                return new JsonResponse(array('errors' => $errors, 'valide' => false,));
+
+                $errors = $this->get('app.geterrormessages')->getErrorMessages($form);
+
+                return new JsonResponse(array(
+                    'errors' => $errors,
+                    'valide' => false,
+                ));
             }
             if ($form->isValid()) {
                 $values = $request->request->all();
@@ -42,16 +52,12 @@ class SignUpController extends Controller {
                 $em->persist($newUser);
                 $em->flush();
 
-                $mailSending = \Swift_Message::newInstance()
-                        ->setSubject('Validation de votre inscription')
-                        ->setFrom(array('cw.bocaboca@gmail.com' => 'Annuaire Bien-Etre'))
-                        ->setTo('wg.wargnier@gmail.com')
-                        ->setCharset('utf-8')
-                        ->setContentType('text/html')
-                        ->setBody($this->renderView('mail.html.twig'));
-                $this->get('mailer')->send($mailSending);
+                $this->get('app.mailerbuilder')->mailer($newUser);
 
-                return new JsonResponse(array('valide' => true, 'values' => $values,));
+                return new JsonResponse(array(
+                    'valide' => true,
+                    'values' => $values,
+                ));
             }
         }
         return $this->render('accueil/login.html.twig', array(
@@ -60,24 +66,59 @@ class SignUpController extends Controller {
         ));
     }
 
-    protected function getErrorMessages(\Symfony\Component\Form\Form $form) {
+    /**
+     * @Route("/signup/final/step/{id}",options={"expose"=true},name="signupFinal")
+     */
+    public function signupFinalAction(Request $request, $id = null) {
 
-        $errors = array();
-
-        foreach ($form->getErrors() as $key => $error) {
-            $errors[] = $error->getMessage();
+        if ($id) {
+            $firstStepSignUp = $this->getDoctrine()->getManager()->getRepository('AppBundle:SignUp')->find($id);
+        } else {
+            $firstStepSignUp = new SignUp();
         }
-        foreach ($form->all() as $child) {
-            if (!$child->isValid()) {
-                $errors[$child->getName()] = $this->getErrorMessages($child);
+
+        $finalStepSignUp = new Utilisateur();
+
+        $form = $this->get('form.factory')->create(UtilisateurType::class, $finalStepSignUp);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($finalStepSignUp);
+                $em->flush();
+
+                return $this->redirectToRoute('home');
             }
         }
-        return $errors;
-//        foreach ($form->all() as $key => $child) {
-//            if ($err == $this->getErrorMessages($child))
-//                $errors[$key] = $err;
-//        }
-//        return $errors;
+        //Auto-complete Ajax
+        if ($request->getMethod() == 'POST' && $request->isXmlHttpRequest()) {
+
+            $val = $request->request->get('valeur');
+            $response = $this->container->get('app.searchpostalcode')->getData($val);
+
+            return new JsonResponse($response);
+        }
+
+        return $this->render('finalSignUp.html.twig', array(
+                    'form' => $form->createView(),
+                    'user' => $finalStepSignUp,
+                    'signup' => $firstStepSignUp
+        ));
+    }
+
+    /**
+     * @Route("/signup/final/step/complete",options={"expose"=true},name="autocomplete")
+     */
+    public function autoCompleteAjaxAction(Request $request) {
+        if ($request->getMethod() == 'POST' && $request->isXmlHttpRequest()) {
+            $val = $request->request->get('valeur');
+            $response = $this->container->get('app.searchpostalcode')->getData($val);
+
+            return new JsonResponse($response);
+        }
     }
 
 }

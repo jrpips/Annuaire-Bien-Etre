@@ -4,6 +4,28 @@ parameters:
 #    parameter_name: value
 
 services:
+    
+    app.mailerbuilder:
+         class: AppBundle\Services\MailerBuilder\MailerBuilder
+         arguments:
+             - "@twig"
+             - "@mailer" 
+          
+    app.geterrormessages:
+         class: AppBundle\Services\FormErrorMessages\FormErrorMessages
+         
+    app.searchpostalcode:
+         class: AppBundle\Services\SearchPostalCode\SearchPostalCode
+         
+   # app.from.type.gender:
+        
+         
+    form:  
+        class: AppBundle\Form
+        arguments:          
+##             - "@doctrine.orm.entity_manager"
+             - "@app.searchpostalcode"
+#        abstract: true
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

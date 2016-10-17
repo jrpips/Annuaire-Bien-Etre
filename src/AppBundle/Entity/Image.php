@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,12 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="image")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Image {
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -28,125 +27,133 @@ class Image {
     private $prestataire;
 
     /**
-     * @var float
-     *
      * @ORM\Column(name="ordre", type="float", nullable=true)
      */
     private $ordre;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="image", type="blob", nullable=true)
+     * @ORM\Column(type="string",length=255)
+     * @Assert\NotBlank(message="requis")
+     * 
      */
-    private $image;
+    private $name;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="url", type="string", length=255, nullable=true)
+    /** 
+     * @ORM\Column(type="string",length=255,nullable=true)
+     * 
      */
-    private $url;
+    protected $path;
+    
+    protected $file;
 
-    public function __toString() {
-        return $this->url . '';
+    public function getUploadRootDir() {
+        // On retourne le chemin relatif vers l'image pour notre code PHP
+        return __DIR__ . '/../../../web/image/userUploads';
+    }
+
+    public function getAbsolutePath() {
+        return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->path;
     }
 
     /**
-     * Get id
-     *
-     * @return int
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     * 
      */
+    public function preUpload() {
+        $this->tempFile = $this->getAbsolutePath();
+        $this->oldFile = $this->getPath();
+
+        if (null !== $this->file) {
+            $this->path = sha1(uniqid(mt_rand(), true)) . '.' . $this->file->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     * 
+     */
+    public function upload() {
+        if (null !== $this->file) {
+            $this->file->move($this->getUploadRootDir(), $this->path);
+            unset($this->file);
+
+            if ($this->oldFile != null) {
+                unlink($this->tempFile);
+            }
+        }
+    }
+
+    /**
+     * @ORM\PreRemove()
+     * 
+     */
+    public function preRemoveUpload() {
+        $this->tempFile = $this->getAbsolutePath();
+    }
+
+    /**
+     * @ORM\PostRemove()
+     * 
+     */
+    public function removeUpload() {
+        if (file_exists($this->tempFile)) {
+            unlink($this->tempFile);
+        }
+    }
+
+    //    public function __toString() {
+    //        return $this->url . '';
+    //    }
+
     public function getId() {
         return $this->id;
     }
 
-    /**
-     * Set ordre
-     *
-     * @param float $ordre
-     *
-     * @return Image
-     */
     public function setOrdre($ordre) {
         $this->ordre = $ordre;
-
         return $this;
     }
 
-    /**
-     * Get ordre
-     *
-     * @return float
-     */
     public function getOrdre() {
         return $this->ordre;
     }
-
-    /**
-     * Set image
-     *
-     * @param string $image
-     *
-     * @return Image
-     */
-    public function setImage($image) {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return string
-     */
-    public function getImage() {
-        return $this->image;
-    }
-
-    /**
-     * Set url
-     *
-     * @param string $url
-     *
-     * @return Image
-     */
-    public function setUrl($url) {
-        $this->url = $url;
-
-        return $this;
-    }
-
-    /**
-     * Get url
-     *
-     * @return string
-     */
-    public function getUrl() {
-        return $this->url;
-    }
-
-    /**
-     * Set prestataire
-     *
-     * @param \AppBundle\Entity\Prestataire $prestataire
-     *
-     * @return Image
-     */
+ 
     public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire = null) {
         $this->prestataire = $prestataire;
-
         return $this;
     }
 
-    /**
-     * Get prestataire
-     *
-     * @return \AppBundle\Entity\Prestataire
-     */
     public function getPrestataire() {
         return $this->prestataire;
+    }
+
+    public function getPath() {
+        return $this->path;
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+
+    public function getFile() {
+        return $this->file;
+    }
+
+    public function setFile($file) {
+        $this->file = $file;
+        return $this;
+    }
+
+    public function setName($name) {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function setPath($path) {
+        $this->path = $path;
+        return $this;
     }
 
 }

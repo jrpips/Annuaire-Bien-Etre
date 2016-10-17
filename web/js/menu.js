@@ -13,10 +13,10 @@ var GpAnnuaire = GpAnnuaire || {
         if (data.valide) {
             console.log('inscription validée!');
             $('#body').html('<div class="valide">Un email de confirmation a été envoyé à cette adresse:<span>' + data.values.sign_up.email + '</span></div>');
-            setTimeout(function(){
+            setTimeout(function () {
                 GpPopup.hide();
-                
-            },3000);
+
+            }, 3000);
         }
         else {
             $('.error').remove();
@@ -35,9 +35,10 @@ var GpPopup = {
         var event = e.currentTarget;
         var eventId = event.id
         console.log(eventId);
-
+        //setTimeout(function(){
         if (eventId == 'subscribe') {
             var height = '400px';
+
             $('#popup h3').empty().prepend('Inscription');
             $('#subscribeForm').css('display', 'block');
             $('#connectForm').css('display', 'none');
@@ -57,6 +58,8 @@ var GpPopup = {
         $('#popup').css({top: top, 'right': right}).slideDown('slow').find(':text,textarea').first().focus();
         $('#modale').fadeIn();
         $('#cancel').on('click', GpPopup.hide);
+        $('#popup').css({'height': 'auto'});
+        //},1000);
 
     },
     'send': function () {
@@ -65,21 +68,62 @@ var GpPopup = {
         $('#modale').hide();
         $('#popup').hide('fast');
     },
-    gpAjax: function () {
-        var inputVal = $('#subscribeForm #form_adresseRue').val();
-        console.log('ok');
+    ajax: function (e) {
+        e.preventDefault();
+        var $form = $('form');
+        var values = {};
+        $.each($form.serializeArray(), function (i, field) {
+            values[field.name] = field.value;
+        });
+        id = e.currentTarget.id;
+        inputVal = $('#subscribeForm #' + id).val();
+
         $.ajax({
             type: "POST",
-            data: inputVal,
-            url: generate('login'),
+            data: values,
+            url: Routing.generate('signup', {values: values}),
             dataType: 'json',
             success: function (data) {
-                console.log(data);
+                GpAnnuaire.subscribe(data);
             }
-        });
+        })
     }
 };
+var gpAjaxForSignUp = function (e) {
+    e.preventDefault();
+    var id = e.currentTarget.id;
+    if ($('#utilisateur_adresseUtilisateur_codePostal').val().length === 4) {
+        $.ajax({
+            type: "POST",
+            data: {'valeur': $('#' + id).val()},
+            dataType: 'json',
+            url: Routing.generate('autocomplete'), // {'valeur': $('#' + id).val(),'id':id}),
+            beforeSend: function () {
+                if ($('.loader').length == 0) {
+                    $('#utilisateur_adresseUtilisateur_commune').parent().append('<div class="loader"><img src="http://127.0.0.1/Annuaire-Bien-Etre/web/image/Loading_icon.gif"/></div>');
+//                    $('.loader img').css({                      
+//                        'width': '70px', 
+//                        'height': '50px',                      
+//                        'float':'right'
+//                    });
+                }
+                $('#utilisateur_adresseUtilisateur_commune option').remove();
+            },
+            success: function (data) {
 
+                console.log(data);
+$('.loader').remove();
+                $.each(data.communes, function (index, value) {
+                    $('#utilisateur_adresseUtilisateur_commune').append($('<option>', {value: value, text: value}));
+                });
+                $('#utilisateur_adresseUtilisateur_localite').val(data.province);
+            }
+        });
+    } else {
+        $('#utilisateur_adresseUtilisateur_commune option').remove();
+        $('#utilisateur_adresseUtilisateur_commune').append($('<option>', {value: 'error', text: 'Aucunes communes ne correspondent à ce code postal!'}));
+    }
+};
 $(function () {
     document.getElementsByTagName('body')[0].onscroll = GpAnnuaire.headerColor;
     setInterval(GpAnnuaire.headerColor, 5000);
@@ -98,8 +142,27 @@ $(function () {
     $('#body form:eq(1) button').attr({'class': 'btn btn-default', 'id': 'cmdSend'});
 
     $('#subscribeForm').on('submit', function (e) {
-        gpAjax(e)
+        GpPopup.ajax(e);
     });
+
+    $('#utilisateur_adresseUtilisateur_codePostal').on('change', function (e) {
+
+        gpAjaxForSignUp(e);
+
+    });
+    $('#utilisateur_adresseUtilisateur_codePostal').on('keyup', function (e) {
+        gpAjaxForSignUp(e);
+
+    });
+//    $('#utilisateur_adresseUtilisateur_commune').on('change', function (e) {
+//        gpAjaxForSignUp(e);
+//        console.log('e2');
+//    });
+//    $('#utilisateur_adresseUtilisateur_localite').on('change', function (e) {
+//        gpAjaxForSignUp(e);
+//        console.log('e3');
+//    });
+
 
 });
 

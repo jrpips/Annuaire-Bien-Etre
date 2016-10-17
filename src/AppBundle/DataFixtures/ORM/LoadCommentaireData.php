@@ -37,7 +37,7 @@ class LoadCommentaireData extends AbstractFixture implements OrderedFixtureInter
 
     public function getOrder() {
         // l'ordre ds lequel les fixtures seront chargées         
-        return 9;
+        return 10;
     }
 
 }

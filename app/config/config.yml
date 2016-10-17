@@ -36,6 +36,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form_themes:
+        - 'bootstrap_3_layout.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -60,10 +62,20 @@ doctrine:
         auto_mapping: true
 
 # Swiftmailer Configuration
-swiftmailer:
-    transport:  "%mailer_transport%"
-    encryption: "%mailer_encryption%"
-    host:       "%mailer_host%"
-    username:   "%mailer_user%"
-    password:   "%mailer_password%"
-    spool:      ~
+#swiftmailer:
+  #  transport:  "%mailer_transport%"
+  #  encryption: "%mailer_encryption%"
+  #  host:       "%mailer_host%"
+  #  username:   "%mailer_user%"
+  #  password:   "%mailer_password%"
+  #  spool:      ~
+  
+# Configuration dev -> mailtrap.io
+swiftmailer: 
+  spool:     { type: memory }
+  transport: smtp
+  host:      mailtrap.io
+  username:  3ea6977f0eb8fb
+  password:  b80c6119ee1b91
+  auth_mode: cram-md5
+  port: 2525

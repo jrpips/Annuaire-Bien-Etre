@@ -1,7 +1,7 @@
 <?php
 
- // src/AppBundle/DataFixtures/ORM/LoadAdresseUtilisateurData.php 
- 
+// src/AppBundle/DataFixtures/ORM/LoadAdresseUtilisateurData.php 
+
 namespace AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
@@ -22,16 +22,15 @@ class LoadAdresseUtilisateurData extends AbstractFixture implements OrderedFixtu
 
             $cPostal = LoadAdresseUtilisateurData::codePostalLoad(); //          1. tirage au sort d'un code postal
             $localite = LoadAdresseUtilisateurData::provinceLoad($cPostal); //   2. sélection de la province correspondante
-            $commune = rand(0, (count($this->cp[$cPostal])) - 1);//              3. et d'une commune
+            $commune = rand(0, (count($this->cp[$cPostal])) - 1); //              3. et d'une commune
 
             $addrUser = new AdresseUtilisateur();
 
             $addrUser->setCodePostal($cPostal);
             $addrUser->setLocalite($localite);
             $addrUser->setCommune($this->cp[$cPostal][$commune]);
-            $addrUser->setUtilisateur($this->getReference('user' . $i));
-
             $manager->persist($addrUser);
+            $this->addReference('addrUser' . $i, $addrUser);
         }
         $manager->flush();
     }
@@ -57,7 +56,7 @@ class LoadAdresseUtilisateurData extends AbstractFixture implements OrderedFixtu
 
     public function getOrder() {
 
-        return 20;
+        return 8;
     }
 
 }

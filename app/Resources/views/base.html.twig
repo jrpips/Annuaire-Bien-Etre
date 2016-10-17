@@ -42,28 +42,7 @@
         <script type="text/javascript" src="{{asset('js/jquery.js')}}" ></script>
         <script type="text/javascript" src="{{asset('js/menu.js')}}"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        {#        <script type="text/javascript" src="{{asset('css/libraries/owl.carousel/owl.carousel.js')}}"></script>#}
-        <script>
-            var gpAjax = function (e) {
-                e.preventDefault();
-                var $form = $('form');
-                var values = {};
-                $.each($form.serializeArray(), function (i, field) {
-                    values[field.name] = field.value;
-                });
-                id = e.currentTarget.id;
-                inputVal = $('#subscribeForm #' + id).val();
-
-                $.ajax({
-                    type: "POST",
-                    data: values,
-                    url: "{{ path('signup') }}",
-                    dataType: 'json',
-                    success: function (data) {
-                        GpAnnuaire.subscribe(data);
-                    }
-                })
-            };
-        </script>
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>    
     </body>
 </html>

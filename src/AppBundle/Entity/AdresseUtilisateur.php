@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="adresse_utilisateur")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AdresseUtilisateurRepository")
  */
-class AdresseUtilisateur
-{
+class AdresseUtilisateur {
+
     /**
      * @var int
      *
@@ -20,13 +20,6 @@ class AdresseUtilisateur
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
-    /**
-     * Lisibilité de la table Utilisateur préférée à la logique métier
-     * 
-     * @ORM\OneToOne(targetEntity="Utilisateur", cascade={"persist"})
-     */
-    private $utilisateur;
 
     /**
      * @var int
@@ -49,14 +42,12 @@ class AdresseUtilisateur
      */
     private $commune;
 
-
     /**
      * Get id
      *
      * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -67,8 +58,7 @@ class AdresseUtilisateur
      *
      * @return AdresseUtilisateur
      */
-    public function setCodePostal($codePostal)
-    {
+    public function setCodePostal($codePostal) {
         $this->codePostal = $codePostal;
 
         return $this;
@@ -79,8 +69,7 @@ class AdresseUtilisateur
      *
      * @return int
      */
-    public function getCodePostal()
-    {
+    public function getCodePostal() {
         return $this->codePostal;
     }
 
@@ -91,8 +80,7 @@ class AdresseUtilisateur
      *
      * @return AdresseUtilisateur
      */
-    public function setLocalite($localite)
-    {
+    public function setLocalite($localite) {
         $this->localite = $localite;
 
         return $this;
@@ -103,8 +91,7 @@ class AdresseUtilisateur
      *
      * @return string
      */
-    public function getLocalite()
-    {
+    public function getLocalite() {
         return $this->localite;
     }
 
@@ -115,8 +102,7 @@ class AdresseUtilisateur
      *
      * @return AdresseUtilisateur
      */
-    public function setCommune($commune)
-    {
+    public function setCommune($commune) {
         $this->commune = $commune;
 
         return $this;
@@ -127,32 +113,8 @@ class AdresseUtilisateur
      *
      * @return string
      */
-    public function getCommune()
-    {
+    public function getCommune() {
         return $this->commune;
     }
 
-    /**
-     * Set utilisateur
-     *
-     * @param \AppBundle\Entity\Utilisateur $utilisateur
-     *
-     * @return AdresseUtilisateur
-     */
-    public function setUtilisateur(\AppBundle\Entity\Utilisateur $utilisateur = null)
-    {
-        $this->utilisateur = $utilisateur;
-
-        return $this;
-    }
-
-    /**
-     * Get utilisateur
-     *
-     * @return \AppBundle\Entity\Utilisateur
-     */
-    public function getUtilisateur()
-    {
-        return $this->utilisateur;
-    }
 }

@@ -23,12 +23,6 @@ class Prestataire {
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Utilisateur")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $utilisateur;
-
-    /**
      * @ORM\OneToMany(targetEntity="Image",mappedBy="prestataire")
      */
     private $images;
@@ -197,28 +191,6 @@ class Prestataire {
      */
     public function getTva() {
         return $this->tva;
-    }
-
-    /**
-     * Set utilisateur
-     *
-     * @param \AppBundle\Entity\Utilisateur $utilisateur
-     *
-     * @return Prestataire
-     */
-    public function setUtilisateur(\AppBundle\Entity\Utilisateur $utilisateur) {
-        $this->utilisateur = $utilisateur;
-
-        return $this;
-    }
-
-    /**
-     * Get utilisateur
-     *
-     * @return \AppBundle\Entity\Utilisateur
-     */
-    public function getUtilisateur() {
-        return $this->utilisateur;
     }
 
     /**

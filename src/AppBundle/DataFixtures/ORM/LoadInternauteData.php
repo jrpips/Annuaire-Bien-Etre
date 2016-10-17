@@ -23,8 +23,8 @@ class LoadInternauteData extends AbstractFixture implements OrderedFixtureInterf
             $internaute->setNom($faker->name);
             $internaute->setPrenom($faker->firstName($gender = null | 'male' | 'female'));
             $internaute->setNewsletter(true);
-            $j = $i + 5;
-            $internaute->setUtilisateur($this->getReference('user' . $j));
+            
+            
             $j = $i + 10;
             $internaute->setImage($this->getReference('img' . $j));
             $random = rand(2, 4);
@@ -41,7 +41,7 @@ class LoadInternauteData extends AbstractFixture implements OrderedFixtureInterf
 
     public function getOrder() {
         // l'ordre ds lequel les fixtures seront chargées         
-        return 8;
+        return 7;
     }
 
 }

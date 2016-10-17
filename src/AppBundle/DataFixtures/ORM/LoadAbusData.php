@@ -31,7 +31,7 @@ class LoadAbusData extends AbstractFixture implements OrderedFixtureInterface {
 
     public function getOrder() {
         // l'ordre ds lequel les fixtures seront chargées         
-        return 10;
+        return 11;
     }
 
 }

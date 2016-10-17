@@ -9,7 +9,7 @@ framework:
 
 web_profiler:
     toolbar: true
-    intercept_redirects: true
+    intercept_redirects: false
 
 monolog:
     handlers:
@@ -17,12 +17,20 @@ monolog:
              type:      stream
              path:      "%kernel.logs_dir%/%kernel.environment%.log"
              level:     debug
-#             channels:  [!event]
+             channels:  [!event]
         console:           
              type:   console
-#             channels: [!event, !doctrine]      
+             channels: [!event, !doctrine]      
 swiftmailer:
-    delivery_address: me@example.com
-    transport: gmail
-    username:  '%mailer_user%'
-    password:  '%mailer_password%'
+  #  delivery_address: me@example.com
+  #  transport: gmail
+  #  username:  '%mailer_user%'
+  #  password:  '%mailer_password%'
+  #  swiftmailer:
+    spool:     { type: memory }
+    transport: smtp
+    host:      mailtrap.io
+    username:  3ea6977f0eb8fb
+    password:  b80c6119ee1b91
+    auth_mode: cram-md5
+    port: 2525

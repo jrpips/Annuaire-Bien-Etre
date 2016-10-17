@@ -24,15 +24,9 @@ class Internaute {
 
     /**
      * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $image;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Utilisateur", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $utilisateur;
 
     /**
      * @ORM\ManyToMany(targetEntity="Prestataire", inversedBy="internautes")
@@ -156,28 +150,6 @@ class Internaute {
      */
     public function getImage() {
         return $this->image;
-    }
-
-    /**
-     * Set utilisateur
-     *
-     * @param \AppBundle\Entity\Utilisateur $utilisateur
-     *
-     * @return Internaute
-     */
-    public function setUtilisateur(\AppBundle\Entity\Utilisateur $utilisateur) {
-        $this->utilisateur = $utilisateur;
-
-        return $this;
-    }
-
-    /**
-     * Get utilisateur
-     *
-     * @return \AppBundle\Entity\Utilisateur
-     */
-    public function getUtilisateur() {
-        return $this->utilisateur;
     }
 
     /**

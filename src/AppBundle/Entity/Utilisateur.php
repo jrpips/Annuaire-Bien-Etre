@@ -23,6 +23,24 @@ class Utilisateur {
     private $id;
 
     /**
+     * @ORM\OneToOne(targetEntity="Internaute", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $internaute;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Prestataire", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $prestataire;
+
+    /**
+     * 
+     * @ORM\OneToOne(targetEntity="AdresseUtilisateur", cascade={"persist"})
+     */
+    private $adresseUtilisateur;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=150, unique=true)
@@ -90,6 +108,14 @@ class Utilisateur {
      * @ORM\Column(name="inscriptionConf", type="boolean")
      */
     private $inscriptionConf;
+
+    public function __construct() {
+        $this->setInscription(new \DateTime());
+        $this->setBanni(false);
+        $this->setInscriptionConf(true);
+        $this->setEssaiPwd(3);
+        $this->setTypeUtilisateur('internaute');
+    }
 
     /**
      * Get id
@@ -254,7 +280,6 @@ class Utilisateur {
         return $this->inscriptionConf;
     }
 
-
     /**
      * Set inscription
      *
@@ -262,8 +287,7 @@ class Utilisateur {
      *
      * @return Utilisateur
      */
-    public function setInscription($inscription)
-    {
+    public function setInscription($inscription) {
         $this->inscription = $inscription;
 
         return $this;
@@ -274,8 +298,7 @@ class Utilisateur {
      *
      * @return \DateTime
      */
-    public function getInscription()
-    {
+    public function getInscription() {
         return $this->inscription;
     }
 
@@ -286,8 +309,7 @@ class Utilisateur {
      *
      * @return Utilisateur
      */
-    public function setTypeUtilisateur($typeUtilisateur)
-    {
+    public function setTypeUtilisateur($typeUtilisateur) {
         $this->typeUtilisateur = $typeUtilisateur;
 
         return $this;
@@ -298,8 +320,74 @@ class Utilisateur {
      *
      * @return string
      */
-    public function getTypeUtilisateur()
-    {
+    public function getTypeUtilisateur() {
         return $this->typeUtilisateur;
     }
+
+    /**
+     * Set internaute
+     *
+     * @param \AppBundle\Entity\Internaute $internaute
+     *
+     * @return Utilisateur
+     */
+    public function setInternaute(\AppBundle\Entity\Internaute $internaute) {
+        $this->internaute = $internaute;
+
+        return $this;
+    }
+
+    /**
+     * Get internaute
+     *
+     * @return \AppBundle\Entity\Internaute
+     */
+    public function getInternaute() {
+        return $this->internaute;
+    }
+
+    /**
+     * Set prestataire
+     *
+     * @param \AppBundle\Entity\Prestataire $prestataire
+     *
+     * @return Utilisateur
+     */
+    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire) {
+        $this->prestataire = $prestataire;
+
+        return $this;
+    }
+
+    /**
+     * Get prestataire
+     *
+     * @return \AppBundle\Entity\Prestataire
+     */
+    public function getPrestataire() {
+        return $this->prestataire;
+    }
+
+    /**
+     * Set adresseUtilisateur
+     *
+     * @param \AppBundle\Entity\AdresseUtilisateur $adresseUtilisateur
+     *
+     * @return Utilisateur
+     */
+    public function setAdresseUtilisateur(\AppBundle\Entity\AdresseUtilisateur $adresseUtilisateur = null) {
+        $this->adresseUtilisateur = $adresseUtilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Get adresseUtilisateur
+     *
+     * @return \AppBundle\Entity\AdresseUtilisateur
+     */
+    public function getAdresseUtilisateur() {
+        return $this->adresseUtilisateur;
+    }
+
 }
