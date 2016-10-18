@@ -1,26 +1,97 @@
 {# empty Twig template #}
-<html>
-    <head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-           <link href="{{asset('css/gp_annuaire.css')}}" rel="stylesheet" type="text/css" >
-    </head>
-    <body>
-        <div class="formSignUp">
-       
-            <h1>Inscription</h1>
-            
-            {{form_start(form)}}
-            {{form_label(form.internaute.nom)}}
-            {{form_widget(form.internaute.nom,{'attr':{'value':signup is null ?'':signup.lastname}})}}
-            {{form_label(form.internaute.prenom)}}
-            {{form_widget(form.internaute.prenom,{'attr':{'value':signup is null ?'':signup.firstname}})}}
-            {{form_rest(form)}}
-            {{form_end(form)}}
-            
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="page-wrapper">
+        <div class="main">
+            <div class="main-inner">
+                <div class="container">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-sm-4 col-sm-offset-4">
+
+
+                                <div class="page-title">
+                                    <h1>Inscription</h1>
+                                </div><!-- /.page-title -->
+
+                                {{form_start(form)}}
+
+                                <div class="form-group">
+                                    {{form_label(form.internaute.nom)}}
+                                    {{form_widget(form.internaute.nom,{'attr':{'value':signup is null ?'':signup.lastname}})}}
+                                    {{form_errors(form.internaute.nom)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.internaute.prenom)}}
+                                    {{form_widget(form.internaute.prenom,{'attr':{'value':signup is null ?'':signup.firstname}})}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.email)}}
+                                    {{form_widget(form.email,{'attr':{'value':signup is null ?'':signup.email}})}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.pwd)}}
+                                    {{form_widget(form.pwd)}}
+                                    {{form_errors(form.pwd)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.adresseRue)}}
+                                    {{form_widget(form.adresseRue)}}
+                                    {{form_errors(form.adresseRue)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.adresseNumero)}}
+                                    {{form_widget(form.adresseNumero)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.adresseUtilisateur.codePostal)}}
+                                    {{form_widget(form.adresseUtilisateur.codePostal)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.adresseUtilisateur.commune)}}
+                                    {{form_widget(form.adresseUtilisateur.commune)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.adresseUtilisateur.localite)}}
+                                    {{form_widget(form.adresseUtilisateur.localite)}}
+                                </div>
+                                <div class="form-group">
+                                    {#                                    {{form_label(form.internaute.newsletter)}}#}
+                                    {{form_row(form.internaute.newsletter)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.internaute.image.name)}}
+                                    {{form_widget(form.internaute.image.name)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.internaute.image.file)}}
+                                    {{form_widget(form.internaute.image.file)}}
+                                </div> 
+
+                                {{form_rest(form)}}
+                                {{form_end(form)}}
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <script type="text/javascript" src="{{asset('js/jquery.js')}}" ></script>
-        <script type="text/javascript" src="{{asset('js/menu.js')}}" ></script>
-        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>          
-    </body>
-</html>
+    </div>
+    <script>
+        $.function({
+            $('#utilisateur_internaute_newsletter').parent().remove();
+        });
+    </script>
+{% endblock %}
+

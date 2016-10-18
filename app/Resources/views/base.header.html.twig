@@ -1,7 +1,7 @@
 {# base.header.html.twig #}
 
-<header class="header header-transparent">
-    
+<header class="header header-transparent navbar-fixed-top">
+
     <div class="header-wrapper" style="width:100%;">
 
         <div class="container">
@@ -9,18 +9,22 @@
             <div class="header-inner">
 
                 <div class="header-logo">
-                    
+
                     <a href="">
                         <img src="{{asset('image/gp_logo.png')}}" alt="Logo">
                         <span >Galet</span>
                     </a>
-                        
+
                 </div><!-- /.header-logo -->
 
                 <div class="header-content">
 
                     <div class="header-bottom">
-
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
                         {{ include("base.menu.html.twig") }}
 
                     </div><!-- /.header-bottom -->

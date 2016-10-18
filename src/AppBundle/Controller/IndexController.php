@@ -23,16 +23,16 @@ class IndexController extends Controller {
      */
     public function indexAction() {
         $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findAll();
-        $promos = $this->getDoctrine()->getManager()->getRepository('AppBundle:Promotion')->findAll();
-        $stages = $this->getDoctrine()->getManager()->getRepository('AppBundle:Stage')->findAll();
-        $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findAll();
+//        $promos = $this->getDoctrine()->getManager()->getRepository('AppBundle:Promotion')->findAll();
+//        $stages = $this->getDoctrine()->getManager()->getRepository('AppBundle:Stage')->findAll();
+//        $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findAll();
         
         return $this->render('accueil/index.html.twig', array(
                     'p' => $prestataires,
-                    'promos' => $promos,
-                    'stages' => $stages,
-                    'services' => $services
-        ));
+//                    'promos' => $promos,
+//                    'stages' => $stages,
+//                    'services' => $services
+       ));
     }
 
     /**

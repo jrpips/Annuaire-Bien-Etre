@@ -18,7 +18,7 @@ class ImageType extends AbstractType {
         $builder
                 //->add('ordre')
                 ->add('name', TextType::class, array('required' => false))
-                ->add('file', FileType::class, array('required' => false))
+                ->add('file', FileType::class, array('required' => false,'label'=>'Déposer votre image'))
         //->add('prestataire')
         ;
     }

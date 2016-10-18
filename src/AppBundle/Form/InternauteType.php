@@ -16,7 +16,7 @@ class InternauteType extends AbstractType {
         $builder
                 ->add('nom', TextType::class, array('required' => false))
                 ->add('prenom', TextType::class, array('required' => false))
-                ->add('newsletter', CheckboxType::class)
+                ->add('newsletter', CheckboxType::class, array('label'=>'Recevoir notre newsletter','required' => false))
                 ->add('image', ImageType::class, array('required' => false))
 //                ->add('utilisateur')
 //                ->add('prestataires')

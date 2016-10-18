@@ -53,6 +53,7 @@ class Utilisateur {
      * @var string
      *
      * @ORM\Column(name="pwd", type="string", length=50)
+     * @Assert\NotBlank(message="Minimun 6 caractères alphanumériques")
      */
     private $pwd;
 
