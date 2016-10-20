@@ -25,13 +25,13 @@ class SignUpController extends Controller {
     }
 
     /**
-     * @Route("/signup/first/step",options={"expose"=true},name="signup")
+     * @Route("/inscription/pre-inscription/",options={"expose"=true},name="signup")
      */
     public function signupAction(Request $request) {
 
-        $newUser = new SignUp();
+        $new_user = new SignUp();
 
-        $form = $this->get('form.factory')->create(SignUpType::class, $newUser);
+        $form = $this->get('form.factory')->create(SignUpType::class, $new_user);
 
         $form->handleRequest($request);
         //ajax
@@ -49,10 +49,10 @@ class SignUpController extends Controller {
             if ($form->isValid()) {
                 $values = $request->request->all();
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($newUser);
+                $em->persist($new_user);
                 $em->flush();
 
-                $this->get('app.mailerbuilder')->mailer($newUser);
+                $this->get('app.mailerbuilder')->mailer($new_user);
 
                 return new JsonResponse(array(
                     'valide' => true,
@@ -62,24 +62,24 @@ class SignUpController extends Controller {
         }
         return $this->render('accueil/login.html.twig', array(
                     'form' => $form->createView(),
-                    'user' => $newUser
+                    'user' => $new_user
         ));
     }
 
     /**
-     * @Route("/signup/final/step/{id}",options={"expose"=true},name="signupFinal")
+     * @Route("/inscription/finalisation/{id}",options={"expose"=true},name="signup-final")
      */
     public function signupFinalAction(Request $request, $id = null) {
 
         if ($id) {
-            $firstStepSignUp = $this->getDoctrine()->getManager()->getRepository('AppBundle:SignUp')->find($id);
+            $first_step_signup = $this->getDoctrine()->getManager()->getRepository('AppBundle:SignUp')->find($id);
         } else {
-            $firstStepSignUp = new SignUp();
+            $first_step_signup = new SignUp();
         }
 
-        $finalStepSignUp = new Utilisateur();
+        $final_step_signup = new Utilisateur();
 
-        $form = $this->get('form.factory')->create(UtilisateurType::class, $finalStepSignUp);
+        $form = $this->get('form.factory')->create(UtilisateurType::class, $final_step_signup);
 
         $form->handleRequest($request);
 
@@ -87,7 +87,7 @@ class SignUpController extends Controller {
             if ($form->isValid()) {
 
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($finalStepSignUp);
+                $em->persist($final_step_signup);
                 $em->flush();
 
                 return $this->redirectToRoute('home');
@@ -102,23 +102,11 @@ class SignUpController extends Controller {
             return new JsonResponse($response);
         }
 
-        return $this->render('finalSignUp.html.twig', array(
+        return $this->render('form.signup.internaute.html.twig', array(
                     'form' => $form->createView(),
-                    'user' => $finalStepSignUp,
-                    'signup' => $firstStepSignUp
+                    'user' => $final_step_signup,
+                    'signup' => $first_step_signup
         ));
-    }
-
-    /**
-     * @Route("/signup/final/step/complete",options={"expose"=true},name="autocomplete")
-     */
-    public function autoCompleteAjaxAction(Request $request) {
-        if ($request->getMethod() == 'POST' && $request->isXmlHttpRequest()) {
-            $val = $request->request->get('valeur');
-            $response = $this->container->get('app.searchpostalcode')->getData($val);
-
-            return new JsonResponse($response);
-        }
     }
 
 }

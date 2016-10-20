@@ -17,13 +17,13 @@ class ElementsForTwigController extends Controller {
 
     public function htmlBaseHeaderAction() {
         $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findAll();
-        $promos = $this->getDoctrine()->getManager()->getRepository('AppBundle:Promotion')->findAll();
+        $promotions = $this->getDoctrine()->getManager()->getRepository('AppBundle:Promotion')->findAll();
         $stages = $this->getDoctrine()->getManager()->getRepository('AppBundle:Stage')->findAll();
         $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findAll();
 
         return $this->render('base.header.html.twig', array(
-                    'p' => $prestataires,
-                    'promos' => $promos,
+                    'prestataires' => $prestataires,
+                    'promotions' => $promotions,
                     'stages' => $stages,
                     'services' => $services
         ));

@@ -38,12 +38,17 @@ class Image {
      */
     private $name;
 
-    /** 
+    /**
+     * @ORM\Column(type="string",length=255,nullable=true)
+     * 
+     */
+    private $url;
+
+    /**
      * @ORM\Column(type="string",length=255,nullable=true)
      * 
      */
     protected $path;
-    
     protected $file;
 
     public function getUploadRootDir() {
@@ -66,6 +71,7 @@ class Image {
 
         if (null !== $this->file) {
             $this->path = sha1(uniqid(mt_rand(), true)) . '.' . $this->file->guessExtension();
+            $this->url=$this->path;
         }
     }
 
@@ -103,9 +109,9 @@ class Image {
         }
     }
 
-    //    public function __toString() {
-    //        return $this->url . '';
-    //    }
+    public function __toString() {
+        return $this->url . '';
+    }
 
     public function getId() {
         return $this->id;
@@ -119,7 +125,7 @@ class Image {
     public function getOrdre() {
         return $this->ordre;
     }
- 
+
     public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire = null) {
         $this->prestataire = $prestataire;
         return $this;
@@ -129,8 +135,14 @@ class Image {
         return $this->prestataire;
     }
 
-    public function getPath() {
-        return $this->path;
+   
+    public function setUrl($url) {
+        $this->url = $url;
+        return $this;
+    }
+
+    public function getUrl() {
+        return $this->url;
     }
 
     public function getName() {
@@ -154,6 +166,10 @@ class Image {
     public function setPath($path) {
         $this->path = $path;
         return $this;
+    }
+
+    public function getPath() {
+        return $this->path;
     }
 
 }

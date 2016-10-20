@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,8 +15,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Image {
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -30,29 +27,33 @@ class Image {
     private $prestataire;
 
     /**
-     * @var float
-     *
      * @ORM\Column(name="ordre", type="float", nullable=true)
      */
     private $ordre;
 
     /**
-     * 
      * @ORM\Column(type="string",length=255)
      * @Assert\NotBlank(message="requis")
+     * 
      */
     private $name;
 
     /**
-     * 
      * @ORM\Column(type="string",length=255,nullable=true)
+     * 
      */
-    private $path;
-    private $file;
+    private $url;
+
+    /**
+     * @ORM\Column(type="string",length=255,nullable=true)
+     * 
+     */
+    protected $path;
+    protected $file;
 
     public function getUploadRootDir() {
         // On retourne le chemin relatif vers l'image pour notre code PHP
-        return __DIR__ . '/../../../../web/image/uploads';
+        return __DIR__ . '/../../../web/image/userUploads';
     }
 
     public function getAbsolutePath() {
@@ -68,8 +69,9 @@ class Image {
         $this->tempFile = $this->getAbsolutePath();
         $this->oldFile = $this->getPath();
 
-        if (null !== $this->file)
-            $this->path = shal(uniqid(mt_rand(), true)) . '.' . $this->file->guessExtension();
+        if (null !== $this->file) {
+            $this->path = sha1(uniqid(mt_rand(), true)) . '.' . $this->file->guessExtension();
+        }
     }
 
     /**
@@ -82,13 +84,15 @@ class Image {
             $this->file->move($this->getUploadRootDir(), $this->path);
             unset($this->file);
 
-            if ($this->oldFile != null)
+            if ($this->oldFile != null) {
                 unlink($this->tempFile);
+            }
         }
     }
 
     /**
      * @ORM\PreRemove()
+     * 
      */
     public function preRemoveUpload() {
         $this->tempFile = $this->getAbsolutePath();
@@ -99,73 +103,75 @@ class Image {
      * 
      */
     public function removeUpload() {
-        if (file_exists($this->tempFile))
+        if (file_exists($this->tempFile)) {
             unlink($this->tempFile);
+        }
     }
 
-//    public function __toString() {
-//        return $this->url . '';
+//    public function __construct() {
+//        $this->setUrl($this->path);
 //    }
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
+    public function __toString() {
+        return $this->url . '';
+    }
+
     public function getId() {
         return $this->id;
     }
 
-    /**
-     * Set ordre
-     *
-     * @param float $ordre
-     *
-     * @return Image
-     */
     public function setOrdre($ordre) {
         $this->ordre = $ordre;
-
         return $this;
     }
 
-    /**
-     * Get ordre
-     *
-     * @return float
-     */
     public function getOrdre() {
         return $this->ordre;
     }
 
-    /**
-     * Set prestataire
-     *
-     * @param \AppBundle\Entity\Prestataire $prestataire
-     *
-     * @return Image
-     */
     public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire = null) {
         $this->prestataire = $prestataire;
-
         return $this;
     }
 
-    /**
-     * Get prestataire
-     *
-     * @return \AppBundle\Entity\Prestataire
-     */
     public function getPrestataire() {
         return $this->prestataire;
     }
 
-    public function getPath() {
-        return $this->path;
+    public function setUrl($url) {
+        $this->url = $path;
+        return $this;
+    }
+
+    public function getUrl() {
+        return $this->url;
     }
 
     public function getName() {
         return $this->name;
     }
 
+    public function getFile() {
+        return $this->file;
+    }
+
+    public function setFile($file) {
+        $this->file = $file;
+        return $this;
+    }
+
+    public function setName($name) {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function setPath($path) {
+        $this->path = $path;
+        return $this;
+    }
+
+    public function getPath()
+    {
+        return $this->path;
+    }
 }

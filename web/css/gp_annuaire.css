@@ -186,7 +186,7 @@ body{
     color:red;
     width:55%;
     text-align:right;
-    // float:left;
+     /*float:left;*/
     position:absolute;
 
 }/*
@@ -257,4 +257,7 @@ body{
 }
 /*#utilisateur_adresseUtilisateur_commune{
     width:80%;  
+}*/
+/*input[type=checkbox]{
+    display:block;
 }*/

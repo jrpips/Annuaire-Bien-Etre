@@ -246,9 +246,9 @@ $(function () {//controller
 
     //checkox form[internaute][newsletter] -> hack construct mistake checbok for field newsletter -> <label><input type=checkox/></label>
 
-    $('.checkbox').empty();
+    //$('.checkbox').empty();
 
-    $('.checkbox').append('<input type="checkbox" id="utilisateur_internaute_newsletter" name="utilisateur[internaute][newsletter]" value="0"><label>Recevoir la newsletter</label>');
+    //$('.checkbox').append('<input type="checkbox" id="utilisateur_internaute_newsletter" name="utilisateur[internaute][newsletter]" value="0"><label>Recevoir la newsletter</label>');
 
 
     //    $('#utilisateur_adresseUtilisateur_commune').on('change', function (e) {
