@@ -23,6 +23,12 @@ class Prestataire {
     private $id;
 
     /**
+     * @ORM\OneToOne(targetEntity="Utilisateur", cascade={"persist"},mappedBy="prestataire")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $utilisateur;
+
+    /**
      * @ORM\OneToMany(targetEntity="Image",mappedBy="prestataire")
      */
     private $images;
@@ -52,13 +58,6 @@ class Prestataire {
      * @ORM\Column(name="siteInternet", type="string", length=150, unique=true)
      */
     private $siteInternet;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=100, unique=true)
-     */
-    private $email;
 
     /**
      * @var string
@@ -125,28 +124,6 @@ class Prestataire {
      */
     public function getSiteInternet() {
         return $this->siteInternet;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return Prestataire
-     */
-    public function setEmail($email) {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail() {
-        return $this->email;
     }
 
     /**
@@ -293,4 +270,28 @@ class Prestataire {
         return $this->internautes;
     }
 
+
+    /**
+     * Set utilisateur
+     *
+     * @param \AppBundle\Entity\Utilisateur $utilisateur
+     *
+     * @return Prestataire
+     */
+    public function setUtilisateur(\AppBundle\Entity\Utilisateur $utilisateur = null)
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \AppBundle\Entity\Utilisateur
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
+    }
 }

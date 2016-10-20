@@ -9,7 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\UtilisateurType;
+use AppBundle\Form\UtilisateurType;
+use AppBundle\Form\ImageType;
 
 class PrestataireType extends AbstractType
 {
@@ -22,10 +23,11 @@ class PrestataireType extends AbstractType
         $builder
             ->add('nom', TextType::class, array('required' => false))
             ->add('siteInternet', TextType::class, array('required' => false))
-            ->add('email', EmailType::class, array('required' => false))
+//            ->add('email', EmailType::class, array('required' => false))
             ->add('telephone', TextType::class, array('required' => false))
             ->add('tva', TextType::class, array('required' => false))
             ->add('utilisateur', UtilisateurType::class)
+//            ->add('image', ImageType::class)
             //->add('internautes', TextType::class, array('required' => false))
 //            ->add('categServices', EntityType::class, array('required' => false))
             ->add('Envoyer', SubmitType::class)

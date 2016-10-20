@@ -22,6 +22,14 @@ class Internaute {
      */
     private $id;
 
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="Utilisateur", cascade={"persist"},mappedBy="internaute")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $utilisateur;
+
     /**
      * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
@@ -203,4 +211,28 @@ class Internaute {
         $this->prestataires->removeElement($prestataire);
     }
 
+
+    /**
+     * Set utilisateur
+     *
+     * @param \AppBundle\Entity\Utilisateur $utilisateur
+     *
+     * @return Internaute
+     */
+    public function setUtilisateur(\AppBundle\Entity\Utilisateur $utilisateur = null)
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \AppBundle\Entity\Utilisateur
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
+    }
 }

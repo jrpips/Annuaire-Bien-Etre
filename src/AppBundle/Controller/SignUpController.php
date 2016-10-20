@@ -77,9 +77,9 @@ class SignUpController extends Controller {
             $first_step_signup = new SignUp();
         }
 
-        $final_step_signup = new Utilisateur();
+        $final_step_signup = new Internaute();
 
-        $form = $this->get('form.factory')->create(UtilisateurType::class, $final_step_signup);
+        $form = $this->get('form.factory')->create(InternauteType::class, $final_step_signup);
 
         $form->handleRequest($request);
 

@@ -23,13 +23,13 @@ class Utilisateur {
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Internaute", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Internaute", cascade={"persist"},inversedBy="utilisateur")
      * @ORM\JoinColumn(nullable=true)
      */
     private $internaute;
 
     /**
-     * @ORM\OneToOne(targetEntity="Prestataire", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Prestataire", cascade={"persist"},inversedBy="utilisateur")
      * @ORM\JoinColumn(nullable=true)
      */
     private $prestataire;

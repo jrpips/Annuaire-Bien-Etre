@@ -28,8 +28,8 @@ class UtilisateurType extends AbstractType {
 //                ->add('banni')
 //                ->add('inscriptionConf')
                 ->add('adresseUtilisateur',AdresseUtilisateurType::class)
-                ->add('internaute',InternauteType::class)
-                ->add('Envoyer', SubmitType::class)
+        //        ->add('internaute',InternauteType::class)
+
         ;
     }
   

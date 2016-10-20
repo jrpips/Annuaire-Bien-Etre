@@ -28,7 +28,7 @@ class PrestataireController extends Controller{
     public function subscribeNewPrestataireAction(Request $request) {
         $new_prestataire = new Prestataire();
 
-        $form = $this->get('form.factory')->create(UtilisateurType::class, $new_prestataire);
+        $form = $this->get('form.factory')->create(PrestataireType::class, $new_prestataire);
 
         $form->handleRequest($request);
 
@@ -37,7 +37,7 @@ class PrestataireController extends Controller{
             $em->persist($new_prestataire);
             $em->flush();
         }
-        return $this->render('signupPrestataire.html.twig', array(
+        return $this->render('form.signup.prestataire.html.twig', array(
             'form' => $form->createView(),
             'prestataire' => $new_prestataire
         ));

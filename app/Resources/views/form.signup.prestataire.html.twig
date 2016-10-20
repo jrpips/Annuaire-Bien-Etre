@@ -25,57 +25,63 @@
 
                                 {{form_start(form)}}
 
-                                {#<div class="form-group">#}
-                                    {#{{form_label(form.internaute.nom)}}#}
-                                    {#{{form_widget(form.internaute.nom,{'attr':{'value':signup is null ?'':signup.lastname}})}}#}
-                                    {#{{form_errors(form.internaute.nom)}}#}
-                                {#</div>#}
-                                {#<div class="form-group">#}
-                                    {#{{form_label(form.internaute.prenom)}}#}
-                                    {#{{form_widget(form.internaute.prenom,{'attr':{'value':signup is null ?'':signup.firstname}})}}#}
-                                {#</div>#}
-                                {#<div class="form-group">#}
-                                    {#{{form_label(form.email)}}#}
-                                    {#{{form_widget(form.email,{'attr':{'value':signup is null ?'':signup.email}})}}#}
-                                {#</div>#}
-                                {#<div class="form-group">#}
-                                    {#{{form_label(form.pwd)}}#}
-                                    {#{{form_widget(form.pwd)}}#}
-                                    {#{{form_errors(form.pwd)}}#}
-                                {#</div>#}
-                                {#<div class="form-group">#}
-                                    {#{{form_label(form.adresseRue)}}#}
-                                    {#{{form_widget(form.adresseRue)}}#}
-                                    {#{{form_errors(form.adresseRue)}}#}
-                                {#</div>#}
-                                {#<div class="form-group">#}
-                                    {#{{form_label(form.adresseNumero)}}#}
-                                    {#{{form_widget(form.adresseNumero)}}#}
-                                {#</div>#}
-                                {#<div class="form-group">#}
-                                    {#{{form_label(form.adresseUtilisateur.codePostal)}}#}
-                                    {#{{form_widget(form.adresseUtilisateur.codePostal)}}#}
-                                {#</div>#}
-                                {#<div class="form-group">#}
-                                    {#{{form_label(form.adresseUtilisateur.commune)}}#}
-                                    {#{{form_widget(form.adresseUtilisateur.commune)}}#}
-                                {#</div>#}
-                                {#<div class="form-group">#}
-                                    {#{{form_label(form.adresseUtilisateur.localite)}}#}
-                                    {#{{form_widget(form.adresseUtilisateur.localite)}}#}
-                                {#</div>#}
-                                {#<div class="form-group">#}
-                                    {#                                    {{form_label(form.internaute.newsletter)}}#}
-                                    {#{{form_row(form.internaute.newsletter)}}#}
-                                {#</div>#}
-                                {#<div class="form-group">#}
-                                    {#{{form_label(form.internaute.image.name)}}#}
-                                    {#{{form_widget(form.internaute.image.name)}}#}
-                                {#</div>#}
-                                {#<div class="form-group">#}
-                                    {#{{form_label(form.internaute.image.file)}}#}
-                                    {#{{form_widget(form.internaute.image.file)}}#}
-                                {#</div>#}
+                                <div class="form-group">
+                                    {{form_label(form.nom)}}
+                                    {{form_widget(form.nom)}}
+                                    {{form_errors(form.nom)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.siteInternet)}}
+                                    {{form_widget(form.siteInternet)}}
+                                    {{form_errors(form.siteInternet)}}
+
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.telephone)}}
+                                    {{form_widget(form.telephone)}}
+                                    {{form_errors(form.telephone)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.tva)}}
+                                    {{form_widget(form.tva)}}
+                                    {{form_errors(form.tva)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.utilisateur.email)}}
+                                    {{form_widget(form.utilisateur.email)}}
+                                    {{form_errors(form.utilisateur.email)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.utilisateur.pwd)}}
+                                    {{form_widget(form.utilisateur.pwd)}}
+                                    {{form_errors(form.utilisateur.pwd)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.utilisateur.adresseRue)}}
+                                    {{form_widget(form.utilisateur.adresseRue)}}
+                                    {{form_errors(form.utilisateur.adresseRue)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.utilisateur.adresseNumero)}}
+                                    {{form_widget(form.utilisateur.adresseNumero)}}
+                                    {{form_errors(form.utilisateur.adresseNumero)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.utilisateur.adresseUtilisateur.codePostal)}}
+                                    {{form_widget(form.utilisateur.adresseUtilisateur.codePostal)}}
+                                    {{form_errors(form.utilisateur.adresseUtilisateur.codePostal)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.utilisateur.adresseUtilisateur.commune)}}
+                                    {{form_widget(form.utilisateur.adresseUtilisateur.commune)}}
+                                    {{form_errors(form.utilisateur.adresseUtilisateur.commune)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.utilisateur.adresseUtilisateur.localite)}}
+                                    {{form_widget(form.utilisateur.adresseUtilisateur.localite)}}
+                                    {{form_errors(form.utilisateur.adresseUtilisateur.localite)}}
+                                </div>
+
 
                                 {{form_rest(form)}}
                                 {{form_end(form)}}

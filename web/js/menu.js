@@ -146,7 +146,7 @@ var GpPopup = GpPopup || {
                 type: "POST",
                 data: {'valeur': $('#' + id).val()},
                 dataType: 'json',
-                url: Routing.generate('autocomplete'), // {'valeur': $('#' + id).val(),'id':id}),
+                url: Routing.generate('autocomplete'),
                 beforeSend: function () {
 
                     if ($('.loader').length == 0) {
@@ -212,7 +212,7 @@ $(function () {//controller
 
 
     /**
-     * Events to submit data field's popup['s'inscrire','se connecter']
+     * Event to submit data field's popup['s'inscrire','se connecter']
      * 
      **/
 
@@ -220,11 +220,29 @@ $(function () {//controller
         GpPopup.ajax(e);
     });
 
+    /**
+     * Events from form Internaute[code_postal] to find commune and localite
+     *
+     */
+
     $('#utilisateur_adresseUtilisateur_codePostal').on('change', function (e) {
         GpPopup.gpAjaxForSignUp(e);
     });
 
     $('#utilisateur_adresseUtilisateur_codePostal').on('keyup', function (e) {
+        GpPopup.gpAjaxForSignUp(e);
+    });
+
+    /**
+     * Events from form Prestataire[code_postal] to find commune and localite
+     *
+     */
+
+    $('#prestataire_utilisateur_adresseUtilisateur_codePostal').on('change', function (e) {
+        GpPopup.gpAjaxForSignUp(e);
+    });
+
+    $('#prestataire_utilisateur_adresseUtilisateur_codePostal').on('keyup', function (e) {
         GpPopup.gpAjaxForSignUp(e);
     });
 
