@@ -23,17 +23,17 @@ class Utilisateur {
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Internaute", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Internaute",mappedBy="utilisateur")
      * @ORM\JoinColumn(nullable=true)
      */
     private $internaute;
 
     /**
-     * @ORM\OneToOne(targetEntity="Prestataire", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Prestataire",mappedBy="utilisateur")
      * @ORM\JoinColumn(nullable=true)
      */
     private $prestataire;
-    
+
     /**
      * 
      * @ORM\OneToOne(targetEntity="AdresseUtilisateur", cascade={"persist"})
@@ -53,6 +53,7 @@ class Utilisateur {
      * @var string
      *
      * @ORM\Column(name="pwd", type="string", length=50)
+     * @Assert\NotBlank(message="Minimun 6 caractères alphanumériques")
      */
     private $pwd;
 
@@ -108,6 +109,14 @@ class Utilisateur {
      * @ORM\Column(name="inscriptionConf", type="boolean")
      */
     private $inscriptionConf;
+
+    public function __construct() {
+        $this->setInscription(new \DateTime());
+        $this->setBanni(false);
+        $this->setInscriptionConf(true);
+        $this->setEssaiPwd(3);
+        $this->setTypeUtilisateur('internaute');
+    }
 
     /**
      * Get id
@@ -338,28 +347,48 @@ class Utilisateur {
         return $this->internaute;
     }
 
+//    /**
+//     * Set prestataire
+//     *
+//     * @param \AppBundle\Entity\Prestataire $prestataire
+//     *
+//     * @return Utilisateur
+//     */
+//    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire) {
+//        $this->prestataire = $prestataire;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get prestataire
+//     *
+//     * @return \AppBundle\Entity\Prestataire
+//     */
+//    public function getPrestataire() {
+//        return $this->prestataire;
+//    }
 
     /**
-     * Set prestataire
+     * Set adresseUtilisateur
      *
-     * @param \AppBundle\Entity\Prestataire $prestataire
+     * @param \AppBundle\Entity\AdresseUtilisateur $adresseUtilisateur
      *
      * @return Utilisateur
      */
-    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire)
-    {
-        $this->prestataire = $prestataire;
+    public function setAdresseUtilisateur(\AppBundle\Entity\AdresseUtilisateur $adresseUtilisateur = null) {
+        $this->adresseUtilisateur = $adresseUtilisateur;
 
         return $this;
     }
 
     /**
-     * Get prestataire
+     * Get adresseUtilisateur
      *
-     * @return \AppBundle\Entity\Prestataire
+     * @return \AppBundle\Entity\AdresseUtilisateur
      */
-    public function getPrestataire()
-    {
-        return $this->prestataire;
+    public function getAdresseUtilisateur() {
+        return $this->adresseUtilisateur;
     }
+
 }

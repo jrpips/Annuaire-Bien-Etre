@@ -1,29 +1,26 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: wargnierc
  * Date: 18/10/2016
  * Time: 19:51
  */
+
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use AppBundle\Entity\SignUp;
 use AppBundle\Entity\Prestataire;
-use AppBundle\Entity\Internaute;
 use AppBundle\Entity\Utilisateur;
-use AppBundle\Form\SignUpType;
-use AppBundle\Form\InternauteType;
-use AppBundle\Form\UtilisateurType;
 use AppBundle\Form\PrestataireType;
 
-class PrestataireController extends Controller{
+class PrestataireController extends Controller {
 
     /**
-     * @Route("/prestataire/inscription",name="signupPrestataire")
+     * @Route("/inscription/prestataire",name="signupPrestataire")
      */
     public function subscribeNewPrestataireAction(Request $request) {
         $new_prestataire = new Prestataire();
@@ -32,14 +29,18 @@ class PrestataireController extends Controller{
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($new_prestataire);
             $em->flush();
+            $request->getSession()->getFlashBag()->add('notice', 'Profil Prestataire bien enregistré.');
+
+            return $this->redirectToRoute('home');
         }
         return $this->render('form.signup.prestataire.html.twig', array(
-            'form' => $form->createView(),
-            'prestataire' => $new_prestataire
+                    'form' => $form->createView(),
+                    'prestataire' => $new_prestataire
         ));
     }
+
 }

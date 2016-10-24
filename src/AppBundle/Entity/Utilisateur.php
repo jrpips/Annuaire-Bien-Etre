@@ -23,13 +23,13 @@ class Utilisateur {
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Internaute", cascade={"persist"},inversedBy="utilisateur")
+     * @ORM\OneToOne(targetEntity="Internaute",mappedBy="utilisateur")
      * @ORM\JoinColumn(nullable=true)
      */
     private $internaute;
 
     /**
-     * @ORM\OneToOne(targetEntity="Prestataire", cascade={"persist"},inversedBy="utilisateur")
+     * @ORM\OneToOne(targetEntity="Prestataire",mappedBy="utilisateur")
      * @ORM\JoinColumn(nullable=true)
      */
     private $prestataire;
@@ -37,6 +37,7 @@ class Utilisateur {
     /**
      * 
      * @ORM\OneToOne(targetEntity="AdresseUtilisateur", cascade={"persist"})
+     * @Assert\Valid
      */
     private $adresseUtilisateur;
 
@@ -347,27 +348,27 @@ class Utilisateur {
         return $this->internaute;
     }
 
-    /**
-     * Set prestataire
-     *
-     * @param \AppBundle\Entity\Prestataire $prestataire
-     *
-     * @return Utilisateur
-     */
-    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire) {
-        $this->prestataire = $prestataire;
-
-        return $this;
-    }
-
-    /**
-     * Get prestataire
-     *
-     * @return \AppBundle\Entity\Prestataire
-     */
-    public function getPrestataire() {
-        return $this->prestataire;
-    }
+//    /**
+//     * Set prestataire
+//     *
+//     * @param \AppBundle\Entity\Prestataire $prestataire
+//     *
+//     * @return Utilisateur
+//     */
+//    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire) {
+//        $this->prestataire = $prestataire;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get prestataire
+//     *
+//     * @return \AppBundle\Entity\Prestataire
+//     */
+//    public function getPrestataire() {
+//        return $this->prestataire;
+//    }
 
     /**
      * Set adresseUtilisateur
@@ -391,4 +392,28 @@ class Utilisateur {
         return $this->adresseUtilisateur;
     }
 
+
+    /**
+     * Set prestataire
+     *
+     * @param \AppBundle\Entity\Prestataire $prestataire
+     *
+     * @return Utilisateur
+     */
+    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire = null)
+    {
+        $this->prestataire = $prestataire;
+
+        return $this;
+    }
+
+    /**
+     * Get prestataire
+     *
+     * @return \AppBundle\Entity\Prestataire
+     */
+    public function getPrestataire()
+    {
+        return $this->prestataire;
+    }
 }

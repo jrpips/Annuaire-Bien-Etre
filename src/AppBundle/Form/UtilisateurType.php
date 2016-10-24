@@ -27,15 +27,16 @@ class UtilisateurType extends AbstractType {
 //                ->add('essaiPwd')
 //                ->add('banni')
 //                ->add('inscriptionConf')
-                ->add('adresseUtilisateur',AdresseUtilisateurType::class)
-        //        ->add('internaute',InternauteType::class)
-
+                ->add('adresseUtilisateur', AdresseUtilisateurType::class)
+                //        ->add('internaute',InternauteType::class)
+              
         ;
     }
-  
+
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Utilisateur'
+            'data_class' => 'AppBundle\Entity\Utilisateur',
+         
         ));
     }
 

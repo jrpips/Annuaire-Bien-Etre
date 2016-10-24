@@ -25,7 +25,7 @@ class SignUpController extends Controller {
     }
 
     /**
-     * @Route("/inscription/pre-inscription/",options={"expose"=true},name="signup")
+     * @Route("/inscription/internaute/pre-inscription",options={"expose"=true},name="signup")
      */
     public function signupAction(Request $request) {
 
@@ -67,7 +67,7 @@ class SignUpController extends Controller {
     }
 
     /**
-     * @Route("/inscription/finalisation/{id}",options={"expose"=true},name="signup-final")
+     * @Route("/inscription/internaute/finalisation/{id}",options={"expose"=true},name="signup-final")
      */
     public function signupFinalAction(Request $request, $id = null) {
 
@@ -78,6 +78,7 @@ class SignUpController extends Controller {
         }
 
         $final_step_signup = new Internaute();
+        $u =new Utilisateur();
 
         $form = $this->get('form.factory')->create(InternauteType::class, $final_step_signup);
 
@@ -88,20 +89,12 @@ class SignUpController extends Controller {
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($final_step_signup);
+                $em->persist($u);
                 $em->flush();
 
                 return $this->redirectToRoute('home');
             }
         }
-        //Auto-complete Ajax
-        if ($request->getMethod() == 'POST' && $request->isXmlHttpRequest()) {
-
-            $val = $request->request->get('valeur');
-            $response = $this->container->get('app.searchpostalcode')->getData($val);
-
-            return new JsonResponse($response);
-        }
-
         return $this->render('form.signup.internaute.html.twig', array(
                     'form' => $form->createView(),
                     'user' => $final_step_signup,

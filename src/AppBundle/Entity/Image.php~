@@ -71,6 +71,7 @@ class Image {
 
         if (null !== $this->file) {
             $this->path = sha1(uniqid(mt_rand(), true)) . '.' . $this->file->guessExtension();
+            $this->url=$this->path;
         }
     }
 
@@ -108,10 +109,6 @@ class Image {
         }
     }
 
-//    public function __construct() {
-//        $this->setUrl($this->path);
-//    }
-
     public function __toString() {
         return $this->url . '';
     }
@@ -138,8 +135,9 @@ class Image {
         return $this->prestataire;
     }
 
+   
     public function setUrl($url) {
-        $this->url = $path;
+        $this->url = $url;
         return $this;
     }
 
@@ -170,8 +168,8 @@ class Image {
         return $this;
     }
 
-    public function getPath()
-    {
+    public function getPath() {
         return $this->path;
     }
+
 }

@@ -91,15 +91,15 @@ var GpPopup = GpPopup || {
      * moteur AJAX //en construction
      * 
      */
-    'ajaxBuilder':function(param){
-        
+    'ajaxBuilder': function (param) {
+
         $.ajax({
-            type:param.METHODE,
-            data:param.VALUES,
-            url:Routing.generate(param.ROUTE,{values:param.VALUES}),
-            dataType:param.TYPE,
-            beforeSend:function(){},
-            success:function(data){}
+            type: param.METHODE,
+            data: param.VALUES,
+            url: Routing.generate(param.ROUTE, {values: param.VALUES}),
+            dataType: param.TYPE,
+            beforeSend: param.function.beforeSEND,
+            success: param.function.SUCCESS
         });
     },
     /**
@@ -137,40 +137,49 @@ var GpPopup = GpPopup || {
     'gpAjaxForSignUp': function (e) {
 
         e.preventDefault();
-
-        var id = e.currentTarget.id;
-
-        if ($('#utilisateur_adresseUtilisateur_codePostal').val().length === 4) {
+     
+        event_id = e.currentTarget.id;
+   
+        if ($('#' + event_id).val().length === 4) {
 
             $.ajax({
                 type: "POST",
-                data: {'valeur': $('#' + id).val()},
+                data: {'valeur': $('#' + event_id).val()},
                 dataType: 'json',
                 url: Routing.generate('autocomplete'),
                 beforeSend: function () {
 
-                    if ($('.loader').length == 0) {
-                        $('#utilisateur_adresseUtilisateur_commune').parent().append('<div class="loader"><img src="http://127.0.0.1/Annuaire-Bien-Etre/web/image/Loading_icon.gif"/></div>');
+                    if ($('.loader').length === 0) {
+                        $('#' + event_id).parent().append('<div class="loader"><img src="http://127.0.0.1/Annuaire-Bien-Etre/web/image/Loading_icon.gif"/></div>');
                     }
 
-                    $('#utilisateur_adresseUtilisateur_commune option').remove();
-
+                    $('#' + event_id + ' option').remove();
+                    console.log(event_id, 'rr');
                 },
                 success: function (data) {
-
+                 
                     $('.loader').remove();
-
+            
+                    var prefix=event_id;
+                    var event_id_length=event_id.length-10;
+                    event_id = prefix.substring(0,event_id_length);
+                    
+                    $('#' + event_id + 'commune option').remove();
+                    
                     $.each(data.communes, function (index, value) {
-                        $('#utilisateur_adresseUtilisateur_commune').append($('<option>', {value: value, text: value}));
+                        
+                        $('#' + event_id + 'commune').append($('<option>', {value: value, text: value}));
+                        
                     });
 
-                    $('#utilisateur_adresseUtilisateur_localite').val(data.province);
+                    $('#' + event_id + 'localite').val(data.province);
+                
                 }
             });
         } else {
 
-            $('#utilisateur_adresseUtilisateur_commune option').remove();
-            $('#utilisateur_adresseUtilisateur_commune').append($('<option>', {value: 'error', text: 'Aucunes communes ne correspondent à ce code postal!'}));
+//            $('#' + event_id + ' option').remove();
+            $('#' + event_id).append($('<option>', {value: 'error', text: 'Aucunes communes ne correspondent à ce code postal!'}));
         }
     }
 };
@@ -225,13 +234,15 @@ $(function () {//controller
      *
      */
 
-    $('#utilisateur_adresseUtilisateur_codePostal').on('change', function (e) {
+    $('#internaute_utilisateur_adresseUtilisateur_codePostal').on('change', function (e) {
         GpPopup.gpAjaxForSignUp(e);
+        console.log('ok');
     });
 
-    $('#utilisateur_adresseUtilisateur_codePostal').on('keyup', function (e) {
-        GpPopup.gpAjaxForSignUp(e);
-    });
+//    $('#internaute_utilisateur_adresseUtilisateur_codePostal').on('keyup', function (e) {
+//        GpPopup.gpAjaxForSignUp(e);
+//        console.log('oky');
+//    });
 
     /**
      * Events from form Prestataire[code_postal] to find commune and localite
@@ -242,9 +253,9 @@ $(function () {//controller
         GpPopup.gpAjaxForSignUp(e);
     });
 
-    $('#prestataire_utilisateur_adresseUtilisateur_codePostal').on('keyup', function (e) {
-        GpPopup.gpAjaxForSignUp(e);
-    });
+//    $('#prestataire_utilisateur_adresseUtilisateur_codePostal').on('keyup', function (e) {
+//        GpPopup.gpAjaxForSignUp(e);
+//    });
 
 
     /**
