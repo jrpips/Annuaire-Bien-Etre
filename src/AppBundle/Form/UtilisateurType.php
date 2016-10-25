@@ -19,7 +19,7 @@ class UtilisateurType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('email', EmailType::class, array('required' => false))
-                ->add('pwd', PasswordType::class, array('required' => false))
+                ->add('password', PasswordType::class, array('required' => false))
                 ->add('adresseNumero', IntegerType::class, array('required' => false))
                 ->add('adresseRue', TextType::class, array('required' => false))
 //                ->add('inscription', 'date')

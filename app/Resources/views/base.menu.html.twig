@@ -1,6 +1,6 @@
 {# base.menu.html.twig #}
 
-{% set identifie = false %} {# simulation utilisateur non-identifié #}
+
 {#<div id="myNavbar" >#}
 <ul id="myNavbar" class="gp_menu header-nav-primary nav nav-pills collapse navbar-collapse" >
 
@@ -111,7 +111,9 @@
 {#</div>#}
 <div id="modale">
     <section id="popup">
-        {{ render(controller("AppBundle:SignUp:signup")) }}
-        {#        {{ include("accueil/login.html.twig") }}#}
+      {#  {% block body %}
+        {% endblock %}#}
+{#        {{ render(controller("AppBundle:SignUp:signup")) }}#}
+                {{ include("accueil/pre.subscribe.html.twig") }}
     </section>
 </div>

@@ -21,7 +21,7 @@ class LoadPrestataireData extends AbstractFixture implements OrderedFixtureInter
             $prestataire = new Prestataire();
             $prestataire->setNom($faker->company);
             $prestataire->setSiteInternet($faker->domainName);
-            $prestataire->setEmail($faker->freeEmail);
+         
             $prestataire->setTelephone($faker->phoneNumber);
             $prestataire->setTva($faker->ean8);
 

@@ -50,7 +50,7 @@ var GpPopup = GpPopup || {
 
             $('#popup h3').empty().prepend('Inscription');
             $('#subscribeForm').css('display', 'block');
-            $('#connectForm').css('display', 'none');
+            $('#connectConteneur').css('display', 'none');
 
         } else {
 
@@ -58,7 +58,7 @@ var GpPopup = GpPopup || {
 
             $('#popup h3').empty().prepend('Connection');
             $('#subscribeForm').css('display', 'none');
-            $('#connectForm').css('display', 'block');
+            $('#connectConteneur').css('display', 'block');
 
         }
 
@@ -106,7 +106,7 @@ var GpPopup = GpPopup || {
      * model:ajax for nav popup['s'inscrire','se connecter']
      * 
      **/
-    'ajax': function (e) {
+    'ajaxPreSignup': function (e) {
 
         e.preventDefault();
 
@@ -116,9 +116,9 @@ var GpPopup = GpPopup || {
         $.each($form.serializeArray(), function (i, field) {
             values[field.name] = field.value;
         });
-
-        id = e.currentTarget.id;
-        inputVal = $('#subscribeForm #' + id).val();
+//        console.log('ok', values);
+//        id = e.currentTarget.id;
+//        inputVal = $('#subscribeForm #' + id).val();
 
         $.ajax({
             type: "POST",
@@ -131,15 +131,43 @@ var GpPopup = GpPopup || {
         })
     },
     /**
+     * model:ajax for nav popup['s'inscrire','se connecter']
+     * 
+     **/
+    'ajaxConnection': function (e) {
+
+        e.preventDefault();
+
+        var $form = $('#connectForm');console.log($form);
+        var values = {};
+
+        $.each($form.serializeArray(), function (i, field) {
+            values[field.name] = field.value;
+        });
+        console.log('ok', values);
+        //id = e.currentTarget.id;
+        //inputVal = $('#subscribeForm #' + id).val();
+
+        $.ajax({
+            type: "POST",
+            //data: values,
+            url: Routing.generate('login_check'),// {values: values}),
+            dataType: 'json',
+            success: function (data) {
+               console.log(data);
+            }
+        })
+    },
+    /**
      * model:ajax for autocomplete form[internaute][adresseUtilisateur]
      * 
      **/
-    'gpAjaxForSignUp': function (e) {
+    'gpAjaxFinalSignup': function (e) {
 
         e.preventDefault();
-     
+
         event_id = e.currentTarget.id;
-   
+
         if ($('#' + event_id).val().length === 4) {
 
             $.ajax({
@@ -157,23 +185,23 @@ var GpPopup = GpPopup || {
                     console.log(event_id, 'rr');
                 },
                 success: function (data) {
-                 
+
                     $('.loader').remove();
-            
-                    var prefix=event_id;
-                    var event_id_length=event_id.length-10;
-                    event_id = prefix.substring(0,event_id_length);
-                    
+
+                    var prefix = event_id;
+                    var event_id_length = event_id.length - 10;
+                    event_id = prefix.substring(0, event_id_length);
+
                     $('#' + event_id + 'commune option').remove();
-                    
+
                     $.each(data.communes, function (index, value) {
-                        
+
                         $('#' + event_id + 'commune').append($('<option>', {value: value, text: value}));
-                        
+
                     });
 
                     $('#' + event_id + 'localite').val(data.province);
-                
+
                 }
             });
         } else {
@@ -225,8 +253,12 @@ $(function () {//controller
      * 
      **/
 
-    $('#subscribeForm').on('submit', function (e) {
-        GpPopup.ajax(e);
+    $('form[name=sign_up]').on('submit', function (e) {
+        console.log('submit');
+        GpPopup.ajaxPreSignup(e);
+    });
+    $('#connectForm').on('submit', function (e) {
+        GpPopup.ajaxConnection(e);
     });
 
     /**
@@ -235,7 +267,7 @@ $(function () {//controller
      */
 
     $('#internaute_utilisateur_adresseUtilisateur_codePostal').on('change', function (e) {
-        GpPopup.gpAjaxForSignUp(e);
+        GpPopup.gpAjaxFinalSignup(e);
         console.log('ok');
     });
 
@@ -250,7 +282,7 @@ $(function () {//controller
      */
 
     $('#prestataire_utilisateur_adresseUtilisateur_codePostal').on('change', function (e) {
-        GpPopup.gpAjaxForSignUp(e);
+        GpPopup.gpAjaxFinalSignup(e);
     });
 
 //    $('#prestataire_utilisateur_adresseUtilisateur_codePostal').on('keyup', function (e) {

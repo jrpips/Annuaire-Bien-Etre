@@ -27,6 +27,7 @@ class LoadImageData extends AbstractFixture implements OrderedFixtureInterface {
                     $j++;
                 }
             }
+            $img->setName($faker->firstName($gender = null | 'male' | 'female'));
             $manager->persist($img);
 
             $this->addReference('img' . $i, $img);

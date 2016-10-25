@@ -26,9 +26,10 @@
     <body>
 
         <div class="page-wrapper">
+            {{render(controller("AppBundle:ElementsForTwig/ElementsForTwig:htmlBaseHeader"))}}
 
 {#            {{ include("base.header.html.twig") }}#}
-{{render(controller("AppBundle:ElementsForTwig/ElementsForTwig:htmlBaseHeader"))}}
+            
             {% block body %}
             {% endblock %}
 

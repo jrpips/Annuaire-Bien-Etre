@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\SignUp;
 use AppBundle\Entity\Internaute;
 use AppBundle\Entity\Utilisateur;
@@ -14,15 +15,6 @@ use AppBundle\Form\InternauteType;
 use AppBundle\Form\UtilisateurType;
 
 class SignUpController extends Controller {
-
-    /**
-     * @Route("/login",name="login")
-     */
-    public function loginAction() {
-        $response = new JsonResponse;
-        $response->setData(array('data' => '$errors'));
-        return $response;
-    }
 
     /**
      * @Route("/inscription/internaute/pre-inscription",options={"expose"=true},name="signup")
@@ -60,7 +52,7 @@ class SignUpController extends Controller {
                 ));
             }
         }
-        return $this->render('accueil/login.html.twig', array(
+        return $this->render('accueil/pre.subscribe.html.twig',array(
                     'form' => $form->createView(),
                     'user' => $new_user
         ));
