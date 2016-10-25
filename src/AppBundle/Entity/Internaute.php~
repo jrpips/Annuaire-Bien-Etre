@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="internaute")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\InternauteRepository")
+ * 
  */
 class Internaute {
 
@@ -26,12 +27,14 @@ class Internaute {
     /**
      * @ORM\OneToOne(targetEntity="Utilisateur", cascade={"persist"},inversedBy="internaute")
      * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid
      */
     private $utilisateur;
 
     /**
      * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid
      */
     private $image;
 
@@ -50,7 +53,7 @@ class Internaute {
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="prenom", type="string", length=50)
      */
     private $prenom;

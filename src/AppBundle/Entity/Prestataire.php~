@@ -24,8 +24,9 @@ class Prestataire {
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Utilisateur", cascade={"persist"},inversedBy="pretataire")
+     * @ORM\OneToOne(targetEntity="Utilisateur", cascade={"persist"},inversedBy="prestataire")
      * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid
      */
     private $utilisateur;
 
@@ -48,22 +49,22 @@ class Prestataire {
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="nom", type="string", length=50, unique=true)
      */
     private $nom;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="siteInternet", type="string", length=150, unique=true)
      */
     private $siteInternet;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="telephone", type="string", length=50, unique=true)
+     * @Assert\NotBlank()
+     * @ORM\Column(name="telephone", type="string", length=50, unique=false)
      */
     private $telephone;
 

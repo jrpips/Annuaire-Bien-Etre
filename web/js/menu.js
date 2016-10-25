@@ -1,6 +1,16 @@
 var GpAnnuaire = GpAnnuaire || {
     /**
-     * view:gestion du background-color de la  nav selon l'état du scroll
+     * view : init menu -> etat : user anonymous
+     *
+     */
+    init:function(){
+        for(var i=1;i<5;i++) {
+            var etat=(i<3)?'block':'none';
+            $('#myNavBar li:nth-child(i)').css({'display':etat});
+        }
+    },
+    /**
+     * view : gestion du background-color de la  nav selon l'état du scroll
      * 
      **/
     headerColor: function () {
@@ -13,7 +23,7 @@ var GpAnnuaire = GpAnnuaire || {
         }
     },
     /**
-     * view:traitement réponse soumission popup['s'inscrire','se connecter']
+     * view : traitement réponse soumission popup['s'inscrire','se connecter']
      * 
      **/
     subscribe: function (data) {
@@ -227,6 +237,8 @@ $(function () {//controller
     document.getElementsByTagName('body')[0].onscroll = GpAnnuaire.headerColor;
 
     setInterval(GpAnnuaire.headerColor, 5000);
+
+    GpAnnuaire.init();
 
 
     /**

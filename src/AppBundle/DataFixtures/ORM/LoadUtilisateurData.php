@@ -29,8 +29,6 @@ class LoadUtilisateurData extends AbstractFixture implements OrderedFixtureInter
             $user->setAdresseNumero($faker->buildingNumber);
             $user->setAdresseRue($faker->streetName);
             $user->setInscription(new \DateTime());
-            $type = ($i < 5) ? 'prestataire' : 'user';
-            $type = ($i == 8) ? 'admin' : $type;
 
             $user->setEssaiPwd(0);
             $user->setBanni(false);

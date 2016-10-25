@@ -129,7 +129,7 @@ class Utilisateur implements UserInterface {
         $this->setBanni(false);
         $this->setInscriptionConf(true);
         $this->setEssaiPwd(3);
-        $this->setTypeUtilisateur('internaute');
+      
     }
 
     /**
