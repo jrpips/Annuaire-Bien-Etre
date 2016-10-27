@@ -9,7 +9,7 @@
 
 <code>
  public function loginAction(Request $request) {
-        //redirection si l'user est déjà connecté
+       
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('home');
         }
