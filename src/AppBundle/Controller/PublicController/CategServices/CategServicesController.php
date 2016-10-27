@@ -31,5 +31,10 @@ class CategServicesController extends Controller {
                     'service' => $service,
         ));
     }
-
+    public function getNavServicesElementsAction(){
+        $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findAll();
+        return $this->render('Public/Navigation/nav.child.services.elements.html.twig', array(
+            'services' => $services,
+        ));
+    }
 }

@@ -63,9 +63,8 @@ class Utilisateur implements UserInterface {
      * @Assert\NotBlank(message="Minimun 6 caractères alphanumériques")
      */
     private $password;
-
     private $confPwd;
-    
+
     /**
      * @ORM\Column(name="roles", type="array")
      */
@@ -131,7 +130,13 @@ class Utilisateur implements UserInterface {
         $this->setBanni(false);
         $this->setInscriptionConf(true);
         $this->setEssaiPwd(3);
-      
+    }
+
+    /**
+     * @Assert\IsTrue(message="confirmation erronée")
+     */
+    public function isConfPwd() {
+        return ($this->password === $this->confPwd) ? true : false;
     }
 
     /**
@@ -185,6 +190,21 @@ class Utilisateur implements UserInterface {
      */
     public function getPassword() {
         return $this->password;
+    }
+
+    public function setConfPwd($confPwd) {
+        $this->email = $confPwd;
+
+        return $this;
+    }
+
+    /**
+     * Get confPwd
+     *
+     * @return string
+     */
+    public function getConfPwd() {
+        return $this->confPwd;
     }
 
     /**

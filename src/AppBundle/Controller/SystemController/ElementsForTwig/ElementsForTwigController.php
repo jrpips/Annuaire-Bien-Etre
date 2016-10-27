@@ -19,7 +19,7 @@ class ElementsForTwigController extends Controller {
 
         $new_user = new SignUp();
         $form = $this->get('form.factory')->create(SignUpType::class, $new_user);
-
+        // TODO prestataires favoris
         $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findAll();
         $promotions = $this->getDoctrine()->getManager()->getRepository('AppBundle:Promotion')->findAll();
         $stages = $this->getDoctrine()->getManager()->getRepository('AppBundle:Stage')->findAll();

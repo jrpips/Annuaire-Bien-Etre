@@ -4,7 +4,7 @@
 {#<div id="myNavbar" >#}
 <ul id="myNavbar" class="gp_menu header-nav-primary nav nav-pills collapse navbar-collapse" >
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        
+
         {{ include("Public/Navigation/nav.child.authenticated.profil.html.twig") }}
 
     {% else %}
@@ -36,19 +36,10 @@
 
     <li >       
         <a href="#">Services <i class="fa fa-chevron-down"></i></a>
-
-        <ul class="sub-menu">
-            <li>
-                <a href="{{path('liste_services')}}"><i class="fa fa-chevron-down"></i>Consulter la liste</a>
-            </li>
-            <li>
-                <ul>
-                    {% for service in services %}
-                        <li><a href="{{path('details_service',{'service_id':service.id})}}">{{ service.nom }}</a></li>
-                        {% endfor %}
-                </ul>
-            </li>
-        </ul>       
+        {{render(controller("AppBundle:PublicController/CategServices/CategServices:getNavServicesElements"))}}
+        {#{{ include("Public/Navigation/nav.child.services.elements.html.twig") }}#}
+        {% block body %}
+        {% endblock %}
     </li>
 
     <li class="has-mega-menu ">

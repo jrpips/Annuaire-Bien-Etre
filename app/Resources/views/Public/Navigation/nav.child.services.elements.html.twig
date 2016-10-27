@@ -1,0 +1,15 @@
+{% extends Public/Navigation/nav.parent.menu.html.twig %}
+{% block body %}
+<ul class="sub-menu">
+    <li>
+        <a href="{{path('liste_services')}}"><i class="fa fa-chevron-down"></i>Consulter la liste</a>
+    </li>
+    <li>
+        <ul>
+            {% for service in services %}
+                <li><a href="{{path('details_service',{'service_id':service.id})}}">{{ service.nom }}</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+</ul>
+{% endblock %}

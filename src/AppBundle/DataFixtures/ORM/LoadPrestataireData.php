@@ -16,8 +16,9 @@ class LoadPrestataireData extends AbstractFixture implements OrderedFixtureInter
     private $nb = 5;
 
     public function load(ObjectManager $manager) {
+        $faker = Factory::create('fr_BE');
         for ($i = 0; $i < $this->nb; $i++) {
-            $faker = Factory::create('fr_BE');
+
             $prestataire = new Prestataire();
             $prestataire->setNom($faker->company);
             $prestataire->setSiteInternet($faker->domainName);
