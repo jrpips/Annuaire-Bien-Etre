@@ -7,4 +7,4 @@
 
 </ol>
 
-<img src = "https://www.google.fr/images/srpr/logo11w.png" title = "google logo" alt = "Google logo">
+<img src = "http://www.psycho-bien-etre.be/wp-content/uploads/2012/02/praticiens_bien_etre.jpg" title = "google logo" alt = "Google logo">
