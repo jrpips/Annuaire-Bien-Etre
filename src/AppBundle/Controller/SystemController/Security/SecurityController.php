@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\SystemController\Security;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -22,7 +22,7 @@ class SecurityController extends Controller {
         // (mauvais mot de passe par exemple)
         $authenticationUtils = $this->get('security.authentication_utils');
 
-        return $this->render('accueil/login.html.twig', array(
+        return $this->render('Public/form.login.html.twig', array(
                     'last_username' => $authenticationUtils->getLastUsername(),
                     'error' => $authenticationUtils->getLastAuthenticationError(),
         ));

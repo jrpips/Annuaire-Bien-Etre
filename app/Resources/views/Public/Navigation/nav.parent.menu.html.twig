@@ -5,7 +5,7 @@
 <ul id="myNavbar" class="gp_menu header-nav-primary nav nav-pills collapse navbar-collapse" >
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         
-        {{ include("accueil/sub.menu.authenticated.profil.html.twig") }}
+        {{ include("Public/Navigation/nav.child.authenticated.profil.html.twig") }}
 
     {% else %}
 
@@ -119,6 +119,6 @@
 
 <div id="modale">
     <section id="popup">     
-        {{ include("accueil/pre.subscribe.html.twig") }}
+        {{ include("Public/form.pre.subscribe.html.twig") }}
     </section>
 </div>

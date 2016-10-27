@@ -7,7 +7,7 @@
  * Time: 19:51
  */
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\PublicController\Prestataires;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -37,7 +37,7 @@ class PrestataireController extends Controller {
 
             return $this->redirectToRoute('home');
         }
-        return $this->render('form.signup.prestataire.html.twig', array(
+        return $this->render('Public\Prestataires\form.signup.prestataire.html.twig', array(
                     'form' => $form->createView(),
                     'prestataire' => $new_prestataire
         ));

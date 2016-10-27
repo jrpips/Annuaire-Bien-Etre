@@ -52,7 +52,7 @@ class SignUpController extends Controller {
                 ));
             }
         }
-        return $this->render('accueil/pre.subscribe.html.twig',array(
+        return $this->render('Public/form.pre.subscribe.html.twig',array(
                     'form' => $form->createView(),
                     'user' => $new_user
         ));
@@ -87,7 +87,7 @@ class SignUpController extends Controller {
                 return $this->redirectToRoute('home');
             }
         }
-        return $this->render('form.signup.internaute.html.twig', array(
+        return $this->render('Public/Internautes/form.signup.internaute.html.twig', array(
                     'form' => $form->createView(),
                     'user' => $final_step_signup,
                     'signup' => $first_step_signup

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\ElementsForTwig;
+namespace AppBundle\Controller\SystemController\ElementsForTwig;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

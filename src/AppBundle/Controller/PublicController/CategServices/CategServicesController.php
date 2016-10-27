@@ -1,13 +1,13 @@
 <?php
 
-namespace AppBundle\Controller\Front\Services;
+namespace AppBundle\Controller\PublicController\CategServices;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\CategService;
 
-class ServicesController extends Controller {
+class CategServicesController extends Controller {
 
     /**
      * @Route("/services/liste", name="liste_services")
@@ -16,7 +16,7 @@ class ServicesController extends Controller {
 
         $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findAll();
         dump($services);
-        return $this->render('accueil/liste.services.html.twig', array(
+        return $this->render('Public/Services/display.liste.services.html.twig', array(
                     'services' => $services,
         ));
     }
@@ -27,7 +27,7 @@ class ServicesController extends Controller {
 
         $service = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->find($service_id);
         dump($service);
-        return $this->render('accueil/details.service.html.twig', array(
+        return $this->render('Public/Services/display.details.service.html.twig', array(
                     'service' => $service,
         ));
     }

@@ -1,5 +1,5 @@
 <?php /*
-  src/AppBundle/Controller/Newsletters/NewsletterController.php
+  src/AppBundle/Controller/PublicController/Newsletters/NewsletterController.php
 
   NewsletterController
   ====================
@@ -11,7 +11,7 @@
 
  */
 
-//namespace AppBundle\Controller\Front;
+//namespace AppBundle\Controller\PublicController\Newsletters;
 //
 //use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 //use Symfony\Bundle\FrameworkBundle\Controller\Controller;
