@@ -8,6 +8,7 @@
 </ol>
 
 <code>
+
  public function loginAction(Request $request) {
        
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
