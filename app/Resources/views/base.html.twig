@@ -28,8 +28,8 @@
         <div class="page-wrapper">
             {{render(controller("AppBundle:ElementsForTwig/ElementsForTwig:htmlBaseHeader"))}}
 
-{#            {{ include("base.header.html.twig") }}#}
-            
+            {#            {{ include("base.header.html.twig") }}#}
+
             {% block body %}
             {% endblock %}
 
@@ -44,6 +44,33 @@
         <script type="text/javascript" src="{{asset('js/menu.js')}}"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>    
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script> 
+        <script>
+            {#function ajax(e) {
+
+                e.preventDefault();
+
+                var $form = $('#connectForm');
+                console.log($form);
+                var values = {};
+
+                $.each($form.serializeArray(), function (i, field) {
+                    values[field.name] = field.value;
+                });
+                console.log('ok', values);
+                //id = e.currentTarget.id;
+                //inputVal = $('#subscribeForm #' + id).val();
+
+                $.ajax({
+                    type: "POST",
+                    //data: values,
+                    url: '{{path('security_check_route')}}',//Routing.generate('security_check_route'), // {values: values}),
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                    }
+                })
+            }#}
+        </script>
     </body>
 </html>

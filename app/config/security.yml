@@ -35,8 +35,11 @@ security:
             pattern: ^/
             provider:     main
             form_login:
-              login_path: login
-              check_path: login_check
+                login_path: login
+                check_path: login_check
+                #check_path:     security_check_route
+#                success_handler: acme.security.authentication_handler
+#                failure_handler: acme.security.authentication_handler
             logout:
               path:       logout
               target:     /

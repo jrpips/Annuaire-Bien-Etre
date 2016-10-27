@@ -57,6 +57,11 @@
                                     {{form_errors(form.utilisateur.password)}}
                                 </div>
                                 <div class="form-group">
+                                    {{form_label(form.utilisateur.confPwd)}}
+                                    {{form_widget(form.utilisateur.confPwd)}}
+                                    {{form_errors(form.utilisateur.confPwd)}}
+                                </div>
+                                <div class="form-group">
                                     {{form_label(form.utilisateur.adresseRue)}}
                                     {{form_widget(form.utilisateur.adresseRue)}}
                                     {{form_errors(form.utilisateur.adresseRue)}}

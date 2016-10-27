@@ -11,7 +11,16 @@ fos_js_routing:
 #        _controller: AppBundle:Security:login
 
 login_check:
-    path: /login_check
+    path: login_check
 
 logout:
-    path: /logout
+    path: logout
+    
+#login_check:
+#    path: security_check_route
+#    defaults:
+#        _controller: AppBundle:Security:login
+    options:
+        expose: true
+#    requirements:
+#        _method:  POST

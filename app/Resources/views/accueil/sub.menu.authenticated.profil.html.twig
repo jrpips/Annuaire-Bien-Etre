@@ -1,0 +1,64 @@
+{# empty Twig template #}
+<li id="avatar">
+
+    {% if not is_granted('ROLE_ADMIN') %}
+        {% if is_granted('ROLE_PRESTATAIRE')%}
+            <img src="{{ asset('image/prestataire.png')}}" alt=""/>
+        {%else%}
+            <img src="{{asset(app.user.internaute.image.url)}}" />
+        {%endif%}                     
+    {%else%}
+        <img src="{{ asset('image/admin.png')}}" alt=""/>
+    {%endif%}
+
+</li>
+<li style="margin-right:130px">
+
+    <a  href="{{path('home')}}">
+        {{app.user.username}} 
+        <i class="fa fa-chevron-down"></i>
+    </a>
+
+    <ul class="sub-menu">
+
+        <li>
+            <a href="">Profil</a>
+
+        <li>
+            <a href="">{{app.user.username}}</a>
+
+        <li>
+            <a href="">{{app.user.email}}</a>
+
+        </li>
+        {% if not is_granted('ROLE_ADMIN') %}
+            {% if is_granted('ROLE_PRESTATAIRE')%}
+                <li class="same-line">
+                    <span>Stages</span>
+                    <a href=""> <span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href=""> <span class="glyphicon glyphicon-eye-open"></span></a>
+                <li class="same-line">
+                    <span>Services</span>
+                    <a href=""> <span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href=""> <span class="glyphicon glyphicon-eye-open"></span></a>
+                <li class="same-line">
+                    <span>Promotions</span>
+                    <a href=""> <span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href=""> <span class="glyphicon glyphicon-eye-open"></span></a>
+             
+                {%else%}
+                <li>
+                    <a href="">Mes favoris</a>
+                {%endif%}                     
+            {%else%}
+            <li>
+                <a href=""> Dashboard</a>
+            {%endif%}
+
+        <li>
+            <a href="">Modifier vos données</a>
+
+    </ul>       
+
+
+</li>

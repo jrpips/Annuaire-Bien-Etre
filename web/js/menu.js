@@ -1,13 +1,47 @@
 var GpAnnuaire = GpAnnuaire || {
     /**
-     * view : init menu -> etat : user anonymous
+     *  view : init menu -> etat : user anonymous
      *
      */
-    init:function(){
-        for(var i=1;i<5;i++) {
-            var etat=(i<3)?'block':'none';
-            $('#myNavBar li:nth-child(i)').css({'display':etat});
+    init: function () {
+        //menu principal:display des boutons [s'inscrire] & [se connecter]
+        for (var i = 1; i < 5; i++) {
+            var etat = (i < 3) ? 'block' : 'none';
+            $('#myNavBar li:nth-child(' + i + ')').css({'display': etat});
         }
+        /** 
+         *  jquery pour customiser input[type=file] https://www.creativejuiz.fr/blog/tutoriels/input-file-personnalise-css-js
+         *
+         */
+        // ajout des classes au formulaire et l'input type file
+
+        $('input[type=file]').attr({'class': 'input-file'});
+        $('input[type=file]').parent().attr({'class': 'input-file-container'});
+        $('.input-file-container label').attr({'class': 'input-file-trigger'});
+        $('.input-file-container').append('<p class="file-return"></p>');
+     
+        // initialisation des variables
+        var fileInput = $(".input-file"),
+                button = $(".input-file-trigger"),
+                the_return = $(".file-return");
+
+        // action lorsque la "barre d'espace" ou "Entrée" est pressée
+        button.on("keydown", function (event) {
+            if (event.keyCode === 13 || event.keyCode === 32) {
+                fileInput.focus();
+            }
+        });
+
+        // action lorsque le label est cliqué
+        button.on("click", function () {
+            fileInput.focus();
+            return false;
+        });
+
+        // affiche un retour visuel dès que input:file change
+        fileInput.on("change", function () {
+            the_return.html(this.value);
+        });
     },
     /**
      * view : gestion du background-color de la  nav selon l'état du scroll
@@ -148,7 +182,8 @@ var GpPopup = GpPopup || {
 
         e.preventDefault();
 
-        var $form = $('#connectForm');console.log($form);
+        var $form = $('#connectForm');
+        console.log($form);
         var values = {};
 
         $.each($form.serializeArray(), function (i, field) {
@@ -161,10 +196,10 @@ var GpPopup = GpPopup || {
         $.ajax({
             type: "POST",
             //data: values,
-            url: Routing.generate('login_check'),// {values: values}),
+            url: Routing.generate('login_check'), // {values: values}),
             dataType: 'json',
             success: function (data) {
-               console.log(data);
+                console.log(data);
             }
         })
     },
@@ -269,9 +304,9 @@ $(function () {//controller
         console.log('submit');
         GpPopup.ajaxPreSignup(e);
     });
-    $('#connectForm').on('submit', function (e) {
-        GpPopup.ajaxConnection(e);
-    });
+//    $('#connectForm').on('submit', function (e) {
+//        GpPopup.ajaxConnection(e);
+//    });
 
     /**
      * Events from form Internaute[code_postal] to find commune and localite

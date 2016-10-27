@@ -1,36 +1,52 @@
-{#{% extends 'accueil/pre.subscribe.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block body %}#}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
 
-{#{% if error != null%}
-     <div class="alert alert-danger">{{ error.message }}</div>
- {% endif %}
-#}
-<div id="connectConteneur">
-    {%if app.user==null%}
-        <div>Vous devez vous identifier</div>
-    {%endif%}
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
 
-    <form action="" method="post" id="connectForm">
-{#          {{ path('login_check') }}#}
-{#          " method="post" id="connectForm">#}
+{% block body %}
 
-        <div class="form-group">
-            <label for="username">Login :</label>
-            <input type="text" id="username" name="_username" value="" />
+    {#{% if error != null%}
+         <div class="alert alert-danger">{{ error.message }}</div>
+    {% endif %}#}
+    <div class="page-wrapper">
+        <div class="main">
+            <div class="main-inner">
+                <div class="container">
+                    <div class="content">
+                        <div class="row">
+                            <div id="connectConteneur" class="col-sm-4 col-sm-offset-4">
+                                <div class="page-title">
+                                    <h1>Login</h1>
+                                </div><!-- /.page-title -->
+                                {#        {{ app.request}}#}
+                                <form action="{{ path('login_check') }}" method="post" id="connectForm" method="post" id="connectForm">
+
+                                    <div class="form-group">
+                                        <label for="username">Login </label>
+                                        <input type="text" id="username" name="_username" value="" />
+                                    </div>
+
+                                    <div class="form-group"> 
+                                        <label for="password">Mot de passe </label>
+                                        <input type="password" id="password" name="_password" />
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <button type="submit" class="btn btn-default pull-right btn">Envoyer</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="form-group"> 
-            <label for="password">Mot de passe :</label>
-            <input type="password" id="password" name="_password" />
-        </div>
-
-        <div class="form-group">
-            {#            <input type="submit" value="Connexion" class="btn btn-default pull-right btn"/>#}
-            {#        </div>#}
-            <button type="submit" class="btn btn-default pull-right btn">Envoyer</button>
-        </div>
-    </form>
-</div>
-{#{%endblock%}#}
+    </div>
+{%endblock%}
 

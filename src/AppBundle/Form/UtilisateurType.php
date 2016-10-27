@@ -20,6 +20,7 @@ class UtilisateurType extends AbstractType {
         $builder
                 ->add('email', EmailType::class, array('required' => false))
                 ->add('password', PasswordType::class, array('required' => false))
+                ->add('confPwd', PasswordType::class, array('required' => false))
                 ->add('adresseNumero', IntegerType::class, array('required' => false))
                 ->add('adresseRue', TextType::class, array('required' => false))
 //                ->add('inscription', 'date')

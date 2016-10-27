@@ -3,30 +3,31 @@
 
 {#<div id="myNavbar" >#}
 <ul id="myNavbar" class="gp_menu header-nav-primary nav nav-pills collapse navbar-collapse" >
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        
+        {{ include("accueil/sub.menu.authenticated.profil.html.twig") }}
 
-    <li>
-        <button id="subscribe" class="btn btn-default navbar-btn"  >
-{#            <span class="glyphicon glyphicon-user"></span>#}
-            S'inscrire
-        </button>
-    </li>
+    {% else %}
 
-    <li>
-        <button id="connection" class="btn btn-default navbar-btn"  >
-{#            <span class="glyphicon glyphicon-log-in"></span>#}
-            Se connecter
-        </button>
-    </li>
-    <li>
-        <div id="avatar">
+        <li>
+            <button id="subscribe" class="btn btn-default navbar-btn"  >
+                {#            <span class="glyphicon glyphicon-user"></span>#}
+                S'inscrire
+            </button>
+        </li>
 
-        </div>
-    </li>
-    <li>
-       <div id="name_user">
-            {#{{ app.user.username }}#}
-       </div>
-    </li>
+        <li>
+            <a href="{{path('login')}}" id="authenticationLink" class="btn btn-default navbar-btn"  >
+                {#            <span class="glyphicon glyphicon-log-in"></span>#}
+                Se connecter
+            </a>
+
+            {#<button id="connection" class="btn btn-default navbar-btn"  >
+                           <span class="glyphicon glyphicon-log-in"></span>
+                Se connecter
+            </button>#}
+        </li>
+    {% endif %}
     <li >
 
         <a href="{{path('home')}}">Accueil <i class="fa fa-chevron-down"></i></a>
@@ -99,30 +100,25 @@
             </li>
         </ul>
     </li>
-    {# <li>
-         <a href="#">Admin <i class="fa fa-chevron-down"></i></a>
- 
-             <ul class="sub-menu">
-                 <li>
-                     <a href="">Connection</a>
-                 </li>
-            </ul>
-     </li>#}
-
     <li>
         <a href="#">Contact <i class="fa fa-chevron-down"></i></a>
     </li>
-    <li>
-        <a id="prestataire-profil" href="{{ path('signupPrestataire') }}"><i style='transform:scale(2)' class="fa fa-cubes"></i><span>Créer un profil prestataire</span></a>
-    </li>
-
+    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+        <li>
+            <a id="prestataire-profil" href="{{ path('signupPrestataire') }}"><i style='transform:scale(2)' class="fa fa-cubes"></i><span>Créer un profil prestataire</span></a>
+        </li>
+    {%else%}
+        <li >
+            <a href="{{path('logout')}}" id="authenticationLink" class="btn btn-default navbar-btn"  >
+                <span class="glyphicon glyphicon-log-out"></span>
+                Déconnexion
+            </a>
+        </li>
+    {%endif%}
 </ul> 
-{#</div>#}
+
 <div id="modale">
-    <section id="popup">
-      {#  {% block body %}
-        {% endblock %}#}
-{#        {{ render(controller("AppBundle:SignUp:signup")) }}#}
-                {{ include("accueil/pre.subscribe.html.twig") }}
+    <section id="popup">     
+        {{ include("accueil/pre.subscribe.html.twig") }}
     </section>
 </div>

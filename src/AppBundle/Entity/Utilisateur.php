@@ -59,10 +59,11 @@ class Utilisateur implements UserInterface {
     /**
      * @var string
      *
-     * @ORM\Column(name="pwd", type="string", length=255)
+     * @ORM\Column(name="password", type="string", length=255)
      * @Assert\NotBlank(message="Minimun 6 caractères alphanumériques")
      */
     private $password;
+    private $confPwd;
 
     /**
      * @ORM\Column(name="roles", type="array")
@@ -129,7 +130,13 @@ class Utilisateur implements UserInterface {
         $this->setBanni(false);
         $this->setInscriptionConf(true);
         $this->setEssaiPwd(3);
-      
+    }
+
+    /**
+     * @Assert\IsTrue(message="confirmation erronée")
+     */
+    public function isConfPwd() {
+        return ($this->password === $this->confPwd) ? true : false;
     }
 
     /**
@@ -183,6 +190,21 @@ class Utilisateur implements UserInterface {
      */
     public function getPassword() {
         return $this->password;
+    }
+
+    public function setConfPwd($confPwd) {
+        $this->email = $confPwd;
+
+        return $this;
+    }
+
+    /**
+     * Get confPwd
+     *
+     * @return string
+     */
+    public function getConfPwd() {
+        return $this->confPwd;
     }
 
     /**
@@ -404,28 +426,6 @@ class Utilisateur implements UserInterface {
     public function getInternaute() {
         return $this->internaute;
     }
-
-//    /**
-//     * Set prestataire
-//     *
-//     * @param \AppBundle\Entity\Prestataire $prestataire
-//     *
-//     * @return Utilisateur
-//     */
-//    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire) {
-//        $this->prestataire = $prestataire;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get prestataire
-//     *
-//     * @return \AppBundle\Entity\Prestataire
-//     */
-//    public function getPrestataire() {
-//        return $this->prestataire;
-//    }
 
     /**
      * Set adresseUtilisateur

@@ -18,7 +18,12 @@ services:
          class: AppBundle\Services\SearchPostalCode\SearchPostalCode
          
    # app.from.type.gender:
-        
+#    acme.security.authentication_handler:
+#        class: AppBundle\Services\LoginCheckAjax\LoginCheckAjax
+#        public: false
+#        arguments:
+#            - "@router"
+#            - "@session"    
          
     form:  
         class: AppBundle\Form
