@@ -26,9 +26,8 @@
     <body>
 
         <div class="page-wrapper">
-            {{render(controller("AppBundle:SystemController/ElementsForTwig/ElementsForTwig:htmlBaseHeader"))}}
-
-            {#            {{ include("base.header.html.twig") }}#}
+            
+            {{ include("base.header.html.twig") }}
 
             {% block body %}
             {% endblock %}

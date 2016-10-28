@@ -8,6 +8,16 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\CategService;
 
 class CategServicesController extends Controller {
+    /** 
+     * call by views/Public/Navigation/nav.parent.menu
+     */
+    public function getNavServicesElementsAction() {
+
+        $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findAll();
+        return $this->render('Public/Navigation/nav.child.services.elements.html.twig', array(
+                    'services' => $services,
+        ));
+    }
 
     /**
      * @Route("/services/liste", name="liste_services")
@@ -20,6 +30,7 @@ class CategServicesController extends Controller {
                     'services' => $services,
         ));
     }
+
     /**
      * @Route("/services/service/details/{service_id}", name="details_service")
      */
@@ -31,10 +42,5 @@ class CategServicesController extends Controller {
                     'service' => $service,
         ));
     }
-    public function getNavServicesElementsAction(){
-        $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findAll();
-        return $this->render('Public/Navigation/nav.child.services.elements.html.twig', array(
-            'services' => $services,
-        ));
-    }
+
 }

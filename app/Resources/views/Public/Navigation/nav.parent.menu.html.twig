@@ -1,7 +1,5 @@
-{# base.menu.html.twig #}
+{# views/Public/Navigation/nav.parent.menu.html.twig #}
 
-
-{#<div id="myNavbar" >#}
 <ul id="myNavbar" class="gp_menu header-nav-primary nav nav-pills collapse navbar-collapse" >
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
@@ -36,10 +34,9 @@
 
     <li >       
         <a href="#">Services <i class="fa fa-chevron-down"></i></a>
+
         {{render(controller("AppBundle:PublicController/CategServices/CategServices:getNavServicesElements"))}}
-        {#{{ include("Public/Navigation/nav.child.services.elements.html.twig") }}#}
-        {% block body %}
-        {% endblock %}
+
     </li>
 
     <li class="has-mega-menu ">
@@ -49,39 +46,24 @@
         <ul class="mega-menu">
 
             <li>
+
                 <a href="#">Prestataires Favoris</a>
+                {{render(controller("AppBundle:PublicController/Prestataires/Prestataire:getNavPrestatairesElements"))}}
 
-                <ul>
-                    {% for prestataire in prestataires %}
-                        <li>
-                            <a href="">{{prestataire.nom}}</a>
-                        </li>    
-                    {%endfor%}
-                </ul>                
             </li>
 
             <li>
+
                 <a href="#">Promotions</a>
+                {{render(controller("AppBundle:PublicController/Promotions/Promotion:getNavPromotionsElements"))}}
 
-                <ul>
-                    {% for promotion in promotions %}
-                        <li>
-                            <a href="">{{promotion.nom}}</a><span> jusqu'au {{ promotion.dateFin|date("d/m","Europe/Paris") }}</span>
-                        </li>
-                    {%endfor%}
-                </ul>
             </li>
 
             <li>
-                <a href="#">Stage</a>
 
-                <ul>
-                    {% for stage in stages %}
-                        <li>
-                            <a href="">{{ stage.nom }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
+                <a href="#">Stage</a>
+                {{render(controller("AppBundle:PublicController/Stages/Stage:getNavStagesElements"))}}
+
             </li>
 
             <li class="hidden-xs">
@@ -109,7 +91,9 @@
 </ul> 
 
 <div id="modale">
-    <section id="popup">     
-        {{ include("Public/form.pre.subscribe.html.twig") }}
+    <section id="popup">
+
+        {{render(controller("AppBundle:SignUp:getNavPreSignupElements"))}}   
+
     </section>
 </div>

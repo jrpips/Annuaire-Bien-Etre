@@ -17,6 +17,19 @@ use AppBundle\Form\UtilisateurType;
 class SignUpController extends Controller {
 
     /**
+     * call by views/Public/Navigation/nav.parent.menu
+     */
+    public function getNavPreSignupElementsAction() {
+
+        $new_user = new SignUp();
+        $form = $this->get('form.factory')->create(SignUpType::class, $new_user);
+        // TODO prestataires favoris
+        return $this->render('Public/form.pre.subscribe.html.twig', array(
+                    'form' => $form->createView(),
+        ));
+    }
+
+    /**
      * @Route("/inscription/internaute/pre-inscription",options={"expose"=true},name="signup")
      */
     public function signupAction(Request $request) {
@@ -52,7 +65,7 @@ class SignUpController extends Controller {
                 ));
             }
         }
-        return $this->render('Public/form.pre.subscribe.html.twig',array(
+        return $this->render('Public/form.pre.subscribe.html.twig', array(
                     'form' => $form->createView(),
                     'user' => $new_user
         ));
@@ -70,7 +83,7 @@ class SignUpController extends Controller {
         }
 
         $final_step_signup = new Internaute();
-        $u =new Utilisateur();
+        $u = new Utilisateur();
 
         $form = $this->get('form.factory')->create(InternauteType::class, $final_step_signup);
 
