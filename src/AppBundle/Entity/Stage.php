@@ -22,7 +22,7 @@ class Stage {
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Prestataire", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Prestataire", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $prestataire;

@@ -30,7 +30,7 @@ class PrestataireType extends AbstractType
 //            ->add('image', ImageType::class)
             //->add('internautes', TextType::class, array('required' => false))
 //            ->add('categServices', EntityType::class, array('required' => false))
-            ->add('Envoyer', SubmitType::class)
+           ->add('Envoyer', SubmitType::class,array('attr'=>array('class'=>'btn btn-default pull-right')))
         ;
     }
     
@@ -40,7 +40,8 @@ class PrestataireType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Prestataire'
+            'data_class' => 'AppBundle\Entity\Prestataire',
+             
         ));
     }
 }

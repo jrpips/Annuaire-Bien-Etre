@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Utilisateur
@@ -11,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="utilisateur")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UtilisateurRepository")
  */
-class Utilisateur {
+class Utilisateur implements UserInterface {
 
     /**
      * @var int
@@ -23,13 +24,13 @@ class Utilisateur {
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Internaute", cascade={"persist"},inversedBy="utilisateur")
+     * @ORM\OneToOne(targetEntity="Internaute",mappedBy="utilisateur")
      * @ORM\JoinColumn(nullable=true)
      */
     private $internaute;
 
     /**
-     * @ORM\OneToOne(targetEntity="Prestataire", cascade={"persist"},inversedBy="utilisateur")
+     * @ORM\OneToOne(targetEntity="Prestataire",mappedBy="utilisateur")
      * @ORM\JoinColumn(nullable=true)
      */
     private $prestataire;
@@ -37,6 +38,7 @@ class Utilisateur {
     /**
      * 
      * @ORM\OneToOne(targetEntity="AdresseUtilisateur", cascade={"persist"})
+     * @Assert\Valid
      */
     private $adresseUtilisateur;
 
@@ -50,12 +52,28 @@ class Utilisateur {
     private $email;
 
     /**
+     * @ORM\Column(name="username", type="string", length=255)
+     */
+    private $username;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="pwd", type="string", length=50)
+     * @ORM\Column(name="password", type="string", length=255)
      * @Assert\NotBlank(message="Minimun 6 caractères alphanumériques")
      */
-    private $pwd;
+    private $password;
+    private $confPwd;
+
+    /**
+     * @ORM\Column(name="roles", type="array")
+     */
+    private $roles = array();
+
+    /**
+     * @ORM\Column(name="salt", type="string", length=255)
+     */
+    private $salt;
 
     /**
      * @var float
@@ -83,13 +101,6 @@ class Utilisateur {
     private $inscription;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="typeUtilisateur", type="string", length=50)
-     */
-    private $typeUtilisateur;
-
-    /**
      * @var float
      *
      * @ORM\Column(name="essaiPwd", type="float")
@@ -110,12 +121,22 @@ class Utilisateur {
      */
     private $inscriptionConf;
 
+    public function eraseCredentials() {
+        
+    }
+
     public function __construct() {
         $this->setInscription(new \DateTime());
         $this->setBanni(false);
         $this->setInscriptionConf(true);
         $this->setEssaiPwd(3);
-        $this->setTypeUtilisateur('internaute');
+    }
+
+    /**
+     * @Assert\IsTrue(message="confirmation erronée")
+     */
+    public function isConfPwd() {
+        return ($this->password === $this->confPwd) ? true : false;
     }
 
     /**
@@ -156,8 +177,8 @@ class Utilisateur {
      *
      * @return Utilisateur
      */
-    public function setPwd($pwd) {
-        $this->pwd = $pwd;
+    public function setPassword($password) {
+        $this->password = $password;
 
         return $this;
     }
@@ -167,8 +188,89 @@ class Utilisateur {
      *
      * @return string
      */
-    public function getPwd() {
-        return $this->pwd;
+    public function getPassword() {
+        return $this->password;
+    }
+
+    public function setConfPwd($confPwd) {
+        $this->email = $confPwd;
+
+        return $this;
+    }
+
+    /**
+     * Get confPwd
+     *
+     * @return string
+     */
+    public function getConfPwd() {
+        return $this->confPwd;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     *
+     * @return User
+     */
+    public function setRoles($roles) {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Get roles
+     *
+     * @return array
+     */
+    public function getRoles() {
+        return $this->roles;
+    }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     *
+     * @return User
+     */
+    public function setSalt($salt) {
+        $this->salt = $salt;
+
+        return $this;
+    }
+
+    /**
+     * Get salt
+     *
+     * @return string
+     */
+    public function getSalt() {
+        return $this->salt;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     *
+     * @return User
+     */
+    public function setUsername($username) {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string
+     */
+    public function getUsername() {
+        return $this->username;
     }
 
     /**
@@ -304,28 +406,6 @@ class Utilisateur {
     }
 
     /**
-     * Set typeUtilisateur
-     *
-     * @param string $typeUtilisateur
-     *
-     * @return Utilisateur
-     */
-    public function setTypeUtilisateur($typeUtilisateur) {
-        $this->typeUtilisateur = $typeUtilisateur;
-
-        return $this;
-    }
-
-    /**
-     * Get typeUtilisateur
-     *
-     * @return string
-     */
-    public function getTypeUtilisateur() {
-        return $this->typeUtilisateur;
-    }
-
-    /**
      * Set internaute
      *
      * @param \AppBundle\Entity\Internaute $internaute
@@ -348,28 +428,6 @@ class Utilisateur {
     }
 
     /**
-     * Set prestataire
-     *
-     * @param \AppBundle\Entity\Prestataire $prestataire
-     *
-     * @return Utilisateur
-     */
-    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire) {
-        $this->prestataire = $prestataire;
-
-        return $this;
-    }
-
-    /**
-     * Get prestataire
-     *
-     * @return \AppBundle\Entity\Prestataire
-     */
-    public function getPrestataire() {
-        return $this->prestataire;
-    }
-
-    /**
      * Set adresseUtilisateur
      *
      * @param \AppBundle\Entity\AdresseUtilisateur $adresseUtilisateur
@@ -389,6 +447,28 @@ class Utilisateur {
      */
     public function getAdresseUtilisateur() {
         return $this->adresseUtilisateur;
+    }
+
+    /**
+     * Set prestataire
+     *
+     * @param \AppBundle\Entity\Prestataire $prestataire
+     *
+     * @return Utilisateur
+     */
+    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire = null) {
+        $this->prestataire = $prestataire;
+
+        return $this;
+    }
+
+    /**
+     * Get prestataire
+     *
+     * @return \AppBundle\Entity\Prestataire
+     */
+    public function getPrestataire() {
+        return $this->prestataire;
     }
 
 }

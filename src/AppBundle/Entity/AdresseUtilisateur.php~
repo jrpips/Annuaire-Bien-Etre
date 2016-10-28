@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * AdresseUtilisateur
@@ -23,21 +24,21 @@ class AdresseUtilisateur {
 
     /**
      * @var int
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="codePostal", type="integer")
      */
     private $codePostal;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="localite", type="string", length=100)
      */
     private $localite;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="commune", type="string", length=100)
      */
     private $commune;

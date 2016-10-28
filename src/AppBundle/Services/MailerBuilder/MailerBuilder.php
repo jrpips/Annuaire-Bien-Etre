@@ -27,7 +27,7 @@ class MailerBuilder {
     }
 
     public function renderTemplate($newUser) {
-        return $this->twig->render('SwiftMailer/mail.html.twig', array('user' => $newUser));
+        return $this->twig->render('System/SwiftMailer/mail.html.twig', array('user' => $newUser));
     }
 
 }

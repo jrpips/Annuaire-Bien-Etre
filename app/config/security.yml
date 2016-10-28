@@ -1,12 +1,29 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/book/security.html
 security:
-
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+        AppBundle\Entity\Utilisateur: plaintext
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    role_hierarchy:
+        #ROLE_USER:          ROLE_USER
+        ROLE_INTERNAUTE:    ROLE_USER
+        ROLE_PRESTATAIRE:   ROLE_USER
+        ROLE_ADMIN:         [ROLE_INTERNAUTE,ROLE_PRESTATAIRE,ROLE_ALLOWED_TO_SWITCH]
+        
     providers:
-        in_memory:
-            memory: ~
-
+#        in_memory:
+#            memory: 
+#                users:
+#                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
+#                    internaute: { password: interpass, roles: [ 'ROLE_INTERNAUTE' ] }
+#                    prestataire: { password: prestapass, roles: [ 'ROLE_PRESTATAIRE' ] }
+#                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+        main:
+          entity:
+            class:    AppBundle\Entity\Utilisateur
+            property: username
+          
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
@@ -14,8 +31,19 @@ security:
             security: false
 
         main:
-            anonymous: ~
-            # activate different ways to authenticate
+            anonymous: true
+            pattern: ^/
+            provider:     main
+            form_login:
+                login_path: login
+                check_path: login_check
+                #check_path:     security_check_route
+#                success_handler: acme.security.authentication_handler
+#                failure_handler: acme.security.authentication_handler
+            logout:
+              path:       logout
+              target:     /
+              # activate different ways to authenticate
 
             # http_basic: ~
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate

@@ -3,7 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+//use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Prestataire
@@ -23,8 +24,9 @@ class Prestataire {
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Utilisateur", cascade={"persist"},mappedBy="prestataire")
+     * @ORM\OneToOne(targetEntity="Utilisateur", cascade={"persist"},inversedBy="prestataire")
      * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid
      */
     private $utilisateur;
 
@@ -35,9 +37,9 @@ class Prestataire {
 
     /**
      *
-     * @ORM\ManyToMany(targetEntity="Internaute",mappedBy="prestataires",cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Internaute",mappedBy="favoris",cascade={"persist"})
      */
-    private $internautes;
+    private $abonnes;//ancien nom : $internautes
 
     /**
      *
@@ -47,28 +49,28 @@ class Prestataire {
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="nom", type="string", length=50, unique=true)
      */
     private $nom;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="siteInternet", type="string", length=150, unique=true)
      */
     private $siteInternet;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="telephone", type="string", length=50, unique=true)
+     * @Assert\NotBlank()
+     * @ORM\Column(name="telephone", type="string", length=50, unique=false)
      */
     private $telephone;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="tva", type="string", length=50, unique=true)
      */
     private $tva;
@@ -293,5 +295,39 @@ class Prestataire {
     public function getUtilisateur()
     {
         return $this->utilisateur;
+    }
+
+    /**
+     * Add abonne
+     *
+     * @param \AppBundle\Entity\Internaute $abonne
+     *
+     * @return Prestataire
+     */
+    public function addAbonne(\AppBundle\Entity\Internaute $abonne)
+    {
+        $this->abonnes[] = $abonne;
+
+        return $this;
+    }
+
+    /**
+     * Remove abonne
+     *
+     * @param \AppBundle\Entity\Internaute $abonne
+     */
+    public function removeAbonne(\AppBundle\Entity\Internaute $abonne)
+    {
+        $this->abonnes->removeElement($abonne);
+    }
+
+    /**
+     * Get abonnes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAbonnes()
+    {
+        return $this->abonnes;
     }
 }

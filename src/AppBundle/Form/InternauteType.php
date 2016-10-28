@@ -17,18 +17,19 @@ class InternauteType extends AbstractType {
         $builder
                 ->add('nom', TextType::class, array('required' => false))
                 ->add('prenom', TextType::class, array('required' => false))
-                ->add('newsletter', CheckboxType::class, array('label'=>'Recevoir notre newsletter','required' => false))
+                ->add('newsletter', CheckboxType::class, array('label' => 'Recevoir notre newsletter', 'required' => false))
                 ->add('image', ImageType::class, array('required' => false))
-                ->add('utilisateur', UtilisateurType::class, array('required' => false))
+                ->add('utilisateur', UtilisateurType::class)
 //                ->add('utilisateur')
 //                ->add('prestataires')
-            ->add('Envoyer', SubmitType::class)
+                ->add('Envoyer', SubmitType::class,array('attr'=>array('class'=>'btn btn-default pull-right')))
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Internaute'
+            'data_class' => 'AppBundle\Entity\Internaute',
+            
         ));
     }
 

@@ -1,6 +1,50 @@
 var GpAnnuaire = GpAnnuaire || {
     /**
-     * view:gestion du background-color de la  nav selon l'état du scroll
+     *  view : init menu -> etat : user anonymous
+     *
+     */
+    init: function () {
+        //menu principal:display des boutons [s'inscrire] & [se connecter]
+        for (var i = 1; i < 5; i++) {
+            var etat = (i < 3) ? 'block' : 'none';
+            $('#myNavBar li:nth-child(' + i + ')').css({'display': etat});
+        }
+        /** 
+         *  jquery pour customiser input[type=file] https://www.creativejuiz.fr/blog/tutoriels/input-file-personnalise-css-js
+         *
+         */
+        // ajout des classes au formulaire et l'input type file
+
+        $('input[type=file]').attr({'class': 'input-file'});
+        $('input[type=file]').parent().attr({'class': 'input-file-container'});
+        $('.input-file-container label').attr({'class': 'input-file-trigger'});
+        $('.input-file-container').append('<p class="file-return"></p>');
+     
+        // initialisation des variables
+        var fileInput = $(".input-file"),
+                button = $(".input-file-trigger"),
+                the_return = $(".file-return");
+
+        // action lorsque la "barre d'espace" ou "Entrée" est pressée
+        button.on("keydown", function (event) {
+            if (event.keyCode === 13 || event.keyCode === 32) {
+                fileInput.focus();
+            }
+        });
+
+        // action lorsque le label est cliqué
+        button.on("click", function () {
+            fileInput.focus();
+            return false;
+        });
+
+        // affiche un retour visuel dès que input:file change
+        fileInput.on("change", function () {
+            the_return.html(this.value);
+        });
+    },
+    /**
+     * view : gestion du background-color de la  nav selon l'état du scroll
      * 
      **/
     headerColor: function () {
@@ -13,7 +57,7 @@ var GpAnnuaire = GpAnnuaire || {
         }
     },
     /**
-     * view:traitement réponse soumission popup['s'inscrire','se connecter']
+     * view : traitement réponse soumission popup['s'inscrire','se connecter']
      * 
      **/
     subscribe: function (data) {
@@ -50,7 +94,7 @@ var GpPopup = GpPopup || {
 
             $('#popup h3').empty().prepend('Inscription');
             $('#subscribeForm').css('display', 'block');
-            $('#connectForm').css('display', 'none');
+            $('#connectConteneur').css('display', 'none');
 
         } else {
 
@@ -58,7 +102,7 @@ var GpPopup = GpPopup || {
 
             $('#popup h3').empty().prepend('Connection');
             $('#subscribeForm').css('display', 'none');
-            $('#connectForm').css('display', 'block');
+            $('#connectConteneur').css('display', 'block');
 
         }
 
@@ -91,22 +135,22 @@ var GpPopup = GpPopup || {
      * moteur AJAX //en construction
      * 
      */
-    'ajaxBuilder':function(param){
-        
+    'ajaxBuilder': function (param) {
+
         $.ajax({
-            type:param.METHODE,
-            data:param.VALUES,
-            url:Routing.generate(param.ROUTE,{values:param.VALUES}),
-            dataType:param.TYPE,
-            beforeSend:function(){},
-            success:function(data){}
+            type: param.METHODE,
+            data: param.VALUES,
+            url: Routing.generate(param.ROUTE, {values: param.VALUES}),
+            dataType: param.TYPE,
+            beforeSend: param.function.beforeSEND,
+            success: param.function.SUCCESS
         });
     },
     /**
      * model:ajax for nav popup['s'inscrire','se connecter']
      * 
      **/
-    'ajax': function (e) {
+    'ajaxPreSignup': function (e) {
 
         e.preventDefault();
 
@@ -116,9 +160,9 @@ var GpPopup = GpPopup || {
         $.each($form.serializeArray(), function (i, field) {
             values[field.name] = field.value;
         });
-
-        id = e.currentTarget.id;
-        inputVal = $('#subscribeForm #' + id).val();
+//        console.log('ok', values);
+//        id = e.currentTarget.id;
+//        inputVal = $('#subscribeForm #' + id).val();
 
         $.ajax({
             type: "POST",
@@ -131,46 +175,84 @@ var GpPopup = GpPopup || {
         })
     },
     /**
-     * model:ajax for autocomplete form[internaute][adresseUtilisateur]
+     * model:ajax for nav popup['s'inscrire','se connecter']
      * 
      **/
-    'gpAjaxForSignUp': function (e) {
+    'ajaxConnection': function (e) {
 
         e.preventDefault();
 
-        var id = e.currentTarget.id;
+        var $form = $('#connectForm');
+        console.log($form);
+        var values = {};
 
-        if ($('#utilisateur_adresseUtilisateur_codePostal').val().length === 4) {
+        $.each($form.serializeArray(), function (i, field) {
+            values[field.name] = field.value;
+        });
+        console.log('ok', values);
+        //id = e.currentTarget.id;
+        //inputVal = $('#subscribeForm #' + id).val();
+
+        $.ajax({
+            type: "POST",
+            //data: values,
+            url: Routing.generate('login_check'), // {values: values}),
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    },
+    /**
+     * model:ajax for autocomplete form[internaute][adresseUtilisateur]
+     * 
+     **/
+    'gpAjaxFinalSignup': function (e) {
+
+        e.preventDefault();
+
+        event_id = e.currentTarget.id;
+
+        if ($('#' + event_id).val().length === 4) {
 
             $.ajax({
                 type: "POST",
-                data: {'valeur': $('#' + id).val()},
+                data: {'valeur': $('#' + event_id).val()},
                 dataType: 'json',
                 url: Routing.generate('autocomplete'),
                 beforeSend: function () {
 
-                    if ($('.loader').length == 0) {
-                        $('#utilisateur_adresseUtilisateur_commune').parent().append('<div class="loader"><img src="http://127.0.0.1/Annuaire-Bien-Etre/web/image/Loading_icon.gif"/></div>');
+                    if ($('.loader').length === 0) {
+                        $('#' + event_id).parent().append('<div class="loader"><img src="http://127.0.0.1/Annuaire-Bien-Etre/web/image/Loading_icon.gif"/></div>');
                     }
 
-                    $('#utilisateur_adresseUtilisateur_commune option').remove();
-
+                    $('#' + event_id + ' option').remove();
+                    console.log(event_id, 'rr');
                 },
                 success: function (data) {
 
                     $('.loader').remove();
 
+                    var prefix = event_id;
+                    var event_id_length = event_id.length - 10;
+                    event_id = prefix.substring(0, event_id_length);
+
+                    $('#' + event_id + 'commune option').remove();
+
                     $.each(data.communes, function (index, value) {
-                        $('#utilisateur_adresseUtilisateur_commune').append($('<option>', {value: value, text: value}));
+
+                        $('#' + event_id + 'commune').append($('<option>', {value: value, text: value}));
+
                     });
 
-                    $('#utilisateur_adresseUtilisateur_localite').val(data.province);
+                    $('#' + event_id + 'localite').val(data.province);
+
                 }
             });
         } else {
 
-            $('#utilisateur_adresseUtilisateur_commune option').remove();
-            $('#utilisateur_adresseUtilisateur_commune').append($('<option>', {value: 'error', text: 'Aucunes communes ne correspondent à ce code postal!'}));
+//            $('#' + event_id + ' option').remove();
+            $('#' + event_id).append($('<option>', {value: 'error', text: 'Aucunes communes ne correspondent à ce code postal!'}));
         }
     }
 };
@@ -190,6 +272,8 @@ $(function () {//controller
     document.getElementsByTagName('body')[0].onscroll = GpAnnuaire.headerColor;
 
     setInterval(GpAnnuaire.headerColor, 5000);
+
+    GpAnnuaire.init();
 
 
     /**
@@ -216,22 +300,28 @@ $(function () {//controller
      * 
      **/
 
-    $('#subscribeForm').on('submit', function (e) {
-        GpPopup.ajax(e);
+    $('form[name=sign_up]').on('submit', function (e) {
+        console.log('submit');
+        GpPopup.ajaxPreSignup(e);
     });
+//    $('#connectForm').on('submit', function (e) {
+//        GpPopup.ajaxConnection(e);
+//    });
 
     /**
      * Events from form Internaute[code_postal] to find commune and localite
      *
      */
 
-    $('#utilisateur_adresseUtilisateur_codePostal').on('change', function (e) {
-        GpPopup.gpAjaxForSignUp(e);
+    $('#internaute_utilisateur_adresseUtilisateur_codePostal').on('change', function (e) {
+        GpPopup.gpAjaxFinalSignup(e);
+        console.log('ok');
     });
 
-    $('#utilisateur_adresseUtilisateur_codePostal').on('keyup', function (e) {
-        GpPopup.gpAjaxForSignUp(e);
-    });
+//    $('#internaute_utilisateur_adresseUtilisateur_codePostal').on('keyup', function (e) {
+//        GpPopup.gpAjaxForSignUp(e);
+//        console.log('oky');
+//    });
 
     /**
      * Events from form Prestataire[code_postal] to find commune and localite
@@ -239,12 +329,12 @@ $(function () {//controller
      */
 
     $('#prestataire_utilisateur_adresseUtilisateur_codePostal').on('change', function (e) {
-        GpPopup.gpAjaxForSignUp(e);
+        GpPopup.gpAjaxFinalSignup(e);
     });
 
-    $('#prestataire_utilisateur_adresseUtilisateur_codePostal').on('keyup', function (e) {
-        GpPopup.gpAjaxForSignUp(e);
-    });
+//    $('#prestataire_utilisateur_adresseUtilisateur_codePostal').on('keyup', function (e) {
+//        GpPopup.gpAjaxForSignUp(e);
+//    });
 
 
     /**

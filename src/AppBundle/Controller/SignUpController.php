@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\SignUp;
 use AppBundle\Entity\Internaute;
 use AppBundle\Entity\Utilisateur;
@@ -16,16 +17,20 @@ use AppBundle\Form\UtilisateurType;
 class SignUpController extends Controller {
 
     /**
-     * @Route("/login",name="login")
+     * call by views/Public/Navigation/nav.parent.menu
      */
-    public function loginAction() {
-        $response = new JsonResponse;
-        $response->setData(array('data' => '$errors'));
-        return $response;
+    public function getNavPreSignupElementsAction() {
+
+        $new_user = new SignUp();
+        $form = $this->get('form.factory')->create(SignUpType::class, $new_user);
+        // TODO prestataires favoris
+        return $this->render('Public/form.pre.subscribe.html.twig', array(
+                    'form' => $form->createView(),
+        ));
     }
 
     /**
-     * @Route("/inscription/pre-inscription/",options={"expose"=true},name="signup")
+     * @Route("/inscription/internaute/pre-inscription",options={"expose"=true},name="signup")
      */
     public function signupAction(Request $request) {
 
@@ -60,14 +65,14 @@ class SignUpController extends Controller {
                 ));
             }
         }
-        return $this->render('accueil/login.html.twig', array(
+        return $this->render('Public/form.pre.subscribe.html.twig', array(
                     'form' => $form->createView(),
                     'user' => $new_user
         ));
     }
 
     /**
-     * @Route("/inscription/finalisation/{id}",options={"expose"=true},name="signup-final")
+     * @Route("/inscription/internaute/finalisation/{id}",options={"expose"=true},name="signup-final")
      */
     public function signupFinalAction(Request $request, $id = null) {
 
@@ -78,6 +83,7 @@ class SignUpController extends Controller {
         }
 
         $final_step_signup = new Internaute();
+        $u = new Utilisateur();
 
         $form = $this->get('form.factory')->create(InternauteType::class, $final_step_signup);
 
@@ -88,21 +94,13 @@ class SignUpController extends Controller {
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($final_step_signup);
+                $em->persist($u);
                 $em->flush();
 
                 return $this->redirectToRoute('home');
             }
         }
-        //Auto-complete Ajax
-        if ($request->getMethod() == 'POST' && $request->isXmlHttpRequest()) {
-
-            $val = $request->request->get('valeur');
-            $response = $this->container->get('app.searchpostalcode')->getData($val);
-
-            return new JsonResponse($response);
-        }
-
-        return $this->render('form.signup.internaute.html.twig', array(
+        return $this->render('Public/Internautes/form.signup.internaute.html.twig', array(
                     'form' => $form->createView(),
                     'user' => $final_step_signup,
                     'signup' => $first_step_signup

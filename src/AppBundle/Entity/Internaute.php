@@ -4,12 +4,14 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Internaute
  *
  * @ORM\Table(name="internaute")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\InternauteRepository")
+ * 
  */
 class Internaute {
 
@@ -22,36 +24,36 @@ class Internaute {
      */
     private $id;
 
-
-
     /**
-     * @ORM\OneToOne(targetEntity="Utilisateur", cascade={"persist"},mappedBy="internaute")
+     * @ORM\OneToOne(targetEntity="Utilisateur", cascade={"persist"},inversedBy="internaute")
      * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid
      */
     private $utilisateur;
 
     /**
      * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid
      */
     private $image;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Prestataire", inversedBy="internautes")
+     * @ORM\ManyToMany(targetEntity="Prestataire", inversedBy="abonnes")
      * @ORM\JoinTable(name="prestataire_for_internaute")
      */
-    private $prestataires;
+    private $favoris;//ancien nom : $prestataires
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="nom", type="string", length=50)
      */
     private $nom;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="prenom", type="string", length=50)
      */
     private $prenom;
@@ -234,5 +236,39 @@ class Internaute {
     public function getUtilisateur()
     {
         return $this->utilisateur;
+    }
+
+    /**
+     * Add favori
+     *
+     * @param \AppBundle\Entity\Prestataire $favori
+     *
+     * @return Internaute
+     */
+    public function addFavori(\AppBundle\Entity\Prestataire $favori)
+    {
+        $this->favoris[] = $favori;
+
+        return $this;
+    }
+
+    /**
+     * Remove favori
+     *
+     * @param \AppBundle\Entity\Prestataire $favori
+     */
+    public function removeFavori(\AppBundle\Entity\Prestataire $favori)
+    {
+        $this->favoris->removeElement($favori);
+    }
+
+    /**
+     * Get favoris
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFavoris()
+    {
+        return $this->favoris;
     }
 }

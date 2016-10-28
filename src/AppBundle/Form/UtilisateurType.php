@@ -19,7 +19,8 @@ class UtilisateurType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('email', EmailType::class, array('required' => false))
-                ->add('pwd', PasswordType::class, array('required' => false))
+                ->add('password', PasswordType::class, array('required' => false))
+                ->add('confPwd', PasswordType::class, array('required' => false))
                 ->add('adresseNumero', IntegerType::class, array('required' => false))
                 ->add('adresseRue', TextType::class, array('required' => false))
 //                ->add('inscription', 'date')
@@ -27,15 +28,16 @@ class UtilisateurType extends AbstractType {
 //                ->add('essaiPwd')
 //                ->add('banni')
 //                ->add('inscriptionConf')
-                ->add('adresseUtilisateur',AdresseUtilisateurType::class)
-        //        ->add('internaute',InternauteType::class)
-
+                ->add('adresseUtilisateur', AdresseUtilisateurType::class)
+                //        ->add('internaute',InternauteType::class)
+              
         ;
     }
-  
+
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Utilisateur'
+            'data_class' => 'AppBundle\Entity\Utilisateur',
+         
         ));
     }
 

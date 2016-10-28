@@ -14,26 +14,36 @@ class LoadUtilisateurData extends AbstractFixture implements OrderedFixtureInter
     private $nb = 9;
 
     public function load(ObjectManager $manager) {
+
+        $listRoles = array('ROLE_ADMIN', 'ROLE_INTERNAUTE', 'ROLE_PRESTATAIRE');
+
         for ($i = 0; $i < $this->nb; $i++) {
             $faker = Factory::create('fr_BE');
             $user = new Utilisateur();
             $user->setEmail($faker->email);
-            $user->setPwd('1234');
+
+            $user->setPassword('1234');
+            $user->setUsername($faker->firstName($gender = null | 'male' | 'female'));          
+            $user->setSalt('');
+
             $user->setAdresseNumero($faker->buildingNumber);
             $user->setAdresseRue($faker->streetName);
             $user->setInscription(new \DateTime());
-            $type = ($i < 5) ? 'prestataire' : 'user';
-            $type = ($i == 8) ? 'admin' : $type;
-            $user->setTypeUtilisateur($type);
+
             $user->setEssaiPwd(0);
             $user->setBanni(false);
             $user->setInscriptionConf(true);
             if ($i < 5) {
                 $user->setPrestataire($this->getReference('prestataire' . $i));
+                $user->setRoles(array($listRoles[2]));
             }
             if ($i > 4 && $i < 8) {
                 $j = $i - 5;
                 $user->setInternaute($this->getReference('internaute' . $j));
+                $user->setRoles(array($listRoles[1]));
+            }
+            else{
+                $user->setRoles(array($listRoles[0]));
             }
             $user->setAdresseUtilisateur($this->getReference('addrUser' . $i));
             $manager->persist($user);

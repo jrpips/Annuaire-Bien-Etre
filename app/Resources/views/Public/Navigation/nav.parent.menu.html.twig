@@ -1,0 +1,99 @@
+{# views/Public/Navigation/nav.parent.menu.html.twig #}
+
+<ul id="myNavbar" class="gp_menu header-nav-primary nav nav-pills collapse navbar-collapse" >
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+        {{ include("Public/Navigation/nav.child.authenticated.profil.html.twig") }}
+
+    {% else %}
+
+        <li>
+            <button id="subscribe" class="btn btn-default navbar-btn"  >
+                {#            <span class="glyphicon glyphicon-user"></span>#}
+                S'inscrire
+            </button>
+        </li>
+
+        <li>
+            <a href="{{path('login')}}" id="authenticationLink" class="btn btn-default navbar-btn"  >
+                {#            <span class="glyphicon glyphicon-log-in"></span>#}
+                Se connecter
+            </a>
+
+            {#<button id="connection" class="btn btn-default navbar-btn"  >
+                           <span class="glyphicon glyphicon-log-in"></span>
+                Se connecter
+            </button>#}
+        </li>
+    {% endif %}
+    <li >
+
+        <a href="{{path('home')}}">Accueil <i class="fa fa-chevron-down"></i></a>
+
+    </li>
+
+    <li >       
+        <a href="#">Services <i class="fa fa-chevron-down"></i></a>
+
+        {{render(controller("AppBundle:PublicController/CategServices/CategServices:getNavServicesElements"))}}
+
+    </li>
+
+    <li class="has-mega-menu ">
+
+        <a href="#">Prestataires <i class="fa fa-chevron-down"></i></a>
+
+        <ul class="mega-menu">
+
+            <li>
+
+                <a href="#">Prestataires Favoris</a>
+                {{render(controller("AppBundle:PublicController/Prestataires/Prestataire:getNavPrestatairesElements"))}}
+
+            </li>
+
+            <li>
+
+                <a href="#">Promotions</a>
+                {{render(controller("AppBundle:PublicController/Promotions/Promotion:getNavPromotionsElements"))}}
+
+            </li>
+
+            <li>
+
+                <a href="#">Stage</a>
+                {{render(controller("AppBundle:PublicController/Stages/Stage:getNavStagesElements"))}}
+
+            </li>
+
+            <li class="hidden-xs">
+                <div class="special">
+                    <a href="">Sign Up Now</a>
+                </div><!-- /.special-->
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#">Contact <i class="fa fa-chevron-down"></i></a>
+    </li>
+    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+        <li>
+            <a id="prestataire-profil" href="{{ path('signupPrestataire') }}"><i style='transform:scale(2)' class="fa fa-cubes"></i><span>Créer un profil prestataire</span></a>
+        </li>
+    {%else%}
+        <li >
+            <a href="{{path('logout')}}" id="authenticationLink" class="btn btn-default navbar-btn"  >
+                <span class="glyphicon glyphicon-log-out"></span>
+                Déconnexion
+            </a>
+        </li>
+    {%endif%}
+</ul> 
+
+<div id="modale">
+    <section id="popup">
+
+        {{render(controller("AppBundle:SignUp:getNavPreSignupElements"))}}   
+
+    </section>
+</div>

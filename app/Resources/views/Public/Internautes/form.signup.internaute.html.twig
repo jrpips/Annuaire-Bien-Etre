@@ -1,0 +1,102 @@
+{# empty Twig template #}
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="page-wrapper">
+        <div class="main">
+            <div class="main-inner">
+                <div class="container">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-sm-4 col-sm-offset-4">
+
+
+                                <div class="page-title">
+                                    <h1>Inscription</h1>
+                                </div><!-- /.page-title -->
+
+                                {{form_start(form)}}
+
+                                <div class="form-group">
+                                    {{form_label(form.nom)}}
+                                    {{form_widget(form.nom,{'attr':{'value':signup is null ?'':signup.lastname}})}}
+                                    {{form_errors(form.nom)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.prenom)}}
+                                    {{form_widget(form.prenom,{'attr':{'value':signup is null ?'':signup.firstname}})}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.utilisateur.email)}}
+                                    {{form_widget(form.utilisateur.email,{'attr':{'value':signup is null ?'':signup.email}})}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.utilisateur.password)}}
+                                    {{form_widget(form.utilisateur.password)}}
+                                    {{form_errors(form.utilisateur.password)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.utilisateur.confPwd)}}
+                                    {{form_widget(form.utilisateur.confPwd)}}
+                                    {{form_errors(form.utilisateur.confPwd)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.utilisateur.adresseRue)}}
+                                    {{form_widget(form.utilisateur.adresseRue)}}
+                                    {{form_errors(form.utilisateur.adresseRue)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.utilisateur.adresseNumero)}}
+                                    {{form_widget(form.utilisateur.adresseNumero)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.utilisateur.adresseUtilisateur.codePostal)}}
+                                    {{form_widget(form.utilisateur.adresseUtilisateur.codePostal)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.utilisateur.adresseUtilisateur.commune)}}
+                                    {{form_widget(form.utilisateur.adresseUtilisateur.commune)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.utilisateur.adresseUtilisateur.localite)}}
+                                    {{form_widget(form.utilisateur.adresseUtilisateur.localite)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.newsletter)}}
+                                    {{form_row(form.newsletter)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.image.name)}}
+                                    {{form_widget(form.image.name)}}
+                                </div>
+                                <div class="form-group">
+                                    {{form_label(form.image.file)}}
+                                    {{form_widget(form.image.file)}}
+                                </div>
+
+                                {{form_rest(form)}}
+                                {{form_end(form)}}
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $.function({
+            $('#utilisateur_internaute_newsletter').parent().remove();
+        });
+    </script>
+{% endblock %}
+

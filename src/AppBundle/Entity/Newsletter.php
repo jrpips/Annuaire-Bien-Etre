@@ -37,7 +37,7 @@ class Newsletter
 
     /**
      * @var string
-     *
+     *  TODO : stoker le pdf sur le serveur
      * @ORM\Column(name="pdf",type="blob", nullable=true)
      */
     private $pdf;
