@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use AppBundle\Form\InternauteType;
 use AppBundle\Form\AdresseUtilisateurType;
 
@@ -20,16 +21,14 @@ class UtilisateurType extends AbstractType {
         $builder
                 ->add('email', EmailType::class, array('required' => false))
                 ->add('password', PasswordType::class, array('required' => false))
-                ->add('confPwd', PasswordType::class, array('required' => false))
+//                ->add('confPwd', PasswordType::class, array('required' => false))
                 ->add('adresseNumero', IntegerType::class, array('required' => false))
                 ->add('adresseRue', TextType::class, array('required' => false))
-//                ->add('inscription', 'date')
-//                ->add('typeUtilisateur')
-//                ->add('essaiPwd')
-//                ->add('banni')
-//                ->add('inscriptionConf')
+                ->add('username', TextType::class, array('required' => false))
+
                 ->add('adresseUtilisateur', AdresseUtilisateurType::class)
-                //        ->add('internaute',InternauteType::class)
+                ->add('Envoyer', SubmitType::class,array('attr'=>array('class'=>'btn btn-default pull-right')))
+         
               
         ;
     }

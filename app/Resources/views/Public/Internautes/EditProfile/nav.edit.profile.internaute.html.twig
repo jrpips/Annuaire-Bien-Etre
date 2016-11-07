@@ -1,0 +1,62 @@
+{# empty Twig template #}
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+
+{% block title %}
+    Modifier mon profil - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="main">
+
+        <div class="main-inner">
+
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-sm-4 col-lg-3">
+                        <div class="sidebar">
+                            <div class="widget">
+                                <div class="user-photo" style="border-style:solid">
+                                    <a href="#">
+{#                                        {%set pathImg=(app.environment=='dev')?'':'image/userUploads/'%} {# retire le chemin du dossier si image chargée en ligne (fixture)#}
+                                        {%set pathImg=(app.user.internaute.image.url matches '{^http}')?'':'image/userUploads/'%} {# retire le chemin du dossier si image chargée en ligne (fixture)#}
+
+                                        {%if app.user.internaute.image.url is defined%}
+                                            <img src="{{asset(pathImg~app.user.internaute.image.url)}}" alt="{{app.user.username}}"/>
+                                        {%else%}
+                                            <img src="{{ asset('image/user.png')}}" alt=""/>
+                                        {%endif%}   
+
+                                        <span class="user-photo-action">{{app.user.username}}</span>
+                                    </a>
+                                </div><!-- /.user-photo -->
+                            </div><!-- /.widget -->
+
+
+                            <div class="widget">
+
+                                <ul class="menu-advanced">
+                                    <li><a href="{{path('show_internaute')}}"><i class="fa fa-user"></i> Mes informations</a></li>
+                                    <li class="active"><a href="#"><i class="fa fa-tasks"></i> Identité</a></li>
+                                    <li><a href="#"><i class="fa fa-envelope-o"></i> Email</a></li>
+                                    <li><a href="{{path('update_photo_internaute')}}"><i class="fa fa-camera"></i> Photo</a></li>
+                                    <li><a href="{{path('change_password')}}"><i class="fa fa-key"></i> Modifier mot de passe</a></li>
+                                    <li><a href="#"><i class="fa fa-phone"></i> Téléphone</a></li>
+                                    <li><a href="#"><i class="fa fa-home"></i> Adresse</a></li>
+                                    <li><a href="#"><i class="fa fa-trash-o"></i> Supprimer mon compte</a></li>
+                                </ul>
+                            </div><!-- /.widget -->
+
+                        </div><!-- /.sidebar -->
+                    </div>
+                    {%block edit%}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

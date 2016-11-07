@@ -5,7 +5,7 @@
     <li>
         <ul>
             {% for service in services %}
-                <li><a href="{{path('details_service',{'service_id':service.id})}}">{{ service.nom }}</a></li>
+                <li><a href="{{path('details_service',{'service_nom':service.nom})}}">{{ service.nom }}</a></li>
             {% endfor %}
         </ul>
     </li>

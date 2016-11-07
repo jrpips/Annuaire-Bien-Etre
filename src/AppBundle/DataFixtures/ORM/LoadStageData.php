@@ -15,9 +15,9 @@ class LoadStageData extends AbstractFixture implements OrderedFixtureInterface {
     private $nb = 2;
 
     public function load(ObjectManager $manager) {
-    
+    $faker = Factory::create();
         for ($i = 0; $i < $this->nb; $i++) {
-            $faker = Factory::create();
+            
             $stage = new Stage();
             $stage->setNom($faker->colorName);
             $stage->setDescription($faker->sentence($nbWords = 6, $variableNbWords = false));

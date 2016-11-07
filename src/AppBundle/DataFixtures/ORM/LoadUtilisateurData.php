@@ -15,15 +15,17 @@ class LoadUtilisateurData extends AbstractFixture implements OrderedFixtureInter
 
     public function load(ObjectManager $manager) {
 
-        $listRoles = array('ROLE_ADMIN', 'ROLE_INTERNAUTE', 'ROLE_PRESTATAIRE');
-
+        //$listRoles = array('ROLE_ADMIN', 'ROLE_INTERNAUTE', 'ROLE_PRESTATAIRE');
+        
+        $faker = Factory::create('fr_BE');
+                    
         for ($i = 0; $i < $this->nb; $i++) {
-            $faker = Factory::create('fr_BE');
+
             $user = new Utilisateur();
             $user->setEmail($faker->email);
 
             $user->setPassword('1234');
-            $user->setUsername($faker->firstName($gender = null | 'male' | 'female'));          
+            $user->setUsername($faker->firstName($gender = null | 'male' | 'female'));
             $user->setSalt('');
 
             $user->setAdresseNumero($faker->buildingNumber);
@@ -35,15 +37,16 @@ class LoadUtilisateurData extends AbstractFixture implements OrderedFixtureInter
             $user->setInscriptionConf(true);
             if ($i < 5) {
                 $user->setPrestataire($this->getReference('prestataire' . $i));
-                $user->setRoles(array($listRoles[2]));
-            }
-            if ($i > 4 && $i < 8) {
-                $j = $i - 5;
-                $user->setInternaute($this->getReference('internaute' . $j));
-                $user->setRoles(array($listRoles[1]));
-            }
-            else{
-                $user->setRoles(array($listRoles[0]));
+                $user->setRoles('ROLE_PRESTATAIRE');
+            } else {
+                switch ($i) {
+                    case 8: $user->setRoles('ROLE_ADMIN');
+                        break;
+                    default:
+                        $j = $i - 5;
+                        $user->setInternaute($this->getReference('internaute' . $j));
+                        $user->setRoles('ROLE_INTERNAUTE');
+                }
             }
             $user->setAdresseUtilisateur($this->getReference('addrUser' . $i));
             $manager->persist($user);

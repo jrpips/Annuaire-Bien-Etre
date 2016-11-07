@@ -1,0 +1,14 @@
+{# empty Twig template #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {%if prestataire is not null%}
+        {{prestataire.nom}}<br>
+        {{prestataire.siteInternet}}<br>
+        {{prestataire.utilisateur.adresseUtilisateur.localite}}<br>
+        {{prestataire.nom}}<br>
+        {{prestataire.nom}}<br>
+    {%else%}
+        Pas de résultat pour le nom indiqué
+    {%endif%}
+{%endblock%}{# empty Twig template #}

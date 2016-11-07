@@ -4,91 +4,93 @@ var GpAnnuaire = GpAnnuaire || {
      *
      */
     init: function () {
-        //menu principal:display des boutons [s'inscrire] & [se connecter]
+        /* menu principal : display des boutons [s'inscrire] & [se connecter] */
         for (var i = 1; i < 5; i++) {
             var etat = (i < 3) ? 'block' : 'none';
             $('#myNavBar li:nth-child(' + i + ')').css({'display': etat});
         }
         /** 
-         *  jquery pour customiser input[type=file] https://www.creativejuiz.fr/blog/tutoriels/input-file-personnalise-css-js
-         *
-         */
-        // ajout des classes au formulaire et l'input type file
+         **  jquery pour customiser input[type=file] 
+         **
+         **/
 
-        $('input[type=file]').attr({'class': 'input-file'});
+        /**  
+         **  ajout des classes au formulaire et l'input type file 
+         **/
+
+        $('input[type=file]').attr({'class': 'input-file'});//masque l'input file par défaut
         $('input[type=file]').parent().attr({'class': 'input-file-container'});
         $('.input-file-container label').attr({'class': 'input-file-trigger'});
-        $('.input-file-container').append('<p class="file-return"></p>');
-     
-        // initialisation des variables
-        var fileInput = $(".input-file"),
-                button = $(".input-file-trigger"),
-                the_return = $(".file-return");
-
-        // action lorsque la "barre d'espace" ou "Entrée" est pressée
-        button.on("keydown", function (event) {
-            if (event.keyCode === 13 || event.keyCode === 32) {
-                fileInput.focus();
-            }
-        });
-
-        // action lorsque le label est cliqué
-        button.on("click", function () {
-            fileInput.focus();
-            return false;
-        });
-
-        // affiche un retour visuel dès que input:file change
-        fileInput.on("change", function () {
-            the_return.html(this.value);
-        });
     },
     /**
-     * view : gestion du background-color de la  nav selon l'état du scroll
-     * 
+     **  view : gestion du background-color de la  nav selon l'état du scroll
+     ** 
      **/
     headerColor: function () {
-        if ($(window).scrollTop() === 0) {
+        if ($(window).scrollTop() === 0) {//scroll null
+
             $('header').attr('header-transparent');
-            $('.header-wrapper').css('background-color', 'transparent');
-        } else {
+            $('.header-wrapper').css({'background-color': 'transparent'});
+
+        } else {//scroll actif
+
             $('header').removeAttr('header-transparent');
-            $('.header-wrapper').css('background-color', 'rgba(0, 159, 139, 0.9)');
-        }
+            $('.header-wrapper').css('background-color', 'rgba(100, 100, 128,0.4)');
+        }//TODO couleur police nav pages != index
     },
     /**
-     * view : traitement réponse soumission popup['s'inscrire','se connecter']
-     * 
+     **  view : traitement réponse soumission popup['s'inscrire','se connecter']
+     ** 
      **/
     subscribe: function (data) {
 
         if (data.valide) {
-            $('#body').html('<div class="valide">Un email de confirmation a été envoyé à cette adresse:<span>' + data.values.sign_up.email + '</span></div>');
 
-            setTimeout(function () {
-                GpPopup.hide();
-            }, 3000);
+            $('.error').remove();
+
+            $('[type=submit]')//ajout de la balise contenant le message de validation
+                    .parent()
+                    .parent()
+                    .append('<div class="message"><i class="glyphicon glyphicon-send"></i> Un email de confirmation a été envoyé l\'adresse <br><span>' + data.values.sign_up.email + '</span></div>')
+                    ;
+            $('#body div.message').css({'display': 'block'}).slideDown('slow');
+
+            setTimeout(function () {//aprés 5s 
+
+                $('#body div.message').remove();
+
+                GpAnnuaire.resetForm('#body');//reset du formulaire
+                GpAnnuaire.hide();//retrait de la popup
+
+            }, 5000);
         }
         else {
+
             $('.error').remove();
 
             for (item in data.errors) {
                 $('#sign_up_' + item).parent().append('<div class="error">' + data.errors[item][0] + '</div>');
             }
         }
-    }
-};
-var GpPopup = GpPopup || {
+    },
+    resetForm: function (element) {
+
+        var form = $(element + ' form input');
+        //TODO 1.a boucle avec un tableau des types input
+        $(element + ' input[type=text]').each(function (index) {//TODO 1.b insérer dynamiquement les différents types
+            $(this).val('');
+        });
+    },
     /**
-     * view:construction et affichage popup['s'inscrire','se connecter'] 
-     * 
+     **  view : construction et affichage popup['s'inscrire','se connecter'] 
+     ** 
      **/
     'display': function (e) {
 
         var event = e.currentTarget;
         var eventId = event.id
 
-        if (eventId == 'subscribe') {
+        if (eventId == 'subscribe') {//récupére l'id qui renseigne le type de form à afficher
 
             var height = '400px';
 
@@ -109,32 +111,38 @@ var GpPopup = GpPopup || {
         $('#popup h3').append('<button type="button" id="cancel" class="close" data-dismiss="modal">&times;</button>');
         $('#popup').css({'height': height});
 
-        var top = $(window).scrollTop() + (($(window).height() - $('#popup').height()) / 2);
+        /**
+         **  Calcul de la position top & right pour un afichage centré
+         **/
+
+        var top = $(window).scrollTop() + (($(window).height() - $('#popup').height()) / 2);//TODO réglé centrage onscroll
         var right = ($(window).width() - $('#popup').width()) / 2;
 
-        //Affichage de la Popup
+        /**
+         **  Affichage de la Popup
+         **/
 
         $('#popup').css({top: top, 'right': right}).slideDown('slow').find(':text,textarea').first().focus();
         $('#modale').fadeIn();
-        $('#cancel').on('click', GpPopup.hide);
+        $('#cancel').on('click', GpAnnuaire.hide);
         $('#popup').css({'height': 'auto'});
 
     },
     /**
-     * view:hide de la nav popup['s'inscrire','se connecter']
-     * 
+     **  view : retrait de la nav popup['s'inscrire','se connecter']
+     ** 
      **/
     'hide': function () {
 
-        $('#modale').hide();
-        $('#popup').hide('fast');
+        $('#modale').hide('slow');
+        $('#popup').hide('slow');
     },
     /**
-     * model:ajaxBuilder
-     * 
-     * moteur AJAX //en construction
-     * 
-     */
+     **  model : ajaxBuilder
+     ** 
+     **  moteur AJAX //en construction
+     ** 
+     **/
     'ajaxBuilder': function (param) {
 
         $.ajax({
@@ -147,8 +155,8 @@ var GpPopup = GpPopup || {
         });
     },
     /**
-     * model:ajax for nav popup['s'inscrire','se connecter']
-     * 
+     **  model : ajax for nav popup['s'inscrire','se connecter']
+     **
      **/
     'ajaxPreSignup': function (e) {
 
@@ -160,9 +168,6 @@ var GpPopup = GpPopup || {
         $.each($form.serializeArray(), function (i, field) {
             values[field.name] = field.value;
         });
-//        console.log('ok', values);
-//        id = e.currentTarget.id;
-//        inputVal = $('#subscribeForm #' + id).val();
 
         $.ajax({
             type: "POST",
@@ -175,8 +180,8 @@ var GpPopup = GpPopup || {
         })
     },
     /**
-     * model:ajax for nav popup['s'inscrire','se connecter']
-     * 
+     **  model : ajax for nav popup['s'inscrire','se connecter']
+     **
      **/
     'ajaxConnection': function (e) {
 
@@ -204,14 +209,40 @@ var GpPopup = GpPopup || {
         })
     },
     /**
-     * model:ajax for autocomplete form[internaute][adresseUtilisateur]
-     * 
+     **  model : moteur de recherche -> prestataire
+     **/
+    'ajaxSearchPrestataire': function (e) {
+        e.preventDefault();
+
+        var $form = $('#searchPrestataire');
+        var values = {};
+        console.log($form);
+        $.each($form.serializeArray(), function (i, field) {
+            values[field.name] = field.value;
+        });
+        console.log('ok', values);
+        var event_id = e.currentTarget.id;
+        console.log(event_id);
+        $.ajax({
+            type: "POST",
+            data: {nom: $('#'+event_id).val()},
+            url: Routing.generate('search_nom_prestataire'),
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+//                for(a in data.prestataire){
+//                console.log(a);}
+            }
+        })
+    },
+    /**
+     **  model : ajax for autocomplete form[internaute][adresseUtilisateur]
      **/
     'gpAjaxFinalSignup': function (e) {
 
         e.preventDefault();
 
-        event_id = e.currentTarget.id;
+         event_id = e.currentTarget.id;
 
         if ($('#' + event_id).val().length === 4) {
 
@@ -250,23 +281,47 @@ var GpPopup = GpPopup || {
                 }
             });
         } else {
-
-//            $('#' + event_id + ' option').remove();
             $('#' + event_id).append($('<option>', {value: 'error', text: 'Aucunes communes ne correspondent à ce code postal!'}));
         }
+    },
+    checkTypeImg: function () {
+
+        var allowedTypes = ['png', 'jpg', 'jpeg'];//extensions attendues
+
+        var files = this.files,
+                imgType;
+
+        imgType = files[0].name.split('.');//1.a
+        imgType = imgType[imgType.length - 1];//1.b récupération de l'extension du fichier reçu
+
+        if (allowedTypes.indexOf(imgType) != -1) {//si l'extension est valide...
+            GpAnnuaire.createThumbnail(files[0]);
+        }
+    },
+    createThumbnail: function (file) {
+
+        var reader = new FileReader();
+
+        var $reader = $(reader);
+
+        $reader.on('load', function () {
+            $('.input-file-trigger').css({'backgroundImage': "url(" + this.result + ")"});
+        });
+
+        reader.readAsDataURL(file);
     }
 };
 /**
- * 
- * 
+ ** 
+ ** 
  **/
 $(function () {//controller
 
     /**
-     * Event to nav background-color                        
-     * 
-     * function(): GpAnnuaire.headerColor
-     * 
+     **  Event to nav background-color                        
+     ** 
+     **  function(): GpAnnuaire.headerColor
+     ** 
      **/
 
     document.getElementsByTagName('body')[0].onscroll = GpAnnuaire.headerColor;
@@ -275,99 +330,82 @@ $(function () {//controller
 
     GpAnnuaire.init();
 
-
     /**
-     * Events to display popup['s'inscrire','se connecter']  
-     * 
-     * function(): GpPopup.display
-     * 
+     **  Events to display popup['s'inscrire','se connecter']  
+     ** 
+     **  function(): GpAnnuaire.display
+     **
      **/
 
     $('.gp_menu #subscribe').on('click', function (e) {
-        GpPopup.display(e)
+        GpAnnuaire.display(e)
     });
 
-    $('.gp_menu #connection').on('click', function (e) {
-        GpPopup.display(e)
-    });
-    //    $('.gp_menu #connection').on('keypress', function (e) {//test simulation click
-    //        $('#connexion').get(0).click();
-    //    });
-
+    //$('.gp_menu #connection').on('click', GpAnnuaire.display());
 
     /**
-     * Event to submit data field's popup['s'inscrire','se connecter']
-     * 
+     **  Event to submit data field's popup['s'inscrire','se connecter']
      **/
 
     $('form[name=sign_up]').on('submit', function (e) {
-        console.log('submit');
-        GpPopup.ajaxPreSignup(e);
-    });
-//    $('#connectForm').on('submit', function (e) {
-//        GpPopup.ajaxConnection(e);
-//    });
-
-    /**
-     * Events from form Internaute[code_postal] to find commune and localite
-     *
-     */
-
-    $('#internaute_utilisateur_adresseUtilisateur_codePostal').on('change', function (e) {
-        GpPopup.gpAjaxFinalSignup(e);
-        console.log('ok');
+        GpAnnuaire.ajaxPreSignup(e)
     });
 
-//    $('#internaute_utilisateur_adresseUtilisateur_codePostal').on('keyup', function (e) {
-//        GpPopup.gpAjaxForSignUp(e);
-//        console.log('oky');
-//    });
-
     /**
-     * Events from form Prestataire[code_postal] to find commune and localite
-     *
-     */
-
-    $('#prestataire_utilisateur_adresseUtilisateur_codePostal').on('change', function (e) {
-        GpPopup.gpAjaxFinalSignup(e);
-    });
-
-//    $('#prestataire_utilisateur_adresseUtilisateur_codePostal').on('keyup', function (e) {
-//        GpPopup.gpAjaxForSignUp(e);
-//    });
-
-
-    /**
-     * DOM manipulations
-     * 
+     **  Event from form Internaute[code_postal] to find commune and localite
      **/
 
-    //add référence id to popup['s'inscrire']
+    $('#utilisateur_adresseUtilisateur_codePostal').on('change', function (e) {
+        GpAnnuaire.gpAjaxFinalSignup(e)
+    });
+
+    /**
+     **  Events from form Prestataire[code_postal] to find commune and localite
+     **/
+
+    $('#prestataire_utilisateur_adresseUtilisateur_codePostal').on('change', function (e) {
+        GpAnnuaire.gpAjaxFinalSignup(e)
+    });
+
+    /**
+     **  Event change value input[type=file]
+     **/
+
+    $('[id*=file]').on('change', GpAnnuaire.checkTypeImg);
+
+    /**
+     **
+     **/
+
+//    $('#nom').on('change', function (e) {
+//        console.log('ok');
+//        GpAnnuaire.ajaxSearchPrestataire(e);
+//    });
+
+    /**
+     **  DOM manipulations
+     ** 
+     **/
+
+    /**
+     **  add référence id to popup['s'inscrire']
+     **/
 
     $('#body form:eq(1)').attr('id', 'subscribeForm');
 
-
-    //button submit popup['s'inscrire','se connecter']
+    /** 
+     **  button submit popup['s'inscrire','se connecter']
+     **/
 
     $('#body form:eq(1) button').attr({'class': 'btn btn-default', 'id': 'cmdSend'});
 
-
-    //checkox form[internaute][newsletter] -> hack construct mistake checbok for field newsletter -> <label><input type=checkox/></label>
+    /**
+     **  checkox form[internaute][newsletter] -> hack construct mistake checkbok for field newsletter -> <label><input type=checkox/></label>
+     **/
 
     //$('.checkbox').empty();
 
     //$('.checkbox').append('<input type="checkbox" id="utilisateur_internaute_newsletter" name="utilisateur[internaute][newsletter]" value="0"><label>Recevoir la newsletter</label>');
-
-
-    //    $('#utilisateur_adresseUtilisateur_commune').on('change', function (e) {
-    //        gpAjaxForSignUp(e);
-    //        console.log('e2');
-    //    });
-    //    $('#utilisateur_adresseUtilisateur_localite').on('change', function (e) {
-    //        gpAjaxForSignUp(e);
-    //        console.log('e3');
-    //    });
-
 
 });
 

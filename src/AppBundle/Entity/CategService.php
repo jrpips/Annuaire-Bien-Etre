@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CategService
@@ -36,6 +37,13 @@ class CategService {
 
     /**
      * @var string
+     * @Assert\NotBlank(message="un nom de service est requis")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "le nom du service doit contenir 2 caractères minimun",
+     *      maxMessage = "le nom du service doit contenir 50 caractères maximun"
+     * )
      *
      * @ORM\Column(name="nom", type="string", length=50, unique=true)
      */
@@ -43,7 +51,13 @@ class CategService {
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(message="une description du service est requise")
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 255,
+     *      minMessage = "le nom du service doit contenir 10 caractères minimun",
+     *      maxMessage = "le nom du service doit contenir 255 caractères maximun"
+     * )
      * @ORM\Column(name="description", type="string", length=255)
      */
     private $description;

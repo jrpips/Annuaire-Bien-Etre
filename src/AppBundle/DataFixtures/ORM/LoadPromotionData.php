@@ -16,9 +16,9 @@ class LoadPromotionData extends AbstractFixture implements OrderedFixtureInterfa
     private $nb = 3;
 
     public function load(ObjectManager $manager) {
-    
+       $faker = Factory::create();
         for ($i = 0; $i < $this->nb; $i++) {
-            $faker = Factory::create();
+         
             $promo = new Promotion();
             $promo->setNom($faker->colorName);
             $promo->setDescription($faker->sentence($nbWords = 6, $variableNbWords = false));

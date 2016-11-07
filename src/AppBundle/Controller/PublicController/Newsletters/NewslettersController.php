@@ -1,4 +1,5 @@
-<?php /*
+<?php 
+/*
   src/AppBundle/Controller/PublicController/Newsletters/NewsletterController.php
 
   NewsletterController

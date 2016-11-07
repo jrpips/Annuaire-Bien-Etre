@@ -17,8 +17,9 @@ class LoadInternauteData extends AbstractFixture implements OrderedFixtureInterf
 
     public function load(ObjectManager $manager) {
         $j;
+         $faker = Factory::create('fr_BE');
         for ($i = 0; $i < $this->nb; $i++) {
-            $faker = Factory::create('fr_BE');
+           
             $internaute = new Internaute();
             $internaute->setNom($faker->name);
             $internaute->setPrenom($faker->firstName($gender = null | 'male' | 'female'));

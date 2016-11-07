@@ -20,7 +20,7 @@ class StageController extends Controller {
     public function getNavStagesElementsAction() {
 
         $stages = $this->getDoctrine()->getManager()->getRepository('AppBundle:Stage')->findAll();
-        return $this->render('Public/Navigation/nav.child.stages.elements.html.twig', array(
+        return $this->render('Public/Navigation/Children/nav.child.stages.elements.html.twig', array(
                     'stages' => $stages,
         ));
     }

@@ -24,8 +24,7 @@ class Prestataire {
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Utilisateur", cascade={"persist"},inversedBy="prestataire")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\OneToOne(targetEntity="Utilisateur", cascade={"persist"},mappedBy="prestataire")
      * @Assert\Valid
      */
     private $utilisateur;
@@ -39,7 +38,7 @@ class Prestataire {
      *
      * @ORM\ManyToMany(targetEntity="Internaute",mappedBy="favoris",cascade={"persist"})
      */
-    private $abonnes;//ancien nom : $internautes
+    private $abonnes; //ancien nom : $internautes
 
     /**
      *
@@ -48,32 +47,45 @@ class Prestataire {
     private $categServices;
 
     /**
-     * @var string
-     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Le nom doit contenir 2 caractères minimun",
+     *      maxMessage = "Le nom ne peut contenir plus de 50 caractères"
+     * )
+     * @Assert\NotBlank(message="Un nom est requis")
      * @ORM\Column(name="nom", type="string", length=50, unique=true)
      */
     private $nom;
 
     /**
-     * @var string
-     * @Assert\NotBlank()
+     * @Assert\Url(
+     *    protocols = {"http", "https"},
+     *    checkDNS = true,
+     *    dnsMessage = "L'adresse '{{ value }}' ne répond pas."
+     * )
      * @ORM\Column(name="siteInternet", type="string", length=150, unique=true)
      */
     private $siteInternet;
 
     /**
      * @var string
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Un numéro de téléphone est requis")
      * @ORM\Column(name="telephone", type="string", length=50, unique=false)
      */
     private $telephone;
 
     /**
      * @var string
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Veuillez renseigner votre numéro")
      * @ORM\Column(name="tva", type="string", length=50, unique=true)
      */
     private $tva;
+
+    public function __toString() {
+        return $this->nom . '';
+        ;
+    }
 
     /**
      * Get id
@@ -272,7 +284,6 @@ class Prestataire {
         return $this->internautes;
     }
 
-
     /**
      * Set utilisateur
      *
@@ -280,8 +291,7 @@ class Prestataire {
      *
      * @return Prestataire
      */
-    public function setUtilisateur(\AppBundle\Entity\Utilisateur $utilisateur = null)
-    {
+    public function setUtilisateur(\AppBundle\Entity\Utilisateur $utilisateur = null) {
         $this->utilisateur = $utilisateur;
 
         return $this;
@@ -292,8 +302,7 @@ class Prestataire {
      *
      * @return \AppBundle\Entity\Utilisateur
      */
-    public function getUtilisateur()
-    {
+    public function getUtilisateur() {
         return $this->utilisateur;
     }
 
@@ -304,8 +313,7 @@ class Prestataire {
      *
      * @return Prestataire
      */
-    public function addAbonne(\AppBundle\Entity\Internaute $abonne)
-    {
+    public function addAbonne(\AppBundle\Entity\Internaute $abonne) {
         $this->abonnes[] = $abonne;
 
         return $this;
@@ -316,8 +324,7 @@ class Prestataire {
      *
      * @param \AppBundle\Entity\Internaute $abonne
      */
-    public function removeAbonne(\AppBundle\Entity\Internaute $abonne)
-    {
+    public function removeAbonne(\AppBundle\Entity\Internaute $abonne) {
         $this->abonnes->removeElement($abonne);
     }
 
@@ -326,8 +333,8 @@ class Prestataire {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAbonnes()
-    {
+    public function getAbonnes() {
         return $this->abonnes;
     }
+
 }

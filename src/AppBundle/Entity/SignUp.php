@@ -14,8 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class SignUp {
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -23,29 +21,46 @@ class SignUp {
     private $id;
 
     /**
-     * @var string
-     *
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Le nom doit contenir 2 caractères minimun",
+     *      maxMessage = "Le nom ne peut contenir plus de 50 caractères"
+     * )
+     * * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Votre nom ne peut contenir de chiffre"
+     * )
+     * @Assert\NotBlank(message="Un nom est requis")
      * @ORM\Column(name="firstname", type="string", length=50)
-     * @Assert\Length(min=2,minMessage="2 caract. minimum")
-     * @Assert\NotBlank(message="requis")
      */
     private $firstname;
 
     /**
-     * @var string
-     *
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Le prénom doit contenir 2 caractères minimun",
+     *      maxMessage = "Le prénom ne peut contenir plus de 50 caractères"
+     * )
+     * * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Votre prénom ne peut contenir de chiffre"
+     * )
+     * @Assert\NotBlank(message="Un prénom est requis")
      * @ORM\Column(name="lastname", type="string", length=50)
-     * @Assert\Length(min=2,minMessage="2 caract. minimum")
-     * @Assert\NotBlank(message="requis")
      */
     private $lastname;
 
     /**
-     * @var string
-     *
+     * @Assert\Email(
+     *     message = "L'email '{{ value }}' est invalde.",
+     *     checkMX = true
+     * )
+     * @Assert\NotBlank(message="Une adresse email est requise")
      * @ORM\Column(name="email", type="string", length=80, unique=true)
-     * @Assert\Length(min=2,minMessage="2 caract. minimum")
-     * @Assert\NotBlank(message="requis")
      */
     private $email;
 
@@ -58,8 +73,6 @@ class SignUp {
 
     /**
      * Get id
-     *
-     * @return int
      */
     public function getId() {
         return $this->id;
@@ -67,10 +80,6 @@ class SignUp {
 
     /**
      * Set firstname
-     *
-     * @param string $firstname
-     *
-     * @return SignUp
      */
     public function setFirstname($firstname) {
         $this->firstname = $firstname;
@@ -80,8 +89,6 @@ class SignUp {
 
     /**
      * Get firstname
-     *
-     * @return string
      */
     public function getFirstname() {
         return $this->firstname;
@@ -89,10 +96,6 @@ class SignUp {
 
     /**
      * Set lastname
-     *
-     * @param string $lastname
-     *
-     * @return SignUp
      */
     public function setLastname($lastname) {
         $this->lastname = $lastname;
@@ -102,8 +105,6 @@ class SignUp {
 
     /**
      * Get lastname
-     *
-     * @return string
      */
     public function getLastname() {
         return $this->lastname;
@@ -111,10 +112,6 @@ class SignUp {
 
     /**
      * Set email
-     *
-     * @param string $email
-     *
-     * @return SignUp
      */
     public function setEmail($email) {
         $this->email = $email;
@@ -124,10 +121,9 @@ class SignUp {
 
     /**
      * Get email
-     *
-     * @return string
      */
     public function getEmail() {
         return $this->email;
     }
+
 }

@@ -12,7 +12,7 @@ class IndexController extends Controller {
      */
     public function indexAction() {
         $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findAll();
-        
+        dump($prestataires);
         return $this->render('Public/index.html.twig', array(
                     'prestataires' => $prestataires,
        ));

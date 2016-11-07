@@ -16,10 +16,8 @@ class ImageType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                //->add('ordre')
                 ->add('name', TextType::class, array('required' => false))
                 ->add('file', FileType::class, array('required' => false,'label'=>'Déposer votre image'))
-        //->add('prestataire')
         ;
     }
 
@@ -29,7 +27,7 @@ class ImageType extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Image',
-             'cascade_validation' => true
+//             'cascade_validation' => true
         ));
     }
 

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Promotion
@@ -26,24 +27,33 @@ class Promotion {
      * @ORM\JoinColumn(nullable=false)
      */
     private $prestataire;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="CategService")
      * @ORM\JoinColumn(nullable=false)
      */
     private $categService;
 
-    
     /**
-     * @var string
-     *
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 100,
+     *      minMessage = "Le nom doit contenir 2 caractères minimun",
+     *      maxMessage = "Le nom ne peut contenir plus de 100 caractères"
+     * )
+     * @Assert\NotBlank(message="Un nom est requis")
      * @ORM\Column(name="nom", type="string", length=100)
      */
     private $nom;
 
     /**
-     * @var string
-     *
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 255,
+     *      minMessage = "La description doit contenir 10 caractères minimun",
+     *      maxMessage = "La description ne peut contenir plus de 255 caractères"
+     * )
+     * @Assert\NotBlank(message="Une description est requise")
      * @ORM\Column(name="description", type="string", length=255)
      */
     private $description;
@@ -246,7 +256,6 @@ class Promotion {
         return $this->affichageFin;
     }
 
-
     /**
      * Set prestataire
      *
@@ -254,8 +263,7 @@ class Promotion {
      *
      * @return Promotion
      */
-    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire)
-    {
+    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire) {
         $this->prestataire = $prestataire;
 
         return $this;
@@ -266,8 +274,7 @@ class Promotion {
      *
      * @return \AppBundle\Entity\Prestataire
      */
-    public function getPrestataire()
-    {
+    public function getPrestataire() {
         return $this->prestataire;
     }
 
@@ -278,8 +285,7 @@ class Promotion {
      *
      * @return Promotion
      */
-    public function setCategService(\AppBundle\Entity\CategService $categService)
-    {
+    public function setCategService(\AppBundle\Entity\CategService $categService) {
         $this->categService = $categService;
 
         return $this;
@@ -290,8 +296,8 @@ class Promotion {
      *
      * @return \AppBundle\Entity\CategService
      */
-    public function getCategService()
-    {
+    public function getCategService() {
         return $this->categService;
     }
+
 }

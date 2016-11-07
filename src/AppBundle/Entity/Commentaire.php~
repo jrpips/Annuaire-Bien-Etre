@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Commentaire
@@ -10,8 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="commentaire")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CommentaireRepository")
  */
-class Commentaire
-{
+class Commentaire {
+
     /**
      * @var int
      *
@@ -20,12 +21,13 @@ class Commentaire
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * @ORM\ManyToOne(targetEntity="Internaute", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $internaute;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Prestataire", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
@@ -40,14 +42,25 @@ class Commentaire
     private $cote;
 
     /**
-     * @var string
-     *
+     * @Assert\NotBlank(message="Un titre est requis")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 100,
+     *      minMessage = "Le titre du commentaire doit contenir 2 caractères minimun",
+     *      maxMessage = "Le titre est trop long, 100 caractères maximun"
+     * )
      * @ORM\Column(name="titre", type="string", length=100)
      */
     private $titre;
 
     /**
-     * @var string
+     * @Assert\NotBlank(message="Un commentaire est requis")
+     * @Assert\Length(
+     *      min = 15,
+     *      max = 255,
+     *      minMessage = "Le commentaire doit contenir 15 caractères minimun",
+     *      maxMessage = "Le commentaire est trop long, doit contenir 255 caractères maximun"
+     * )
      *
      * @ORM\Column(name="contenu", type="text")
      */
@@ -60,14 +73,12 @@ class Commentaire
      */
     private $encodage;
 
-
     /**
      * Get id
      *
      * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -78,8 +89,7 @@ class Commentaire
      *
      * @return Commentaire
      */
-    public function setCote($cote)
-    {
+    public function setCote($cote) {
         $this->cote = $cote;
 
         return $this;
@@ -90,8 +100,7 @@ class Commentaire
      *
      * @return float
      */
-    public function getCote()
-    {
+    public function getCote() {
         return $this->cote;
     }
 
@@ -102,8 +111,7 @@ class Commentaire
      *
      * @return Commentaire
      */
-    public function setTitre($titre)
-    {
+    public function setTitre($titre) {
         $this->titre = $titre;
 
         return $this;
@@ -114,8 +122,7 @@ class Commentaire
      *
      * @return string
      */
-    public function getTitre()
-    {
+    public function getTitre() {
         return $this->titre;
     }
 
@@ -126,8 +133,7 @@ class Commentaire
      *
      * @return Commentaire
      */
-    public function setContenu($contenu)
-    {
+    public function setContenu($contenu) {
         $this->contenu = $contenu;
 
         return $this;
@@ -138,8 +144,7 @@ class Commentaire
      *
      * @return string
      */
-    public function getContenu()
-    {
+    public function getContenu() {
         return $this->contenu;
     }
 
@@ -150,8 +155,7 @@ class Commentaire
      *
      * @return Commentaire
      */
-    public function setEncodage($encodage)
-    {
+    public function setEncodage($encodage) {
         $this->encodage = $encodage;
 
         return $this;
@@ -162,8 +166,7 @@ class Commentaire
      *
      * @return \DateTime
      */
-    public function getEncodage()
-    {
+    public function getEncodage() {
         return $this->encodage;
     }
 
@@ -174,8 +177,7 @@ class Commentaire
      *
      * @return Commentaire
      */
-    public function setInternaute(\AppBundle\Entity\Internaute $internaute)
-    {
+    public function setInternaute(\AppBundle\Entity\Internaute $internaute) {
         $this->internaute = $internaute;
 
         return $this;
@@ -186,8 +188,7 @@ class Commentaire
      *
      * @return \AppBundle\Entity\Internaute
      */
-    public function getInternaute()
-    {
+    public function getInternaute() {
         return $this->internaute;
     }
 
@@ -198,8 +199,7 @@ class Commentaire
      *
      * @return Commentaire
      */
-    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire)
-    {
+    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire) {
         $this->prestataire = $prestataire;
 
         return $this;
@@ -210,8 +210,8 @@ class Commentaire
      *
      * @return \AppBundle\Entity\Prestataire
      */
-    public function getPrestataire()
-    {
+    public function getPrestataire() {
         return $this->prestataire;
     }
+
 }

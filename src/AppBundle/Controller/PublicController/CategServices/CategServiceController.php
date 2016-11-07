@@ -7,14 +7,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\CategService;
 
-class CategServicesController extends Controller {
+class CategServiceController extends Controller {
     /** 
      * call by views/Public/Navigation/nav.parent.menu
      */
     public function getNavServicesElementsAction() {
 
         $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findAll();
-        return $this->render('Public/Navigation/nav.child.services.elements.html.twig', array(
+        return $this->render('Public/Navigation/Children/nav.child.services.elements.html.twig', array(
                     'services' => $services,
         ));
     }
@@ -32,11 +32,11 @@ class CategServicesController extends Controller {
     }
 
     /**
-     * @Route("/services/service/details/{service_id}", name="details_service")
+     * @Route("/services/details/du/service/{service_nom}", name="details_service")
      */
-    public function getDetailsServiceAction($service_id) {
+    public function getDetailsServiceAction($service_nom) {
 
-        $service = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->find($service_id);
+        $service = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findOneByNom($service_nom);
         dump($service);
         return $this->render('Public/Services/display.details.service.html.twig', array(
                     'service' => $service,

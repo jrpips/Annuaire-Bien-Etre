@@ -16,8 +16,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Internaute {
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -25,7 +23,7 @@ class Internaute {
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Utilisateur", cascade={"persist"},inversedBy="internaute")
+     * @ORM\OneToOne(targetEntity="Utilisateur", cascade={"persist"},mappedBy="internaute")
      * @ORM\JoinColumn(nullable=true)
      * @Assert\Valid
      */
@@ -42,25 +40,43 @@ class Internaute {
      * @ORM\ManyToMany(targetEntity="Prestataire", inversedBy="abonnes")
      * @ORM\JoinTable(name="prestataire_for_internaute")
      */
-    private $favoris;//ancien nom : $prestataires
+    private $favoris; //ancien nom : $prestataires
 
     /**
-     * @var string
-     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Le nom doit contenir 2 caractères minimun",
+     *      maxMessage = "Le nom ne peut contenir plus de 50 caractères"
+     * )
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Votre nom ne peut contenir de chiffre"
+     * )
+     * @Assert\NotBlank(message="Un nom est requis")
      * @ORM\Column(name="nom", type="string", length=50)
      */
     private $nom;
 
     /**
-     * @var string
-     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Le prénom doit contenir 2 caractères minimun",
+     *      maxMessage = "Le prénom ne peut contenir plus de 50 caractères"
+     * )
+     * * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Votre prénom ne peut contenir de chiffre"
+     * )
+     * @Assert\NotBlank(message="Un prénom est requis")
      * @ORM\Column(name="prenom", type="string", length=50)
      */
     private $prenom;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="newsletter", type="boolean")
      */
     private $newsletter;
@@ -213,7 +229,6 @@ class Internaute {
         $this->prestataires->removeElement($prestataire);
     }
 
-
     /**
      * Set utilisateur
      *
@@ -221,8 +236,7 @@ class Internaute {
      *
      * @return Internaute
      */
-    public function setUtilisateur(\AppBundle\Entity\Utilisateur $utilisateur = null)
-    {
+    public function setUtilisateur(\AppBundle\Entity\Utilisateur $utilisateur = null) {
         $this->utilisateur = $utilisateur;
 
         return $this;
@@ -233,8 +247,7 @@ class Internaute {
      *
      * @return \AppBundle\Entity\Utilisateur
      */
-    public function getUtilisateur()
-    {
+    public function getUtilisateur() {
         return $this->utilisateur;
     }
 
@@ -245,8 +258,7 @@ class Internaute {
      *
      * @return Internaute
      */
-    public function addFavori(\AppBundle\Entity\Prestataire $favori)
-    {
+    public function addFavori(\AppBundle\Entity\Prestataire $favori) {
         $this->favoris[] = $favori;
 
         return $this;
@@ -257,8 +269,7 @@ class Internaute {
      *
      * @param \AppBundle\Entity\Prestataire $favori
      */
-    public function removeFavori(\AppBundle\Entity\Prestataire $favori)
-    {
+    public function removeFavori(\AppBundle\Entity\Prestataire $favori) {
         $this->favoris->removeElement($favori);
     }
 
@@ -267,8 +278,8 @@ class Internaute {
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getFavoris()
-    {
+    public function getFavoris() {
         return $this->favoris;
     }
+
 }

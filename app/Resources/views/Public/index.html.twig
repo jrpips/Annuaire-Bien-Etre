@@ -10,7 +10,7 @@
 
 {% block body %}
 
-    <div class="main">
+    <div class="main" id="homepage">
 
         <div class="main-inner">
 
@@ -33,19 +33,19 @@
                         <!-- Wrapper for slides -->
 
                         <div class="carousel-inner" role="listbox" >
-                            
+
                             {% set slider =['poster.jpg','poster2.jpg','poster3.jpg'] %} <!-- erzatz chargement DB -->
-                            
+
                             {% for photo in slider %}
-                                
+
                                 {% set class=loop.index==1?'active':'' %}
-                                
+
                                 <div class="item {{class}}">
                                     <img src="{{asset("image/"~photo)}}" alt="Chania">
                                 </div>
-                                
+
                             {% endfor %}
-                            
+
                         </div>
 
                         <!-- Left and right controls -->
@@ -69,14 +69,14 @@
                                     <h1>Bien-Être</h1>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>Maecenas a porttitor sem. Morbi et lacinia. </p>
 
-                                    <div class="input-group">
+                                   {# <div class="input-group">
 
                                         <input type="text" class="form-control" placeholder="Recherche de services, prestataires ...">
                                         <span class="input-group-btn">
                                             <button class="btn btn-primary" type="button">Recherche</button>
                                         </span>
 
-                                    </div><!-- /.input-group -->
+                                    </div><!-- /.input-group -->#}
 
                                 </div><!-- /.col-* -->
 
@@ -117,14 +117,13 @@
 
                                     <div class="col-sm-6 col-md-3">
 
-                                        <div class="card-simple" data-background-image="
-{#                                             {{asset(prestataire.images|first)}}#}
-                                             ">
+                                        <div class="card-simple"> 
+                                            
+                                           {% set imgServicePrestataire=(prestataire.images is not null)?(prestataire.images)|first.url:'image/prestataire.png' %}
 
-                                            <div class="card-simple-background">
+                                            <div class="card-simple-background" style="background:url('{{asset(imgServicePrestataire)}}') no-repeat;background-size:cover">
 
                                                 <div class="card-simple-content">
-
                                                     <h2><a href="listing-detail.html"></a>{{prestataire.nom}}</h2>
 
                                                     <div class="card-simple-rating">
@@ -143,8 +142,8 @@
 
                                                 </div><!-- /.card-simple-content -->
 
-{#                                                {{ dump(prestataire.categServices) }}#}
-                                                <div class="card-simple-label">{{(prestataire.categServices)|first}}</div>
+{#                                          {% set firstService=(prestataire.categServices is defined)?(prestataire.categServices)|first.nom:'service' %}#}
+                                                <div class="card-simple-label">{{prestataire.siteInternet}}</div>
 
                                             </div><!-- /.card-simple-background -->
 

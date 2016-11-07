@@ -17,8 +17,9 @@ class LoadCategServiceData extends AbstractFixture implements OrderedFixtureInte
 
     public function load(ObjectManager $manager) {
         $j;
+        $faker = Factory::create('fr_BE');
         for ($i = 0; $i < $this->nb; $i++) {
-            $faker = Factory::create('fr_BE');
+            
             $categ = new CategService();
             $categ->setNom($faker->colorName);
             $categ->setDescription($faker->sentence($nbWords = 6, $variableNbWords = false));

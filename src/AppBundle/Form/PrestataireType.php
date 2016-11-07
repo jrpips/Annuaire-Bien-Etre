@@ -23,7 +23,7 @@ class PrestataireType extends AbstractType
         $builder
             ->add('nom', TextType::class, array('required' => false))
             ->add('siteInternet', TextType::class, array('required' => false))
-//            ->add('email', EmailType::class, array('required' => false))
+
             ->add('telephone', TextType::class, array('required' => false))
             ->add('tva', TextType::class, array('required' => false))
             ->add('utilisateur', UtilisateurType::class)

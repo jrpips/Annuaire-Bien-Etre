@@ -15,9 +15,12 @@ class LoadImageData extends AbstractFixture implements OrderedFixtureInterface {
     private $nb = 19;
 
     public function load(ObjectManager $manager) {
+        
         $j = 0;
+        $faker = Factory::create('fr_BE');
+        
         for ($i = 0; $i < $this->nb; $i++) {
-            $faker = Factory::create('fr_BE');
+
             $img = new Image();
             $img->setOrdre($i);
             $img->setUrl($faker->imageUrl(40, 40, 'business'));
@@ -39,5 +42,5 @@ class LoadImageData extends AbstractFixture implements OrderedFixtureInterface {
         // l'ordre ds lequel les fixtures seront chargées         
         return 6;
     }
-    
+
 }

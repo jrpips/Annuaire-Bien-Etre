@@ -16,22 +16,23 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Prestataire;
 use AppBundle\Entity\Utilisateur;
 use AppBundle\Form\PrestataireType;
+use AppBundle\Form\MoteurDeRechercheType;
 
 class PrestataireController extends Controller {
 
     /**
      * call by views/Public/Navigation/nav.parent.menu
      */
-    public function getNavPrestatairesElementsAction() {
+    public function getChildNavPrestatairesElementsAction() {
 
         $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findAll();
-        return $this->render('Public/Navigation/nav.child.prestataires.elements.html.twig', array(
+        return $this->render('Public/Navigation/Children/nav.child.prestataires.elements.html.twig', array(
                     'prestataires' => $prestataires,
         ));
     }
 
     /**
-     * @Route("/inscription/prestataire",name="signupPrestataire")
+     * @Route("/inscription/prestataires",name="signupPrestataire")
      */
     public function subscribeNewPrestataireAction(Request $request) {
 
@@ -52,6 +53,54 @@ class PrestataireController extends Controller {
         return $this->render('Public\Prestataires\form.signup.prestataire.html.twig', array(
                     'form' => $form->createView(),
                     'prestataire' => $new_prestataire
+        ));
+    }
+
+    /**
+     * @Route("/prestataires/details/prestataire/{prestataire_nom}",name="details_prestataire")
+     */
+    public function getPrestataireDetailsAction($prestataire_nom) {
+        $prestataire = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findOneByNom($prestataire_nom);
+        dump($prestataire);
+        return $this->render('Public\Prestataires\display.details.prestataire.html.twig', array(
+                    'prestataire' => $prestataire
+        ));
+    }
+
+    /**
+     * @Route("recherche/prestataire",options={"expose"=true},name="search_prestataire")
+     */
+    public function moteurDeRecherchePrestataires() {
+
+//        $prestataire = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->recherche($param);
+//        dump($prestataire);
+        $form = $this->get('form.factory')->create(MoteurDeRechercheType::class);
+
+        return $this->render('Public\Prestataires\SearchPrestataire\moteur.de.recherche.prestataire.html.twig', array(
+                    'form' => $form->createView(),
+                        //  'prestataire' => $prestataire
+        ));
+    }
+
+    /**
+     * @Route("recherche/prestataire/resultat",options={"expose"=true},name="search_nom_prestataire")
+     */
+    public function moteurDeRecherchePrestatairesByNom(Request $request) {
+
+        if ($request->getMethod() == 'POST') {
+//             $form->handleRequest();
+            $nom = $request->request->all();
+            //$nom=$request->request->get('recherche');
+            foreach ($nom as $k => $v) {
+                $nom = $v['recherche'];
+            }
+        }
+        $prestataire = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findOneByNom($nom);
+        dump($prestataire);
+
+
+        return $this->render('Public\Prestataires\SearchPrestataire\resultat.recherche.prestataire.html.twig', array(
+                    'prestataire' => $prestataire
         ));
     }
 

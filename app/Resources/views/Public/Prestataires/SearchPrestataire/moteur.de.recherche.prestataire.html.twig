@@ -1,0 +1,11 @@
+{# empty Twig template #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div style="margin:300px 0">
+        <form action="{{path('search_nom_prestataire')}}" method="POST">
+            {{form_widget(form.recherche)}}
+            {{form_rest(form)}}
+        </form>
+    </div>
+{%endblock%}

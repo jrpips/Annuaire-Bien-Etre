@@ -24,21 +24,21 @@ class AdresseUtilisateur {
 
     /**
      * @var int
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Un code postal est requis")
      * @ORM\Column(name="codePostal", type="integer")
      */
     private $codePostal;
 
     /**
      * @var string
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Une localité est requise")
      * @ORM\Column(name="localite", type="string", length=100)
      */
     private $localite;
 
     /**
      * @var string
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Une commune est requise")
      * @ORM\Column(name="commune", type="string", length=100)
      */
     private $commune;

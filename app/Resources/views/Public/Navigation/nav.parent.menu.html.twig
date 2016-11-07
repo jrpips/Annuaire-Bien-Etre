@@ -3,7 +3,7 @@
 <ul id="myNavbar" class="gp_menu header-nav-primary nav nav-pills collapse navbar-collapse" >
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-        {{ include("Public/Navigation/nav.child.authenticated.profil.html.twig") }}
+        {{ include("Public/Navigation/Children/nav.child.authenticated.profil.html.twig") }}
 
     {% else %}
 
@@ -35,7 +35,7 @@
     <li >       
         <a href="#">Services <i class="fa fa-chevron-down"></i></a>
 
-        {{render(controller("AppBundle:PublicController/CategServices/CategServices:getNavServicesElements"))}}
+        {{render(controller("AppBundle:PublicController/CategServices/CategService:getNavServicesElements"))}}
 
     </li>
 
@@ -48,7 +48,7 @@
             <li>
 
                 <a href="#">Prestataires Favoris</a>
-                {{render(controller("AppBundle:PublicController/Prestataires/Prestataire:getNavPrestatairesElements"))}}
+                {{render(controller("AppBundle:PublicController/Prestataires/Prestataire:getChildNavPrestatairesElements"))}}
 
             </li>
 
@@ -93,7 +93,7 @@
 <div id="modale">
     <section id="popup">
 
-        {{render(controller("AppBundle:SignUp:getNavPreSignupElements"))}}   
+        {{render(controller("AppBundle:PublicController/Internautes/Internaute:getChildNavPreSignupElements"))}}   
 
     </section>
 </div>

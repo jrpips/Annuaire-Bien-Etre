@@ -15,8 +15,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class Utilisateur implements UserInterface {
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -24,46 +22,67 @@ class Utilisateur implements UserInterface {
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Internaute",mappedBy="utilisateur")
+     * @ORM\OneToOne(targetEntity="Internaute",cascade={"persist"},inversedBy="utilisateur")
      * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid
      */
     private $internaute;
 
     /**
-     * @ORM\OneToOne(targetEntity="Prestataire",mappedBy="utilisateur")
+     * @ORM\OneToOne(targetEntity="Prestataire",cascade={"persist"},inversedBy="utilisateur")
      * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid
      */
     private $prestataire;
 
     /**
-     * 
      * @ORM\OneToOne(targetEntity="AdresseUtilisateur", cascade={"persist"})
      * @Assert\Valid
      */
     private $adresseUtilisateur;
 
     /**
-     * @var string
+     * @Assert\Email(
+     *     message = "L'email '{{ value }}' est invalde.",
+     *     checkMX = true
+     * )
+     * @Assert\NotBlank(message="Une adresse email est requise.")
      *
      * @ORM\Column(name="email", type="string", length=150, unique=true)
-     * @Assert\Length(min=2,minMessage="2 caract. minimum")
-     * @Assert\NotBlank(message="requis")
      */
     private $email;
 
     /**
-     * @ORM\Column(name="username", type="string", length=255)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Le pseudo doit contenir 2 caractères minimun.",
+     *      maxMessage = "Le pseudo ne peut contenir plus de 50 caractères."
+     * )
+     * @Assert\NotBlank(message="Un pseudo est requis")
+     * 
+     * @ORM\Column(name="username", type="string", length=50)
      */
     private $username;
 
     /**
-     * @var string
-     *
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 50,
+     *      minMessage = "Le mot de passe doit contenir 3 caractères minimun.",
+     *      maxMessage = "Le nom ne peut contenir plus de 50 caractères"
+     * )
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z0-9]+$/",
+     *     match=true,
+     *     message="Le mot de passe ne peut contenir des caractères spéciaux." 
+     * )
+     * @Assert\NotBlank(message="Minimun 3 caractères alphanumériques.")
+     * 
      * @ORM\Column(name="password", type="string", length=255)
-     * @Assert\NotBlank(message="Minimun 6 caractères alphanumériques")
      */
     private $password;
-    private $confPwd;
+    //private $confPwd;
 
     /**
      * @ORM\Column(name="roles", type="array")
@@ -71,52 +90,45 @@ class Utilisateur implements UserInterface {
     private $roles = array();
 
     /**
-     * @ORM\Column(name="salt", type="string", length=255)
+     * @ORM\Column(name="salt", type="string", length=255,nullable=true)
      */
     private $salt;
 
     /**
-     * @var float
-     *
+     * @Assert\Regex(
+     *     pattern="/^[0-9]+$/",
+     *     match=true,
+     *     message="Le numéro est invalide." 
+     * )
+     * @Assert\NotBlank(message="Un numéro est requis.")
+     * 
      * @ORM\Column(name="adresseNumero", type="float")
-     * @Assert\Length(min=2,minMessage="2 caract. minimum")
-     * @Assert\NotBlank(message="requis")
      */
     private $adresseNumero;
 
     /**
-     * @var string
+     * @Assert\NotBlank(message="Un nom de rue est requis.")
      *
-     * @ORM\Column(name="adresseRue", type="string", length=150)
-     * @Assert\Length(min=2,minMessage="2 caract. minimum")
-     * @Assert\NotBlank(message="requis")
+     * @ORM\Column(name="adresseRue", type="string", length=150)    
      */
     private $adresseRue;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="inscription", type="date")
      */
     private $inscription;
 
     /**
-     * @var float
-     *
      * @ORM\Column(name="essaiPwd", type="float")
      */
     private $essaiPwd;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="banni", type="boolean")
      */
     private $banni;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="inscriptionConf", type="boolean")
      */
     private $inscriptionConf;
@@ -129,20 +141,20 @@ class Utilisateur implements UserInterface {
         $this->setInscription(new \DateTime());
         $this->setBanni(false);
         $this->setInscriptionConf(true);
-        $this->setEssaiPwd(3);
+        $this->setEssaiPwd(0);
+//        $this->setSalt('');
+//        $this->setRoles('ROLE_INTERNAUTE');
     }
 
-    /**
-     * @Assert\IsTrue(message="confirmation erronée")
-     */
-    public function isConfPwd() {
-        return ($this->password === $this->confPwd) ? true : false;
-    }
+//    /**
+//     * @Assert\IsTrue(message="confirmation erronée")
+//     */
+//    public function isConfPwd() {
+//        return $this->password === $this->confPwd;
+//    }
 
     /**
      * Get id
-     *
-     * @return int
      */
     public function getId() {
         return $this->id;
@@ -150,10 +162,6 @@ class Utilisateur implements UserInterface {
 
     /**
      * Set email
-     *
-     * @param string $email
-     *
-     * @return Utilisateur
      */
     public function setEmail($email) {
         $this->email = $email;
@@ -163,8 +171,6 @@ class Utilisateur implements UserInterface {
 
     /**
      * Get email
-     *
-     * @return string
      */
     public function getEmail() {
         return $this->email;
@@ -172,10 +178,6 @@ class Utilisateur implements UserInterface {
 
     /**
      * Set pwd
-     *
-     * @param string $pwd
-     *
-     * @return Utilisateur
      */
     public function setPassword($password) {
         $this->password = $password;
@@ -185,27 +187,25 @@ class Utilisateur implements UserInterface {
 
     /**
      * Get pwd
-     *
-     * @return string
      */
     public function getPassword() {
         return $this->password;
     }
 
-    public function setConfPwd($confPwd) {
-        $this->email = $confPwd;
-
-        return $this;
-    }
-
-    /**
-     * Get confPwd
-     *
-     * @return string
-     */
-    public function getConfPwd() {
-        return $this->confPwd;
-    }
+//    public function setConfPwd($confPwd) {
+//        $this->email = $confPwd;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get confPwd
+//     *
+//     * @return string
+//     */
+//    public function getConfPwd() {
+//        return $this->confPwd;
+//    }
 
     /**
      * Set roles
@@ -215,7 +215,7 @@ class Utilisateur implements UserInterface {
      * @return User
      */
     public function setRoles($roles) {
-        $this->roles = $roles;
+        $this->roles = array($roles);
 
         return $this;
     }

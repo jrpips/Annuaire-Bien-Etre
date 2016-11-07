@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Newsletter
@@ -10,8 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="newsletter")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NewsletterRepository")
  */
-class Newsletter
-{
+class Newsletter {
+
     /**
      * @var int
      *
@@ -22,8 +23,13 @@ class Newsletter
     private $id;
 
     /**
-     * @var string
-     *
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 80,
+     *      minMessage = "Le titre doit contenir 2 caractères minimun",
+     *      maxMessage = "Le titre ne peut contenir plus de 50 caractères"
+     * )
+     * @Assert\NotBlank(message="Un titre est requis")
      * @ORM\Column(name="titre", type="string", length=80)
      */
     private $titre;
@@ -42,14 +48,12 @@ class Newsletter
      */
     private $pdf;
 
-
     /**
      * Get id
      *
      * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -60,8 +64,7 @@ class Newsletter
      *
      * @return Newsletter
      */
-    public function setTitre($titre)
-    {
+    public function setTitre($titre) {
         $this->titre = $titre;
 
         return $this;
@@ -72,8 +75,7 @@ class Newsletter
      *
      * @return string
      */
-    public function getTitre()
-    {
+    public function getTitre() {
         return $this->titre;
     }
 
@@ -84,8 +86,7 @@ class Newsletter
      *
      * @return Newsletter
      */
-    public function setPublication($publication)
-    {
+    public function setPublication($publication) {
         $this->publication = $publication;
 
         return $this;
@@ -96,8 +97,7 @@ class Newsletter
      *
      * @return \DateTime
      */
-    public function getPublication()
-    {
+    public function getPublication() {
         return $this->publication;
     }
 
@@ -108,8 +108,7 @@ class Newsletter
      *
      * @return Newsletter
      */
-    public function setPdf($pdf)
-    {
+    public function setPdf($pdf) {
         $this->pdf = $pdf;
 
         return $this;
@@ -120,8 +119,8 @@ class Newsletter
      *
      * @return string
      */
-    public function getPdf()
-    {
+    public function getPdf() {
         return $this->pdf;
     }
+
 }
