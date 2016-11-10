@@ -41,7 +41,7 @@ class InternauteController extends Controller {
                     ->getDoctrine()
                     ->getManager()
                     ->getRepository('AppBundle:Internaute')
-                    ->getPrestatairesFavoris($this->getUser()->getInternaute()->getId());
+                    ->getPrestatairesFavoris($this->getUser()->getInternaute()->getId());//récupération Id internaute
         }
         $myFavoris = $myFavoris[0];
         dump($myFavoris);
@@ -51,23 +51,61 @@ class InternauteController extends Controller {
     }
 
     /**
-     * @Route("/gestion/favoris/{nomPrestataire}",options={"expose"=true},name="favoris")
+     * @Route("/gestion/favoris/liste",options={"expose"=true},name="display_favoris")
      */
-    public function gestionFavorisAction(Request $request, $nomPrestataire = 'Cornette') {
+    public function displayFavorisAction() {
+        return $this->render('Public/Internautes/EditProfile/display.liste.favoris.html.twig');
+    }
+
+    /**
+     * @Route("/gestion/favoris/add/{nomPrestataire}",options={"expose"=true},name="add_favoris")
+     */
+    public function addFavorisAction(Request $request, $nomPrestataire = 'Cornette') {
         if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {
-            $em = $this
-                            ->getDoctrine()->getManager();
+
+            $em = $this->getDoctrine()->getManager();
+
             $newAbonne = $em
-                    ->getRepository('AppBundle:Internaute')
-                    ->getPrestatairesFavoris($this->getUser()->getInternaute()->getId());
+                ->getRepository('AppBundle:Internaute')
+                ->getPrestatairesFavoris($this->getUser()->getInternaute()->getId());
+
             $newFavori = $em
-                    ->getRepository('AppBundle:Prestataire')
-                    ->findByNom($nomPrestataire);
+                ->getRepository('AppBundle:Prestataire')
+                ->findByNom($nomPrestataire);
+
             $newAbonne[0]->addFavori($newFavori[0]);
+
             $em = $this->getDoctrine()->getManager();
             $em->flush();
-            return $this->redirectToRoute('home');
         }
+            return $this->redirectToRoute('home');
+
+    }
+
+    /**
+     * @Route("/gestion/favoris/remove/{nomPrestataire}",options={"expose"=true},name="remove_favori")
+     */
+    public function removeFavorisAction(Request $request, $nomPrestataire = null, $idInternaute = null) {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $oldAbonne = $em
+                ->getRepository('AppBundle:Internaute')
+                ->findInternaute($this->getUser()->getInternaute()->getId());
+
+            $oldFavori = $em
+                ->getRepository('AppBundle:Prestataire')
+                ->findByNom($nomPrestataire);
+
+            $oldAbonne[0]->removeFavori($oldFavori[0]);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+        }
+
+
+        return $this->redirectToRoute('display_favoris');
     }
 
     /**

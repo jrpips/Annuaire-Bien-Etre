@@ -1,0 +1,23 @@
+{# empty Twig template #}
+{% extends 'Public/Internautes/EditProfile/nav.edit.profile.internaute.html.twig' %}
+
+{% block edit %}
+<div class="col-sm-8 col-lg-9">
+
+    <div class="content">
+        <div class="row">
+
+            <div class="page-title">
+                <h1>
+                   Liste des favoris
+                </h1>
+            </div>
+            <div class="background-white p20 mb30">
+                    {%for favori in app.user.internaute.favoris%}
+                        <div>{{favori}} <a style="color:rosybrown" href="{{path('remove_favori',{'nomPrestataire':favori,'idInternaute':app.user.internaute.id})}}">X</a></div>
+                    {%endfor%}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

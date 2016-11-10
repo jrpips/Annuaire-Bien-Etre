@@ -33,7 +33,7 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository {
                         ->innerJoin('p.categServices', 's')->addSelect('s')
                         ->innerJoin('u.adresseUtilisateur', 'adr')->addSelect('adr');
 
-        $qb->where("p.nom like :nom")
+        $qb->andWhere("p.nom like :nom")
                 ->andWhere("adr.commune like :commune")
                 ->andWhere("s.nom like :service");
 

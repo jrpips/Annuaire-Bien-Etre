@@ -27,17 +27,17 @@
 
                                 <div class="form-group">
                                     {{form_label(form.internaute.nom)}}
-                                    {{form_widget(form.internaute.nom,{'attr':{'value':(signup is not null)?signup.lastname:user.internaute.nom}})}}
+                                    {{form_widget(form.internaute.nom)}}{#,{'attr':{'value':(signup is not null)?signup.lastname:user.internaute.nom}})}}#}
                                     {{form_errors(form.internaute.nom)}}
                                 </div>
                                 <div class="form-group">
                                     {{form_label(form.internaute.prenom)}}
-                                    {{form_widget(form.internaute.prenom,{'attr':{'value':signup is not null ?signup.firstname:user.internaute.prenom}})}}
+                                    {{form_widget(form.internaute.prenom)}} {#,{'attr':{'value':signup is not null ?signup.firstname:user.internaute.prenom}})}} #}
                                     {{form_errors(form.internaute.prenom)}}
                                 </div>
                                 <div class="form-group">
                                     {{form_label(form.email)}}
-                                    {{form_widget(form.email,{'attr':{'value':signup is not null ?signup.email:user.email}})}}
+                                    {{form_widget(form.email)}}{#,{'attr':{'value':signup is not null ?signup.email:user.email}})}} #}
                                     {{form_errors(form.email)}}
                                 </div>
                                 <div class="form-group">
@@ -109,9 +109,9 @@
         </div>
     </div>
     <script>
-        $.function({
-            $('#utilisateur_internaute_newsletter').parent().remove();
-        });
+//        $.function({
+//            $('#utilisateur_internaute_newsletter').parent().remove();
+//        });
     </script>
 {% endblock %}
 
