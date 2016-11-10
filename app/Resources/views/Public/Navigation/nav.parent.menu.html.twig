@@ -1,6 +1,12 @@
 {# views/Public/Navigation/nav.parent.menu.html.twig #}
 
 <ul id="myNavbar" class="gp_menu header-nav-primary nav nav-pills collapse navbar-collapse" >
+    <li>
+         <button  class="btn btn-default navbar-btn"  ><span class="glyphicon glyphicon-search"></span> Recherche</button>
+
+        {{render(controller("AppBundle:PublicController/Prestataires/Prestataire:moteurDeRecherchePrestataires"))}}   
+
+    </li>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
         {{ include("Public/Navigation/Children/nav.child.authenticated.profil.html.twig") }}
@@ -73,9 +79,11 @@
             </li>
         </ul>
     </li>
+
     <li>
-        <a href="#">Contact <i class="fa fa-chevron-down"></i></a>
+        <a href="#">Contact<i class="fa fa-chevron-down"></i></a>
     </li>
+
     {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
         <li>
             <a id="prestataire-profil" href="{{ path('signupPrestataire') }}"><i style='transform:scale(2)' class="fa fa-cubes"></i><span>Créer un profil prestataire</span></a>

@@ -14,7 +14,9 @@ class MoteurDeRechercheType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('recherche', TextType::class, array('required' => false))
+                ->add('nom', TextType::class, array('required' => false))
+                ->add('commune', TextType::class, array('required' => false))
+                ->add('service', TextType::class, array('required' => false))
                 ->add('rechercher', SubmitType::class);
     }
 

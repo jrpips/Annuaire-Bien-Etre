@@ -69,14 +69,14 @@
                                     <h1>Bien-Être</h1>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>Maecenas a porttitor sem. Morbi et lacinia. </p>
 
-                                   {# <div class="input-group">
-
-                                        <input type="text" class="form-control" placeholder="Recherche de services, prestataires ...">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-primary" type="button">Recherche</button>
-                                        </span>
-
-                                    </div><!-- /.input-group -->#}
+                                    {# <div class="input-group">
+ 
+                                         <input type="text" class="form-control" placeholder="Recherche de services, prestataires ...">
+                                         <span class="input-group-btn">
+                                             <button class="btn btn-primary" type="button">Recherche</button>
+                                         </span>
+ 
+                                     </div><!-- /.input-group -->#}
 
                                 </div><!-- /.col-* -->
 
@@ -112,20 +112,24 @@
                         <div class="cards-simple-wrapper">
 
                             <div class="row">
-
+                                {% if is_granted('ROLE_INTERNAUTE') %}                                
+                                    {{render(controller("AppBundle:PublicController/Internautes/Internaute:getPrestatairesFavoris"))}}   
+                                {%endif%}
+                                {#  </div>
+                                  <div class="row">#}
                                 {% for prestataire in prestataires %}
 
                                     <div class="col-sm-6 col-md-3">
 
                                         <div class="card-simple"> 
-                                            
-                                           {% set imgServicePrestataire=(prestataire.images is not null)?(prestataire.images)|first.url:'image/prestataire.png' %}
+
+                                            {% set imgServicePrestataire=(prestataire.images is not null)?(prestataire.images)|first.url:'image/prestataire.png' %}
 
                                             <div class="card-simple-background" style="background:url('{{asset(imgServicePrestataire)}}') no-repeat;background-size:cover">
 
                                                 <div class="card-simple-content">
                                                     <h2><a href="listing-detail.html"></a>{{prestataire.nom}}</h2>
-
+                                                    <h3 style="text-align:center"><a href="{{path('favoris',{'nomPrestataire':prestataire.nom})}}" style="color:brown" class="fa fa-heart-o" href="listing-detail.html"></a></h3>
                                                     <div class="card-simple-rating">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
@@ -137,12 +141,12 @@
                                                     <div class="card-simple-actions">
                                                         <a href="#" class="fa fa-bookmark-o"></a>
                                                         <a href="listing-detail.html" class="fa fa-search"></a>
-                                                        <a href="#" class="fa fa-heart-o"></a>
+                                                        <a href="#" class="fa fa-heart-o"></a>{#injecter ID prestataire#}
                                                     </div><!-- /.card-simple-actions -->
 
                                                 </div><!-- /.card-simple-content -->
 
-{#                                          {% set firstService=(prestataire.categServices is defined)?(prestataire.categServices)|first.nom:'service' %}#}
+                                                {#                                          {% set firstService=(prestataire.categServices is defined)?(prestataire.categServices)|first.nom:'service' %}#}
                                                 <div class="card-simple-label">{{prestataire.siteInternet}}</div>
 
                                             </div><!-- /.card-simple-background -->
@@ -152,6 +156,7 @@
                                     </div><!-- /.col-* -->
 
                                 {% endfor %}
+                                {#                                {% endif %}#}
 
                             </div><!-- /.row -->
 

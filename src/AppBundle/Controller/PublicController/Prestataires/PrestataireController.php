@@ -70,13 +70,13 @@ class PrestataireController extends Controller {
     /**
      * @Route("recherche/prestataire",options={"expose"=true},name="search_prestataire")
      */
-    public function moteurDeRecherchePrestataires() {
+    public function moteurDeRecherchePrestatairesAction() {
 
 //        $prestataire = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->recherche($param);
 //        dump($prestataire);
         $form = $this->get('form.factory')->create(MoteurDeRechercheType::class);
 
-        return $this->render('Public\Prestataires\SearchPrestataire\moteur.de.recherche.prestataire.html.twig', array(
+        return $this->render('Public\Navigation\Children\MoteurDeRecherche\form.moteur.de.recherche.prestataire.html.twig', array(
                     'form' => $form->createView(),
                         //  'prestataire' => $prestataire
         ));
@@ -85,22 +85,23 @@ class PrestataireController extends Controller {
     /**
      * @Route("recherche/prestataire/resultat",options={"expose"=true},name="search_nom_prestataire")
      */
-    public function moteurDeRecherchePrestatairesByNom(Request $request) {
+    public function moteurDeRecherchePrestatairesByNomAction(Request $request) {
 
         if ($request->getMethod() == 'POST') {
-//             $form->handleRequest();
-            $nom = $request->request->all();
+
+            $criteria = $request->request->all();
             //$nom=$request->request->get('recherche');
-            foreach ($nom as $k => $v) {
-                $nom = $v['recherche'];
-            }
+//            foreach ($nom as $k => $v) {
+//                $nom = $v['recherche'];
+//                $commune = $v['commune'];
+//            }
         }
-        $prestataire = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findOneByNom($nom);
-        dump($prestataire);
+        $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findMyPrestataire($criteria);
+        dump($prestataires);
 
 
         return $this->render('Public\Prestataires\SearchPrestataire\resultat.recherche.prestataire.html.twig', array(
-                    'prestataire' => $prestataire
+                    'prestataires' => $prestataires
         ));
     }
 

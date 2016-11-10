@@ -11,11 +11,13 @@ class IndexController extends Controller {
      * @Route("/", name="home")
      */
     public function indexAction() {
+
         $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findAll();
+
         dump($prestataires);
         return $this->render('Public/index.html.twig', array(
-                    'prestataires' => $prestataires,
-       ));
+                    'prestataires' => $prestataires,                  
+        ));
     }
 
     /**

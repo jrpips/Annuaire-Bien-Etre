@@ -2,12 +2,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {%if prestataire is not null%}
-        {{prestataire.nom}}<br>
-        {{prestataire.siteInternet}}<br>
-        {{prestataire.utilisateur.adresseUtilisateur.localite}}<br>
-        {{prestataire.nom}}<br>
-        {{prestataire.nom}}<br>
+    {%if prestataires is not null%}
+        {%for prestataire in prestataires%}
+            {{prestataire.nom}}<br>
+            {{prestataire.siteInternet}}<br>
+            {{prestataire.utilisateur.adresseUtilisateur.localite}}<br>
+            {{prestataire.nom}}<br>
+            {{prestataire.nom}}<br>
+            {%for i in prestataire.images%}
+                <img src="{{asset(i.url)}}" />
+            {%endfor%}
+        {%endfor%}
     {%else%}
         Pas de résultat pour le nom indiqué
     {%endif%}

@@ -20,7 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 class InternauteController extends Controller {
 
     /**
-     * call by views/Public/Navigation/nav.parent.menu
+     * Call by views/Public/Navigation/nav.parent.menu
      */
     public function getChildNavPreSignupElementsAction() {
 
@@ -30,6 +30,44 @@ class InternauteController extends Controller {
         return $this->render('Public/Internautes/Register/form.pre.subscribe.html.twig', array(
                     'form' => $form->createView(),
         ));
+    }
+
+    /**
+     * Get the favorites prestataires of authenticated internaute
+     */
+    public function getPrestatairesFavorisAction() {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {
+            $myFavoris = $this
+                    ->getDoctrine()
+                    ->getManager()
+                    ->getRepository('AppBundle:Internaute')
+                    ->getPrestatairesFavoris($this->getUser()->getInternaute()->getId());
+        }
+        $myFavoris = $myFavoris[0];
+        dump($myFavoris);
+        return $this->render('Public/Internautes/Favoris/display.prestataires.favoris.html.twig', array(
+                    'favoris' => $myFavoris
+        ));
+    }
+
+    /**
+     * @Route("/gestion/favoris/{nomPrestataire}",options={"expose"=true},name="favoris")
+     */
+    public function gestionFavorisAction(Request $request, $nomPrestataire = 'Cornette') {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {
+            $em = $this
+                            ->getDoctrine()->getManager();
+            $newAbonne = $em
+                    ->getRepository('AppBundle:Internaute')
+                    ->getPrestatairesFavoris($this->getUser()->getInternaute()->getId());
+            $newFavori = $em
+                    ->getRepository('AppBundle:Prestataire')
+                    ->findByNom($nomPrestataire);
+            $newAbonne[0]->addFavori($newFavori[0]);
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            return $this->redirectToRoute('home');
+        }
     }
 
     /**

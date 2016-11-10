@@ -1,0 +1,46 @@
+{# empty Twig template #}
+
+
+{% for prestataire in favoris.favoris %}
+
+    <div class="col-sm-6 col-md-3">
+
+        <div class="card-simple"> 
+
+            {% set imgServicePrestataire=(prestataire.images is not null)?(prestataire.images)|first.url:'image/prestataire.png' %}
+
+            <div class="card-simple-background" style="background:url('{{asset(imgServicePrestataire)}}') no-repeat;background-size:cover">
+
+                <div class="card-simple-content">
+                    <h2><a  href="listing-detail.html"></a>{{prestataire.nom}}</h2>
+                    <h3 style="text-align:center"><a style="color:brown" class="fa fa-heart" href="listing-detail.html"></a></h3>
+                    <div class="card-simple-rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </div><!-- /.card-rating -->
+
+                    <div class="card-simple-actions">
+                        <a href="#" class="fa fa-bookmark-o"></a>
+                        <a href="#" class="fa fa-search"></a>
+                        <a href="#" class="fa fa-heart"></a>
+                    </div><!-- /.card-simple-actions -->
+{#  <a href="#" class="fa fa-heart"></a>#}
+                </div><!-- /.card-simple-content -->
+
+                {#                                          {% set firstService=(prestataire.categServices is defined)?(prestataire.categServices)|first.nom:'service' %}#}
+                <div class="card-simple-label">{{prestataire.siteInternet}}</div>
+
+            </div><!-- /.card-simple-background -->
+
+        </div><!-- /.card-simple -->
+
+    </div><!-- /.col-* -->
+
+{% endfor %}
+
+
+
+
