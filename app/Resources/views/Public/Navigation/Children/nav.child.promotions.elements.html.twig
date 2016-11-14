@@ -3,7 +3,7 @@
 <ul>
     {% for promotion in promotions %}
         <li>
-            <a href="">{{promotion.nom}}</a><span> jusqu'au {{ promotion.dateFin|date("d/m","Europe/Paris") }}</span>
+            <a href="">{{promotion.nom}}<span> jusqu'au {{ promotion.dateFin|date("d/m","Europe/Paris") }}</span></a>
         </li>
     {%endfor%}
 </ul>

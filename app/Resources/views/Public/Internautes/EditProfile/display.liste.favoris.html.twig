@@ -14,7 +14,7 @@
             </div>
             <div class="background-white p20 mb30">
                     {%for favori in app.user.internaute.favoris%}
-                        <div>{{favori}} <a style="color:rosybrown" href="{{path('remove_favori',{'nomPrestataire':favori,'idInternaute':app.user.internaute.id})}}">X</a></div>
+                        <div>{{favori}} <a style="color:rosybrown" href="{{path('remove_favori',{'nomPrestataire':favori,'from':'show_internaute'})}}">X</a></div>
                     {%endfor%}
             </div>
         </div>

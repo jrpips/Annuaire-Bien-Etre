@@ -36,6 +36,12 @@ class CategService {
     private $image;
 
     /**
+     * @ORM\OneToMany(targetEntity="Promotion",cascade={"persist"},mappedBy="categService")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $promotions;
+
+    /**
      * @var string
      * @Assert\NotBlank(message="un nom de service est requis")
      * @Assert\Length(

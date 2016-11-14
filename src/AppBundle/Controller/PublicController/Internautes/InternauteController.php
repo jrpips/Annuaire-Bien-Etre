@@ -33,7 +33,7 @@ class InternauteController extends Controller {
     }
 
     /**
-     * Get the favorites prestataires of authenticated internaute
+     * Get the favorites prestataires on success authenticated internaute (page home)
      */
     public function getPrestatairesFavorisAction() {
         if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {
@@ -58,7 +58,7 @@ class InternauteController extends Controller {
     }
 
     /**
-     * @Route("/gestion/favoris/add/{nomPrestataire}",options={"expose"=true},name="add_favoris")
+     * @Route("/gestion/favoris/add/{nomPrestataire}",options={"expose"=true},name="add_favori")
      */
     public function addFavorisAction(Request $request, $nomPrestataire = 'Cornette') {
         if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {
@@ -83,9 +83,9 @@ class InternauteController extends Controller {
     }
 
     /**
-     * @Route("/gestion/favoris/remove/{nomPrestataire}",options={"expose"=true},name="remove_favori")
+     * @Route("/gestion/favoris/remove/{nomPrestataire}/{from}",options={"expose"=true},name="remove_favori")
      */
-    public function removeFavorisAction(Request $request, $nomPrestataire = null, $idInternaute = null) {
+    public function removeFavorisAction(Request $request, $nomPrestataire = null,$from='home') {
         if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {
 
             $em = $this->getDoctrine()->getManager();
@@ -104,9 +104,8 @@ class InternauteController extends Controller {
             $em->flush();
         }
 
-
-        return $this->redirectToRoute('display_favoris');
-    }
+        return $this->redirectToRoute($from);
+   }
 
     /**
      * @Route("/inscription/internaute/pre-inscription",options={"expose"=true},name="signup")

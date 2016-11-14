@@ -4,7 +4,7 @@
     <li>
          <button  class="btn btn-default navbar-btn"  ><span class="glyphicon glyphicon-search"></span> Recherche</button>
 
-        {{render(controller("AppBundle:PublicController/Prestataires/Prestataire:moteurDeRecherchePrestataires"))}}   
+        {{render(controller("AppBundle:PublicController/Prestataires/Prestataire:moteurDeRecherche"))}}
 
     </li>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -60,7 +60,7 @@
 
             <li>
 
-                <a href="#">Promotions</a>
+                <a href="#">Dernières romotions</a>
                 {{render(controller("AppBundle:PublicController/Promotions/Promotion:getNavPromotionsElements"))}}
 
             </li>

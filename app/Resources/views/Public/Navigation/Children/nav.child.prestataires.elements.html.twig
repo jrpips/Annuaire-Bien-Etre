@@ -3,7 +3,7 @@
 <ul>
     {% for prestataire in prestataires %}
         <li>
-            <a href="">{{prestataire.nom}}</a>
+            <a href="{{path('details_prestataire',{'prestataire_nom':prestataire.nom})}}">{{prestataire.nom}}</a>
         </li>    
     {%endfor%}
 </ul>    

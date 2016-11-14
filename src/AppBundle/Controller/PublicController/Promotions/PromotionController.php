@@ -19,7 +19,8 @@ class PromotionController extends Controller {
      */
     public function getNavPromotionsElementsAction() {
 
-        $promotions = $this->getDoctrine()->getManager()->getRepository('AppBundle:Promotion')->findAll();
+        $promotions = $this->getDoctrine()->getManager()->getRepository('AppBundle:Promotion')->findBy(array(),array('dateDebut'=>'desc'),5);
+        dump($promotions);
         return $this->render('Public/Navigation/Children/nav.child.promotions.elements.html.twig', array(
                     'promotions' => $promotions,
         ));

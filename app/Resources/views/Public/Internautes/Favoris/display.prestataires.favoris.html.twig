@@ -1,6 +1,5 @@
 {# empty Twig template #}
 
-
 {% for prestataire in favoris.favoris %}
 
     <div class="col-sm-6 col-md-3">
@@ -12,8 +11,8 @@
             <div class="card-simple-background" style="background:url('{{asset(imgServicePrestataire)}}') no-repeat;background-size:cover">
 
                 <div class="card-simple-content">
-                    <h2><a  href="listing-detail.html"></a>{{prestataire.nom}}</h2>
-                    <h3 style="text-align:center"><a style="color:brown" class="fa fa-heart" href="listing-detail.html"></a></h3>
+                    <h2><a  href="#"></a>{{prestataire.nom}}</h2>
+                    <h3 style="text-align:center"><a href="{{path('remove_favori',{'nomPrestataire':prestataire.nom,'from':'home'})}}" style="color:brown" class="fa fa-heart" href="listing-detail.html"></a></h3>
                     <div class="card-simple-rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>

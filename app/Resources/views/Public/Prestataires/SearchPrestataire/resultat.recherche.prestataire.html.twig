@@ -1,19 +1,61 @@
-{# empty Twig template #}
+{# resultat.recherche.prestataire #}
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {%if prestataires is not null%}
-        {%for prestataire in prestataires%}
-            {{prestataire.nom}}<br>
-            {{prestataire.siteInternet}}<br>
-            {{prestataire.utilisateur.adresseUtilisateur.localite}}<br>
-            {{prestataire.nom}}<br>
-            {{prestataire.nom}}<br>
-            {%for i in prestataire.images%}
-                <img src="{{asset(i.url)}}" />
-            {%endfor%}
-        {%endfor%}
-    {%else%}
-        Pas de résultat pour le nom indiqué
-    {%endif%}
-{%endblock%}{# empty Twig template #}
+    <div class="container">
+        <div class="page-header">
+
+            <h1>Résultat de votre recherche</h1>
+
+        </div>
+
+        <div class="cards-simple-wrapper">
+            <div class="row">
+                {% for prestataire in prestataires %}
+
+                    <div class="col-sm-6 col-md-3">
+
+                        <div class="card-simple">
+
+                            {% set imgServicePrestataire=(prestataire.images is not null)?(prestataire.images)|first.url:'image/prestataire.png' %}
+
+                            <div class="card-simple-background" style="background:url('{{asset(imgServicePrestataire)}}') no-repeat;background-size:cover">
+
+                                <div class="card-simple-content">
+                                    <h2><a href="listing-detail.html"></a>{{ prestataire.nom }}</h2>
+                                    <h3 style="text-align:center">
+                                        <a href="{{ path('add_favori',{'nomPrestataire':prestataire.nom,'from':'home'}) }}"
+                                           class="fa fa-heart-o"></a>
+                                    </h3>
+                                    <div class="card-simple-rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div><!-- /.card-rating -->
+
+                                    <div class="card-simple-actions">
+                                        <a href="#" class="fa fa-bookmark-o"></a>
+                                        <a href="listing-detail.html" class="fa fa-search"></a>
+                                        <a href="#" class="fa fa-heart-o"></a>{#injecter ID prestataire#}
+                                    </div><!-- /.card-simple-actions -->
+
+                                </div><!-- /.card-simple-content -->
+
+                                {#                                          {% set firstService=(prestataire.categServices is defined)?(prestataire.categServices)|first.nom:'service' %}#}
+                                <div class="card-simple-label">{{ prestataire.siteInternet }}</div>
+
+                            </div><!-- /.card-simple-background -->
+
+                        </div><!-- /.card-simple -->
+
+                    </div><!-- /.col-* -->
+
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}{# empty Twig template #}

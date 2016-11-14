@@ -48,18 +48,6 @@
 
                         </div>
 
-                        <!-- Left and right controls -->
-
-                        {# <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                             <span class="sr-only">Previous</span>
-                         </a>
- 
-                         <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                             <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                             <span class="sr-only">Next</span>
-                         </a>#}
-
                         <div class="container" id="gp_content">
 
                             <div class="row">
@@ -68,15 +56,6 @@
 
                                     <h1>Bien-Être</h1>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>Maecenas a porttitor sem. Morbi et lacinia. </p>
-
-                                    {# <div class="input-group">
- 
-                                         <input type="text" class="form-control" placeholder="Recherche de services, prestataires ...">
-                                         <span class="input-group-btn">
-                                             <button class="btn btn-primary" type="button">Recherche</button>
-                                         </span>
- 
-                                     </div><!-- /.input-group -->#}
 
                                 </div><!-- /.col-* -->
 
@@ -119,6 +98,7 @@
                                   <div class="row">#}
                                 {% for prestataire in prestataires %}
 
+
                                     <div class="col-sm-6 col-md-3">
 
                                         <div class="card-simple"> 
@@ -129,7 +109,7 @@
 
                                                 <div class="card-simple-content">
                                                     <h2><a href="listing-detail.html"></a>{{prestataire.nom}}</h2>
-                                                    <h3 style="text-align:center"><a href="{{path('add_favoris',{'nomPrestataire':prestataire.nom})}}" style="color:brown" class="fa fa-heart-o" href="listing-detail.html"></a></h3>
+                                                    <h3 style="text-align:center"><a href="{{path('add_favori',{'nomPrestataire':prestataire.nom,'from':'home'})}}" style="color:brown" class="fa fa-heart-o" href="listing-detail.html"></a></h3>
                                                     <div class="card-simple-rating">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>

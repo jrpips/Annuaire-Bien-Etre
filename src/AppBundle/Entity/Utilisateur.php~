@@ -22,14 +22,14 @@ class Utilisateur implements UserInterface {
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Internaute",inversedBy="utilisateur")
+     * @ORM\OneToOne(targetEntity="Internaute",cascade={"persist"},inversedBy="utilisateur")
      * @ORM\JoinColumn(nullable=true)
      * @Assert\Valid
      */
     private $internaute;
 
     /**
-     * @ORM\OneToOne(targetEntity="Prestataire",inversedBy="utilisateur")
+     * @ORM\OneToOne(targetEntity="Prestataire",cascade={"persist"},inversedBy="utilisateur")
      * @ORM\JoinColumn(nullable=true)
      * @Assert\Valid
      */
@@ -74,7 +74,7 @@ class Utilisateur implements UserInterface {
      * )
      * @Assert\Regex(
      *     pattern="/^[a-zA-Z0-9]+$/",
-     *     match=false,
+     *     match=true,
      *     message="Le mot de passe ne peut contenir des caractères spéciaux." 
      * )
      * @Assert\NotBlank(message="Minimun 3 caractères alphanumériques.")
@@ -97,7 +97,7 @@ class Utilisateur implements UserInterface {
     /**
      * @Assert\Regex(
      *     pattern="/^[0-9]+$/",
-     *     match=false,
+     *     match=true,
      *     message="Le numéro est invalide." 
      * )
      * @Assert\NotBlank(message="Un numéro est requis.")
@@ -142,8 +142,8 @@ class Utilisateur implements UserInterface {
         $this->setBanni(false);
         $this->setInscriptionConf(true);
         $this->setEssaiPwd(0);
-        $this->setSalt('');
-        $this->setRoles('ROLE_INTERNAUTE');
+//        $this->setSalt('');
+//        $this->setRoles('ROLE_INTERNAUTE');
     }
 
 //    /**

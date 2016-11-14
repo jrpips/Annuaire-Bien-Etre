@@ -23,13 +23,13 @@ class Promotion {
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Prestataire")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Prestataire", cascade={"persist"},inversedBy="promotions")
      * @ORM\JoinColumn(nullable=false)
      */
     private $prestataire;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CategService")
+     * @ORM\ManyToOne(targetEntity="CategService",cascade={"persist"},inversedBy="promotions")
      * @ORM\JoinColumn(nullable=false)
      */
     private $categService;

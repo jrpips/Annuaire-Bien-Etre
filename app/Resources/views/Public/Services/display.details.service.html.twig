@@ -35,7 +35,20 @@
                             </div>
                             <h2>Prestataire(s) offrant ce service</h2>
                             {%for p in service.prestataires%}
-                                <a href="{{path('details_prestataire',{'prestataire_nom':p.nom})}}">{{p.nom}}</a>
+                                <ul>
+                                    <li><a href="{{path('details_prestataire',{'prestataire_nom':p.nom})}}">{{p.nom}}</a>
+                                </ul>
+                            {%endfor%}
+                            <h2>Promo</h2>
+                            {%for promo in service.promotions%}
+                            <ul>
+                                <li>
+                                   {# <a href="{{path('details_prestataire',{'prestataire_nom':p.nom})}}">#}
+                                    Nom promo {{promo.nom}}<br>
+                                    Publiée par {{ promo.prestataire.nom }}<br>
+                                    
+                                    {# </a>#}
+                             </ul>
                             {%endfor%}
                         </div>
                     </div>

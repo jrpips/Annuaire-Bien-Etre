@@ -47,6 +47,18 @@ class Prestataire {
     private $categServices;
 
     /**
+     * @ORM\OneToMany(targetEntity="Stage", cascade={"persist"},mappedBy="prestataire")
+     * @Assert\Valid
+     */
+    private $stages;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Promotion", cascade={"persist"},mappedBy="prestataire")
+     * @Assert\Valid
+     */
+    private $promotions;
+
+    /**
      * @Assert\Length(
      *      min = 2,
      *      max = 50,
@@ -337,4 +349,72 @@ class Prestataire {
         return $this->abonnes;
     }
 
+
+    /**
+     * Add stage
+     *
+     * @param \AppBundle\Entity\Stage $stage
+     *
+     * @return Prestataire
+     */
+    public function addStage(\AppBundle\Entity\Stage $stage)
+    {
+        $this->stages[] = $stage;
+
+        return $this;
+    }
+
+    /**
+     * Remove stage
+     *
+     * @param \AppBundle\Entity\Stage $stage
+     */
+    public function removeStage(\AppBundle\Entity\Stage $stage)
+    {
+        $this->stages->removeElement($stage);
+    }
+
+    /**
+     * Get stages
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStages()
+    {
+        return $this->stages;
+    }
+
+    /**
+     * Add promotion
+     *
+     * @param \AppBundle\Entity\Promotion $promotion
+     *
+     * @return Prestataire
+     */
+    public function addPromotion(\AppBundle\Entity\Promotion $promotion)
+    {
+        $this->promotions[] = $promotion;
+
+        return $this;
+    }
+
+    /**
+     * Remove promotion
+     *
+     * @param \AppBundle\Entity\Promotion $promotion
+     */
+    public function removePromotion(\AppBundle\Entity\Promotion $promotion)
+    {
+        $this->promotions->removeElement($promotion);
+    }
+
+    /**
+     * Get promotions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPromotions()
+    {
+        return $this->promotions;
+    }
 }

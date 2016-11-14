@@ -36,6 +36,12 @@ class CategService {
     private $image;
 
     /**
+     * @ORM\OneToMany(targetEntity="Promotion",cascade={"persist"},mappedBy="categService")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $promotions;
+
+    /**
      * @var string
      * @Assert\NotBlank(message="un nom de service est requis")
      * @Assert\Length(
@@ -237,4 +243,38 @@ class CategService {
         return $this->prestataires;
     }
 
+
+    /**
+     * Add promotion
+     *
+     * @param \AppBundle\Entity\Promotion $promotion
+     *
+     * @return CategService
+     */
+    public function addPromotion(\AppBundle\Entity\Promotion $promotion)
+    {
+        $this->promotions[] = $promotion;
+
+        return $this;
+    }
+
+    /**
+     * Remove promotion
+     *
+     * @param \AppBundle\Entity\Promotion $promotion
+     */
+    public function removePromotion(\AppBundle\Entity\Promotion $promotion)
+    {
+        $this->promotions->removeElement($promotion);
+    }
+
+    /**
+     * Get promotions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPromotions()
+    {
+        return $this->promotions;
+    }
 }
