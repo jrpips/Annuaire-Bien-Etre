@@ -29,7 +29,7 @@ class Commentaire {
     private $internaute;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Prestataire", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Prestataire", cascade={"persist"},inversedBy="commentaires")
      * @ORM\JoinColumn(nullable=false)
      */
     private $prestataire;

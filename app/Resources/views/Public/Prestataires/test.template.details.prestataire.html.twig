@@ -1,0 +1,1003 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}
+    Prestataire  - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="main" jstcache="0">
+        <div class="main-inner" jstcache="0">
+            <div class="content" jstcache="0">
+                <div class="mt-80 mb80">
+                    {% set imgServicePrestataire=(prestataire.images is not null)?(prestataire.images)|first.url:'image/prestataire.png' %}
+                    <div class="detail-banner"
+                         style="background:url('{{ asset(imgServicePrestataire) }}') no-repeat;background-size:cover">
+                        <div class="container">
+                            <div class="detail-banner-left">
+                                <div class="detail-banner-info">
+                                    <div class="detail-label">Prestataire Bien-Être</div>
+                                    <div class="detail-verified">Verified</div>
+                                </div><!-- /.detail-banner-info -->
+
+                                <h2 class="detail-title">
+                                    {{ prestataire.nom }}
+                                </h2>
+
+                                <div class="detail-banner-address">
+                                    <i class="fa fa-map-o"></i> {{ prestataire.utilisateur.adresseNumero }}
+                                    ,{{ prestataire.utilisateur.adresseRue }}
+                                    {{ prestataire.utilisateur.adresseUtilisateur.codePostal }} {{ prestataire.utilisateur.adresseUtilisateur.commune }}
+                                </div><!-- /.detail-banner-address -->
+
+                                <div class="detail-banner-rating">{#TODO : cotation dynamique#}
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-half-o"></i>
+                                </div><!-- /.detail-banner-rating -->
+
+                                <div class="detail-banner-btn bookmark marked">
+                                    <i class="fa fa-bookmark-o"></i> <span data-toggle="Bookmarked">Bookmarked</span>
+                                </div><!-- /.detail-claim -->
+
+                                <div class="detail-banner-btn heart marked">
+                                    <i class="fa fa-heart-o"></i> <span data-toggle="I Love It">I Love It</span>
+                                </div><!-- /.detail-claim -->
+                                {#<div class="detail-banner-btn heart">
+                                    <i class="fa fa-heart-o"></i> <span data-toggle="I Love It">Give Heart</span>
+                                </div>#}
+                            </div><!-- /.detail-banner-left -->
+                        </div><!-- /.container -->
+                    </div><!-- /.detail-banner -->
+
+                </div>
+
+                <div class="container" jstcache="0">
+                    <div class="row detail-content" jstcache="0">
+                        <div class="col-sm-7" jstcache="0">
+                            <div class="detail-gallery">
+                                <div class="detail-gallery-preview">
+                                    <a href="assets/img/tmp/gallery-1.jpg" class="cboxElement">
+                                        <img src="assets/img/tmp/gallery-1.jpg">
+                                    </a>
+                                </div>
+
+
+                            </div><!-- /.detail-gallery -->
+
+                            <h2>Nous sommes ici</h2>
+                            <div class="background-white p20" jstcache="0">
+
+                                <!-- Nav tabs -->
+                                <ul id="listing-detail-location" class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="">
+                                        <a href="#simple-map-panel" aria-controls="simple-map-panel" role="tab"
+                                           data-toggle="tab" aria-expanded="false">
+                                            <i class="fa fa-map"></i>Carte
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="active">
+                                        <a href="#street-view-panel" aria-controls="street-view-panel" role="tab"
+                                           data-toggle="tab" aria-expanded="true">
+                                            <i class="fa fa-street-view"></i>Street View
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <!-- Tab panes -->
+                                <div class="tab-content" jstcache="0">
+                                    <div role="tabpanel" class="tab-pane fade" id="simple-map-panel">
+                                        <div class="detail-map">
+                                            <div class="map-position">
+                                                <div id="listing-detail-map"
+                                                     data-transparent-marker-image="assets/img/transparent-marker-image.png"
+                                                     data-styles="[{&quot;featureType&quot;:&quot;administrative&quot;,&quot;elementType&quot;:&quot;labels.text.fill&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#444444&quot;}]},{&quot;featureType&quot;:&quot;landscape&quot;,&quot;elementType&quot;:&quot;all&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#f2f2f2&quot;}]},{&quot;featureType&quot;:&quot;poi&quot;,&quot;elementType&quot;:&quot;all&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;off&quot;}]},{&quot;featureType&quot;:&quot;poi.government&quot;,&quot;elementType&quot;:&quot;labels.text.fill&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#b43b3b&quot;}]},{&quot;featureType&quot;:&quot;poi.park&quot;,&quot;elementType&quot;:&quot;geometry.fill&quot;,&quot;stylers&quot;:[{&quot;hue&quot;:&quot;#ff0000&quot;}]},{&quot;featureType&quot;:&quot;road&quot;,&quot;elementType&quot;:&quot;all&quot;,&quot;stylers&quot;:[{&quot;saturation&quot;:-100},{&quot;lightness&quot;:45}]},{&quot;featureType&quot;:&quot;road&quot;,&quot;elementType&quot;:&quot;geometry.fill&quot;,&quot;stylers&quot;:[{&quot;lightness&quot;:&quot;8&quot;},{&quot;color&quot;:&quot;#bcbec0&quot;}]},{&quot;featureType&quot;:&quot;road&quot;,&quot;elementType&quot;:&quot;labels.text.fill&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#5b5b5b&quot;}]},{&quot;featureType&quot;:&quot;road.highway&quot;,&quot;elementType&quot;:&quot;all&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;simplified&quot;}]},{&quot;featureType&quot;:&quot;road.arterial&quot;,&quot;elementType&quot;:&quot;labels.icon&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;off&quot;}]},{&quot;featureType&quot;:&quot;transit&quot;,&quot;elementType&quot;:&quot;all&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;off&quot;}]},{&quot;featureType&quot;:&quot;water&quot;,&quot;elementType&quot;:&quot;all&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#7cb3c9&quot;},{&quot;visibility&quot;:&quot;on&quot;}]},{&quot;featureType&quot;:&quot;water&quot;,&quot;elementType&quot;:&quot;geometry.fill&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#abb9c0&quot;}]},{&quot;featureType&quot;:&quot;water&quot;,&quot;elementType&quot;:&quot;labels.text&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#fff1f1&quot;},{&quot;visibility&quot;:&quot;off&quot;}]}]"
+                                                     data-zoom="15" data-latitude="40.779995"
+                                                     data-longitude="-73.969133" data-icon="fa fa-coffee"
+                                                     style="position: relative; overflow: hidden;">
+                                                    <div style="height: 100%; width: 100%; position: absolute; background-color: rgb(229, 227, 223);">
+                                                        <div class="gm-style"
+                                                             style="position: absolute; left: 0px; top: 0px; overflow: hidden; width: 100%; height: 100%; z-index: 0;">
+                                                            <div style="position: absolute; left: 0px; top: 0px; overflow: hidden; width: 100%; height: 100%; z-index: 0; cursor: url(&quot;http://maps.gstatic.com/mapfiles/openhand_8_8.cur&quot;) 8 8, default;">
+                                                                <div style="position: absolute; left: 0px; top: 0px; z-index: 1; width: 100%; transform-origin: 0px 0px 0px; transform: matrix(1, 0, 0, 1, 0, 0);">
+                                                                    <div style="position: absolute; left: 0px; top: 0px; z-index: 100; width: 100%;">
+                                                                        <div style="position: absolute; left: 0px; top: 0px; z-index: 0;">
+                                                                            <div aria-hidden="true"
+                                                                                 style="position: absolute; left: 0px; top: 0px; z-index: 1; visibility: inherit;">
+                                                                                <div style="width: 256px; height: 256px; position: absolute; left: 8px; top: -123px;"></div>
+                                                                                <div style="width: 256px; height: 256px; position: absolute; left: 8px; top: 133px;"></div>
+                                                                                <div style="width: 256px; height: 256px; position: absolute; left: 264px; top: -123px;"></div>
+                                                                                <div style="width: 256px; height: 256px; position: absolute; left: 264px; top: 133px;"></div>
+                                                                                <div style="width: 256px; height: 256px; position: absolute; left: -248px; top: -123px;"></div>
+                                                                                <div style="width: 256px; height: 256px; position: absolute; left: -248px; top: 133px;"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div style="position: absolute; left: 0px; top: 0px; z-index: 101; width: 100%;"></div>
+                                                                    <div style="position: absolute; left: 0px; top: 0px; z-index: 102; width: 100%;"></div>
+                                                                    <div style="position: absolute; left: 0px; top: 0px; z-index: 103; width: 100%;">
+                                                                        <div style="position: absolute; left: 0px; top: 0px; z-index: -1;">
+                                                                            <div aria-hidden="true"
+                                                                                 style="position: absolute; left: 0px; top: 0px; z-index: 1; visibility: inherit;">
+                                                                                <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 8px; top: -123px;"></div>
+                                                                                <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 8px; top: 133px;"></div>
+                                                                                <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 264px; top: -123px;">
+                                                                                    <canvas draggable="false"
+                                                                                            height="256" width="256"
+                                                                                            style="user-select: none; position: absolute; left: 0px; top: 0px; height: 256px; width: 256px;"></canvas>
+                                                                                </div>
+                                                                                <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 264px; top: 133px;">
+                                                                                    <canvas draggable="false"
+                                                                                            height="256" width="256"
+                                                                                            style="user-select: none; position: absolute; left: 0px; top: 0px; height: 256px; width: 256px;"></canvas>
+                                                                                </div>
+                                                                                <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: -248px; top: -123px;"></div>
+                                                                                <div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: -248px; top: 133px;"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div style="position: absolute; z-index: 0; left: 0px; top: 0px;">
+                                                                        <div style="overflow: hidden; width: 612px; height: 300px;">
+                                                                            <img src="http://maps.googleapis.com/maps/api/js/StaticMapService.GetMapImage?1m2&amp;1i2470392&amp;2i3151739&amp;2e1&amp;3u15&amp;4m2&amp;1u612&amp;2u300&amp;5m5&amp;1e0&amp;5sfr-FR&amp;6sus&amp;10b1&amp;12b1&amp;token=11017"
+                                                                                 style="width: 612px; height: 300px;">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div style="position: absolute; left: 0px; top: 0px; z-index: 0;">
+                                                                        <div aria-hidden="true"
+                                                                             style="position: absolute; left: 0px; top: 0px; z-index: 1; visibility: inherit;">
+                                                                            <div style="position: absolute; left: -248px; top: -123px; transition: opacity 200ms ease-out;">
+                                                                                <img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i15!2i9649!3i12311!4i256!2m3!1e0!2sm!3i368043840!3m9!2sfr-FR!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=54260"
+                                                                                     draggable="false" alt=""
+                                                                                     style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
+                                                                            </div>
+                                                                            <div style="position: absolute; left: 8px; top: 133px; transition: opacity 200ms ease-out;">
+                                                                                <img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i15!2i9650!3i12312!4i256!2m3!1e0!2sm!3i368043384!3m9!2sfr-FR!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=117607"
+                                                                                     draggable="false" alt=""
+                                                                                     style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
+                                                                            </div>
+                                                                            <div style="position: absolute; left: 264px; top: -123px; transition: opacity 200ms ease-out;">
+                                                                                <img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i15!2i9651!3i12311!4i256!2m3!1e0!2sm!3i368043264!3m9!2sfr-FR!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=6778"
+                                                                                     draggable="false" alt=""
+                                                                                     style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
+                                                                            </div>
+                                                                            <div style="position: absolute; left: 8px; top: -123px; transition: opacity 200ms ease-out;">
+                                                                                <img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i15!2i9650!3i12311!4i256!2m3!1e0!2sm!3i368043264!3m9!2sfr-FR!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=46499"
+                                                                                     draggable="false" alt=""
+                                                                                     style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
+                                                                            </div>
+                                                                            <div style="position: absolute; left: -248px; top: 133px; transition: opacity 200ms ease-out;">
+                                                                                <img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i15!2i9649!3i12312!4i256!2m3!1e0!2sm!3i368043384!3m9!2sfr-FR!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=18665"
+                                                                                     draggable="false" alt=""
+                                                                                     style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
+                                                                            </div>
+                                                                            <div style="position: absolute; left: 264px; top: 133px; transition: opacity 200ms ease-out;">
+                                                                                <img src="http://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i15!2i9651!3i12312!4i256!2m3!1e0!2sm!3i368043600!3m9!2sfr-FR!3sUS!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=79328"
+                                                                                     draggable="false" alt=""
+                                                                                     style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div style="position: absolute; left: 0px; top: 0px; z-index: 2; width: 100%; height: 100%;"></div>
+                                                                <div style="position: absolute; left: 0px; top: 0px; z-index: 3; width: 100%; height: 100%;"></div>
+                                                                <div style="position: absolute; left: 0px; top: 0px; z-index: 4; width: 100%; transform-origin: 0px 0px 0px; transform: matrix(1, 0, 0, 1, 0, 0);">
+                                                                    <div style="position: absolute; left: 0px; top: 0px; z-index: 104; width: 100%;"></div>
+                                                                    <div style="position: absolute; left: 0px; top: 0px; z-index: 105; width: 100%;"></div>
+                                                                    <div style="position: absolute; left: 0px; top: 0px; z-index: 106; width: 100%;">
+                                                                        <div class="cluster"></div>
+                                                                    </div>
+                                                                    <div style="position: absolute; left: 0px; top: 0px; z-index: 107; width: 100%;">
+                                                                        <div style="position: absolute; visibility: visible; width: 38px; left: 286.275px; top: 109.815px;">
+                                                                            <div class="marker">
+                                                                                <div class="marker-inner"><i
+                                                                                            class="fa fa-coffee"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div style="margin-left: 5px; margin-right: 5px; z-index: 1000000; position: absolute; left: 0px; bottom: 0px;">
+                                                                <a target="_blank"
+                                                                   href="https://maps.google.com/maps?ll=40.779995,-73.97439&amp;z=15&amp;t=m&amp;hl=fr-FR&amp;gl=US&amp;mapclient=apiv3"
+                                                                   title="Cliquez ici pour afficher cette zone sur Google&nbsp;Maps"
+                                                                   style="position: static; overflow: visible; float: none; display: inline;">
+                                                                    <div style="width: 66px; height: 26px; cursor: pointer;">
+                                                                        <img src="http://maps.gstatic.com/mapfiles/api-3/images/google4.png"
+                                                                             draggable="false"
+                                                                             style="position: absolute; left: 0px; top: 0px; width: 66px; height: 26px; user-select: none; border: 0px; padding: 0px; margin: 0px;">
+                                                                    </div>
+                                                                </a></div>
+                                                            <div style="background-color: white; padding: 15px 21px; border: 1px solid rgb(171, 171, 171); font-family: Roboto, Arial, sans-serif; color: rgb(34, 34, 34); box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px; z-index: 10000002; display: none; width: 256px; height: 148px; position: absolute; left: 34px; top: 60px;">
+                                                                <div style="padding: 0px 0px 10px; font-size: 16px;">
+                                                                    Données cartographiques
+                                                                </div>
+                                                                <div style="font-size: 13px;">Données cartographiques
+                                                                    ©2016 Google
+                                                                </div>
+                                                                <div style="width: 13px; height: 13px; overflow: hidden; position: absolute; opacity: 0.7; right: 12px; top: 12px; z-index: 10000; cursor: pointer;">
+                                                                    <img src="http://maps.gstatic.com/mapfiles/api-3/images/mapcnt6.png"
+                                                                         draggable="false"
+                                                                         style="position: absolute; left: -2px; top: -336px; width: 59px; height: 492px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
+                                                                </div>
+                                                            </div>
+                                                            <div class="gmnoprint"
+                                                                 style="z-index: 1000001; position: absolute; right: 278px; bottom: 0px; width: 126px;">
+                                                                <div draggable="false" class="gm-style-cc"
+                                                                     style="user-select: none; height: 14px; line-height: 14px;">
+                                                                    <div style="opacity: 0.7; width: 100%; height: 100%; position: absolute;">
+                                                                        <div style="width: 1px;"></div>
+                                                                        <div style="background-color: rgb(245, 245, 245); width: auto; height: 100%; margin-left: 1px;"></div>
+                                                                    </div>
+                                                                    <div style="position: relative; padding-right: 6px; padding-left: 6px; font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); white-space: nowrap; direction: ltr; text-align: right; vertical-align: middle; display: inline-block;">
+                                                                        <a style="color: rgb(68, 68, 68); text-decoration: none; cursor: pointer;">Données
+                                                                            cartographiques</a><span
+                                                                                style="display: none;">Données cartographiques ©2016 Google</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="gmnoscreen"
+                                                                 style="position: absolute; right: 0px; bottom: 0px;">
+                                                                <div style="font-family: Roboto, Arial, sans-serif; font-size: 11px; color: rgb(68, 68, 68); direction: ltr; text-align: right; background-color: rgb(245, 245, 245);">
+                                                                    Données cartographiques ©2016 Google
+                                                                </div>
+                                                            </div>
+                                                            <div class="gmnoprint gm-style-cc" draggable="false"
+                                                                 style="z-index: 1000001; user-select: none; height: 14px; line-height: 14px; position: absolute; right: 165px; bottom: 0px;">
+                                                                <div style="opacity: 0.7; width: 100%; height: 100%; position: absolute;">
+                                                                    <div style="width: 1px;"></div>
+                                                                    <div style="background-color: rgb(245, 245, 245); width: auto; height: 100%; margin-left: 1px;"></div>
+                                                                </div>
+                                                                <div style="position: relative; padding-right: 6px; padding-left: 6px; font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); white-space: nowrap; direction: ltr; text-align: right; vertical-align: middle; display: inline-block;">
+                                                                    <a href="https://www.google.com/intl/fr-FR_US/help/terms_maps.html"
+                                                                       target="_blank"
+                                                                       style="text-decoration: none; cursor: pointer; color: rgb(68, 68, 68);">Conditions
+                                                                        d'utilisation</a></div>
+                                                            </div>
+                                                            <div style="width: 25px; height: 25px; overflow: hidden; display: none; margin: 10px 14px; position: absolute; top: 0px; right: 0px;">
+                                                                <img src="http://maps.gstatic.com/mapfiles/api-3/images/sv9.png"
+                                                                     draggable="false" class="gm-fullscreen-control"
+                                                                     style="position: absolute; left: -52px; top: -86px; width: 164px; height: 175px; user-select: none; border: 0px; padding: 0px; margin: 0px;">
+                                                            </div>
+                                                            <div draggable="false" class="gm-style-cc"
+                                                                 style="user-select: none; height: 14px; line-height: 14px; position: absolute; right: 0px; bottom: 0px;">
+                                                                <div style="opacity: 0.7; width: 100%; height: 100%; position: absolute;">
+                                                                    <div style="width: 1px;"></div>
+                                                                    <div style="background-color: rgb(245, 245, 245); width: auto; height: 100%; margin-left: 1px;"></div>
+                                                                </div>
+                                                                <div style="position: relative; padding-right: 6px; padding-left: 6px; font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); white-space: nowrap; direction: ltr; text-align: right; vertical-align: middle; display: inline-block;">
+                                                                    <a target="_new"
+                                                                       title="Signaler à Google une erreur dans la carte routière ou les images"
+                                                                       href="https://www.google.com/maps/@40.779995,-73.9743901,15z/data=!10m1!1e1!12b1?source=apiv3&amp;rapsrc=apiv3"
+                                                                       style="font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); text-decoration: none; position: relative;">Signaler
+                                                                        une erreur cartographique</a></div>
+                                                            </div>
+                                                            <div class="gmnoprint gm-bundled-control gm-bundled-control-on-bottom"
+                                                                 draggable="false" controlwidth="28" controlheight="55"
+                                                                 style="margin: 10px; user-select: none; position: absolute; bottom: 81px; left: 0px;">
+                                                                <div class="gmnoprint" controlwidth="28"
+                                                                     controlheight="55"
+                                                                     style="position: absolute; left: 0px; top: 0px;">
+                                                                    <div draggable="false"
+                                                                         style="user-select: none; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; border-radius: 2px; cursor: pointer; background-color: rgb(255, 255, 255); width: 28px; height: 55px;">
+                                                                        <div title="Zoom avant"
+                                                                             style="position: relative; width: 28px; height: 27px; left: 0px; top: 0px;">
+                                                                            <div style="overflow: hidden; position: absolute; width: 15px; height: 15px; left: 7px; top: 6px;">
+                                                                                <img src="http://maps.gstatic.com/mapfiles/api-3/images/tmapctrl.png"
+                                                                                     draggable="false"
+                                                                                     style="position: absolute; left: 0px; top: 0px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none; width: 120px; height: 54px;">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div style="position: relative; overflow: hidden; width: 67%; height: 1px; left: 16%; background-color: rgb(230, 230, 230); top: 0px;"></div>
+                                                                        <div title="Zoom arrière"
+                                                                             style="position: relative; width: 28px; height: 27px; left: 0px; top: 0px;">
+                                                                            <div style="overflow: hidden; position: absolute; width: 15px; height: 15px; left: 7px; top: 6px;">
+                                                                                <img src="http://maps.gstatic.com/mapfiles/api-3/images/tmapctrl.png"
+                                                                                     draggable="false"
+                                                                                     style="position: absolute; left: 0px; top: -15px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none; width: 120px; height: 54px;">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="gmnoprint gm-bundled-control gm-bundled-control-on-bottom"
+                                                                 draggable="false" controlwidth="28" controlheight="28"
+                                                                 style="margin: 10px; user-select: none; position: absolute; bottom: 42px; right: 28px;">
+                                                                <div class="gm-svpc" controlwidth="28"
+                                                                     controlheight="28"
+                                                                     style="background-color: rgb(255, 255, 255); box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; border-radius: 2px; width: 28px; height: 28px; cursor: url(&quot;http://maps.gstatic.com/mapfiles/openhand_8_8.cur&quot;) 8 8, default; position: absolute; left: 0px; top: 0px;">
+                                                                    <div style="position: absolute; left: 1px; top: 1px;"></div>
+                                                                    <div style="position: absolute; left: 1px; top: 1px;">
+                                                                        <div aria-label="Contrôle de Pegman dans Street View"
+                                                                             style="width: 26px; height: 26px; overflow: hidden; position: absolute; left: 0px; top: 0px;">
+                                                                            <img src="http://maps.gstatic.com/mapfiles/api-3/images/cb_scout5.png"
+                                                                                 draggable="false"
+                                                                                 style="position: absolute; left: -147px; top: -26px; width: 215px; height: 835px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
+                                                                        </div>
+                                                                        <div aria-label="Pegman est au-dessus de la carte."
+                                                                             style="width: 26px; height: 26px; overflow: hidden; position: absolute; left: 0px; top: 0px; visibility: hidden;">
+                                                                            <img src="http://maps.gstatic.com/mapfiles/api-3/images/cb_scout5.png"
+                                                                                 draggable="false"
+                                                                                 style="position: absolute; left: -147px; top: -52px; width: 215px; height: 835px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
+                                                                        </div>
+                                                                        <div aria-label="Contrôle de Pegman dans Street View"
+                                                                             style="width: 26px; height: 26px; overflow: hidden; position: absolute; left: 0px; top: 0px; visibility: hidden;">
+                                                                            <img src="http://maps.gstatic.com/mapfiles/api-3/images/cb_scout5.png"
+                                                                                 draggable="false"
+                                                                                 style="position: absolute; left: -147px; top: -78px; width: 215px; height: 835px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="gmnoprint" controlwidth="28"
+                                                                     controlheight="0"
+                                                                     style="display: none; position: absolute;">
+                                                                    <div title="Faire pivoter le plan à 90°"
+                                                                         style="width: 28px; height: 28px; overflow: hidden; position: absolute; border-radius: 2px; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; cursor: pointer; background-color: rgb(255, 255, 255); display: none;">
+                                                                        <img src="http://maps.gstatic.com/mapfiles/api-3/images/tmapctrl4.png"
+                                                                             draggable="false"
+                                                                             style="position: absolute; left: -141px; top: 6px; width: 170px; height: 54px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
+                                                                    </div>
+                                                                    <div class="gm-tilt"
+                                                                         style="width: 28px; height: 28px; overflow: hidden; position: absolute; border-radius: 2px; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; top: 0px; cursor: pointer; background-color: rgb(255, 255, 255);">
+                                                                        <img src="http://maps.gstatic.com/mapfiles/api-3/images/tmapctrl4.png"
+                                                                             draggable="false"
+                                                                             style="position: absolute; left: -141px; top: -13px; width: 170px; height: 54px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- /#map-property -->
+                                            </div><!-- /.map-property -->
+                                        </div><!-- /.detail-map -->
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade active in" id="street-view-panel"
+                                         jstcache="0">
+                                        <div id="listing-detail-street-view" data-latitude="40.758896"
+                                             data-longitude="-73.985135" data-heading="225" data-pitch="0" data-zoom="1"
+                                             jstcache="0"
+                                             style="position: relative; background-color: rgb(229, 227, 223); overflow: hidden;">
+                                            <div class="gm-style" jstcache="0"
+                                                 style="position: absolute; left: 0px; top: 0px; overflow: hidden; width: 100%; height: 100%; z-index: 1;">
+                                                <div jstcache="0"
+                                                     style="position: absolute; left: 0px; top: 0px; overflow: hidden; width: 100%; height: 100%; z-index: 0; background-color: rgb(229, 227, 223);">
+                                                    <div jstcache="0"
+                                                         style="position: absolute; left: 0px; top: 0px; z-index: 1; width: 100%; height: 100%; cursor: url(&quot;http://maps.gstatic.com/mapfiles/openhand_8_8.cur&quot;) 8 8, default;">
+                                                        <div style="position: absolute; left: 0px; top: 0px; z-index: 100; width: 100%;"></div>
+                                                        <div style="position: absolute; left: 0px; top: 0px; z-index: 101; width: 100%;"></div>
+                                                        <div style="position: absolute; left: 0px; top: 0px; z-index: 102; width: 100%;"></div>
+                                                        <div style="position: absolute; left: 0px; top: 0px; z-index: 103; width: 100%;"></div>
+                                                        <div style="position: absolute; left: 0px; top: 0px; z-index: 104; width: 100%;"></div>
+                                                        <div style="position: absolute; left: 0px; top: 0px; z-index: 105; width: 100%;"></div>
+                                                        <div style="position: absolute; left: 0px; top: 0px; z-index: 106; width: 100%;"></div>
+                                                        <div style="position: absolute; left: 0px; top: 0px; z-index: 107; width: 100%;"></div>
+                                                        <div class="gmnoprint"
+                                                             style="position: absolute; left: 0px; top: 0px; z-index: 2; font-family: Roboto, Arial, sans-serif;">
+                                                            <svg version="1.1" width="367px" height="300px"
+                                                                 viewBox="0 0 367 300"
+                                                                 style="position: absolute; left: 0px; top: 0px; pointer-events: none;"></svg>
+                                                        </div>
+                                                        <div jstcache="0" style="width: 100%; height: 100%;">
+                                                            <div jstcache="5" aria-label="Street View"
+                                                                 jsaction="click: scene.viewport;dblclick: scene.viewport;mousedown: scene.viewport;mousemove: scene.viewport;mouseup: scene.viewport;mouseover: scene.viewport;mouseout: scene.viewport;touchstart: scene.viewport;touchmove: scene.viewport;touchend: scene.viewport;pointerdown: scene.viewport;pointermove: scene.viewport;pointerup: scene.viewport;pointercancel: scene.viewport;MSPointerDown: scene.viewport;MSPointerMove: scene.viewport;MSPointerUp: scene.viewport;MSPointerCancel: scene.viewport;contextmenu: scene.viewport;keydown: scene.viewport;keyup: scene.viewport;wheel: scene.viewport;mousewheel: scene.viewport;DOMMouseScroll: scene.viewport;"
+                                                                 role="main" tabindex="0" class="widget-scene"
+                                                                 style="cursor: auto;">
+                                                                <canvas width="367" height="300" id=""
+                                                                        class="widget-scene-canvas" tabindex="-1"
+                                                                        style="width: 367px; height: 300px;"></canvas>
+                                                                <div id="" class="widget-scene-imagery-render"
+                                                                     style="width: 0px; height: 0px; display: none;"></div>
+                                                                <div class="widget-scene-effects noprint"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="margin-left: 5px; margin-right: 5px; z-index: 1000000; position: absolute; left: 0px; bottom: 0px;">
+                                                    <a target="_blank"
+                                                       href="https://maps.google.com/maps/@40.758895,-73.985131,0a,73.7y,73.22h,43.33t/data=!3m4!1e1!3m2!1s-XBKeRM1DVZc%2FV51dbS_kRdI%2FAAAAAAAAHLc%2FVo2kWewZgvcBXVGzSyObejO5gWsQu9yegCLIB!2e4?source=apiv3"
+                                                       title="Cliquez ici pour afficher cette zone sur Google&nbsp;Maps"
+                                                       style="position: static; overflow: visible; float: none; display: inline;">
+                                                        <div style="width: 66px; height: 26px; cursor: pointer;"><img
+                                                                    src="http://maps.gstatic.com/mapfiles/api-3/images/google_white5.png"
+                                                                    draggable="false"
+                                                                    style="position: absolute; left: 0px; top: 0px; width: 66px; height: 26px; user-select: none; border: 0px; padding: 0px; margin: 0px;">
+                                                        </div>
+                                                    </a></div>
+                                                <div style="background-color: white; padding: 15px 21px; border: 1px solid rgb(171, 171, 171); font-family: Roboto, Arial, sans-serif; color: rgb(34, 34, 34); box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px; z-index: 10000002; display: none; width: 256px; height: 148px; position: absolute; left: 34px; top: 60px;">
+                                                    <div style="padding: 0px 0px 10px; font-size: 16px;">Données
+                                                        cartographiques
+                                                    </div>
+                                                    <div style="font-size: 13px;">© {{ prestataire.nom }}</div>
+                                                    <div style="width: 13px; height: 13px; overflow: hidden; position: absolute; opacity: 0.7; right: 12px; top: 12px; z-index: 10000; cursor: pointer;">
+                                                        <img src="http://maps.gstatic.com/mapfiles/api-3/images/mapcnt6.png"
+                                                             draggable="false"
+                                                             style="position: absolute; left: -2px; top: -336px; width: 59px; height: 492px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
+                                                    </div>
+                                                </div>
+                                                <div class="gmnoprint"
+                                                     style="z-index: 1000001; position: absolute; right: 219px; bottom: 0px; width: 83px;">
+                                                    <div draggable="false" class="gm-style-cc"
+                                                         style="user-select: none; height: 14px; line-height: 14px;">
+                                                        <div style="opacity: 0.7; width: 100%; height: 100%; position: absolute;">
+                                                            <div style="width: 1px;"></div>
+                                                            <div style="background-color: rgb(0, 0, 0); width: auto; height: 100%; margin-left: 1px;"></div>
+                                                        </div>
+                                                        <div style="position: relative; padding-right: 6px; padding-left: 6px; font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(255, 255, 255); white-space: nowrap; direction: ltr; text-align: right; vertical-align: middle; display: inline-block;">
+                                                            <a style="color: rgb(68, 68, 68); text-decoration: none; cursor: pointer; display: none;">Données
+                                                                cartographiques</a><span>© {{ prestataire.nom }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="gmnoscreen"
+                                                     style="position: absolute; right: 0px; bottom: 0px;">
+                                                    <div style="font-family: Roboto, Arial, sans-serif; font-size: 11px; color: rgb(68, 68, 68); direction: ltr; text-align: right; background-color: rgb(245, 245, 245);">
+                                                        © {{ prestataire.nom }}
+                                                    </div>
+                                                </div>
+                                                <div class="gmnoprint gm-style-cc" draggable="false"
+                                                     style="z-index: 1000001; user-select: none; height: 14px; line-height: 14px; position: absolute; right: 106px; bottom: 0px;">
+                                                    <div style="opacity: 0.7; width: 100%; height: 100%; position: absolute;">
+                                                        <div style="width: 1px;"></div>
+                                                        <div style="background-color: rgb(0, 0, 0); width: auto; height: 100%; margin-left: 1px;"></div>
+                                                    </div>
+                                                    <div style="position: relative; padding-right: 6px; padding-left: 6px; font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(255, 255, 255); white-space: nowrap; direction: ltr; text-align: right; vertical-align: middle; display: inline-block;">
+                                                        <a href="https://www.google.com/intl/fr-FR_US/help/terms_maps.html"
+                                                           target="_blank"
+                                                           style="text-decoration: none; cursor: pointer; color: rgb(255, 255, 255);">Conditions
+                                                            d'utilisation</a></div>
+                                                </div>
+                                                <div style="width: 25px; height: 25px; overflow: hidden; margin: 10px 20px; position: absolute; top: 0px; right: 0px;">
+                                                    <img src="http://maps.gstatic.com/mapfiles/api-3/images/sv9.png"
+                                                         draggable="false" class="gm-fullscreen-control"
+                                                         style="position: absolute; left: 0px; top: -86px; width: 164px; height: 175px; user-select: none; border: 0px; padding: 0px; margin: 0px;">
+                                                </div>
+                                                <div class="gmnoprint gm-bundled-control gm-bundled-control-on-bottom"
+                                                     draggable="false" controlwidth="28" controlheight="55"
+                                                     style="margin: 10px; user-select: none; position: absolute; bottom: 69px; right: 28px;">
+                                                    <div class="gmnoprint" controlwidth="28" controlheight="55"
+                                                         style="position: absolute; left: 0px; top: 0px;">
+                                                        <div draggable="false"
+                                                             style="user-select: none; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; border-radius: 2px; cursor: pointer; background-color: rgb(34, 34, 34); width: 28px; height: 55px;">
+                                                            <div title="Zoom avant"
+                                                                 style="position: relative; width: 28px; height: 27px; left: 0px; top: 0px;">
+                                                                <div style="overflow: hidden; position: absolute; width: 15px; height: 15px; left: 7px; top: 6px;">
+                                                                    <img src="http://maps.gstatic.com/mapfiles/api-3/images/tmapctrl.png"
+                                                                         draggable="false"
+                                                                         style="position: absolute; left: -60px; top: 0px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none; width: 120px; height: 54px;">
+                                                                </div>
+                                                            </div>
+                                                            <div style="position: relative; overflow: hidden; width: 67%; height: 1px; left: 16%; background-color: rgb(26, 26, 26); top: 0px;"></div>
+                                                            <div title="Zoom arrière"
+                                                                 style="position: relative; width: 28px; height: 27px; left: 0px; top: 0px;">
+                                                                <div style="overflow: hidden; position: absolute; width: 15px; height: 15px; left: 7px; top: 6px;">
+                                                                    <img src="http://maps.gstatic.com/mapfiles/api-3/images/tmapctrl.png"
+                                                                         draggable="false"
+                                                                         style="position: absolute; left: -60px; top: -15px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none; width: 120px; height: 54px;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div draggable="false" controlwidth="25px"
+                                                         style="user-select: none; font-family: Roboto, Arial, sans-serif; font-size: 11px; width: 25px; text-align: center; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; cursor: pointer; display: none; position: absolute;"></div>
+                                                </div>
+                                                <div dir="ltr" jstcache="0"
+                                                     style="position: absolute; display: none; left: 0px; top: 0px;">
+                                                    <div jstcache="37" class="gm-iv-container gm-iv-small-container"
+                                                         jsan="t-_EPk2VOG1I0,7.gm-iv-container,7.gm-iv-small-container">
+                                                        <div jsaction="closeControl.click" class="gm-iv-close">
+                                                            <div class="gm-iv-back">
+                                                                <div jstcache="34"
+                                                                     class="gm-iv-back-icon-background gm-iv-back-icon"
+                                                                     jsan="7.gm-iv-back-icon-background,7.gm-iv-back-icon"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div dir="ltr" style="position: absolute; left: 0px; top: 0px;"
+                                                     jstcache="0">
+                                                    <div jstcache="65" class="gm-iv-address"
+                                                         jsan="t-bDow0pNywiw,7.gm-iv-address">
+                                                        <div class="gm-iv-address-description">
+                                                            <div jstcache="39" class="gm-iv-short-address-description">
+                                                                Martin Martin
+                                                            </div>
+                                                            <div jstcache="40"
+                                                                 class="gm-iv-long-address-description"></div>
+                                                            <div jstcache="41" class="gm-iv-profile-url"
+                                                                 style="display:none"><a target="_blank" jstcache="42">
+                                                                    <div jstcache="43" class="gm-iv-profile-link"></div>
+                                                                </a></div>
+                                                        </div>
+                                                        <div jstcache="44" class="gm-iv-address-link"><a target="_blank"
+                                                                                                         jstcache="45"
+                                                                                                         href="https://www.google.com/maps/@40.758895,-73.985131,0a,73.7y,73.22h,43.33t/data=!3m4!1e1!3m2!1s-XBKeRM1DVZc%2FV51dbS_kRdI%2FAAAAAAAAHLc%2FVo2kWewZgvcBXVGzSyObejO5gWsQu9yegCLIB!2e4?source=apiv3">Afficher
+                                                                dans Google&nbsp;Maps</a></div>
+                                                        <div jstcache="46" class="gm-iv-address-custom"
+                                                             style="display:none"><p>Custom Imagery</p></div>
+                                                        <div jstcache="47" class="gm-iv-vertical-separator"></div>
+                                                        <div jstcache="48" class="gm-iv-marker"><a target="_blank"
+                                                                                                   jstcache="49"
+                                                                                                   href="https://www.google.com/maps/@40.758895,-73.98513100000002,13z?hl=fr-FR&amp;gl=US">
+                                                                <div class="gm-iv-marker-icon gm-iv-marker-icon-background"></div>
+                                                            </a></div>
+                                                        <div jstcache="50" class="gm-iv-timeline" style="display:none">
+                                                            <div class="gm-iv-horizontal-separator"></div>
+                                                            <div jstcache="51" jsaction="timeline.show"
+                                                                 class="gm-iv-timeline-wrapper" style="display:none">
+                                                                <div jstcache="52" class="gm-iv-timeline-icon-wrapper"
+                                                                     style="display:none">
+                                                                    <div class="gm-iv-timeline-icon gm-iv-timeline-icon-background"></div>
+                                                                </div>
+                                                                <div jstcache="53" class="gm-iv-timeline-description"
+                                                                     style="display:none">
+                                                                    <div jstcache="54"
+                                                                         class="gm-iv-timeline-description-details"></div>
+                                                                    <div class="gm-iv-timeline-description-separator">
+                                                                        -
+                                                                    </div>
+                                                                    <div jstcache="55"
+                                                                         class="gm-iv-timeline-description-details"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div jstcache="56" class="gm-iv-timeline-description"
+                                                                 style="display:none">
+                                                                <div jstcache="57"
+                                                                     class="gm-iv-timeline-description-details"></div>
+                                                                <div class="gm-iv-timeline-description-separator">-
+                                                                </div>
+                                                                <div jstcache="58"
+                                                                     class="gm-iv-timeline-description-details"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div style="position: absolute; left: 0px; margin-top: -29px; width: 351px; height: 248px; display: none;"></div>
+                                                </div>
+                                                <div style="position: absolute; background-color: rgb(34, 34, 34); border-radius: 2px; width: 28px; height: 28px; margin-right: 10px; overflow: hidden; z-index: 1; display: none; bottom: 89px; right: 0px;">
+                                                    <img src="http://maps.gstatic.com/mapfiles/api-3/images/sv9.png"
+                                                         draggable="false"
+                                                         style="position: absolute; left: -103px; top: -84px; width: 164px; height: 175px; user-select: none; border: 0px; padding: 0px; margin: 0px;">
+                                                </div>
+                                                <div draggable="false"
+                                                     style="color: white; font-family: Roboto, Arial, sans-serif; background-color: black; padding: 4px; border: 2px solid white; user-select: none; display: none; position: absolute; left: 184px; top: 150px;">
+                                                    Cette image n'est plus disponible.
+                                                </div>
+                                                <div draggable="false" class="gm-style-cc"
+                                                     style="user-select: none; height: 14px; line-height: 14px; position: absolute; right: 0px; bottom: 0px;">
+                                                    <div style="opacity: 0.7; width: 100%; height: 100%; position: absolute;">
+                                                        <div style="width: 1px;"></div>
+                                                        <div style="background-color: rgb(0, 0, 0); width: auto; height: 100%; margin-left: 1px;"></div>
+                                                    </div>
+                                                    <div style="position: relative; padding-right: 6px; padding-left: 6px; font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(255, 255, 255); white-space: nowrap; direction: ltr; text-align: right; vertical-align: middle; display: inline-block;">
+                                                        <a target="_new"
+                                                           title="Signaler un problème avec des images Street View sur Google"
+                                                           href="https://www.google.com/cbk?cb_client=apiv3&amp;output=report&amp;image_key=!1e3!2s-XBKeRM1DVZc%2FV51dbS_kRdI%2FAAAAAAAAHLc%2FVo2kWewZgvcBXVGzSyObejO5gWsQu9yegCLIB&amp;cbp=1,73.224,,0,46.668&amp;hl=fr-FR"
+                                                           style="text-decoration: none; color: rgb(255, 255, 255);">Signaler
+                                                            un problème</a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h2>Video</h2>
+                            <div class="detail-video">
+                                <iframe src="https://player.vimeo.com/video/36911719?color=009f8b&amp;byline=0&amp;portrait=0"
+                                        width="653" height="366" frameborder="0" webkitallowfullscreen=""
+                                        mozallowfullscreen="" allowfullscreen=""></iframe>
+                            </div><!-- /.detail-video -->
+
+                            <h2 id="reviews">Commentaires et avis</h2>
+                            <div class="reviews">
+                                {% for commentaire in prestataire.commentaires %}
+                                    <div class="review">
+                                        <div class="review-image">
+                                            <img src="{{ asset(commentaire.internaute.image.url) }}" alt="">
+                                        </div><!-- /.review-image -->
+
+                                        <div class="review-inner">
+
+                                            <div class="review-title">
+                                                <h2>{{ commentaire.internaute.nom }}</h2>
+
+                                                <span class="report">
+                                             <span class="separator">•</span>
+                                                <i class="fa fa-flag" title="" data-toggle="tooltip"
+                                                   data-placement="top" data-original-title="Report"></i>
+                                            </span>
+
+                                                <div class="review-overall-rating">
+                                                    <span class="overall-rating-title">Cotation:</span>
+                                                    {% for i in 1..commentaire.cote %}
+                                                        <i class="fa fa-star"></i>
+                                                    {% endfor %}
+
+                                                    <i class="fa fa-star-o"></i>{#TODO : ajuster étoiles vides -> max étoiles -> 5#}
+                                                </div><!-- /.review-rating -->
+                                            </div><!-- /.review-title -->
+
+                                            <div class="review-content-wrapper">
+                                                <div class="review-content">
+                                                    <div class="review-pros">
+                                                        <p>{{ commentaire.titre }}</p>
+                                                        <p>{{ commentaire.contenu }}</p>
+                                                    </div><!-- /.pros -->
+                                                    {# <div class="review-cons">
+                                                         <p>Duis et magna vel est tempus vehicula vitae sit amet enim. Sed
+                                                             vitae ligula congue.</p>
+                                                     </div><!-- /.cons -->#}
+                                                </div><!-- /.review-content -->
+
+                                                <div class="review-rating">
+                                                    <dl>
+                                                        <dt>Accueil</dt>
+                                                        <dd>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </dd>
+                                                        <dt>Service</dt>
+                                                        <dd>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        </dd>
+                                                        <dt>Rapport qualité/prix</dt>
+                                                        <dd>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        </dd>
+                                                    </dl>
+                                                </div><!-- /.review-rating -->
+                                            </div><!-- /.review-content-wrapper -->
+
+                                        </div><!-- /.review-inner -->
+                                    </div><!-- /.review -->
+
+
+                                {% endfor %}
+                            </div><!-- /.reviews -->
+
+
+                        </div><!-- /.col-sm-7 -->
+
+                        <div class="col-sm-5">
+
+                            <div class="background-white p20">
+                                <div class="detail-overview-hearts">
+                                    <i class="fa fa-heart"></i> <strong>213 </strong>people love it
+                                </div>
+                                <div class="detail-overview-rating">
+                                    <i class="fa fa-star"></i> <strong>4.3 / 5 </strong>from <a href="#reviews">316
+                                        reviews</a>
+                                </div>
+
+                                <div class="detail-actions row">
+                                    <div class="col-sm-4">
+                                        <div class="btn btn-primary btn-book"><i class="fa fa-shopping-cart"></i> Book
+                                            Now
+                                        </div>
+                                    </div><!-- /.col-sm-4 -->
+                                    <div class="col-sm-4">
+                                        <div class="btn btn-secondary btn-share"><i class="fa fa-share-square-o"></i>
+                                            Share
+                                            <div class="share-wrapper">
+                                                <ul class="share">
+                                                    <li><i class="fa fa-facebook"></i> Facebook</li>
+                                                    <li><i class="fa fa-twitter"></i> Twitter</li>
+                                                    <li><i class="fa fa-google-plus"></i> Google+</li>
+                                                    <li><i class="fa fa-pinterest"></i> Pinterest</li>
+                                                    <li><i class="fa fa-chain"></i> Link</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div><!-- /.col-sm-4 -->
+                                    <div class="col-sm-4">
+                                        <div class="btn btn-secondary btn-claim"><i class="fa fa-hand-peace-o"></i>
+                                            Claim
+                                        </div>
+                                    </div><!-- /.col-sm-4 -->
+                                </div><!-- /.detail-actions -->
+                            </div>
+
+                            <h2>About <span class="text-secondary">{{ prestataire.nom }}</span></h2>
+                            <div class="background-white p20">
+                                <div class="detail-vcard">
+                                    <div class="detail-logo">
+                                        <img src="assets/img/tmp/pragmaticmates-logo.png">
+                                    </div><!-- /.detail-logo -->
+
+                                    <div class="detail-contact">
+                                        <div class="detail-contact-email">
+                                            <i class="fa fa-envelope-o"></i> <a
+                                                    href="mailto:#">{{ prestataire.utilisateur.email }}</a>
+                                        </div>
+                                        <div class="detail-contact-phone">
+                                            <i class="fa fa-mobile-phone"></i> <a
+                                                    href="tel:#">{{ prestataire.telephone }}</a>
+                                        </div>
+                                        <div class="detail-contact-website">
+                                            <i class="fa fa-globe"></i> <a href="#">{{ prestataire.siteInternet }}</a>
+                                        </div>
+                                        <div class="detail-contact-address">
+                                            <i class="fa fa-map-o"></i>
+                                            {{ prestataire.utilisateur.adresseNumero }}
+                                            ,{{ prestataire.utilisateur.adresseRue }}
+                                            {{ prestataire.utilisateur.adresseUtilisateur.codePostal }} {{ prestataire.utilisateur.adresseUtilisateur.commune }}
+                                        </div>
+                                    </div><!-- /.detail-contact -->
+                                </div><!-- /.detail-vcard -->
+
+                                <div class="detail-description">
+                                    {% for service in prestataire.categServices %}
+                                        <p>{{ service.nom }}</p>
+                                        <p>{{ service.description }}</p>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="detail-follow">
+                                    <h5>Follow Us:</h5>
+                                    <div class="follow-wrapper">
+                                        <a class="follow-btn facebook" href="#"><i class="fa fa-facebook"></i></a>
+                                        <a class="follow-btn youtube" href="#"><i class="fa fa-youtube"></i></a>
+                                        <a class="follow-btn twitter" href="#"><i class="fa fa-twitter"></i></a>
+                                        <a class="follow-btn tripadvisor" href="#"><i class="fa fa-tripadvisor"></i></a>
+                                        <a class="follow-btn google-plus" href="#"><i class="fa fa-google-plus"></i></a>
+                                    </div><!-- /.follow-wrapper -->
+                                </div><!-- /.detail-follow -->
+                            </div>
+
+                            <div class="widget">
+                                <h2 class="widgettitle">Working Hours</h2>
+
+                                <div class="p20 background-white">
+                                    <div class="working-hours">
+                                        <div class="day clearfix">
+                                            <span class="name">Mon</span><span class="hours">07:00 AM - 07:00 PM</span>
+                                        </div><!-- /.day -->
+
+                                        <div class="day clearfix">
+                                            <span class="name">Tue</span><span class="hours">07:00 AM - 07:00 PM</span>
+                                        </div><!-- /.day -->
+
+                                        <div class="day clearfix">
+                                            <span class="name">Wed</span><span class="hours">07:00 AM - 07:00 PM</span>
+                                        </div><!-- /.day -->
+
+                                        <div class="day clearfix">
+                                            <span class="name">Thu</span><span class="hours">07:00 AM - 07:00 PM</span>
+                                        </div><!-- /.day -->
+
+                                        <div class="day clearfix">
+                                            <span class="name">Fri</span><span class="hours">07:00 AM - 07:00 PM</span>
+                                        </div><!-- /.day -->
+
+                                        <div class="day clearfix">
+                                            <span class="name">Sat</span><span class="hours">07:00 AM - 02:00 PM</span>
+                                        </div><!-- /.day -->
+
+                                        <div class="day clearfix">
+                                            <span class="name">Sun</span><span class="hours">Closed</span>
+                                        </div><!-- /.day -->
+                                    </div>
+                                </div>
+                            </div><!-- /.widget -->
+
+
+                            <h2>Services</h2>
+
+                            <div class="background-white p20">
+                                <ul class="detail-amenities">
+                                    {% for service in categServices %}
+                                        {% if service in  prestataire.categServices %}
+                                            {% set match='yes' %}
+                                        {% else %}
+                                            {% set match='no' %}
+                                        {% endif %}
+                                        <li class="{{ match }}">{{ service }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div><!-- /.detail-amenities -->
+
+                            <h2>Enquire Form</h2>
+
+                            <div class="detail-enquire-form background-white p20">
+                                <form method="post" action="?">
+                                    <div class="form-group">
+                                        <label for="">Name</label>
+                                        <input type="text" class="form-control" name="" id="">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="form-group">
+                                        <label for="">Email <span class="required">*</span></label>
+                                        <input type="email" class="form-control" name="" id="" required="">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="form-group">
+                                        <label for="">Message <span class="required">*</span></label>
+                                        <textarea class="form-control" name="" id="" rows="5" required=""></textarea>
+                                        <div class="textarea-resize"></div>
+                                    </div><!-- /.form-group -->
+
+                                    <p>Required fields are marked <span class="required">*</span></p>
+
+                                    <button class="btn btn-primary btn-block" type="submit"><i
+                                                class="fa fa-paper-plane"></i>Send Message
+                                    </button>
+                                </form>
+                            </div><!-- /.detail-enquire-form -->
+
+                            <h2>3 Reasons Why Choose Us</h2>
+
+                            <div class="background-white p20 reasons">
+                                <div class="reason">
+                                    <div class="reason-icon">
+                                        <i class="fa fa-trophy"></i>
+                                    </div><!-- /.reason-icon -->
+                                    <div class="reason-content">
+                                        <h4>Coffee House of the Year 2015</h4>
+                                        <p>Fusce at venenatis lorem. Quisque volutpat aliquam leo, a pellentesque orci
+                                            varius sit amet.</p>
+                                    </div><!-- /.reason-content -->
+                                </div><!-- /.reason -->
+                                <div class="reason">
+                                    <div class="reason-icon">
+                                        <i class="fa fa-coffee"></i>
+                                    </div><!-- /.reason-icon -->
+                                    <div class="reason-content">
+                                        <h4>High Quality Coffee Beans</h4>
+                                        <p>Fusce at venenatis lorem. Quisque volutpat aliquam leo, a pellentesque orci
+                                            varius sit amet.</p>
+                                    </div><!-- /.reason-content -->
+                                </div><!-- /.reason -->
+                                <div class="reason">
+                                    <div class="reason-icon">
+                                        <i class="fa fa-cutlery"></i>
+                                    </div><!-- /.reason-icon -->
+                                    <div class="reason-content">
+                                        <h4>Snacks &amp; Deserts</h4>
+                                        <p>Fusce at venenatis lorem. Quisque volutpat aliquam leo, a pellentesque orci
+                                            varius sit amet.</p>
+                                    </div><!-- /.reason-content -->
+                                </div><!-- /.reason -->
+                            </div>
+
+                            <div class="detail-payments">
+                                <h3>Accepted Payments</h3>
+
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-paypal"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-cc-stripe"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
+                                </ul>
+                            </div>
+                        </div><!-- /.col-sm-5 -->
+
+                        <div class="col-sm-12">
+                            <h2>Submit a Review</h2>
+
+                            <form class="background-white p20 add-review" method="post" action="?">
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label for="">Name <span class="required">*</span></label>
+                                        <input type="text" class="form-control" id="" required="">
+                                    </div><!-- /.col-sm-6 -->
+
+                                    <div class="form-group col-sm-6">
+                                        <label for="">Email <span class="required">*</span></label>
+                                        <input type="email" class="form-control" id="" required="">
+                                    </div><!-- /.col-sm-6 -->
+                                </div><!-- /.row -->
+
+                                <div class="row">
+                                    <div class="form-group input-rating col-sm-3">
+
+                                        <div class="rating-title">Food</div>
+
+                                        <input type="radio" value="1" name="food" id="rating-food-1">
+                                        <label for="rating-food-1"></label>
+                                        <input type="radio" value="2" name="food" id="rating-food-2">
+                                        <label for="rating-food-2"></label>
+                                        <input type="radio" value="3" name="food" id="rating-food-3">
+                                        <label for="rating-food-3"></label>
+                                        <input type="radio" value="4" name="food" id="rating-food-4">
+                                        <label for="rating-food-4"></label>
+                                        <input type="radio" value="5" name="food" id="rating-food-5">
+                                        <label for="rating-food-5"></label>
+
+                                    </div><!-- /.col-sm-3 -->
+                                    <div class="form-group input-rating col-sm-3">
+
+                                        <div class="rating-title">Staff</div>
+
+                                        <input type="radio" value="1" name="staff" id="rating-staff-1">
+                                        <label for="rating-staff-1" class=""></label>
+                                        <input type="radio" value="2" name="staff" id="rating-staff-2">
+                                        <label for="rating-staff-2" class=""></label>
+                                        <input type="radio" value="3" name="staff" id="rating-staff-3">
+                                        <label for="rating-staff-3" class=""></label>
+                                        <input type="radio" value="4" name="staff" id="rating-staff-4">
+                                        <label for="rating-staff-4" class=""></label>
+                                        <input type="radio" value="5" name="staff" id="rating-staff-5">
+                                        <label for="rating-staff-5" class=""></label>
+
+                                    </div><!-- /.col-sm-3 -->
+                                    <div class="form-group input-rating col-sm-3">
+
+                                        <div class="rating-title">Value</div>
+
+                                        <input type="radio" value="1" name="value" id="rating-value-1">
+                                        <label for="rating-value-1" class=""></label>
+                                        <input type="radio" value="2" name="value" id="rating-value-2">
+                                        <label for="rating-value-2" class=""></label>
+                                        <input type="radio" value="3" name="value" id="rating-value-3">
+                                        <label for="rating-value-3" class=""></label>
+                                        <input type="radio" value="4" name="value" id="rating-value-4">
+                                        <label for="rating-value-4" class=""></label>
+                                        <input type="radio" value="5" name="value" id="rating-value-5">
+                                        <label for="rating-value-5" class=""></label>
+
+                                    </div><!-- /.col-sm-3 -->
+                                    <div class="form-group input-rating col-sm-3">
+
+                                        <div class="rating-title">Atmosphere</div>
+
+                                        <input type="radio" value="1" name="atmosphere" id="rating-atmosphere-1">
+                                        <label for="rating-atmosphere-1"></label>
+                                        <input type="radio" value="2" name="atmosphere" id="rating-atmosphere-2">
+                                        <label for="rating-atmosphere-2"></label>
+                                        <input type="radio" value="3" name="atmosphere" id="rating-atmosphere-3">
+                                        <label for="rating-atmosphere-3"></label>
+                                        <input type="radio" value="4" name="atmosphere" id="rating-atmosphere-4">
+                                        <label for="rating-atmosphere-4"></label>
+                                        <input type="radio" value="5" name="atmosphere" id="rating-atmosphere-5">
+                                        <label for="rating-atmosphere-5"></label>
+
+                                    </div><!-- /.col-sm-3 -->
+                                </div><!-- /.row -->
+
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label for="">Pros</label>
+                                        <textarea class="form-control" rows="5" id=""></textarea>
+                                        <div class="textarea-resize"></div>
+                                    </div><!-- /.col-sm-6 -->
+                                    <div class="form-group col-sm-6">
+                                        <label for="">Cons</label>
+                                        <textarea class="form-control" rows="5" id=""></textarea>
+                                        <div class="textarea-resize"></div>
+                                    </div><!-- /.col-sm-6 -->
+
+                                    <div class="col-sm-8">
+                                        <p>Required fields are marked <span class="required">*</span></p>
+                                    </div><!-- /.col-sm-8 -->
+                                    <div class="col-sm-4">
+                                        <button class="btn btn-primary btn-block" type="submit"><i
+                                                    class="fa fa-star"></i>Submit Review
+                                        </button>
+                                    </div><!-- /.col-sm-4 -->
+                                </div><!-- /.row -->
+                            </form>
+                        </div><!-- /.col-* -->
+                    </div><!-- /.row -->
+
+                </div><!-- /.container -->
+
+            </div><!-- /.content -->
+        </div><!-- /.main-inner -->
+    </div>
+{% endblock %}

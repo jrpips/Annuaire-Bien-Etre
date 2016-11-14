@@ -59,6 +59,12 @@ class Prestataire {
     private $promotions;
 
     /**
+     * @ORM\OneToMany(targetEntity="Commentaire", cascade={"persist"},mappedBy="prestataire")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $commentaires;
+
+    /**
      * @Assert\Length(
      *      min = 2,
      *      max = 50,
@@ -416,5 +422,39 @@ class Prestataire {
     public function getPromotions()
     {
         return $this->promotions;
+    }
+
+    /**
+     * Add commentaire
+     *
+     * @param \AppBundle\Entity\Commentaire $commentaire
+     *
+     * @return Prestataire
+     */
+    public function addCommentaire(\AppBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires[] = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove commentaire
+     *
+     * @param \AppBundle\Entity\Commentaire $commentaire
+     */
+    public function removeCommentaire(\AppBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires->removeElement($commentaire);
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
     }
 }

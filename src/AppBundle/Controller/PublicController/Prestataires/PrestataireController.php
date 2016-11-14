@@ -21,6 +21,19 @@ use AppBundle\Form\MoteurDeRechercheType;
 class PrestataireController extends Controller {
 
     /**
+     * @Route("/test/presta",name="test")
+     */
+    public function testPrestataireAction() {
+        $test=2;
+        $prestataire = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->find($test);
+        $categServices = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findAll();
+        dump($prestataire,$categServices);
+        return $this->render('Public/Prestataires/test.template.details.prestataire.html.twig', array(
+            'prestataire' => $prestataire,
+            'categServices'=>$categServices
+        ));
+    }
+    /**
      * call by views/Public/Navigation/nav.parent.menu
      */
     public function getChildNavPrestatairesElementsAction() {
