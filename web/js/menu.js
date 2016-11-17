@@ -295,22 +295,53 @@ var GpAnnuaire = GpAnnuaire || {
             $.each($form.serializeArray(), function (i, field) {
                 values[field.name] = field.value;
             });
-            console.log('ok', values,$('#nom').text());
+            console.log('ok', values, $('#nom').text());
 
             $.ajax({
                 type: "POST",
-                data:  values,
-                url: Routing.generate('add_comment',{'prestataire_nom':$('#nomPrestataire').text()}),
+                data: values,
+                url: Routing.generate('add_comment', {'prestataire_nom': $('#nomPrestataire').text()}),
                 dataType: 'json',
                 success: function (data) {
                     console.log(data);
-                    if(!data.valide){
+                    if (!data.valide) {
 
-                    $('.errorCommentaire').remove();
+                        $('.errorCommentaire').remove();
 
-                    for (item in data.errors) {
-                        $('#commentaire_' + item).parent().append('<div class="errorCommentaire" >' + data.errors[item][0] + '</div>');
-                    }}
+                        for (item in data.errors) {
+                            $('#commentaire_' + item).parent().append('<div class="errorCommentaire" >' + data.errors[item][0] + '</div>');
+                        }
+                    }
+                }
+            })
+        },
+        'ajaxContactPrestataire': function (e) {
+            console.log(e);
+            e.preventDefault();
+
+            var $form = $('form[name=contact_prestataire]');
+            var values = {};
+            console.log($form);
+            $.each($form.serializeArray(), function (i, field) {
+                values[field.name] = field.value;
+            });
+            console.log('ok', values, $('#nomPrestataire').text());
+
+            $.ajax({
+                type: "POST",
+                data: values,
+                url: Routing.generate('add_comment', {'prestataire_nom': $('#nomPrestataire').text()}),
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    if (!data.valide) {
+
+                        $('.errorCommentaire').remove();
+
+                        for (item in data.errors) {
+                            $('#contact_prestataire_' + item).parent().append('<div class="errorCommentaire" >' + data.errors[item][0] + '</div>');
+                        }
+                    }
                 }
             })
         },
@@ -339,6 +370,15 @@ var GpAnnuaire = GpAnnuaire || {
             });
 
             reader.readAsDataURL(file);
+        },
+        starCotationFormCommentaire: function () {
+            for (i = 1; i < 11; i++) {
+
+                $('#rating-' + i).on('click', function () {
+                    $('#rating-' + i).attr('data', 'toto');
+                    console.log('ok');
+                });
+            }
         }
     };
 /**
@@ -430,19 +470,28 @@ $(function () {//controller
     $('#body form:eq(1) button').attr({'class': 'btn btn-default', 'id': 'cmdSend'});
 
     /**
-     **  checkox form[internaute][newsletter] -> hack construct mistake checkbok for field newsletter -> <label><input type=checkox/></label>
+     **  checkbox form[internaute][newsletter] -> hack construct mistake checkbok for field newsletter -> <label><input type=checkox/></label>
      **/
 
     //$('.checkbox').empty();
 
     //$('.checkbox').append('<input type="checkbox" id="utilisateur_internaute_newsletter" name="utilisateur[internaute][newsletter]" value="0"><label>Recevoir la newsletter</label>');
-
     /**
-     **   soumission du formulaire d'ajout de commentaire
+     **  submit form contact Prestataire
      **/
-    $('form[name=commentaire]').on('submit',function (e) {
+    $('form[name=contact_prestataire]').on('submit', function (e) {
+        GpAnnuaire.ajaxContactPrestataire(e);
+    });
+    /**
+     **  soumission du formulaire d'ajout de commentaire
+     **/
+    $('form[name=commentaire]').on('submit', function (e) {
         GpAnnuaire.ajaxCommentaire(e)
     });
+    /**
+     **  cotation star --> form ajout commentaire
+     **/
+    $('#ratingStar').on('mouseover', GpAnnuaire.starCotationFormCommentaire);
 });
 
 

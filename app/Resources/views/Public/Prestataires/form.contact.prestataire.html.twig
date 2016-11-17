@@ -1,0 +1,25 @@
+<div class="detail-enquire-form background-white p20">
+    {{ form_start(form) }}
+
+        <div class="form-group">
+            <label for="">Nom</label>
+           {{ form_widget(form.nom) }}
+        </div><!-- /.form-group -->
+
+        <div class="form-group">
+            <label for="">Email <span class="required">*</span></label>
+            {{ form_widget(form.email) }}
+        </div><!-- /.form-group -->
+
+        <div class="form-group">
+            <label for="">Message <span class="required">*</span></label>
+            {{ form_widget(form.message) }}
+        </div><!-- /.form-group -->
+
+        <p>Champs obligatoires <span class="required">*</span></p>
+
+        <button class="btn btn-primary btn-block" type="submit"><i
+                    class="fa fa-paper-plane"></i>Envoyer
+        </button>
+    {{ form_end(form) }}
+</div><!-- /.detail-enquire-form -->

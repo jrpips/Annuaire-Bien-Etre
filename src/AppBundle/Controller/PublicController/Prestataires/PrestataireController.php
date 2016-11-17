@@ -27,6 +27,7 @@ use AppBundle\Entity\Prestataire;
 use AppBundle\Entity\Utilisateur;
 use AppBundle\Entity\Commentaire;
 use AppBundle\Form\PrestataireType;
+use AppBundle\Form\ContactPrestataireType;
 use AppBundle\Form\MoteurDeRechercheType;
 
 class PrestataireController extends Controller
@@ -111,5 +112,21 @@ class PrestataireController extends Controller
         ));
     }
 
+    /**
+     *  render formulaire contact Prestataire
+     */
+    public function getFormContactPrestataireAction()
+    {
+        $form = $this->get('form.factory')->create(ContactPrestataireType::class);
+        return $this->render('Public/Prestataires/form.contact.prestataire.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
 
+    /**
+     * @Route("internaute/contact/prestataire",options={"expose"=true},name="send_mail_prestataire")
+     */
+    public function sendMailToPrestataire(Request $request){
+
+    }
 }

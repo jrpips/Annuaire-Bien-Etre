@@ -20,10 +20,8 @@ class CommentaireController extends Controller
      */
     public function constructFormCommentaireAction()
     {
-
         $comment = new Commentaire();
         $form = $this->get('form.factory')->create(CommentaireType::class, $comment);
-        // TODO prestataires favoris
         return $this->render('Public/Prestataires/form.commentaire.html.twig', array(
             'form' => $form->createView(),
         ));
@@ -32,7 +30,7 @@ class CommentaireController extends Controller
     /**
      * @Route("/internaute/commentaire/prestataire",options={"expose"=true},name="add_comment")
      */
-    public function addCommentAction(Request $request)//TODO : appel Ajax
+    public function addCommentAction(Request $request)
     {
 
         if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {// ne commente pas qui veut...

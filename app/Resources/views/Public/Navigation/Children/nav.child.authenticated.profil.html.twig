@@ -1,7 +1,7 @@
 {# empty Twig template #}
 
 {%set pathImg=(app.user.internaute.image.url matches '{^http}')?'':'image/userUploads/'%} {# retire le chemin du dossier si image chargée en ligne (fixture)#}
-
+{#attention condition exclu les Prestataires et l'Admin#}
 <li id="avatar">
 
     {% if not is_granted('ROLE_ADMIN') %}

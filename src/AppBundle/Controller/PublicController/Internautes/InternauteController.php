@@ -236,7 +236,6 @@ class InternauteController extends Controller {
         $u = $this->getUser()->getInternaute()->getImage()->getUrl();
         $tabImage = $this->getDoctrine()->getManager()->getRepository('AppBundle:Image')->findByUrl($u);
         $image = $tabImage[0];
-        dump($image);
 
         $form = $this
                 ->get('form.factory')

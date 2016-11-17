@@ -1,14 +1,18 @@
 {# Public/Prestataires/form.commmentaire #}
 
 <section class="background-white p20 add-review" style="overflow: hidden;    font-family: 'Nunito'">
+
     {{ form_start(form) }}
+
     <div class="form-group input-rating col-sm-12">
+
         <label for="">Titre <span class="required">*</span></label>
         {{ form_widget(form.titre) }}
         {{ form_errors(form.titre) }}
-    </div>
-    <div class="form-group input-rating col-sm-6">
 
+    </div>
+
+    <div id="ratingStar" class="form-group input-rating col-sm-6">
 
             <div class="rating-title"><label for="">Votre cotation<span class="required">*</span></label></div>
             {% for i in 1..4 %}
@@ -19,20 +23,29 @@
             {% endfor %}
             {{ form_widget(form.cote) }}
             {{ form_errors(form.cote) }}
-        </div>
+
+    </div>
+
     <div class="form-group input-rating col-sm-12">
+
         <label for="">Contenu <span class="required">*</span></label>
         {{ form_widget(form.contenu) }}
         {{ form_errors(form.contenu) }}
+
     </div>
+
     <div class="col-sm-8">
         <p>Champs obligatoires<span class="required">*</span></p>
     </div><!-- /.col-sm-8 -->
+
     <div class="col-sm-4">
+
         <button id="commentaire_submit" name="commentaire[submit]" class="btn btn-primary btn-block" type="submit"><i
                     class="fa fa-star"></i>Soumettre
         </button>
+
     </div><!-- /.col-sm-4 -->
     {{ form_widget(form._token) }}
     {{ form_end(form) }}
+
 </section>

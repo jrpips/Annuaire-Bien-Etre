@@ -14,6 +14,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class Utilisateur implements UserInterface {
 
+   const TYPE_INTERNAUTE = 'internaute';
+    const TYPE_PRESTATAIRE = 'prestataire';
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
