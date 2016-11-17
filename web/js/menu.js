@@ -300,7 +300,7 @@ var GpAnnuaire = GpAnnuaire || {
             $.ajax({
                 type: "POST",
                 data:  values,
-                url: Routing.generate('add_comment',{'prestataire_nom':$('#nom').text()}),
+                url: Routing.generate('add_comment',{'prestataire_nom':$('#nomPrestataire').text()}),
                 dataType: 'json',
                 success: function (data) {
                     console.log(data);

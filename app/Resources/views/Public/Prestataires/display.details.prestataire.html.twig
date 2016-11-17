@@ -18,10 +18,6 @@
                          style="background:url('{{ asset(imgServicePrestataire) }}') no-repeat;background-size:cover">
                         <div class="container">
                             <div class="detail-banner-left">
-                                {#  <div class="detail-banner-info">
-                                      <div class="detail-label">Prestataire Bien-Être</div>
-                                      <div class="detail-verified">Verified</div>
-                                  </div><!-- /.detail-banner-info -->#}
 
                                 <h2 class="detail-title">
                                     {{ prestataire.nom }}
@@ -33,16 +29,24 @@
                                     {{ prestataire.utilisateur.adresseUtilisateur.codePostal }} {{ prestataire.utilisateur.adresseUtilisateur.commune }}
                                 </div><!-- /.detail-banner-address -->
 
-                                <div class="detail-banner-rating">{#TODO : corriger surplus star#}
-                                    {% for commentaire in prestataire.commentaires %}
-                                        {% for i in 1..commentaire.cote %}
-                                            <i class="fa fa-star"></i>
-                                        {% endfor %}
-                                        {% set starFinal=(5-commentaire.cote) %}
-                                        {% for i in 1..starFinal %}
-                                            <i class="fa fa-star-o"></i>
-                                        {% endfor %}
+                                {#///////////////////////////////////////////////////////////////////////////////#}
+                                {% set cote = 3.5 %}{# forfait cotation de départ#}
+                                {% for commentaire in prestataire.commentaires %}{# addition des cotes#}
+                                    {% set cote=cote+commentaire.cote %}
+                                {% endfor %}
+                                {% set moyenne=cote/((prestataire.commentaires|length)+1|round) %}
+                                {#///////////////////////////////////////////////////////////////////////////////#}
+
+                                <div class="detail-banner-rating">{#TODO : corriger surplus star#}{# cote moyenne #}
+
+                                    {% for i in 1..moyenne|round %}
+                                        <i class="fa fa-star"></i>
                                     {% endfor %}
+                                    {% set starFinal=(5-(moyenne|round)) %}
+                                    {% for i in 1..starFinal %}
+                                        <i class="fa fa-star-o"></i>
+                                    {% endfor %}
+
                                 </div><!-- /.detail-banner-rating -->
 
                                 <div class="detail-banner-btn bookmark marked">
@@ -58,9 +62,7 @@
                             </div><!-- /.detail-banner-left -->
                             <div class="detail-banner-right">
 
-
                                 <div class="carte" style="width:400px;height:250px;opacity:0.7;"></div>
-
 
                             </div>
                         </div><!-- /.container -->
@@ -71,7 +73,6 @@
                 <div class="container" jstcache="0">
                     <div class="row detail-content" jstcache="0">
                         <div class="col-sm-7" jstcache="0">
-
 
                             <h2>Nous sommes ici</h2>
                             <div class="background-white p20">
@@ -106,7 +107,7 @@
                                                    data-placement="top" data-original-title="Report"></i>
                                             </span>
 
-                                                <div class="review-overall-rating">
+                                                <div class="review-overall-rating">{# cote individuelle #}
                                                     <span class="overall-rating-title">Cotation:</span>
                                                     {% for i in 1..commentaire.cote %}
                                                         <i class="fa fa-star"></i>
@@ -115,7 +116,6 @@
                                                     {% for i in 1..starFinal %}
                                                         <i class="fa fa-star-o"></i>
                                                     {% endfor %}
-
                                                 </div><!-- /.review-rating -->
                                             </div><!-- /.review-title -->
 
@@ -160,13 +160,10 @@
                                                     </dl>
                                                 </div><!-- /.review-rating -->
                                             </div><!-- /.review-content-wrapper -->
-
                                         </div><!-- /.review-inner -->
                                     </div><!-- /.review -->
-
                                 {% endfor %}
                             </div><!-- /.reviews -->
-
                         </div><!-- /.col-sm-7 -->
 
                         <div class="col-sm-5">
@@ -177,10 +174,6 @@
                                     aime(nt) {{ prestataire.nom }}
                                 </div>
                                 <div class="detail-overview-rating">
-                                    {% set cote = 3.5 %}{# forfait cotation de départ#}
-                                    {% for commentaire in prestataire.commentaires %}{# addition des cotes#}
-                                        {% set cote=cote+commentaire.cote %}
-                                    {% endfor %}
                                     <i class="fa fa-star"></i> <strong>{{ cote/ (prestataire.commentaires|length + 1) }}
                                         / 5 </strong>from <a
                                             href="#reviews">{{ prestataire.commentaires|length }}
@@ -287,7 +280,6 @@
                                                 {{ promo.categService }}
                                             </a>
                                             {% endfor %}
-
                                     </ul>
                                 </div>
                             </div><!-- /.widget -->
@@ -334,26 +326,22 @@
                                 </form>
                             </div><!-- /.detail-enquire-form -->
 
-
                         </div><!-- /.col-sm-5 -->
-                        <div style="opacity:0">
-                            <div id="nom">{{ prestataire.nom }}</div>
+                        <div style="display:none">
+                            <div id="nomPrestataire">{{ prestataire.nom }}</div>
                             <div id="numero">{{ prestataire.utilisateur.adresseNumero }}</div>
                             <div id="rue"> {{ prestataire.utilisateur.adresseRue }}</div>
                             <div id="cp">{{ prestataire.utilisateur.adresseUtilisateur.codePostal }}</div>
                             <div id="commune">{{ prestataire.utilisateur.adresseUtilisateur.commune }}</div>
                         </div>
                         {% if is_granted('ROLE_INTERNAUTE') %}
-                        <div class="col-sm-12">
-                            <h2>Soumettre un commentaire</h2>
-                            {{render(controller("AppBundle:PublicController/Commentaires/Commentaire:constructFormCommentaire"))}}
-
-                        </div><!-- /.col-* -->
+                            <div class="col-sm-12">
+                                <h2>Soumettre un commentaire</h2>
+                                {{ render(controller("AppBundle:PublicController/Commentaires/Commentaire:constructFormCommentaire")) }}
+                            </div><!-- /.col-* -->
                         {% endif %}
                     </div><!-- /.row -->
-
                 </div><!-- /.container -->
-
             </div><!-- /.content -->
         </div><!-- /.main-inner -->
 
@@ -380,7 +368,7 @@
                     document.getElementById('carte'),
                     myOptions
             );
-            var nomPrestataire = document.getElementById('nom').textContent;
+            var nomPrestataire = document.getElementById('nomPrestataire').textContent;
             var numero = document.getElementById('numero').textContent;
             var rue = document.getElementById('rue').textContent;
             var cp = document.getElementById('cp').textContent;
