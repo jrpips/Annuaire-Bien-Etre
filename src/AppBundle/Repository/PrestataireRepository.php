@@ -50,9 +50,9 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository {
             ->leftJoin('p.stages', 'st')->addSelect('st')
             ;
 
-        $qb->where('p.nom=:nom')->setParameter('nom', $nom);
+        $prestataire=$qb->where('p.nom=:nom')->setParameter('nom', $nom)->getQuery()->getResult();
 
-        return $qb->getQuery()->getResult();
+        return $prestataire[0];
     }
 
     public function findPrestataire($nom) {

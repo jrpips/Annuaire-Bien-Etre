@@ -67,13 +67,13 @@ class InternauteController extends Controller {
 
             $newAbonne = $em
                 ->getRepository('AppBundle:Internaute')
-                ->getPrestatairesFavoris($this->getUser()->getInternaute()->getId());
+                ->getPrestatairesFavoris($this->getUser()->getInternaute()->getId());// récupération de l'Internaute qui s'abonne
 
             $newFavori = $em
                 ->getRepository('AppBundle:Prestataire')
-                ->findByNom($nomPrestataire);
+                ->findByNom($nomPrestataire);// récupération du Prestataire choisi
 
-            $newAbonne[0]->addFavori($newFavori[0]);
+            $newAbonne[0]->addFavori($newFavori[0]);// ajout du nouvel abonné (Internaute) à son favori (Prestataire)
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();
@@ -135,7 +135,7 @@ class InternauteController extends Controller {
                 $em->persist($new_user);
                 $em->flush();
 
-                $this->get('app.mailerbuilder')->mailer($new_user);
+                $this->get('app.mailerbuilder')->signupMailer($new_user);
 
                 return new JsonResponse(array(
                     'valide' => true,

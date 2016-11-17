@@ -1,78 +1,426 @@
-{# empty Twig template #}
-
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    {{parent()}}
+    {{ parent() }}
 {% endblock %}
 
 {% block title %}
-    Prestataire {{prestataire.nom}} - {{ parent() }}
+    Prestataire  - {{ parent() }}
 {% endblock %}
 
 {% block body %}
-    <div class="main">
+    <div class="main" jstcache="0">
+        <div class="main-inner" jstcache="0">
+            <div class="content" jstcache="0">
+                <div class="mt-80 mb80">
+                    {% set imgServicePrestataire=(prestataire.images is not null)?(prestataire.images)|first.url:'image/prestataire.png' %}
+                    <div class="detail-banner"
+                         style="background:url('{{ asset(imgServicePrestataire) }}') no-repeat;background-size:cover">
+                        <div class="container">
+                            <div class="detail-banner-left">
+                                {#  <div class="detail-banner-info">
+                                      <div class="detail-label">Prestataire Bien-Être</div>
+                                      <div class="detail-verified">Verified</div>
+                                  </div><!-- /.detail-banner-info -->#}
 
-        <div class="main-inner">
+                                <h2 class="detail-title">
+                                    {{ prestataire.nom }}
+                                </h2>
 
-            <div class="content">
+                                <div class="detail-banner-address">
+                                    <i class="fa fa-map-o"></i> {{ prestataire.utilisateur.adresseNumero }}
+                                    ,{{ prestataire.utilisateur.adresseRue }}
+                                    {{ prestataire.utilisateur.adresseUtilisateur.codePostal }} {{ prestataire.utilisateur.adresseUtilisateur.commune }}
+                                </div><!-- /.detail-banner-address -->
+
+                                <div class="detail-banner-rating">{#TODO : corriger surplus star#}
+                                    {% for commentaire in prestataire.commentaires %}
+                                        {% for i in 1..commentaire.cote %}
+                                            <i class="fa fa-star"></i>
+                                        {% endfor %}
+                                        {% set starFinal=(5-commentaire.cote) %}
+                                        {% for i in 1..starFinal %}
+                                            <i class="fa fa-star-o"></i>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div><!-- /.detail-banner-rating -->
+
+                                <div class="detail-banner-btn bookmark marked">
+                                    <i class="fa fa-bookmark-o"></i> <span data-toggle="Bookmarked">Bookmarked</span>
+                                </div><!-- /.detail-claim -->
+
+                                <div class="detail-banner-btn heart marked">
+                                    <i class="fa fa-heart-o"></i> <span data-toggle="I Love It">I Love It</span>
+                                </div><!-- /.detail-claim -->
+                                {#<div class="detail-banner-btn heart">
+                                    <i class="fa fa-heart-o"></i> <span data-toggle="I Love It">Give Heart</span>
+                                </div>#}
+                            </div><!-- /.detail-banner-left -->
+                            <div class="detail-banner-right">
 
 
-                <div class="row">
+                                <div class="carte" style="width:400px;height:250px;opacity:0.7;"></div>
 
-                    <div class="col-md-offset-3" >
-                        <h1>Prestataire {{prestataire.nom}}</h1>
-                        <div class="media">
-                            <div class="media-left">
-
-                                {%for i in prestataire.images%}
-                                    <img src="{{asset(i.url)}}" />
-                                {%endfor%}
 
                             </div>
-                            <div class="media-body">
-                                <div>{{ prestataire.nom }}</div>
-                                <div>{{ prestataire.siteInternet }}</div>
-                                <div>{{prestataire.telephone}}</div>
-                                <div>{{prestataire.tva}}</div>
-                                <div>{{ prestataire.utilisateur.adresseRue }}</div>
-                                <div>{{ prestataire.utilisateur.adresseNumero }}</div>
-                                <div>{{ prestataire.utilisateur.adresseUtilisateur.commune }}</div>
-                                <div>{{ prestataire.utilisateur.adresseUtilisateur.codePostal }}</div>
-                                <div>{{ prestataire.utilisateur.adresseUtilisateur.localite }}</div>
-                            </div>
-                            <h2>Services proposés</h2>
-                            <ul>
-                                {%for s in prestataire.categServices%}
-                                    <li> <a href="{{path('details_service',{'service_nom':s.nom})}}">{{s.nom}}</a>
-                                {%endfor%}
-                            </ul>
-                            <h2>Stages</h2>
-                            <ul>
-                                {%for stage in prestataire.stages%}
-                                    <li> {{ stage.nom }}<br>{{ stage.description }}
-                                {%endfor%}
-                            </ul>
-                            <h2>Promotions</h2>
-                            <ul>
-                                  {%for promo in prestataire.promotions%}
-                                    <li> {{ promo.nom }}
-                                        <br>{{ promo.description }}
-                                        <br>Service :
-                                            <a href="{{path('details_service',{'service_nom':promo.categService})}}">
-                                                {{ promo.categService }}
-                                            </a>
-                                  {%endfor%}
-
-                            </ul>
-                        </div>
-                    </div>
+                        </div><!-- /.container -->
+                    </div><!-- /.detail-banner -->
 
                 </div>
 
-            </div>
+                <div class="container" jstcache="0">
+                    <div class="row detail-content" jstcache="0">
+                        <div class="col-sm-7" jstcache="0">
 
-        </div>
+
+                            <h2>Nous sommes ici</h2>
+                            <div class="background-white p20">
+
+                                <div id="carte" style="height:250px"></div>
+
+                            </div>
+
+                            <h2>Video</h2>
+                            <div class="detail-video">
+                                <iframe src="https://player.vimeo.com/video/36911719?color=009f8b&amp;byline=0&amp;portrait=0"
+                                        width="653" height="366" frameborder="0" webkitallowfullscreen=""
+                                        mozallowfullscreen="" allowfullscreen=""></iframe>
+                            </div><!-- /.detail-video -->
+
+                            <h2 id="reviews">Commentaires et avis</h2>
+                            <div class="reviews">
+                                {% for commentaire in prestataire.commentaires %}
+                                    <div class="review">
+                                        <div class="review-image">
+                                            <img src="{{ asset(commentaire.internaute.image.url) }}" alt="">
+                                        </div><!-- /.review-image -->
+
+                                        <div class="review-inner">
+
+                                            <div class="review-title">
+                                                <h2>{{ commentaire.internaute.nom }}</h2>
+
+                                                <span class="report">
+                                             <span class="separator">•</span>
+                                                <i class="fa fa-flag" title="" data-toggle="tooltip"
+                                                   data-placement="top" data-original-title="Report"></i>
+                                            </span>
+
+                                                <div class="review-overall-rating">
+                                                    <span class="overall-rating-title">Cotation:</span>
+                                                    {% for i in 1..commentaire.cote %}
+                                                        <i class="fa fa-star"></i>
+                                                    {% endfor %}
+                                                    {% set starFinal=(5-commentaire.cote) %}
+                                                    {% for i in 1..starFinal %}
+                                                        <i class="fa fa-star-o"></i>
+                                                    {% endfor %}
+
+                                                </div><!-- /.review-rating -->
+                                            </div><!-- /.review-title -->
+
+                                            <div class="review-content-wrapper">
+                                                <div class="review-content">
+                                                    <div class="review-pros">
+                                                        <p>{{ commentaire.titre }}</p>
+                                                        <p>{{ commentaire.contenu }}</p>
+                                                    </div><!-- /.pros -->
+                                                    {# <div class="review-cons">
+                                                         <p>Duis et magna vel est tempus vehicula vitae sit amet enim. Sed
+                                                             vitae ligula congue.</p>
+                                                     </div><!-- /.cons -->#}
+                                                </div><!-- /.review-content -->
+
+                                                <div class="review-rating">
+                                                    <dl>
+                                                        <dt>Accueil</dt>
+                                                        <dd>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </dd>
+                                                        <dt>Service</dt>
+                                                        <dd>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        </dd>
+                                                        <dt>Rapport qualité/prix</dt>
+                                                        <dd>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                            <i class="fa fa-star-o"></i>
+                                                        </dd>
+                                                    </dl>
+                                                </div><!-- /.review-rating -->
+                                            </div><!-- /.review-content-wrapper -->
+
+                                        </div><!-- /.review-inner -->
+                                    </div><!-- /.review -->
+
+                                {% endfor %}
+                            </div><!-- /.reviews -->
+
+                        </div><!-- /.col-sm-7 -->
+
+                        <div class="col-sm-5">
+
+                            <div class="background-white p20">
+                                <div class="detail-overview-hearts">
+                                    <i class="fa fa-heart"></i> <strong>{{ prestataire.abonnes|length }} </strong>personne(s)
+                                    aime(nt) {{ prestataire.nom }}
+                                </div>
+                                <div class="detail-overview-rating">
+                                    {% set cote = 3.5 %}{# forfait cotation de départ#}
+                                    {% for commentaire in prestataire.commentaires %}{# addition des cotes#}
+                                        {% set cote=cote+commentaire.cote %}
+                                    {% endfor %}
+                                    <i class="fa fa-star"></i> <strong>{{ cote/ (prestataire.commentaires|length + 1) }}
+                                        / 5 </strong>from <a
+                                            href="#reviews">{{ prestataire.commentaires|length }}
+                                        vote(s)</a>
+                                </div>
+
+                                <div class="detail-actions row">
+                                    <div class="col-sm-4">
+                                        <div class="btn btn-primary btn-book"><i class="fa fa-shopping-cart"></i> Book
+                                            Now
+                                        </div>
+                                    </div><!-- /.col-sm-4 -->
+                                    <div class="col-sm-4">
+                                        <div class="btn btn-secondary btn-share"><i class="fa fa-share-square-o"></i>
+                                            Share
+                                            <div class="share-wrapper">
+                                                <ul class="share">
+                                                    <li><i class="fa fa-facebook"></i> Facebook</li>
+                                                    <li><i class="fa fa-twitter"></i> Twitter</li>
+                                                    <li><i class="fa fa-google-plus"></i> Google+</li>
+                                                    <li><i class="fa fa-pinterest"></i> Pinterest</li>
+                                                    <li><i class="fa fa-chain"></i> Link</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div><!-- /.col-sm-4 -->
+                                    <div class="col-sm-4">
+                                        <div class="btn btn-secondary btn-claim"><i class="fa fa-hand-peace-o"></i>
+                                            Claim
+                                        </div>
+                                    </div><!-- /.col-sm-4 -->
+                                </div><!-- /.detail-actions -->
+                            </div>
+
+                            <h2>A propos de <span class="text-secondary">{{ prestataire.nom }}</span></h2>
+                            <div class="background-white p20">
+                                <div class="detail-vcard">
+                                    <div class="detail-logo">
+                                        <img style="width:100px" src="{{ asset(imgServicePrestataire) }}">
+                                    </div><!-- /.detail-logo -->
+
+                                    <div class="detail-contact">
+                                        <div class="detail-contact-email">
+                                            <i class="fa fa-envelope-o"></i> <a
+                                                    href="mailto:#">{{ prestataire.utilisateur.email }}</a>
+                                        </div>
+                                        <div class="detail-contact-phone">
+                                            <i class="fa fa-mobile-phone"></i> <a
+                                                    href="tel:#">{{ prestataire.telephone }}</a>
+                                        </div>
+                                        <div class="detail-contact-website">
+                                            <i class="fa fa-globe"></i> <a href="#">{{ prestataire.siteInternet }}</a>
+                                        </div>
+                                        <div class="detail-contact-address">
+                                            <i class="fa fa-map-o"></i>
+                                            {{ prestataire.utilisateur.adresseNumero }}
+                                            ,{{ prestataire.utilisateur.adresseRue }}
+                                            {{ prestataire.utilisateur.adresseUtilisateur.codePostal }} {{ prestataire.utilisateur.adresseUtilisateur.commune }}
+                                        </div>
+                                    </div><!-- /.detail-contact -->
+                                </div><!-- /.detail-vcard -->
+
+                                {% for service in prestataire.categServices %}
+                                    <div><span class="text-secondary">{{ service.nom }}</span></div>
+                                    <div class="detail-description">
+                                        <div>{{ service.description }}</div>
+                                    </div>
+                                {% endfor %}
+
+                                <div class="detail-follow">
+                                    <h5>Follow Us:</h5>
+                                    <div class="follow-wrapper">
+                                        <a class="follow-btn facebook" href="#"><i class="fa fa-facebook"></i></a>
+                                        <a class="follow-btn youtube" href="#"><i class="fa fa-youtube"></i></a>
+                                        <a class="follow-btn twitter" href="#"><i class="fa fa-twitter"></i></a>
+                                        <a class="follow-btn tripadvisor" href="#"><i class="fa fa-tripadvisor"></i></a>
+                                        <a class="follow-btn google-plus" href="#"><i class="fa fa-google-plus"></i></a>
+                                    </div><!-- /.follow-wrapper -->
+                                </div><!-- /.detail-follow -->
+                            </div>
+
+                            <div class="widget">
+                                <h2 class="widgettitle">Stages proposés</h2>
+
+                                <div class="p20 background-white">
+                                    <ul>
+                                        {% for stage in prestataire.stages %}
+                                        <li> {{ stage.nom }}<br>{{ stage.description }}
+                                            {% endfor %}
+                                    </ul>
+                                </div>
+                            </div><!-- /.widget -->
+
+                            <div class="widget">
+                                <h2 class="widgettitle">Promotions</h2>
+
+                                <div class="p20 background-white">
+                                    <ul>
+                                        {% for promo in prestataire.promotions %}
+                                        <li> {{ promo.nom }}
+                                            <br>{{ promo.description }}
+                                            <br>Service :
+                                            <a href="{{ path('details_service',{'service_nom':promo.categService}) }}">
+                                                {{ promo.categService }}
+                                            </a>
+                                            {% endfor %}
+
+                                    </ul>
+                                </div>
+                            </div><!-- /.widget -->
+
+                            <h2>Services</h2>
+
+                            <div class="background-white p20">
+                                <ul class="detail-amenities">
+                                    {% for service in categServices %}
+
+                                        {% set match=(service in  prestataire.categServices)?'yes':'no' %}
+
+                                        <li class="{{ match }}">{{ service }}</li>
+
+                                    {% endfor %}
+                                </ul>
+                            </div><!-- /.detail-amenities -->
+
+                            <h2>Contacter {{ prestataire.nom }}</h2>
+
+                            <div class="detail-enquire-form background-white p20">
+                                <form method="post" action="?">
+                                    <div class="form-group">
+                                        <label for="">Nom</label>
+                                        <input type="text" class="form-control" name="" id="">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="form-group">
+                                        <label for="">Email <span class="required">*</span></label>
+                                        <input type="email" class="form-control" name="" id="" required="">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="form-group">
+                                        <label for="">Message <span class="required">*</span></label>
+                                        <textarea class="form-control" name="" id="" rows="5" required=""></textarea>
+                                        <div class="textarea-resize"></div>
+                                    </div><!-- /.form-group -->
+
+                                    <p>Champs obligatoires <span class="required">*</span></p>
+
+                                    <button class="btn btn-primary btn-block" type="submit"><i
+                                                class="fa fa-paper-plane"></i>Envoyer
+                                    </button>
+                                </form>
+                            </div><!-- /.detail-enquire-form -->
+
+
+                        </div><!-- /.col-sm-5 -->
+                        <div style="opacity:0">
+                            <div id="nom">{{ prestataire.nom }}</div>
+                            <div id="numero">{{ prestataire.utilisateur.adresseNumero }}</div>
+                            <div id="rue"> {{ prestataire.utilisateur.adresseRue }}</div>
+                            <div id="cp">{{ prestataire.utilisateur.adresseUtilisateur.codePostal }}</div>
+                            <div id="commune">{{ prestataire.utilisateur.adresseUtilisateur.commune }}</div>
+                        </div>
+                        {% if is_granted('ROLE_INTERNAUTE') %}
+                        <div class="col-sm-12">
+                            <h2>Soumettre un commentaire</h2>
+                            {{render(controller("AppBundle:PublicController/Commentaires/Commentaire:constructFormCommentaire"))}}
+
+                        </div><!-- /.col-* -->
+                        {% endif %}
+                    </div><!-- /.row -->
+
+                </div><!-- /.container -->
+
+            </div><!-- /.content -->
+        </div><!-- /.main-inner -->
 
     </div>
-{%endblock%}
+    <script src="http://maps.google.com/maps/api/js?Key=AIzaSyCm9IyG4uLCEBqmBl4bCmlHhUvCUB3Xtks&amp;sensor=false;"></script>
+    <script>
+
+        window.onload = function () {
+            // Une variable pour contenir notre future marker
+            var myMarker = null;
+
+            // Des coordonnées de départ
+            var myLatlng = new google.maps.LatLng(50.8504500, 4.3487800);//Coord. de Bruxelles
+
+            // Les options de notre carte
+            var myOptions = {
+                zoom: 15,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            // On créé la carte
+            var myMap = new google.maps.Map(
+                    document.getElementById('carte'),
+                    myOptions
+            );
+            var nomPrestataire = document.getElementById('nom').textContent;
+            var numero = document.getElementById('numero').textContent;
+            var rue = document.getElementById('rue').textContent;
+            var cp = document.getElementById('cp').textContent;
+            var commune = document.getElementById('commune').textContent;
+
+            // L'adresse que nous allons rechercher
+            var GeocoderOptions = {
+                'address': numero + " , " + rue + " " + cp + " " + commune,
+                'region': 'BE'
+            }
+
+            // Notre fonction qui traitera le resultat
+            function GeocodingResult(results, status) {
+                // Si la recher à fonctionné
+                if (status == google.maps.GeocoderStatus.OK) {
+
+                    // S'il existait déjà un marker sur la map,
+                    // on l'enlève
+                    if (myMarker != null) {
+                        myMarker.setMap(null);
+                    }
+
+                    // On créé donc un nouveau marker sur l'adresse géocodée
+                    myMarker = new google.maps.Marker({
+                        position: results[0].geometry.location,
+                        map: myMap,
+                        title: nomPrestataire
+                    });
+
+                    // Et on centre la vue sur ce marker
+                    myMap.setCenter(results[0].geometry.location);
+
+                } // Fin si status OK
+
+            } // Fin de la fonction
+
+            // Nous pouvons maintenant lancer la recherche de l'adresse
+            var myGeocoder = new google.maps.Geocoder();
+            myGeocoder.geocode(GeocoderOptions, GeocodingResult);
+        }
+
+    </script>
+{% endblock %}

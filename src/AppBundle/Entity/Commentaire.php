@@ -23,14 +23,14 @@ class Commentaire {
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Internaute", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Internaute", cascade={"persist"},inversedBy="commentaires")
      * @ORM\JoinColumn(nullable=false)
      */
     private $internaute;
 
     /**
      * @ORM\ManyToOne(targetEntity="Prestataire", cascade={"persist"},inversedBy="commentaires")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $prestataire;
 
@@ -80,6 +80,9 @@ class Commentaire {
      */
     public function getId() {
         return $this->id;
+    }
+    public function __construct() {
+        $this->setEncodage(new \DateTime());
     }
 
     /**

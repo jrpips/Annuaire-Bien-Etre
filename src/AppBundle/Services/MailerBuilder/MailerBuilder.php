@@ -12,7 +12,7 @@ class MailerBuilder {
         $this->mailer = $mailer;
     }
 
-    public function mailer($newUser) {
+    public function signupMailer($newUser) {
         $body = $this->renderTemplate($newUser);
 
         $message = \Swift_Message::newInstance()

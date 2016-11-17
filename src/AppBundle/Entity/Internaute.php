@@ -82,6 +82,12 @@ class Internaute {
     private $newsletter;
 
     /**
+     * @ORM\OneToMany(targetEntity="Commentaire", cascade={"persist"},mappedBy="internaute")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $commentaires;
+
+    /**
      * Get id
      *
      * @return int
@@ -282,4 +288,38 @@ class Internaute {
         return $this->favoris;
     }
 
+
+    /**
+     * Add commentaire
+     *
+     * @param \AppBundle\Entity\Commentaire $commentaire
+     *
+     * @return Internaute
+     */
+    public function addCommentaire(\AppBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires[] = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove commentaire
+     *
+     * @param \AppBundle\Entity\Commentaire $commentaire
+     */
+    public function removeCommentaire(\AppBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires->removeElement($commentaire);
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
+    }
 }

@@ -1,0 +1,78 @@
+{# empty Twig template #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+
+{% block title %}
+    Prestataire {{prestataire.nom}} - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="main">
+
+        <div class="main-inner">
+
+            <div class="content">
+
+
+                <div class="row">
+
+                    <div class="col-md-offset-3" >
+                        <h1>Prestataire {{prestataire.nom}}</h1>
+                        <div class="media">
+                            <div class="media-left">
+
+                                {%for i in prestataire.images%}
+                                    <img src="{{asset(i.url)}}" />
+                                {%endfor%}
+
+                            </div>
+                            <div class="media-body">
+                                <div>{{ prestataire.nom }}</div>
+                                <div>{{ prestataire.siteInternet }}</div>
+                                <div>{{prestataire.telephone}}</div>
+                                <div>{{prestataire.tva}}</div>
+                                <div>{{ prestataire.utilisateur.adresseRue }}</div>
+                                <div>{{ prestataire.utilisateur.adresseNumero }}</div>
+                                <div>{{ prestataire.utilisateur.adresseUtilisateur.commune }}</div>
+                                <div>{{ prestataire.utilisateur.adresseUtilisateur.codePostal }}</div>
+                                <div>{{ prestataire.utilisateur.adresseUtilisateur.localite }}</div>
+                            </div>
+                            <h2>Services proposés</h2>
+                            <ul>
+                                {%for s in prestataire.categServices%}
+                                    <li> <a href="{{path('details_service',{'service_nom':s.nom})}}">{{s.nom}}</a>
+                                {%endfor%}
+                            </ul>
+                            <h2>Stages</h2>
+                            <ul>
+                                {%for stage in prestataire.stages%}
+                                    <li> {{ stage.nom }}<br>{{ stage.description }}
+                                {%endfor%}
+                            </ul>
+                            <h2>Promotions</h2>
+                            <ul>
+                                  {%for promo in prestataire.promotions%}
+                                    <li> {{ promo.nom }}
+                                        <br>{{ promo.description }}
+                                        <br>Service :
+                                            <a href="{{path('details_service',{'service_nom':promo.categService})}}">
+                                                {{ promo.categService }}
+                                            </a>
+                                  {%endfor%}
+
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{%endblock%}
