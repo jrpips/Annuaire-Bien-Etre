@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+
+{% block title %}
+    Services - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <h2>Liste des services </h2>
+    <ul>
+        {% for service in services %}
+            <li>{{ service.nom }}
+                <a href="{{ path('home') }}">Voir</a>
+            </li>
+        {% endfor %}
+    </ul>
+  {#  <a href="{{ path('create_service') }}">Créer un service</a>#}
+{% endblock %}

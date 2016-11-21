@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class CategServiceRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findServicesByNomPrestataire($nom){
+        $qb = $this->createQueryBuilder('cs')
+            ->leftJoin('cs.prestataires', 'p')->addSelect('p');
+
+        $qb->andWhere("p.nom like :nom");
+
+        $qb->setParameter('nom',$nom);
+
+        return $qb->getQuery()->getResult();
+    }
 }
