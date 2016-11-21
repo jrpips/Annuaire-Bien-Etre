@@ -82,6 +82,12 @@ class Internaute {
     private $newsletter;
 
     /**
+     * @ORM\OneToMany(targetEntity="Commentaire", cascade={"persist"},mappedBy="internaute")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $commentaires;
+
+    /**
      * Get id
      *
      * @return int
