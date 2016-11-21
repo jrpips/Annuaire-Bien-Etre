@@ -400,7 +400,14 @@ var GpAnnuaire = GpAnnuaire || {
             cote--;
 
             $('#commentaire_cote').val(cote / 2);
-        }
+        },
+        rightChangeService:function(){
+            console.log('right');
+        },
+        leftChangeService:function(){
+            console.log('left');
+        },
+
     };
 /**
  **
@@ -491,32 +498,45 @@ $(function () {//controller
     $('#body form:eq(1) button').attr({'class': 'btn btn-default', 'id': 'cmdSend'});
 
     /**
-     **  checkbox form[internaute][newsletter] -> hack construct mistake checkbok for field newsletter -> <label><input type=checkox/></label>
+     **    Checkbox form[internaute][newsletter] -> hack construct mistake checkbok for field newsletter -> <label><input type=checkox/></label>
      **/
 
     //$('.checkbox').empty();
 
     //$('.checkbox').append('<input type="checkbox" id="utilisateur_internaute_newsletter" name="utilisateur[internaute][newsletter]" value="0"><label>Recevoir la newsletter</label>');
+
     /**
-     **  submit form contact Prestataire
+     **    Submit form contact Prestataire
      **/
     $('form[name=contact_prestataire]').on('submit', function (e) {
         GpAnnuaire.ajaxContactPrestataire(e);
     });
+
     /**
-     **  soumission du formulaire d'ajout de commentaire
+     **   Soumission du formulaire d'ajout de commentaire
      **/
     $('form[name=commentaire]').on('submit', function (e) {
         GpAnnuaire.ajaxCommentaire(e)
     });
+
     /**
-     **  cotation star --> form ajout commentaire
+     **   Cotation star --> form ajout commentaire
      **/
     for (i = 1; i < 11; i++) {
         $('#rating-' + i).on('click', function (e) {
             GpAnnuaire.cotationFormCommentaire(e);
         });
     }
+
+    /**
+     **   Gestion listes services Prestataire
+     **/
+   /* $('#test select[name=right]').on('change',function(){
+        $('button[name=droite]').on('click',GpAnnuaire.rightChangeService);
+    })
+    $('#test select[name=left]').on('change',function(){
+        $('button[name=gauche]').on('click',GpAnnuaire.leftChangeService);
+    })*/
 });
 
 

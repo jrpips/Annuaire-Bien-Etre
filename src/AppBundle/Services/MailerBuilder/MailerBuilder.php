@@ -37,6 +37,17 @@ class MailerBuilder {
         $this->mailer->send($message);
     }
 
+    public function addNewServiceMailer($param){
+        $message = \Swift_Message::newInstance()
+            ->setSubject("Demande d'un nouveau service")
+            ->setFrom(array('cw.bocaboca@gmail.com' => 'Annuaire Bien-Etre'))
+            ->setTo('wg.wargnier@gmail.com')
+            ->setCharset('utf-8')
+            ->setContentType('text/html');
+
+        $this->mailer->send($message);
+    }
+
     public function renderTemplate($newUser) {
         return $this->twig->render('System/SwiftMailer/mail.html.twig', array('user' => $newUser));
     }

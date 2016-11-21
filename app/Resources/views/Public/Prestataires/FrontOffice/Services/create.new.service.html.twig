@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}
+    Service création - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_label(form.nom) }}
+    {{ form_widget(form.nom) }}
+    {{ form_errors(form.nom) }}
+    {{ form_label(form.description) }}
+    {{ form_widget(form.description) }}
+    {{ form_errors(form.description) }}
+    {#{ form_widget(form.titre) }}
+    {{ form_errors(form.titre) }}
+    {{ form_widget(form.titre) }}#}
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}

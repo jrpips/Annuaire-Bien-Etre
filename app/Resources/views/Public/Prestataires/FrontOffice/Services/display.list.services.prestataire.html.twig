@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    {{parent()}}
+    {{ parent() }}
 {% endblock %}
 
 {% block title %}
@@ -10,12 +10,58 @@
 
 {% block body %}
     <h2>Liste des services </h2>
-    <ul>
-        {% for service in services %}
-            <li>{{ service.nom }}
-                <a href="{{ path('home') }}">Voir</a>
-            </li>
-        {% endfor %}
-    </ul>
-  {#  <a href="{{ path('create_service') }}">Créer un service</a>#}
+    <form id="test" action="javascript:void(0)">
+        <select multiple size="5" name="s1">
+            {% for service in servicesP %}
+                <option value="{{ service.nom }}">{{ service.nom }}</option>
+
+            {% endfor %}
+        </select>
+        <button name="gauche" id="gauche2"><--</button>
+        <button name="droite" id="droite2">--></button>
+        <select multiple size="5" name="s2">
+            {% for service in servicesA %}
+                <option value="{{ service.nom }}">{{ service.nom }}</option>
+
+            {% endfor %}
+        </select>
+    </form>
+<script>
+    document.getElementById(test).s1.onchange = function () {
+        document.getElementById(test).droite.onclick = function () {
+            for (var m = 0; m < 6/*document.forms.s1.length*/; m++) {
+                if (document.getElementById(test).s1[m].selected) {
+                    var x = document.getElementById(test).s2;
+
+                    var option = document.createElement("option");
+                    option.text = document.getElementById(test).s1[m].text;
+                    option.value = document.getElementById(test).s1[m].value;
+                    document.getElementById(test).s1[m].remove();//text="";
+                    x.add(option);
+                    m--;
+                }
+            }
+        }
+    }
+    document.getElementById(test).s2.onchange = function () {
+        document.getElementById(test).gauche.onclick = function () {
+
+            for (var p = 0; p < 6/*(document.forms.s2.length)*/; p++) {
+                if (document.getElementById(test).s2[p].selected) {
+                    var y = document.getElementById(test).s1;
+
+                    var option2 = document.createElement("option");
+                    option2.text = document.getElementById(test).s2[p].text;
+                    option2.value = document.getElementById(test).s2[p].value;
+                    document.getElementById(test).s2[p].remove();
+                    //document.getElementById(test).s2[p].text="";
+                    //document.getElementById(test).s2[p].text="";
+                    y.add(option2);
+                    p--;
+                }
+            }
+        }
+    }
+</script>
+
 {% endblock %}
