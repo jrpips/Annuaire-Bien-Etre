@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class StageRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findStagesByNomPrestataire($nom){
+        $qb = $this->createQueryBuilder('st')
+            ->leftJoin('st.prestataire', 'p')->addSelect('p');
+
+        $qb->andWhere("p.nom like :nom");
+
+        $qb->setParameter('nom',$nom);
+
+        return $qb->getQuery()->getResult();
+    }
 }

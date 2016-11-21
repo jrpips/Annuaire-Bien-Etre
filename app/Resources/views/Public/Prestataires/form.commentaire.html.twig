@@ -15,15 +15,16 @@
     <div id="ratingStar" class="form-group input-rating col-sm-6">
 
             <div class="rating-title"><label for="">Votre cotation<span class="required">*</span></label></div>
+        <ul>
             {% for i in 1..4 %}
-                <i class="fa fa-star" style="color:gold" id="rating-{{ i }}"></i>
+                <li class="fa fa-star" style="color:gold" id="rating-{{ i }}" data="{{ i }}"></li>
             {% endfor %}
             {% for i in 5..10 %}
-                <i class="fa fa-star-o" style="color:gold" id="rating-{{ i }}"></i>
+                <li class="fa fa-star-o" style="color:gold" id="rating-{{ i }}" data="{{ i }}"></li>
             {% endfor %}
             {{ form_widget(form.cote) }}
             {{ form_errors(form.cote) }}
-
+</ul>
     </div>
 
     <div class="form-group input-rating col-sm-12">

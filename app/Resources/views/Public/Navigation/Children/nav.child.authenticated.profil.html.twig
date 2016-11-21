@@ -1,83 +1,92 @@
-{# empty Twig template #}
-
-{%set pathImg=(app.user.internaute.image.url matches '{^http}')?'':'image/userUploads/'%} {# retire le chemin du dossier si image chargée en ligne (fixture)#}
-{#attention condition exclu les Prestataires et l'Admin#}
+{#  #}
+ {% if is_granted('ROLE_INTERNAUTE') %}
+     {% set pathImg=(app.user.internaute.image.url matches '{^http}')?'':'image/userUploads/' %} {# retire le chemin du dossier si image chargée en ligne (fixture)#}
+ {% endif %}
+{% if is_granted('ROLE_PRESTATAIRE') %}
+    {% set pathImg=(app.user.prestataire.images|first.url matches '{^http}')?'':'image/userUploads/' %} {# retire le chemin du dossier si image chargée en ligne (fixture)#}
+{% endif %}
+{# attention condition exclu les Prestataires et l'Admin #}
 <li id="avatar">
 
     {% if not is_granted('ROLE_ADMIN') %}
 
-        {% if is_granted('ROLE_PRESTATAIRE')%}
+        {% if is_granted('ROLE_PRESTATAIRE') %}
 
-            <img src="{{ asset('image/prestataire.png')}}" alt=""/>
+            <img src="{{ asset('image/prestataire.png') }}" alt=""/>
 
-        {%else%}
-            {%if app.user.internaute.image.url is defined%}
+        {% else %}
+            {% if app.user.internaute.image.url is defined %}
 
-                <img src="{{asset(pathImg~app.user.internaute.image.url)}}" /> {# #}
-            {%else%}
-                <img src="{{ asset('image/user.png')}}" alt=""/>
-            {%endif%}   
-        {%endif%}   
+                <img src="{{ asset(pathImg~app.user.internaute.image.url) }}"/> {# #}
+            {% else %}
+                <img src="{{ asset('image/user.png') }}" alt=""/>
+            {% endif %}
+        {% endif %}
 
-    {%else%}
-        <img src="{{ asset('image/admin.png')}}" alt=""/>
-    {%endif%}
+    {% else %}
+        <img src="{{ asset('image/admin.png') }}" alt=""/>
+    {% endif %}
 
 <li style="margin-right:130px">
 
-    <a  href="{{path('home')}}">
+    <a href="{{ path('home') }}">
 
-        {{app.user.username}} 
+        {{ app.user.username }}
         <i class="fa fa-chevron-down"></i>
 
     </a>
 
     <ul class="sub-menu">
 
+        {% if not is_granted('ROLE_ADMIN') %}
+        {% if is_granted('ROLE_INTERNAUTE') %}
         <li>
-            <a href="{{path('show_internaute')}}">Consulter mon Profil</a>     
-
-            {% if not is_granted('ROLE_ADMIN') %}
-
-                {% if is_granted('ROLE_PRESTATAIRE')%}
-
-                <li class="same-line">
-                    <span>Stages</span>
-                    <a href=""> <span class="glyphicon glyphicon-pencil"></span></a>
-                    <a href=""> <span class="glyphicon glyphicon-eye-open"></span></a>
-
-                <li class="same-line">
-                    <span>Services</span>
-                    <a href=""> <span class="glyphicon glyphicon-pencil"></span></a>
-                    <a href=""> <span class="glyphicon glyphicon-eye-open"></span></a>
-
-                <li class="same-line">
-                    <span>Promotions</span>
-                    <a href=""> <span class="glyphicon glyphicon-pencil"></span></a>
-                    <a href=""> <span class="glyphicon glyphicon-eye-open"></span></a>
-
-                {%else%} 
-
-                <li>
-                    <a href="{{path('display_favoris')}}">Mes favoris</a>
-                <li>
-                    <a href="{{path('change_password')}}">Modifier mon mot de passe</a>
-
-                {%endif%} 
-
-            <li>
-                <a href="{{path('update_internaute')}}">Modifier mes données</a>
-
-            {%else%}
-
-            <li>
-                <a href=""> Dashboard</a>
-
-            {%endif%}
+            <a href="{{ path('show_internaute') }}">Consulter ma page</a>
+            {% endif %}
+            {% if is_granted('ROLE_PRESTATAIRE') %}
         <li>
-            <a href="{{path('logout')}}"  style="color:rgb(169,39,39)">
+            <a href="{{ path('details_prestataire',{'prestataire_nom':app.user.prestataire.nom}) }}"><span
+                        class="glyphicon glyphicon-eye-open"></span> Consulter mon Profil</a>
+
+        <li>
+            <a href="{{ path('list_stages',{'prestataire_nom':app.user.prestataire.nom}) }}"><span
+                        class="glyphicon glyphicon-pencil"></span> Stages</a>
+
+        <li>
+            <a><span class="glyphicon glyphicon-pencil"></span> Services</a>
+
+        <li>
+            <a><span class="glyphicon glyphicon-pencil"></span> Promotions</a>
+
+            {% else %}
+
+        <li>
+            <a href="{{ path('display_favoris') }}">Mes favoris</a>
+
+        <li>
+            <a href="{{ path('change_password') }}">Modifier mon mot de passe</a>
+
+            {% endif %}
+            {% if is_granted('ROLE_INTERNAUTE') %}
+
+        <li>
+            <a href="{{ path('update_internaute') }}">Modifier mes données</a>
+            {% endif %}
+            {% if is_granted('ROLE_PRESTATAIRE') %}
+
+        <li>
+            <a href="{{ path('update_prestataire') }}">Modifier mes données</a>
+            {% endif %}
+            {% else %}
+
+        <li>
+            <a href=""> Dashboard</a>
+
+            {% endif %}
+        <li>
+            <a href="{{ path('logout') }}" style="color:rgb(169,39,39)">
                 <span class="glyphicon glyphicon-log-out"></span>
                 Déconnexion
             </a>
-    </ul>       
+    </ul>
 </li>

@@ -1,25 +1,26 @@
-<div class="detail-enquire-form background-white p20">
+<div class="detail-enquire-form background-white p20" id="contactPresta">
     {{ form_start(form) }}
 
-        <div class="form-group">
-            <label for="">Nom</label>
-           {{ form_widget(form.nom) }}
-        </div><!-- /.form-group -->
+    <div class="form-group">
+        <label for="">Nom</label>
+        {{ form_widget(form.nom) }}
+    </div><!-- /.form-group -->
 
-        <div class="form-group">
-            <label for="">Email <span class="required">*</span></label>
-            {{ form_widget(form.email) }}
-        </div><!-- /.form-group -->
+    <div class="form-group">
+        <label for="">Email <span class="required">*</span></label>
+        {{ form_widget(form.email) }}
+    </div><!-- /.form-group -->
 
-        <div class="form-group">
-            <label for="">Message <span class="required">*</span></label>
-            {{ form_widget(form.message) }}
-        </div><!-- /.form-group -->
-
-        <p>Champs obligatoires <span class="required">*</span></p>
-
+    <div class="form-group">
+        <label for="">Message <span class="required">*</span></label>
+        {{ form_widget(form.message) }}
+    </div><!-- /.form-group -->
+    <input type="hidden" id="contact_prestataire_email" name="contact_prestataire[email]" class="form-control" value="wg.wargnier@gmail.com">
+    <div id="info">Champs obligatoires <span class="required">*</span></div>
+    <p>
         <button class="btn btn-primary btn-block" type="submit"><i
                     class="fa fa-paper-plane"></i>Envoyer
         </button>
+    </p>
     {{ form_end(form) }}
 </div><!-- /.detail-enquire-form -->

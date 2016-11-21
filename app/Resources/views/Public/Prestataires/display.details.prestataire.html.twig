@@ -37,7 +37,7 @@
                                 {% set moyenne=cote/((prestataire.commentaires|length)+1|round) %}
                                 {#///////////////////////////////////////////////////////////////////////////////#}
 
-                                <div class="detail-banner-rating">{#TODO : corriger surplus star#}{# cote moyenne #}
+                                <div class="detail-banner-rating">
 
                                     {% for i in 1..moyenne|round %}
                                         <i class="fa fa-star"></i>
@@ -112,7 +112,7 @@
                                                     {% for i in 1..commentaire.cote %}
                                                         <i class="fa fa-star"></i>
                                                     {% endfor %}
-                                                    {% set starFinal=(5-commentaire.cote) %}
+                                                    {% set starFinal=(5-commentaire.cote)|round %}
                                                     {% for i in 1..starFinal %}
                                                         <i class="fa fa-star-o"></i>
                                                     {% endfor %}

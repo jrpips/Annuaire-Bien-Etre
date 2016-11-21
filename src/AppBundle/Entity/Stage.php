@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Stage
@@ -28,56 +29,70 @@ class Stage {
     private $prestataire;
 
     /**
-     * @var string
-     *
+     * @Assert\NotBlank(message="Un nom est requis")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Le nom doit contenir 2 caractères minimun",
+     *      maxMessage = "Le nom ne peut contenir plus de 50 caractères"
+     * )
      * @ORM\Column(name="nom", type="string", length=150)
      */
     private $nom;
 
     /**
-     * @var string
-     *
+     * @Assert\NotBlank(message="Une description est requise")
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 255,
+     *      minMessage = "La description doit contenir 10 caractères minimun",
+     *      maxMessage = "La description ne peut contenir plus de 255 caractères"
+     * )
      * @ORM\Column(name="description", type="string", length=255)
      */
     private $description;
 
     /**
-     * @var string
+     * @Assert\NotBlank(message="Un tarif est requis")
      *
      * @ORM\Column(name="tarif", type="string", length=50)
      */
     private $tarif;
 
     /**
-     * @var string
-     *
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "L'info doit contenir 2 caractères minimun",
+     *      maxMessage = "L'info ne peut contenir plus de 50 caractères"
+     * )
      * @ORM\Column(name="info", type="text", nullable=true)
      */
     private $info;
 
     /**
-     * @var \DateTime
+     * @Assert\NotBlank(message="Une date  est requise")
      *
      * @ORM\Column(name="dateDebut", type="date")
      */
     private $dateDebut;
 
     /**
-     * @var \DateTime
+     * @Assert\NotBlank(message="Une date  est requise")
      *
      * @ORM\Column(name="dateFin", type="date")
      */
     private $dateFin;
 
     /**
-     * @var \DateTime
+     * @Assert\NotBlank(message="Une date  est requise")
      *
      * @ORM\Column(name="affichageDebut", type="date")
      */
     private $affichageDebut;
 
     /**
-     * @var \DateTime
+     * @Assert\NotBlank(message="Une date  est requise")
      *
      * @ORM\Column(name="affichageFin", type="date")
      */

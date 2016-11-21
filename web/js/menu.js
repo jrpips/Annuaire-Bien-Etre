@@ -72,12 +72,14 @@ var GpAnnuaire = GpAnnuaire || {
             }
         },
         resetForm: function (element) {// param element --> form.parent()
+            tabChildForm = ['input', 'textarea'];
+            var form = $(element + ' form');
+            for (i = 0; i < 2; i++) {
 
-            var form = $(element + ' form input');
-            //TODO 1.a boucle avec un tableau des types input
-            $(element + ' input[type=text]').each(function (index) {//TODO 1.b insérer dynamiquement les différents types
-                $(this).val('');
-            });
+                $(element + ' ' + tabChildForm[i]).each(function (index) {
+                    $(this).val('');
+                });
+            }
         },
         /**
          **  view : construction et affichage popup['s'inscrire','se connecter']
@@ -192,14 +194,11 @@ var GpAnnuaire = GpAnnuaire || {
             $.each($form.serializeArray(), function (i, field) {
                 values[field.name] = field.value;
             });
-            console.log('ok', values);
-            //id = e.currentTarget.id;
-            //inputVal = $('#subscribeForm #' + id).val();
 
             $.ajax({
                 type: "POST",
-                //data: values,
-                url: Routing.generate('login_check'), // {values: values}),
+
+                url: Routing.generate('login_check'),
                 dataType: 'json',
                 success: function (data) {
                     console.log(data);
@@ -307,6 +306,7 @@ var GpAnnuaire = GpAnnuaire || {
                     if (!data.valide) {
 
                         $('.errorCommentaire').remove();
+                        GpAnnuaire.resetForm('section');
 
                         for (item in data.errors) {
                             $('#commentaire_' + item).parent().append('<div class="errorCommentaire" >' + data.errors[item][0] + '</div>');
@@ -330,11 +330,24 @@ var GpAnnuaire = GpAnnuaire || {
             $.ajax({
                 type: "POST",
                 data: values,
-                url: Routing.generate('add_comment', {'prestataire_nom': $('#nomPrestataire').text()}),
+                url: Routing.generate('send_mail_prestataire'),// ({'prestataire_email': "wg.wargnier%40gmail.com"})),
                 dataType: 'json',
                 success: function (data) {
                     console.log(data);
-                    if (!data.valide) {
+                    if (data.valide) {
+
+                        $('.errorCommentaire').remove();
+                        GpAnnuaire.resetForm('#contactPresta');
+                        $('#info').empty().text('Votre message est envoyé!');
+
+                        var back = function(){
+                            console.log("Boom!");
+                            $('#info').empty().html("Champs obligatoires <span class='required' >*</span>");
+                        };
+                        setTimeout(back, 5000);
+
+                        console.log(data.valide);
+                    } else {
 
                         $('.errorCommentaire').remove();
 
@@ -371,14 +384,22 @@ var GpAnnuaire = GpAnnuaire || {
 
             reader.readAsDataURL(file);
         },
-        starCotationFormCommentaire: function () {
-            for (i = 1; i < 11; i++) {
+        cotationFormCommentaire: function (e) {
 
-                $('#rating-' + i).on('click', function () {
-                    $('#rating-' + i).attr('data', 'toto');
-                    console.log('ok');
-                });
+            event_id = e.currentTarget.id;
+            var cote = $('#' + event_id).attr('data');
+
+            cote++;
+
+            for (var j = 0; j <= cote; j++) {
+                $('#rating-' + j).removeAttr('class').attr('class', 'fa fa-star');
             }
+            for (j = cote; j <= 10; j++) {
+                $('#rating-' + j).removeAttr('class').attr('class', 'fa fa-star-o');
+            }
+            cote--;
+
+            $('#commentaire_cote').val(cote / 2);
         }
     };
 /**
@@ -491,7 +512,11 @@ $(function () {//controller
     /**
      **  cotation star --> form ajout commentaire
      **/
-    $('#ratingStar').on('mouseover', GpAnnuaire.starCotationFormCommentaire);
+    for (i = 1; i < 11; i++) {
+        $('#rating-' + i).on('click', function (e) {
+            GpAnnuaire.cotationFormCommentaire(e);
+        });
+    }
 });
 
 

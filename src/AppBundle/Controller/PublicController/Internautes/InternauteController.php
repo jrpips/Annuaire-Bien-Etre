@@ -130,7 +130,7 @@ class InternauteController extends Controller {
                 ));
             }
             if ($form->isValid()) {
-                $values = $request->request->all();
+                //$values = $request->request->all();
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($new_user);
                 $em->flush();

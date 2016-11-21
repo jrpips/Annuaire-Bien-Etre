@@ -55,7 +55,7 @@ class CommentaireController extends Controller
                 }
                 if ($form->isValid()) {
 
-                    $comment->setCote(3);
+                    //$comment->setCote(3);
 
                     dump($request->request);
                     $em = $this->getDoctrine()->getManager();
@@ -77,7 +77,10 @@ class CommentaireController extends Controller
                     $em = $this->getDoctrine()->getManager();
                     $em->flush();
 
-                    return $this->redirectToRoute('home');
+                    return new JsonResponse(array(
+
+                        'valide' => false,
+                    ));
                 }
             }
         }

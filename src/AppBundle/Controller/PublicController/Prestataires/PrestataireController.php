@@ -100,7 +100,6 @@ class PrestataireController extends Controller
      */
     public function moteurDeRechercheResultAction(Request $request)
     {
-
         dump($request->request);
         $criteria = $request->request->all();
 
@@ -124,9 +123,48 @@ class PrestataireController extends Controller
     }
 
     /**
+     * @Route("/prestataire/mise-a-jour",options={"expose"=true},name="update_prestataire")
+     */
+    public function updatePrestataireAction(Request $request)
+    {
+        return false;
+    }
+
+    /**
      * @Route("internaute/contact/prestataire",options={"expose"=true},name="send_mail_prestataire")
      */
-    public function sendMailToPrestataire(Request $request){
+    public function sendMailToPrestataireAction(Request $request)
+    {
+        $emailPrestataire = $request->get('prestataire_email');
+        $form = $this->get('form.factory')->create(ContactPrestataireType::class);
 
+        $form->handleRequest($request);
+        //ajax
+        if ($request->getMethod() == 'POST' && $request->isXmlHttpRequest()) {
+
+            if (!$form->isValid()) {
+
+                $errors = $this->get('app.geterrormessages')->getErrorMessages($form);
+
+                return new JsonResponse(array(
+                    'errors' => $errors,
+                    'valide' => false,
+                ));
+            }
+            if ($form->isValid()) {
+                $values = $request->request->all();
+                //$em = $this->getDoctrine()->getManager();
+                //$em->persist($new_user);
+                //$em->flush();
+
+                $this->get('app.mailerbuilder')->contactPrestataireMailer($values);
+
+                return new JsonResponse(array(
+                    'valide' => true,
+                    'values' => $values,
+                    'email' => $emailPrestataire
+                ));
+            }
+        }
     }
 }

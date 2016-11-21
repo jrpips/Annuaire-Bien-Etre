@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <h2>Liste des stages de {{ stages[0].prestataire.nom }}</h2>
+<ul>
+    {% for stage in stages %}
+        <li>{{ stage.nom }}
+            <a href="{{ path('home') }}">Voir</a>
+            <a href="{{ path('update_stage',{'nom_stage':stage.nom}) }}"> Modifier</a>
+            <a href="{{ path('delete_stage',{'nom_stage':stage.nom}) }}"> Supprimer</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ path('create_stage') }}">Créer un stage</a>
+{% endblock %}
