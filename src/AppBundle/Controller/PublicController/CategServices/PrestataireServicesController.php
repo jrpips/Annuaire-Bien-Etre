@@ -47,7 +47,7 @@ class PrestataireServicesController extends Controller
             $this->get('app.mailerbuilder')->addNewServiceMailer();
         }
         dump($newService);
-        return $this->render('Public/Prestataires/FrontOffice/Services/create.new.service.html.twig', array(
+        return $this->render('Public/Prestataires/FrontOffice/Services/form.new.service.html.twig', array(
             'form' => $form->createView(),
             'newService' => $newService
         ));

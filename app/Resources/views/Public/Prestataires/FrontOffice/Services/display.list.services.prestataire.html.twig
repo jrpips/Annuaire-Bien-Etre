@@ -9,59 +9,44 @@
 {% endblock %}
 
 {% block body %}
-    <h2>Liste des services </h2>
-    <form id="test" action="javascript:void(0)">
-        <select multiple size="5" name="s1">
-            {% for service in servicesP %}
-                <option value="{{ service.nom }}">{{ service.nom }}</option>
-
+    <h2 style="margin-top:300px">Liste des services </h2>
+    <form  action="javascript:void(0)">
+        <select multiple="" size="10" name="s1">
+           {% for service in servicesP %}
+               <option value="{{ service.nom }}">{{ service.nom }}</option>
             {% endfor %}
         </select>
-        <button name="gauche" id="gauche2"><--</button>
-        <button name="droite" id="droite2">--></button>
-        <select multiple size="5" name="s2">
+        <button name="gauche" id="gauche2"><span class="glyphicon glyphicon-chevron-left"></span></button>
+        <button name="droite" id="droite2"><span class="glyphicon glyphicon-chevron-right"></span></button>
+        <select style="overflow:hidden" multiple size="10" name="s2">
             {% for service in servicesA %}
-                <option value="{{ service.nom }}">{{ service.nom }}</option>
-
+                <option style="border:1px dashed lightslategray" value="{{ service.nom }}">{{ service.nom }}</option>
             {% endfor %}
         </select>
     </form>
-<script>
-    document.getElementById(test).s1.onchange = function () {
-        document.getElementById(test).droite.onclick = function () {
-            for (var m = 0; m < 6/*document.forms.s1.length*/; m++) {
-                if (document.getElementById(test).s1[m].selected) {
-                    var x = document.getElementById(test).s2;
+    <script>
+        window.onload = function () {
+            $('form').on('change', function () {
 
-                    var option = document.createElement("option");
-                    option.text = document.getElementById(test).s1[m].text;
-                    option.value = document.getElementById(test).s1[m].value;
-                    document.getElementById(test).s1[m].remove();//text="";
-                    x.add(option);
-                    m--;
-                }
-            }
+                $('form [name=droite]').on('click', function () {
+                        if ($('form [name=s1] option:selected')) {
+                            var item=$('form [name=s1] option:selected');
+                            $('form [name=s1] option:selected').remove();
+                            item.removeAttr('selected');
+                            $('[name=s2]').append(item);
+                        }
+                });
+
+                $('form [name=gauche]').on('click', function () {
+                    if ($('form [name=s2] option:selected')) {
+                        var item=$('form [name=s2] option:selected');
+                        $('form [name=s2] option:selected').remove();
+                        item.removeAttr('selected');
+                        $('[name=s1]').append(item);
+                    }
+                });
+            });
         }
-    }
-    document.getElementById(test).s2.onchange = function () {
-        document.getElementById(test).gauche.onclick = function () {
-
-            for (var p = 0; p < 6/*(document.forms.s2.length)*/; p++) {
-                if (document.getElementById(test).s2[p].selected) {
-                    var y = document.getElementById(test).s1;
-
-                    var option2 = document.createElement("option");
-                    option2.text = document.getElementById(test).s2[p].text;
-                    option2.value = document.getElementById(test).s2[p].value;
-                    document.getElementById(test).s2[p].remove();
-                    //document.getElementById(test).s2[p].text="";
-                    //document.getElementById(test).s2[p].text="";
-                    y.add(option2);
-                    p--;
-                }
-            }
-        }
-    }
-</script>
+    </script>
 
 {% endblock %}

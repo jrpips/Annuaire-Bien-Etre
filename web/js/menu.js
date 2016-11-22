@@ -27,12 +27,12 @@ var GpAnnuaire = GpAnnuaire || {
         headerColor: function () {
             if ($(window).scrollTop() === 0) {//scroll null
 
-                $('header').attr('header-transparent');
-                $('.header-wrapper').css({'background-color': 'transparent'});
+                //$('header').attr('header-transparent');
+                $('.header-wrapper').css({'background-color': 'rgba(100, 100, 128,0.2)'/*'transparent'*/});
 
             } else {//scroll actif
 
-                $('header').removeAttr('header-transparent');
+                //$('header').removeAttr('header-transparent');
                 $('.header-wrapper').css('background-color', 'rgba(100, 100, 128,0.4)');
             }//TODO couleur police nav pages != index
         },
