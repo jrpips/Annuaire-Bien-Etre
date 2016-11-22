@@ -39,12 +39,13 @@ class PrestataireServicesController extends Controller
         $form = $this->get('form.factory')->create(CategServiceType::class, $newService);
         $form->handleRequest($request);
         if ($form->isValid()) {
+            $newService->setValide(false)->addPrestataire($this->getUser()->getPrestataire());
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($newService);
             $em->flush();
 
-            $this->get('app.mailerbuilder')->addNewServiceMailer();
+            $this->get('app.mailerbuilder')->addNewServiceMailer(null);
         }
         dump($newService);
         return $this->render('Public/Prestataires/FrontOffice/Services/form.new.service.html.twig', array(
