@@ -10,14 +10,29 @@ namespace AppBundle\Repository;
  */
 class CategServiceRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findServicesByNomPrestataire($nom){
+    /**
+     *   Sélection des services validés par l'admin Bien-Etre
+     **/
+    public function myFindValideServices()
+    {
         $qb = $this->createQueryBuilder('cs')
-            ->leftJoin('cs.prestataires', 'p')->addSelect('p');
-
-        $qb->andWhere("p.nom like :nom");
-
-        $qb->setParameter('nom',$nom);
+            ->andWhere('cs.valide like :boolean')
+            ->setParameter('boolean', true);
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     *   Sélection des Services proposés par le Prestataire reçu en paramêtre
+     **/
+    public function findServicesByNomPrestataire($nom)
+    {
+        $qb = $this->createQueryBuilder('cs')
+            ->leftJoin('cs.prestataires', 'p')->addSelect('p')
+            ->andWhere("p.nom like :nom")
+            ->setParameter('nom', $nom);
+
+        return $qb->getQuery()->getResult();
+    }
+
 }

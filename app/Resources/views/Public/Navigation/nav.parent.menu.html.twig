@@ -53,7 +53,7 @@
 
             <li>
 
-                <a href="#">Prestataires Favoris</a>
+                {% if is_granted('ROLE_INTERNAUTE') %}<a href="#">Prestataires Favoris</a>{% else %}<a href="#">Derniers inscrits</a>{% endif %}
                 {{render(controller("AppBundle:PublicController/Prestataires/Prestataire:getChildNavPrestatairesElements"))}}
 
             </li>

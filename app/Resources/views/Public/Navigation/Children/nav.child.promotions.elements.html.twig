@@ -1,6 +1,7 @@
 {# views/Public/Navigation/nav.child.promotions.elements #}
 
 <ul>
+    <li> <a href="">Voir la liste</a></li>
     {% for promotion in promotions %}
         <li>
             <a href="">{{promotion.nom}}<span> jusqu'au {{ promotion.dateFin|date("d/m","Europe/Paris") }}</span></a>

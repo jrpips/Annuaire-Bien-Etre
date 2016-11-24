@@ -43,12 +43,14 @@ class SecurityController extends Controller {
                 dump($u);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($u);
-                $em->flush();  return $this->redirectToRoute('show_internaute');
+                $em->flush();
+
+                return $this->redirectToRoute('show_internaute');
             }
         } elseif ($new_pwd->getPassword() === null) {
             $error = '';
         } else {
-            $error = 'has-error';
+            $error = 'has-error';//class Bootstrap
         }
 
         dump($new_pwd);

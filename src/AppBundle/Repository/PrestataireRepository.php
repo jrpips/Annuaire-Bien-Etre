@@ -63,5 +63,27 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository {
 
         return $qb->getQuery()->getResult();
     }
+    /**
+     *   Sélection des Prestataires proposant le Service reçu en paramêtre
+     **/
+    public function findPrestatairesByService($service){
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin('p.categServices', 'cs')->addSelect('cs')
+            ->andWhere("cs.nom like :service")
+            ->setParameter('service', $service);
 
+        return $qb->getQuery()->getResult();
+    }
+    /**
+     *   Sélection des derniers Prestataires inscrits
+     **/
+    public function findLastPrestataires(){
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin('p.utilisateur', 'u')->addSelect('u')
+            ->orderBy('u.inscription','DESC')
+            ->setFirstResult( 0 )//offset
+            ->setMaxResults( 5 );//limit
+
+        return $qb->getQuery()->getResult();
+    }
 }

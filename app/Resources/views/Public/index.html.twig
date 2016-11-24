@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    {{parent()}}
+    {{ parent() }}
 {% endblock %}
 
 {% block title %}
@@ -32,7 +32,7 @@
 
                         <!-- Wrapper for slides -->
 
-                        <div class="carousel-inner" role="listbox" >
+                        <div class="carousel-inner" role="listbox">
 
                             {% set slider =['poster.jpg','poster2.jpg','poster3.jpg'] %} <!-- erzatz chargement DB -->
 
@@ -40,8 +40,8 @@
 
                                 {% set class=loop.index==1?'active':'' %}
 
-                                <div class="item {{class}}">
-                                    <img src="{{asset("image/"~photo)}}" alt="Chania">
+                                <div class="item {{ class }}">
+                                    <img src="{{ asset("image/"~photo) }}" alt="Chania">
                                 </div>
 
                             {% endfor %}
@@ -55,7 +55,8 @@
                                 <div class="col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
 
                                     <h1>Bien-Être</h1>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>Maecenas a porttitor sem. Morbi et lacinia. </p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>Maecenas a porttitor
+                                        sem. Morbi et lacinia. </p>
 
                                 </div><!-- /.col-* -->
 
@@ -63,7 +64,7 @@
 
                         </div><!-- /.container -->
 
-                    </div><!--/# myCarousel -->                     
+                    </div><!--/# myCarousel -->
 
                     <div class="container">
 
@@ -73,70 +74,56 @@
                                 {% for i in 1..5 %}
 
                                     <a href="#">
-                                        <img src="{{asset('image/tmp/partner-'~i~'.jpg')}}" alt="">
+                                        <img src="{{ asset('image/tmp/partner-'~i~'.jpg') }}" alt="">
                                     </a>
 
-                                {%endfor%}
+                                {% endfor %}
                             </div><!-- /.partners -->
 
                         </div>
 
                         <div class="page-header">
 
-                            <h1>Prestataires &amp; Services</h1>
-                            <p>Liste des prestataires et services les plus sollicités <br>par nos menbres. Découvrez notre sélection du mois.</p>
+                            <h1>Services</h1>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>Maecenas a porttitor sem.
+                                Morbi et lacinia. </p>
 
                         </div><!-- /.page-header -->
 
                         <div class="cards-simple-wrapper">
 
                             <div class="row">
-                                {% if is_granted('ROLE_INTERNAUTE') %}                                
-                                    {{render(controller("AppBundle:PublicController/Internautes/Internaute:getPrestatairesFavoris"))}}   
-                                {%endif%}
-                                {#  </div>
-                                  <div class="row">#}
-                                {% for prestataire in prestataires %}
 
+                                {% for s in services %}
+
+                                    {% set pathImg=(s.image.url matches '{^http}')?'':'image/userUploads/' %}
 
                                     <div class="col-sm-6 col-md-3">
 
-                                        <div class="card-simple"> 
+                                            <div class="card-simple">
 
-                                            {% set imgServicePrestataire=(prestataire.images is not null)?(prestataire.images)|first.url:'image/prestataire.png' %}
+                                                <div class="card-simple-background"
+                                                     style="background:url('{{ asset(pathImg~s.image) }}') no-repeat;background-size:cover">
 
-                                            <div class="card-simple-background" style="background:url('{{asset(imgServicePrestataire)}}') no-repeat;background-size:cover">
+                                                    <div class="card-simple-content">
+                                                        <h2><a href="{{ path('service_prestataires',{'service':s.nom}) }}">{{ s.description }}</a></h2>
 
-                                                <div class="card-simple-content">
-                                                    <h2><a href="listing-detail.html"></a>{{prestataire.nom}}</h2>
-                                                    <h3 style="text-align:center"><a href="{{path('add_favori',{'nomPrestataire':prestataire.nom,'from':'home'})}}" style="color:brown" class="fa fa-heart-o" href="listing-detail.html"></a></h3>
-                                                    <div class="card-simple-rating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div><!-- /.card-rating -->
+                                                        <div class="card-simple-actions">
+                                                            <p>{{ s.description }}</p>
 
-                                                    <div class="card-simple-actions">
-                                                        <a href="#" class="fa fa-bookmark-o"></a>
-                                                        <a href="listing-detail.html" class="fa fa-search"></a>
-                                                        <a href="#" class="fa fa-heart-o"></a>{#injecter ID prestataire#}
-                                                    </div><!-- /.card-simple-actions -->
+                                                        </div><!-- /.card-simple-actions -->
 
-                                                </div><!-- /.card-simple-content -->
+                                                    </div><!-- /.card-simple-content -->
 
-                                                {#                                          {% set firstService=(prestataire.categServices is defined)?(prestataire.categServices)|first.nom:'service' %}#}
-                                                <div class="card-simple-label">{{prestataire.siteInternet}}</div>
+                                                    <div class="card-simple-label">{{ s.nom }}</div>
 
-                                            </div><!-- /.card-simple-background -->
+                                                </div><!-- /.card-simple-background -->
 
-                                        </div><!-- /.card-simple -->
+                                            </div><!-- /.card-simple -->
 
                                     </div><!-- /.col-* -->
 
                                 {% endfor %}
-                                {#                                {% endif %}#}
 
                             </div><!-- /.row -->
 

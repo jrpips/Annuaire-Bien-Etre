@@ -37,8 +37,12 @@ class PrestataireController extends Controller
      */
     public function getChildNavPrestatairesElementsAction()
     {
-        $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findAll();
-
+        if ($this->isGranted('ROLE_INTERNAUTE')) {
+            //$prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findPrestatairesFavoris();
+        } else {
+            $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findLastPrestataires();
+        }
+        dump($prestataires);
         return $this->render('Public/Navigation/Children/nav.child.prestataires.elements.html.twig', array(
             'prestataires' => $prestataires,
         ));
@@ -47,7 +51,8 @@ class PrestataireController extends Controller
     /**
      * @Route("/inscription/prestataires",name="signupPrestataire")
      */
-    public function subscribeNewPrestataireAction(Request $request)
+    public
+    function subscribeNewPrestataireAction(Request $request)
     {
         $new_prestataire = new Prestataire();
 
@@ -71,7 +76,8 @@ class PrestataireController extends Controller
     /**
      * @Route("/details/prestataire/{prestataire_nom}",name="details_prestataire")
      */
-    public function getPrestataireDetailsAction($prestataire_nom)
+    public
+    function getPrestataireDetailsAction($prestataire_nom)
     {
         $prestataire = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->getCompleteProfilePrestataire($prestataire_nom);
         $categServices = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findAll();
@@ -85,7 +91,8 @@ class PrestataireController extends Controller
     /**
      * @Route("recherche/prestataire",options={"expose"=true},name="search_prestataire")
      */
-    public function moteurDeRechercheAction()
+    public
+    function moteurDeRechercheAction()
     {
 
         $form = $this->get('form.factory')->create(MoteurDeRechercheType::class);
@@ -98,7 +105,8 @@ class PrestataireController extends Controller
     /**
      * @Route("recherche/prestataire/resultat",options={"expose"=true},name="search_nom_prestataire")
      */
-    public function moteurDeRechercheResultAction(Request $request)
+    public
+    function moteurDeRechercheResultAction(Request $request)
     {
         dump($request->request);
         $criteria = $request->request->all();
@@ -106,7 +114,7 @@ class PrestataireController extends Controller
         $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findMyPrestataire($criteria);
         dump($prestataires, $criteria);
 
-        return $this->render('Public\Prestataires\SearchPrestataire\resultat.recherche.prestataire.html.twig', array(
+        return $this->render('Public\Prestataires\FoundPrestataires\display.liste.selected.prestataires.html.twig', array(
             'prestataires' => $prestataires
         ));
     }
@@ -114,7 +122,8 @@ class PrestataireController extends Controller
     /**
      *  render formulaire contact Prestataire
      */
-    public function getFormContactPrestataireAction()
+    public
+    function getFormContactPrestataireAction()
     {
         $form = $this->get('form.factory')->create(ContactPrestataireType::class);
         return $this->render('Public/Prestataires/form.contact.prestataire.html.twig', array(
@@ -125,7 +134,8 @@ class PrestataireController extends Controller
     /**
      * @Route("/prestataire/mise-a-jour",options={"expose"=true},name="update_prestataire")
      */
-    public function updatePrestataireAction(Request $request)
+    public
+    function updatePrestataireAction(Request $request)
     {
         return false;
     }
@@ -133,7 +143,8 @@ class PrestataireController extends Controller
     /**
      * @Route("internaute/contact/prestataire",options={"expose"=true},name="send_mail_prestataire")
      */
-    public function sendMailToPrestataireAction(Request $request)
+    public
+    function sendMailToPrestataireAction(Request $request)
     {
         $emailPrestataire = $request->get('prestataire_email');
         $form = $this->get('form.factory')->create(ContactPrestataireType::class);
@@ -152,10 +163,8 @@ class PrestataireController extends Controller
                 ));
             }
             if ($form->isValid()) {
+
                 $values = $request->request->all();
-                //$em = $this->getDoctrine()->getManager();
-                //$em->persist($new_user);
-                //$em->flush();
 
                 $this->get('app.mailerbuilder')->contactPrestataireMailer($values);
 
@@ -166,5 +175,19 @@ class PrestataireController extends Controller
                 ));
             }
         }
+    }
+
+    /**
+     * @Route("/utilisateur/selection/prestataires/proposant/service/{service}",name="service_prestataires")
+     */
+    public
+    function getListePrestatairesByService($service)
+    {
+        $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findPrestatairesByService($service);
+        dump($prestataires);
+
+        return $this->render('Public\Prestataires\FoundPrestataires\display.liste.selected.prestataires.html.twig', array(
+            'prestataires' => $prestataires
+        ));
     }
 }

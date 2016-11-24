@@ -13,6 +13,19 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
+        $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->myFindValideServices();
+        dump($services);
+        return $this->render('Public/index.html.twig', array(
+            'services' => $services,
+        ));
+
+    }
+
+    /*************
+     ** @Route("/", name="home")
+     */
+    public function _indexAction()
+    {
 
         $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findAll();//TODO : déterminer une limite
 
@@ -24,15 +37,15 @@ class IndexController extends Controller
 
             $j = count($prestataires);
 
-                foreach ($favoris as $k => $v) {  // moteur de comparaison
-                    $i = $j - count($prestataires); // adaptation de la clé en cas de retrait de la clé/valeur Prestataires en cours
-                    foreach ($prestataires as $nom) {
-                        if ($v == $nom) {
-                            unset($prestataires[$i]);
-                        } // si Pretataire = Favori -> retrait du Prestataire
-                        $i++;
-                    }
+            foreach ($favoris as $k => $v) {  // moteur de comparaison
+                $i = $j - count($prestataires); // adaptation de la clé en cas de retrait de la clé/valeur Prestataires en cours
+                foreach ($prestataires as $nom) {
+                    if ($v == $nom) {
+                        unset($prestataires[$i]);
+                    } // si Pretataire = Favori -> retrait du Prestataire
+                    $i++;
                 }
+            }
 
         }
         return $this->render('Public/index.html.twig', array(

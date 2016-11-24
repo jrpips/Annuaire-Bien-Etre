@@ -42,23 +42,22 @@
                                     {% for i in 1..moyenne|round %}
                                         <i class="fa fa-star"></i>
                                     {% endfor %}
-                                    {% set starFinal=(5-(moyenne|round)) %}
-                                    {% for i in 1..starFinal %}
+                                    {% set emptyStar=(5-(moyenne|round)) %}
+                                    {% for i in 1..emptyStar %}
                                         <i class="fa fa-star-o"></i>
                                     {% endfor %}
 
                                 </div><!-- /.detail-banner-rating -->
-
-                                <div class="detail-banner-btn bookmark marked">
-                                    <i class="fa fa-bookmark-o"></i> <span data-toggle="Bookmarked">Bookmarked</span>
-                                </div><!-- /.detail-claim -->
-
-                                <div class="detail-banner-btn heart marked">
-                                    <i class="fa fa-heart-o"></i> <span data-toggle="I Love It">I Love It</span>
-                                </div><!-- /.detail-claim -->
-                                {#<div class="detail-banner-btn heart">
-                                    <i class="fa fa-heart-o"></i> <span data-toggle="I Love It">Give Heart</span>
-                                </div>#}
+                                {% if is_granted('ROLE_INTERNAUTE') %}
+                                    <div class="detail-banner-btn  ">
+                                        <i class="fa fa-bookmark" style="color:burlywood"></i> S'abonner
+                                    </div><!-- /.detail-claim -->
+                                    <a href="#coter">
+                                        <div class="detail-banner-btn  ">
+                                            <i class="fa fa-heart" style="color:red"></i> Coter
+                                        </div><!-- /.detail-claim -->
+                                    </a>
+                                {% endif %}
                             </div><!-- /.detail-banner-left -->
                             <div class="detail-banner-right">
 
@@ -170,14 +169,14 @@
 
                             <div class="background-white p20">
                                 <div class="detail-overview-hearts">
-                                    <i class="fa fa-heart"></i> <strong>{{ prestataire.abonnes|length }} </strong>personne(s)
-                                    aime(nt) {{ prestataire.nom }}
+                                     <i class="fa fa-bookmark" style="color:burlywood"></i>
+                                    <strong>{{ prestataire.abonnes|length }} </strong>abonné{% if  prestataire.abonnes|length>1 %}s{% endif %}
                                 </div>
                                 <div class="detail-overview-rating">
-                                    <i class="fa fa-star"></i> <strong>{{ cote/ (prestataire.commentaires|length + 1) }}
-                                        / 5 </strong>from <a
-                                            href="#reviews">{{ prestataire.commentaires|length }}
-                                        vote(s)</a>
+                                    <i class="fa fa-heart"></i>
+                                    <strong>{{ (cote/ (prestataire.commentaires|length + 1))|round(1, 'common') }}
+                                        / 5 </strong>from {{ prestataire.commentaires|length }}
+                                    vote{% if  prestataire.commentaires|length>1 %}s{% endif %}
                                 </div>
 
                                 <div class="detail-actions row">
@@ -218,7 +217,7 @@
                                     <div class="detail-contact">
                                         <div class="detail-contact-email">
                                             <i class="fa fa-envelope-o"></i> <a
-                                                    href="mailto:#">{{ prestataire.utilisateur.email }}</a>
+                                                    href="#contact">{{ prestataire.utilisateur.email }}</a>
                                         </div>
                                         <div class="detail-contact-phone">
                                             <i class="fa fa-mobile-phone"></i> <a
@@ -291,18 +290,18 @@
                                     {% for service in categServices %}
 
                                         {% set match=(service in  prestataire.categServices)?'yes':'no' %}
-
-                                        <li class="{{ match }}">{{ service }}</li>
-
+                                        {% if service.valide %}
+                                            <li class="{{ match }}">{{ service.nom }}</li>
+                                        {% endif %}
                                     {% endfor %}
                                 </ul>
                             </div><!-- /.detail-amenities -->
 
-                            <h2>Contacter {{ prestataire.nom }}</h2>
-{#//////////////////////////////////////////////////////////////////////////////////////////////#}
+                            <h2 id="contact">Contacter {{ prestataire.nom }}</h2>
+                            {#//////////////////////////////////////////////////////////////////////////////////////////////#}
                             {{ render(controller("AppBundle:PublicController/Prestataires/Prestataire:getFormContactPrestataire")) }}
 
-{#///////////////////////////////////////////////////////////////////////////////////////////////////#}
+                            {#///////////////////////////////////////////////////////////////////////////////////////////////////#}
                         </div><!-- /.col-sm-5 -->
                         <div style="display:none">
                             <div id="nomPrestataire">{{ prestataire.nom }}</div>
@@ -312,7 +311,7 @@
                             <div id="commune">{{ prestataire.utilisateur.adresseUtilisateur.commune }}</div>
                         </div>
                         {% if is_granted('ROLE_INTERNAUTE') %}
-                            <div class="col-sm-12">
+                            <div class="col-sm-12" id="coter">
                                 <h2>Soumettre un commentaire</h2>
                                 {{ render(controller("AppBundle:PublicController/Commentaires/Commentaire:constructFormCommentaire")) }}
                             </div><!-- /.col-* -->

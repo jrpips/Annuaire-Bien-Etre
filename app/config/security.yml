@@ -42,7 +42,7 @@ security:
 #                failure_handler: acme.security.authentication_handler
             logout:
               path:       logout
-              target:     /
+              target:     /login
               # activate different ways to authenticate
 
             # http_basic: ~

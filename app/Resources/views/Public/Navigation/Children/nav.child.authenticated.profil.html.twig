@@ -1,7 +1,17 @@
-{#  #}
- {% if is_granted('ROLE_INTERNAUTE') %}
-     {% set pathImg=(app.user.internaute.image.url matches '{^http}')?'':'image/userUploads/' %} {# retire le chemin du dossier si image chargée en ligne (fixture)#}
- {% endif %}
+{#
+    Sous-menu utilisateur identifié
+    -------------------------------
+
+    info:       s'adapte en fonction du rôle de l'utilisateur connecté
+
+    path:       "Public/Navigation/Children/nav.child.authenticated"
+    parent:     "Public/Navigation/nav.parent.menu"
+    type call:  include by "nav.parent.menu"
+
+ #}
+{% if is_granted('ROLE_INTERNAUTE') %}
+    {% set pathImg=(app.user.internaute.image.url matches '{^http}')?'':'image/userUploads/' %} {# retire le chemin du dossier si image chargée en ligne (fixture)#}
+{% endif %}
 {% if is_granted('ROLE_PRESTATAIRE') %}
     {% set pathImg=(app.user.prestataire.images|first.url matches '{^http}')?'':'image/userUploads/' %} {# retire le chemin du dossier si image chargée en ligne (fixture)#}
 {% endif %}
@@ -41,19 +51,19 @@
         {% if not is_granted('ROLE_ADMIN') %}
         {% if is_granted('ROLE_INTERNAUTE') %}
         <li>
-            <a href="{{ path('show_internaute') }}">Consulter ma page</a>
+            <a href="{{ path('show_internaute') }}">Infos personnelles</a>
             {% endif %}
             {% if is_granted('ROLE_PRESTATAIRE') %}
         <li>
             <a href="{{ path('details_prestataire',{'prestataire_nom':app.user.prestataire.nom}) }}"><span
-                        class="glyphicon glyphicon-eye-open"></span> Consulter mon Profil</a>
+                        class="glyphicon glyphicon-eye-open"> </span> Visualiser ma page</a>
 
         <li>
             <a href="{{ path('list_stages',{'prestataire_nom':app.user.prestataire.nom}) }}"><span
                         class="glyphicon glyphicon-pencil"></span> Stages</a>
 
         <li>
-            <a href="{{ path('prestataire_services')}}"><span class="glyphicon glyphicon-pencil"></span> Services</a>
+            <a href="{{ path('prestataire_services') }}"><span class="glyphicon glyphicon-pencil"></span> Services</a>
 
         <li>
             <a><span class="glyphicon glyphicon-pencil"></span> Promotions</a>

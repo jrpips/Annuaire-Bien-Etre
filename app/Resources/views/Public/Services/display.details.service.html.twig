@@ -24,8 +24,8 @@
                         <h1>Service {{service.nom}}</h1>
                         <div class="media">
                             <div class="media-left">
-
-                                <img  src="{{ asset(service.image.url )}}" alt="{{ service.image.name }}"/>
+                                {% set pathImg=(service.image.url matches '{^http}')?'':'image/userUploads/' %}
+                                <img  src="{{ asset(pathImg~service.image.url )}}" alt="{{ service.image.name }}"/>
 
                             </div>
                             <div class="media-body">

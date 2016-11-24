@@ -22,10 +22,10 @@
                             <div class="card-simple-background" style="background:url('{{asset(imgServicePrestataire)}}') no-repeat;background-size:cover">
 
                                 <div class="card-simple-content">
-                                    <h2><a href="listing-detail.html"></a>{{ prestataire.nom }}</h2>
+                                    <h2><a href="{{ path('details_prestataire',{'prestataire_nom':prestataire.nom}) }}">{{ prestataire.nom }}</a></h2>
                                     <h3 style="text-align:center">
-                                        <a href="{{ path('add_favori',{'nomPrestataire':prestataire.nom,'from':'home'}) }}"
-                                           class="fa fa-heart-o"></a>
+                                       {# <a href="{{ path('add_favori',{'nomPrestataire':prestataire.nom,'from':'home'}) }}"
+                                           class="fa fa-heart-o"></a>#}
                                     </h3>
                                     <div class="card-simple-rating">
                                         <i class="fa fa-star"></i>

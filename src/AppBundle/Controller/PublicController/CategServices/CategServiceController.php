@@ -13,7 +13,7 @@ class CategServiceController extends Controller {
      */
     public function getNavServicesElementsAction() {
 
-        $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findAll();
+        $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->myFindValideServices();
         return $this->render('Public/Navigation/Children/nav.child.services.elements.html.twig', array(
                     'services' => $services,
         ));
@@ -24,7 +24,7 @@ class CategServiceController extends Controller {
      */
     public function getListServicesAction() {
 
-        $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findAll();
+        $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->myFindValideServices();
         dump($services);
         return $this->render('Public/Services/display.liste.services.html.twig', array(
                     'services' => $services,
