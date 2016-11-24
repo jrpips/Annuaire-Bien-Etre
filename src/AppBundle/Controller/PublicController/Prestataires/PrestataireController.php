@@ -38,9 +38,11 @@ class PrestataireController extends Controller
     public function getChildNavPrestatairesElementsAction()
     {
         if ($this->isGranted('ROLE_INTERNAUTE')) {
-            //$prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findPrestatairesFavoris();
+            $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')
+                ->findPrestatairesFavoris($this->getUser()->getInternaute()->getNom());
         } else {
-            $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findLastPrestataires();
+            $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')
+                ->findLastPrestataires();
         }
         dump($prestataires);
         return $this->render('Public/Navigation/Children/nav.child.prestataires.elements.html.twig', array(

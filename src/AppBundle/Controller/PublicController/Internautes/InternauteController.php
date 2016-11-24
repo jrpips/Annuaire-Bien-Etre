@@ -139,7 +139,7 @@ class InternauteController extends Controller {
 
                 return new JsonResponse(array(
                     'valide' => true,
-                    'values' => $values,
+                   // 'values' => $values,
                 ));
             }
         }

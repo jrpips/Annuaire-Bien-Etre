@@ -2,8 +2,10 @@
 
 namespace AppBundle\Controller\PublicController\CategServices;
 
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\CategService;
 use AppBundle\Entity\Prestataire;
@@ -22,7 +24,7 @@ class PrestataireServicesController extends Controller
         $listeServicesAnnuaire = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')
             ->findAll();
 
-        dump($listeServicesPrestataire, $listeServicesAnnuaire);
+        //dump($listeServicesPrestataire, $listeServicesAnnuaire);
 
         return $this->render('Public/Prestataires/FrontOffice/Services/display.list.services.prestataire.html.twig', array(
             'servicesP' => $listeServicesPrestataire,
@@ -47,10 +49,35 @@ class PrestataireServicesController extends Controller
 
             $this->get('app.mailerbuilder')->addNewServiceMailer(null);
         }
-        dump($newService);
+        //dump($newService);
         return $this->render('Public/Prestataires/FrontOffice/Services/form.new.service.html.twig', array(
             'form' => $form->createView(),
             'newService' => $newService
         ));
+    }
+    /**
+     * @Route("/prestataire/retirer/un/service",options={"expose"=true},name="remove_service")
+     */
+    public function removeServiveAction(Request $request)
+    {
+        $service=$request->request->get('service');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $oldService = $em
+            ->getRepository('AppBundle:CategService')
+            ->findByNom($service);
+
+        $p= $em
+            ->getRepository('AppBundle:Prestataire')
+            ->findPrestataire($this->getUser()->getPrestataire()->getId());
+
+      dump($oldService);
+       $p[1]->removeCategService($oldService[0]);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return new JsonResponse('Service '.$service.' a été retiré avec succés de votre liste');
     }
 }

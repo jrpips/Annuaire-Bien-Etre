@@ -10,42 +10,60 @@
 
 {% block body %}
     <h2 style="margin-top:300px">Liste des services </h2>
-    <form  action="javascript:void(0)">
+    <form action="javascript:void(0)">
         <select multiple="" size="10" name="s1">
-           {% for service in servicesP %}
-               <option value="{{ service.nom }}">{{ service.nom }}</option>
+            {% for service in servicesP %}
+                <option value="{{ service.nom }}">{{ service.nom }}</option>
             {% endfor %}
         </select>
-        <button name="gauche" id="gauche2"><span class="glyphicon glyphicon-chevron-left"></span></button>
-        <button name="droite" id="droite2"><span class="glyphicon glyphicon-chevron-right"></span></button>
+        <button name="gauche" id="gauche2"><span class="glyphicon glyphicon-chevron-left"></span>Ajout</button>
+        <button name="droite" id="droite2">Retrait<span class="glyphicon glyphicon-chevron-right"></span></button>
         <select style="overflow:hidden" multiple size="10" name="s2">
             {% for service in servicesA %}
                 <option style="border:1px dashed lightslategray" value="{{ service.nom }}">{{ service.nom }}</option>
             {% endfor %}
         </select>
     </form>
-    <script>
+    <script>{#TODO : js dans fichier js ;) #}
         window.onload = function () {
             $('form').on('change', function () {
 
                 $('form [name=droite]').on('click', function () {
-                        if ($('form [name=s1] option:selected')) {
-                            var item=$('form [name=s1] option:selected');
-                            $('form [name=s1] option:selected').remove();
-                            item.removeAttr('selected');
-                            $('[name=s2]').append(item);
+                    if ($('form [name=s1] option:selected')) {
+
+                        var item = $('form [name=s1] option:selected');
+
+                        for (var i = 0; i < item.length; i++) {
+                            ajaxRemoveService(item[i].value);
                         }
+                        $('form [name=s1] option:selected').remove();
+                        item.removeAttr('selected');
+                        $('[name=s2]').append(item);
+                    }
                 });
 
                 $('form [name=gauche]').on('click', function () {
                     if ($('form [name=s2] option:selected')) {
-                        var item=$('form [name=s2] option:selected');
+                        var item = $('form [name=s2] option:selected');
                         $('form [name=s2] option:selected').remove();
                         item.removeAttr('selected');
                         $('[name=s1]').append(item);
                     }
                 });
             });
+            function ajaxRemoveService(service) {
+                //e.preventDefault();
+
+                $.ajax({
+                    type: "POST",
+                    data: {'service':service},
+                    url: Routing.generate('remove_service'),
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                    }
+                })
+            }
         }
     </script>
 

@@ -9,7 +9,9 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 
 class PrestataireRepository extends \Doctrine\ORM\EntityRepository {
-
+    /**
+     *   Sélection de Prestataire(s) via les arguments du moteur de recherche
+     **/
     public function findMyPrestataire($criteria) {
 
         foreach ($criteria as $k => $v) {
@@ -38,7 +40,9 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository {
         return $qb->getQuery()->getResult();
     }
 
-
+    /**
+     *   Sélection d'un Prestataire avec son nom en param
+     **/
     public function getCompleteProfilePrestataire($nom)
     {
         $qb = $this->createQueryBuilder('p')
@@ -46,7 +50,7 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository {
             ->leftJoin('u.adresseUtilisateur', 'adr')->addSelect('adr')
             ->leftJoin('p.images', 'i')->addSelect('i')
             ->leftJoin('p.categServices', 's')->addSelect('s')
-            //->leftJoin('stage.prestataire', 'sp')->addSelect('sp')
+            ->leftJoin('stage.prestataire', 'sp')->addSelect('sp')
             ->leftJoin('p.stages', 'st')->addSelect('st')
             ;
 
@@ -85,5 +89,18 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository {
             ->setMaxResults( 5 );//limit
 
         return $qb->getQuery()->getResult();
+    }
+    /**
+     *   Sélection des Prestataires favoris d'un Internaute donné
+     **/
+    public function findPrestatairesFavoris($internaute){
+        $qb =$this->createQueryBuilder('p')
+            ->leftJoin('p.utilisateur','u')
+            ->leftJoin('p.abonnes','pa')
+            ->andWhere('pa.nom like :internaute')
+            ->setParameter('internaute',$internaute);
+
+        return $qb->getQuery()->getResult();
+
     }
 }
