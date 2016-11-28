@@ -1,0 +1,11 @@
+{% extends 'Admin/base.admin.html.twig' %}
+{% block body %}
+{% for u in users %}
+    {{ u.username }}
+    {% if u.internaute is not null %}
+        {{ u.internaute.nom }}<br>
+        {% else %}
+        {{ u.prestataire.nom }}<br>
+        {% endif %}
+{% endfor %}
+{% endblock %}

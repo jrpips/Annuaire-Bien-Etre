@@ -43,5 +43,14 @@ class InternauteRepository extends \Doctrine\ORM\EntityRepository {
 
         return $qb->getQuery()->getResult();
     }
+    /**
+     *  Retourne le nombre d'Internautes inscrits
+     */
+    public function countInternautes() {
+
+        $qb = $this->createQueryBuilder('i')->select('COUNT(i)');
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 
 }

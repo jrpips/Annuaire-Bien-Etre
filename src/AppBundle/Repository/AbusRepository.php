@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class AbusRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     *  Retourne le nombre d'abus signalés
+     */
+    public function countAbus() {
+
+        $qb = $this->createQueryBuilder('a')->select('COUNT(a)');
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
 }

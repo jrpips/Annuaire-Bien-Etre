@@ -14,7 +14,10 @@ body{
     font-family: 'Nunito' , sans-serif !important;
 }
 a{
-    text-decoration-line: none;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none !important;
 }
 .header-logo a img{
     width:30px;

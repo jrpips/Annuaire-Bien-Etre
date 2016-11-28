@@ -34,5 +34,17 @@ class CategServiceRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+    /**
+     *   Sélection des Services non-proposés par le Prestataire reçu en paramêtre
+     **/
+    public function findNotServicesByNomPrestataire($nom)
+    {
+        $qb = $this->createQueryBuilder('cs')
+            ->leftJoin('cs.prestataires', 'p')->addSelect('p')
+            ->andWhere("p.nom not like :nom")
+            ->setParameter('nom', $nom);
+
+        return $qb->getQuery()->getResult();
+    }
 
 }

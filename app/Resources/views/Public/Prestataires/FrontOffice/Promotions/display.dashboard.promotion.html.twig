@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}
+    Gestion des promotions - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="page-wrapper">
+        <div class="main">
+            <div class="main-inner">
+                <div class="container">
+                    <div class="content">
+                        <div class="row">
+                            <div class="page-title">
+                                <h1>Gestionnaire des promotions</h1>
+                            </div>
+                            <ul>
+                                {% for p in promotions %}
+                                    <li>{{ p.nom }}
+                                        {# <a href="{{ path('home') }}">Voir</a>#}
+                                        <a class="btn btn-primary" href="{{ path('update_promotion',{'nom_promotion':p.nom}) }}"> Modifier</a>
+                                        <a class="btn btn-primary" href="{{ path('delete_promotion',{'nom_promotion':p.nom}) }}"> Supprimer</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <a class="btn btn-primary" href="{{ path('new_promotion') }}">Ajouter une promotion</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

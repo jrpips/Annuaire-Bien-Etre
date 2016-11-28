@@ -1,0 +1,49 @@
+<li>
+
+    <a href="{{ path('home') }}">Accueil <i class="fa fa-chevron-down"></i></a>
+
+</li>
+<li>
+    <a href="#">Services <i class="fa fa-chevron-down"></i></a>
+
+    {{ render(controller("AppBundle:PublicController/CategServices/CategService:getNavServicesElements")) }}
+
+</li>
+
+<li class="has-mega-menu ">
+
+    <a href="#">Prestataires <i class="fa fa-chevron-down"></i></a>
+
+    <ul class="mega-menu">
+
+        <li>
+
+          <a href="#">Derniers inscrits</a>
+            {{ render(controller("AppBundle:PublicController/Prestataires/Prestataire:getChildNavPrestatairesElements")) }}
+
+        </li>
+
+        <li>
+
+            <a href="#">Dernières promotions</a>
+            {{ render(controller("AppBundle:PublicController/Promotions/Promotion:getNavPromotionsElements")) }}
+
+        </li>
+
+        <li>
+
+            <a href="#">Stage</a>
+            {{ render(controller("AppBundle:PublicController/Stages/Stage:getNavStagesElements")) }}
+
+        </li>
+
+        <li class="hidden-xs">
+            <div class="special">
+                <a href="">Sign Up Now</a>
+            </div><!-- /.special-->
+        </li>
+    </ul>
+</li>
+<li>
+    <a href="#">Contact<i class="fa fa-chevron-down"></i></a>
+</li>

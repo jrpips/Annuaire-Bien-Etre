@@ -4,13 +4,15 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Abus
  *
  * @ORM\Table(name="abus")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AbusRepository")
  */
-class Abus {
+class Abus
+{
 
     /**
      * @var int
@@ -37,24 +39,30 @@ class Abus {
     private $encodage;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Internaute", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Utilisateur", cascade={"persist"},inversedBy="msgAbus")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $internaute;
-    
+    private $denonceur;
+
     /**
-     * @ORM\ManyToOne(targetEntity="Commentaire", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Commentaire",inversedBy="abus", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $commentaire;
+    private $commentDenonce;
 
     /**
      * Get id
      *
      * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
+    }
+
+    public function __construct()
+    {
+        $this->setEncodage(new \DateTime());
     }
 
     /**
@@ -64,7 +72,8 @@ class Abus {
      *
      * @return Abus
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
 
         return $this;
@@ -75,7 +84,8 @@ class Abus {
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
@@ -86,7 +96,8 @@ class Abus {
      *
      * @return Abus
      */
-    public function setEncodage($encodage) {
+    public function setEncodage($encodage)
+    {
         $this->encodage = $encodage;
 
         return $this;
@@ -97,7 +108,8 @@ class Abus {
      *
      * @return \DateTime
      */
-    public function getEncodage() {
+    public function getEncodage()
+    {
         return $this->encodage;
     }
 
@@ -147,5 +159,77 @@ class Abus {
     public function getCommentaire()
     {
         return $this->commentaire;
+    }
+
+    /**
+     * Set auteur
+     *
+     * @param \AppBundle\Entity\Utilisateur $auteur
+     *
+     * @return Abus
+     */
+    public function setAuteur(\AppBundle\Entity\Utilisateur $auteur)
+    {
+        $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    /**
+     * Get auteur
+     *
+     * @return \AppBundle\Entity\Utilisateur
+     */
+    public function getAuteur()
+    {
+        return $this->auteur;
+    }
+
+    /**
+     * Set denonceur
+     *
+     * @param \AppBundle\Entity\Utilisateur $denonceur
+     *
+     * @return Abus
+     */
+    public function setDenonceur(\AppBundle\Entity\Utilisateur $denonceur)
+    {
+        $this->denonceur = $denonceur;
+
+        return $this;
+    }
+
+    /**
+     * Get denonceur
+     *
+     * @return \AppBundle\Entity\Utilisateur
+     */
+    public function getDenonceur()
+    {
+        return $this->denonceur;
+    }
+
+    /**
+     * Set commentDenonce
+     *
+     * @param \AppBundle\Entity\Commentaire $commentDenonce
+     *
+     * @return Abus
+     */
+    public function setCommentDenonce(\AppBundle\Entity\Commentaire $commentDenonce)
+    {
+        $this->commentDenonce = $commentDenonce;
+
+        return $this;
+    }
+
+    /**
+     * Get commentDenonce
+     *
+     * @return \AppBundle\Entity\Commentaire
+     */
+    public function getCommentDenonce()
+    {
+        return $this->commentDenonce;
     }
 }

@@ -1,27 +1,34 @@
 {# views/Public/Navigation/nav.parent.menu.html.twig #}
 
-<ul id="myNavbar" class="gp_menu header-nav-primary nav nav-pills collapse navbar-collapse" >
+
     <li>
-         <button  class="btn btn-default navbar-btn"  ><span class="glyphicon glyphicon-search"></span> Recherche</button>
-
-        {{render(controller("AppBundle:PublicController/Prestataires/Prestataire:moteurDeRecherche"))}}
-
+        <form action="{{path('simple_search_prestataire')}}" method="POST" >
+            <div class="input-group" style="margin: 10px 0 0 0 ">
+                <input type="text" id="moteur_de_recherche_nom" name="moteur_de_recherche[nom]" class="form-control" placeholder="Recherche...">
+                <div class="input-group-btn">
+                    <button class="btn btn-default navbar-btn">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <a href="{{ path('form_advanced_search') }}" style="display:block;font-size:10px;margin:0" href="">Recherche avancée</a>
     </li>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-        {{ include("Public/Navigation/Children/nav.child.authenticated.profil.html.twig") }}
+        {{ include("Public/Navigation/Links/CustomisedNav/nav.authenticated.profil.html.twig") }}
 
     {% else %}
 
         <li>
-            <button id="subscribe" class="btn btn-default navbar-btn"  >
+            <button id="subscribe" class="btn btn-default navbar-btn">
                 {#            <span class="glyphicon glyphicon-user"></span>#}
                 S'inscrire
             </button>
         </li>
 
         <li>
-            <a href="{{path('login')}}" id="authenticationLink" class="btn btn-default navbar-btn"  >
+            <a href="{{ path('login') }}" id="authenticationLink" class="btn btn-default navbar-btn">
                 {#            <span class="glyphicon glyphicon-log-in"></span>#}
                 Se connecter
             </a>
@@ -32,16 +39,16 @@
             </button>#}
         </li>
     {% endif %}
-    <li >
+    <li>
 
-        <a href="{{path('home')}}">Accueil <i class="fa fa-chevron-down"></i></a>
+        <a href="{{ path('home') }}">Accueil <i class="fa fa-chevron-down"></i></a>
 
     </li>
 
-    <li >       
+    <li>
         <a href="#">Services <i class="fa fa-chevron-down"></i></a>
 
-        {{render(controller("AppBundle:PublicController/CategServices/CategService:getNavServicesElements"))}}
+        {{ render(controller("AppBundle:PublicController/CategServices/CategService:getNavServicesElements")) }}
 
     </li>
 
@@ -53,22 +60,23 @@
 
             <li>
 
-                {% if is_granted('ROLE_INTERNAUTE') %}<a href="#">Prestataires Favoris</a>{% else %}<a href="#">Derniers inscrits</a>{% endif %}
-                {{render(controller("AppBundle:PublicController/Prestataires/Prestataire:getChildNavPrestatairesElements"))}}
+                {% if is_granted('ROLE_INTERNAUTE') %}<a href="#">Prestataires Favoris</a>{% else %}<a href="#">Derniers
+                    inscrits</a>{% endif %}
+                {{ render(controller("AppBundle:PublicController/Prestataires/Prestataire:getChildNavPrestatairesElements")) }}
 
             </li>
 
             <li>
 
                 <a href="#">Dernières promotions</a>
-                {{render(controller("AppBundle:PublicController/Promotions/Promotion:getNavPromotionsElements"))}}
+                {{ render(controller("AppBundle:PublicController/Promotions/Promotion:getNavPromotionsElements")) }}
 
             </li>
 
             <li>
 
                 <a href="#">Stage</a>
-                {{render(controller("AppBundle:PublicController/Stages/Stage:getNavStagesElements"))}}
+                {{ render(controller("AppBundle:PublicController/Stages/Stage:getNavStagesElements")) }}
 
             </li>
 
@@ -86,22 +94,14 @@
 
     {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
         <li>
-            <a id="prestataire-profil" href="{{ path('signupPrestataire') }}"><i style='transform:scale(2)' class="fa fa-cubes"></i><span>Créer un profil prestataire</span></a>
+            <a id="prestataire-profil" href="{{ path('signupPrestataire') }}"><i style='transform:scale(2)'
+                                                                                 class="fa fa-cubes"></i><span>Créer un profil prestataire</span></a>
         </li>
-    {%else%}
-        <li >
-            <a href="{{path('logout')}}" id="authenticationLink" class="btn btn-default navbar-btn"  >
+    {% else %}
+        <li>
+            <a href="{{ path('logout') }}" id="authenticationLink" class="btn btn-default navbar-btn">
                 <span class="glyphicon glyphicon-log-out"></span>
                 Déconnexion
             </a>
         </li>
-    {%endif%}
-</ul> 
-
-<div id="modale">
-    <section id="popup">
-
-        {{render(controller("AppBundle:PublicController/Internautes/Internaute:getChildNavPreSignupElements"))}}   
-
-    </section>
-</div>
+    {% endif %}

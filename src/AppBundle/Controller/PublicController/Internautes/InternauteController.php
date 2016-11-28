@@ -60,7 +60,7 @@ class InternauteController extends Controller {
     /**
      * @Route("/gestion/favoris/add/{nomPrestataire}",options={"expose"=true},name="add_favori")
      */
-    public function addFavorisAction(Request $request, $nomPrestataire = 'Cornette') {
+    public function addFavorisAction(Request $request, $nomPrestataire) {
         if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {
 
             $em = $this->getDoctrine()->getManager();

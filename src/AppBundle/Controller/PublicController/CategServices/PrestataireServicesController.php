@@ -1,5 +1,4 @@
 <?php
-
 namespace AppBundle\Controller\PublicController\CategServices;
 
 use Doctrine\ORM\EntityManager;
@@ -18,13 +17,14 @@ class PrestataireServicesController extends Controller
      */
     public function listeServicesPrestataireAction(Request $request)
     {
+     $nomPrestataire=$this->getUser()->getPrestataire()->getNom();
         $listeServicesPrestataire = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')
-            ->findServicesByNomPrestataire($this->getUser()->getPrestataire()->getNom());
+            ->findServicesByNomPrestataire($nomPrestataire);
 
         $listeServicesAnnuaire = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')
-            ->findAll();
+             ->findAll();
 
-        //dump($listeServicesPrestataire, $listeServicesAnnuaire);
+        dump($listeServicesPrestataire, $listeServicesAnnuaire);
 
         return $this->render('Public/Prestataires/FrontOffice/Services/display.list.services.prestataire.html.twig', array(
             'servicesP' => $listeServicesPrestataire,
@@ -33,7 +33,7 @@ class PrestataireServicesController extends Controller
     }
 
     /**
-     * @Route("/prestataire/ajouter/un/service",name="add_service")
+     * @Route("/prestataire/ajouter/service",name="add_service")
      */
     public function addNewServiveAction(Request $request)
     {
@@ -55,29 +55,5 @@ class PrestataireServicesController extends Controller
             'newService' => $newService
         ));
     }
-    /**
-     * @Route("/prestataire/retirer/un/service",options={"expose"=true},name="remove_service")
-     */
-    public function removeServiveAction(Request $request)
-    {
-        $service=$request->request->get('service');
 
-        $em = $this->getDoctrine()->getManager();
-
-        $oldService = $em
-            ->getRepository('AppBundle:CategService')
-            ->findByNom($service);
-
-        $p= $em
-            ->getRepository('AppBundle:Prestataire')
-            ->findPrestataire($this->getUser()->getPrestataire()->getId());
-
-      dump($oldService);
-       $p[1]->removeCategService($oldService[0]);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->flush();
-
-        return new JsonResponse('Service '.$service.' a été retiré avec succés de votre liste');
-    }
 }

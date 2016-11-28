@@ -1,0 +1,83 @@
+<header class="header header-minimal">
+
+        <div class="container-fluid">
+            <div class="header-inner">
+                <div class="header-logo" style="padding:0 100px 0 20px">
+
+                    <a href="">
+                        <img src="{{asset('image/gp_mini_logo.png')}}" alt="Logo">
+                        <span >Galet</span>
+                    </a>
+
+                </div><!-- /.header-logo -->
+
+                <div class="header-content">
+                    <div class="header-bottom">
+
+                        <ul class="header-nav-primary nav nav-pills collapse navbar-collapse">
+
+                            {{ include("Admin/AdminNavigation/nav.admin.html.twig") }}
+
+                        </ul>
+
+                        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".header-nav-primary">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <div class="header-nav-user">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div class="user-image">
+                                        <img src="{{ asset('image/admin.png') }}" alt=""/>
+                                        <div class="notification"></div><!-- /.notification-->
+                                    </div><!-- /.user-image -->
+                                    <span class="header-nav-user-name">{{ app.user.username }}</span> <i class="fa fa-chevron-down"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li>
+                                        <a href="{{ path('dashboard') }}"> Dashboard</a>
+
+                                    <li>
+                                        <a href="{{ path('logout') }}" style="color:rgb(169,39,39)">
+                                            <span class="glyphicon glyphicon-log-out"></span>
+                                            Déconnexion
+                                        </a>
+                                </ul>
+                            </div><!-- /.dropdown -->
+                        </div><!-- /.header-nav-user -->
+                    </div><!-- /.header-bottom -->
+                </div><!-- /.header-content -->
+            </div><!-- /.header-inner -->
+        </div><!-- /.container -->
+
+
+    <div class="header-statusbar">
+        <div class="header-statusbar-inner">
+            <div class="header-statusbar-left">
+                <h1>Dashboard</h1>
+
+                <div class="display-inline-block">
+                    <div class="hidden-xs visible-lg">
+                        <div class="header-statusbar-search">
+                            <input type="text" class="form-control" placeholder="Search for...">
+                        </div><!-- /.header-search -->
+                    </div>
+                </div>
+            </div><!-- /.header-statusbar-left -->
+
+            <div class="header-statusbar-right">
+                <div class="hidden-xs visible-lg">
+                    Navigation:
+                    <ul class="breadcrumb">
+                        <li><a href="#">Superlist</a></li>
+                        <li><a href="#">Dashboard</a></li>
+                        <li><a href="#">Statistics</a></li>
+                    </ul>
+                </div>
+            </div><!-- /.header-statusbar-right -->
+        </div><!-- /.header-statusbar-inner -->
+    </div><!-- /.header-statusbar -->
+</header>

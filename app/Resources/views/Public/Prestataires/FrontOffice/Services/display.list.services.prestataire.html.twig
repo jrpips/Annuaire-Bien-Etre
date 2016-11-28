@@ -9,62 +9,91 @@
 {% endblock %}
 
 {% block body %}
-    <h2 style="margin-top:300px">Liste des services </h2>
-    <form action="javascript:void(0)">
-        <select multiple="" size="10" name="s1">
-            {% for service in servicesP %}
-                <option value="{{ service.nom }}">{{ service.nom }}</option>
-            {% endfor %}
-        </select>
-        <button name="gauche" id="gauche2"><span class="glyphicon glyphicon-chevron-left"></span>Ajout</button>
-        <button name="droite" id="droite2">Retrait<span class="glyphicon glyphicon-chevron-right"></span></button>
-        <select style="overflow:hidden" multiple size="10" name="s2">
-            {% for service in servicesA %}
-                <option style="border:1px dashed lightslategray" value="{{ service.nom }}">{{ service.nom }}</option>
-            {% endfor %}
-        </select>
-    </form>
-    <script>{#TODO : js dans fichier js ;) #}
-        window.onload = function () {
-            $('form').on('change', function () {
+    <div class="page-wrapper">
+        <div class="main">
+            <div class="main-inner">
+                <div class="container">
+                    <div class="content">
+                        <div class="row">
+                            <div class="page-title">
+                                <h1>Gestionnaire des services </h1>
+                            </div>
+                            <form action="javascript:void(0)">
 
-                $('form [name=droite]').on('click', function () {
-                    if ($('form [name=s1] option:selected')) {
+                                    <select style="overflow:hidden" multiple="" size="10" name="s1">
+                                        {% for service in servicesP %}
+                                            <option style="border:1px dashed lightslategray;margin:5px" value="{{ service.nom }}">{{ service.nom }}</option>
+                                        {% endfor %}
+                                    </select>
 
-                        var item = $('form [name=s1] option:selected');
+                                <button class="btn btn-primary" name="gauche" id="gauche2"><span
+                                            class="glyphicon glyphicon-chevron-left"></span>Ajout
+                                </button>
+                                <button class="btn btn-primary" name="droite" id="droite2">Retrait<span
+                                            class="glyphicon glyphicon-chevron-right"></span></button>
 
-                        for (var i = 0; i < item.length; i++) {
-                            ajaxRemoveService(item[i].value);
-                        }
-                        $('form [name=s1] option:selected').remove();
-                        item.removeAttr('selected');
-                        $('[name=s2]').append(item);
-                    }
-                });
+                                    <select style="overflow:hidden" multiple size="10" name="s2">
+                                        {% for service in servicesA %}
+                                            {% if service not in servicesP %}
+                                                <option style="border:1px dashed lightslategray;margin:5px"
+                                                        value="{{ service.nom }}">{{ service.nom }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
 
-                $('form [name=gauche]').on('click', function () {
-                    if ($('form [name=s2] option:selected')) {
-                        var item = $('form [name=s2] option:selected');
-                        $('form [name=s2] option:selected').remove();
-                        item.removeAttr('selected');
-                        $('[name=s1]').append(item);
-                    }
-                });
-            });
-            function ajaxRemoveService(service) {
-                //e.preventDefault();
+                            </form>
+                            <a class="btn btn-primary" href="{{ path('add_service') }}">Créer un nouveau service</a>
+                            <script>{#TODO : js dans fichier js ;) #}
+                                window.onload = function () {
+                                    $('form').on('change', function () {
 
-                $.ajax({
-                    type: "POST",
-                    data: {'service':service},
-                    url: Routing.generate('remove_service'),
-                    dataType: 'json',
-                    success: function (data) {
-                        console.log(data);
-                    }
-                })
-            }
-        }
-    </script>
+                                        $('form [name=droite]').on('click', function () {
+                                            if ($('form [name=s1] option:selected')) {
 
+                                                var item = $('form [name=s1] option:selected');
+
+                                                for (var i = 0; i < item.length; i++) {
+                                                    ajaxGestionService(item[i].value, 'remove_service');
+                                                }
+                                                $('form [name=s1] option:selected').remove();
+                                                item.removeAttr('selected');
+                                                $('[name=s2]').append(item);
+                                            }
+                                        });
+
+                                        $('form [name=gauche]').on('click', function () {
+                                            if ($('form [name=s2] option:selected')) {
+                                                var item = $('form [name=s2] option:selected');
+
+                                                for (var i = 0; i < item.length; i++) {
+                                                    ajaxGestionService(item[i].value, 'ajout_service');
+                                                }
+
+                                                $('form [name=s2] option:selected').remove();
+                                                item.removeAttr('selected');
+                                                $('[name=s1]').append(item);
+                                            }
+                                        });
+                                    });
+                                    function ajaxGestionService(service, route) {
+                                        //e.preventDefault();
+
+                                        $.ajax({
+                                            type: "POST",
+                                            data: {'service': service},
+                                            url: Routing.generate(route),
+                                            dataType: 'json',
+                                            success: function (data) {
+                                                console.log(data);
+                                            }
+                                        })
+                                    }
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

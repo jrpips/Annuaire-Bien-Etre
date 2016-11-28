@@ -49,9 +49,18 @@
 
                                 </div><!-- /.detail-banner-rating -->
                                 {% if is_granted('ROLE_INTERNAUTE') %}
-                                    <div class="detail-banner-btn  ">
-                                        <i class="fa fa-bookmark" style="color:burlywood"></i> S'abonner
-                                    </div><!-- /.detail-claim -->
+                                    {% if prestataire in app.user.internaute.favoris %}
+                                        {% set route,text='remove_favori','Se désabonner' %}
+                                    {% else %}
+                                        {% set route,text='add_favori','S\'abonner' %}
+                                    {% endif %}
+                                    <a href="{{ path(route,{'nomPrestataire':prestataire.nom}) }}">
+                                        <div class="detail-banner-btn">
+
+                                            <i class="fa fa-bookmark-o" style="color:burlywood"></i>{{ text }}
+
+                                        </div><!-- /.detail-claim -->
+                                    </a>
                                     <a href="#coter">
                                         <div class="detail-banner-btn  ">
                                             <i class="fa fa-heart" style="color:red"></i> Coter
@@ -130,34 +139,10 @@
                                                      </div><!-- /.cons -->#}
                                                 </div><!-- /.review-content -->
 
-                                                <div class="review-rating">
-                                                    <dl>
-                                                        <dt>Accueil</dt>
-                                                        <dd>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                        </dd>
-                                                        <dt>Service</dt>
-                                                        <dd>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </dd>
-                                                        <dt>Rapport qualité/prix</dt>
-                                                        <dd>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </dd>
-                                                    </dl>
-                                                </div><!-- /.review-rating -->
+                                                    <div class="review-rating">
+                                                        <a class="btn btn-warning" href="{{ path('signaler_abus',{'commentaire_id':commentaire.id,'prestataire_nom':prestataire.nom}) }}">Signaler un abus</a>
+                                                    </div><!-- /.review-rating -->
+
                                             </div><!-- /.review-content-wrapper -->
                                         </div><!-- /.review-inner -->
                                     </div><!-- /.review -->
@@ -169,7 +154,7 @@
 
                             <div class="background-white p20">
                                 <div class="detail-overview-hearts">
-                                     <i class="fa fa-bookmark" style="color:burlywood"></i>
+                                    <i class="fa fa-bookmark" style="color:burlywood"></i>
                                     <strong>{{ prestataire.abonnes|length }} </strong>abonné{% if  prestataire.abonnes|length>1 %}s{% endif %}
                                 </div>
                                 <div class="detail-overview-rating">
@@ -298,10 +283,9 @@
                             </div><!-- /.detail-amenities -->
 
                             <h2 id="contact">Contacter {{ prestataire.nom }}</h2>
-                            {#//////////////////////////////////////////////////////////////////////////////////////////////#}
+
                             {{ render(controller("AppBundle:PublicController/Prestataires/Prestataire:getFormContactPrestataire")) }}
 
-                            {#///////////////////////////////////////////////////////////////////////////////////////////////////#}
                         </div><!-- /.col-sm-5 -->
                         <div style="display:none">
                             <div id="nomPrestataire">{{ prestataire.nom }}</div>

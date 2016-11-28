@@ -10,4 +10,41 @@ namespace AppBundle\Repository;
  */
 class UtilisateurRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Sélection de l'Utilisateur correspondant à un Internaute donné
+     *
+     * @param $id_internaute
+     * @return array
+     */
+    public function findUtilisateur($id_internaute)
+    {
+
+        $qb = $this->createQueryBuilder('u')->leftJoin('u.internaute', 'i')->addSelect('i');
+
+        $qb->where('i.id=:id')->setParameter('id', $id_internaute);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Récupération du nombre d'Utilisateur bannis
+     */
+    public function countBannedUsers()
+    {
+
+        $qb = $this->createQueryBuilder('u')->select('COUNT(u)')->andWhere('u.banni=:bool')->setParameter('bool', true);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * Récupération des comptes Utilisateur bannis
+     */
+    public function findBannedUsers()
+    {
+
+        $qb = $this->createQueryBuilder('u')->andWhere('u.banni=:bool')->setParameter('bool', true);
+
+        return $qb->getQuery()->getResult();
+    }
 }

@@ -66,13 +66,13 @@ class CommentaireController extends Controller
 
                     $prestataireCommented = $em
                         ->getRepository('AppBundle:Prestataire')
-                        ->findByNom($nomPrestataire);// récupération du sujet du commentaire
+                        ->findOneByNom($nomPrestataire);// récupération du sujet du commentaire
 
                     $comment
                         ->setInternaute($auteurComment[0])
-                        ->setPrestataire($prestataireCommented[0]);// ajout de l'auteur (internaute) et du sujet (prestataire)
+                        ->setPrestataire($prestataireCommented);// ajout de l'auteur (internaute) et du sujet (prestataire)
 
-                    $prestataireCommented[0]->addCommentaire($comment);// injection du commentaire
+                    $prestataireCommented->addCommentaire($comment);// injection du commentaire
 
                     $em = $this->getDoctrine()->getManager();
                     $em->flush();
@@ -85,5 +85,30 @@ class CommentaireController extends Controller
             }
         }
         return $this->redirectToRoute('details_prestataire', array('prestataire_nom' => $nomPrestataire));
+    }
+
+    /**
+     * @Route("/admi/supprimer/commentaire/{commentaire_titre}/{abus_id}/{banni}",options={"expose"=true},name="delete_comment")
+     */
+    public function deleteCommentAction(Request $request, $commentaire_titre, $abus_id, $banni = null)
+    {
+        $commentaire = $this->getDoctrine()->getManager()->getRepository('AppBundle:Commentaire')->findOneByTitre($commentaire_titre);
+        $abus = $this->getDoctrine()->getManager()->getRepository('AppBundle:Abus')->findOneById($abus_id);
+        if ($banni) {
+            $user = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->findUtilisateur($banni);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        if ($banni) {
+            $user[0]->setBanni(true);
+            $em->persist($user[0]);
+        }
+        $em->remove($abus);
+        $em->flush();
+        $em->remove($commentaire);
+        $em->flush();
+
+        return $this->redirectToRoute('abus');
     }
 }

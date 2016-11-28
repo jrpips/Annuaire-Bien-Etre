@@ -14,8 +14,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class Utilisateur implements UserInterface {
 
-   const TYPE_INTERNAUTE = 'internaute';
-    const TYPE_PRESTATAIRE = 'prestataire';
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -42,6 +40,12 @@ class Utilisateur implements UserInterface {
      * @Assert\Valid
      */
     private $adresseUtilisateur;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Abus", cascade={"persist"},mappedBy="denonceur")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $msgAbus;
 
     /**
      * @Assert\Email(
@@ -473,4 +477,72 @@ class Utilisateur implements UserInterface {
         return $this->prestataire;
     }
 
+
+    /**
+     * Add denonceur
+     *
+     * @param \AppBundle\Entity\Abus $denonceur
+     *
+     * @return Utilisateur
+     */
+    public function addDenonceur(\AppBundle\Entity\Abus $denonceur)
+    {
+        $this->denonceur[] = $denonceur;
+
+        return $this;
+    }
+
+    /**
+     * Remove denonceur
+     *
+     * @param \AppBundle\Entity\Abus $denonceur
+     */
+    public function removeDenonceur(\AppBundle\Entity\Abus $denonceur)
+    {
+        $this->denonceur->removeElement($denonceur);
+    }
+
+    /**
+     * Get denonceur
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDenonceur()
+    {
+        return $this->denonceur;
+    }
+
+    /**
+     * Add msgAbus
+     *
+     * @param \AppBundle\Entity\Abus $msgAbus
+     *
+     * @return Utilisateur
+     */
+    public function addMsgAbus(\AppBundle\Entity\Abus $msgAbus)
+    {
+        $this->msgAbus[] = $msgAbus;
+
+        return $this;
+    }
+
+    /**
+     * Remove msgAbus
+     *
+     * @param \AppBundle\Entity\Abus $msgAbus
+     */
+    public function removeMsgAbus(\AppBundle\Entity\Abus $msgAbus)
+    {
+        $this->msgAbus->removeElement($msgAbus);
+    }
+
+    /**
+     * Get msgAbus
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMsgAbus()
+    {
+        return $this->msgAbus;
+    }
 }

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="page-wrapper">
+        <div class="main">
+            <div class="main-inner">
+                <div class="container">
+                    <div class="content">
+                        <div class="row">
+                            <div class="page-title">
+                                <h2>Gestionnaire des stages de {{ stages[0].prestataire.nom }}</h2>
+                            </div>
+                            <table>
+                                {% for stage in stages %}
+                                    <tr><td>{{ stage.nom }}</td>
+                                        {# <a href="{{ path('home') }}">Voir</a>#}
+                                        <td><a class="btn " href="{{ path('update_stage',{'nom_stage':stage.nom}) }}"> Modifier</a></td>
+                                        <td> <a class="btn " href="{{ path('delete_stage',{'nom_stage':stage.nom}) }}"> Supprimer</a></td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                            <a class="btn " href="{{ path('create_stage') }}">Créer un stage</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

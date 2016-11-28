@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}
+    Services - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+<h2 style="margin-top:300px">Liste des services </h2>
+
+<ul>
+        {% for service in servicesP %}
+      <li>    {{ service.nom }}<a href="{{ path('remove_service',{'service':service.nom}) }}"> X</a>
+        {% endfor %}
+
+
+        {% for service in servicesA %}
+      <li>      {{ service.nom }}<a href="{{ path('ajout_service',{'service':service.nom}) }}"> +</a>
+        {% endfor %}
+</ul>
+{% endblock %}

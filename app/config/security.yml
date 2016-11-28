@@ -12,7 +12,7 @@ security:
         ROLE_ADMIN:         [ROLE_INTERNAUTE,ROLE_PRESTATAIRE,ROLE_ALLOWED_TO_SWITCH]
         
     providers:
-#        in_memory:
+#        in_memory:+65
 #            memory: 
 #                users:
 #                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }

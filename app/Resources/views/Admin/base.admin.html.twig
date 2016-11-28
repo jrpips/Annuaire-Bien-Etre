@@ -30,12 +30,12 @@
 
 <div class="page-wrapper">
 
-        {{ include("base.header.html.twig") }}
+    {{ include("Admin/base.admin.header.html.twig") }}
 
     {% block body %}
     {% endblock %}
 
-         {{ include("base.footer.html.twig") }}
+    {{ include("Admin/base.admin.footer.html.twig") }}
 
 </div><!-- /.page-wrapper -->
 
@@ -43,7 +43,7 @@
 {% endblock %}
 
 <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/menu.js') }}"></script>
+{#<script type="text/javascript" src="{{ asset('js/menu.js') }}"></script>#}
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>

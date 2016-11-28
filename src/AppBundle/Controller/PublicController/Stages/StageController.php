@@ -27,19 +27,19 @@ class StageController extends Controller
     {
         $stages = $this->getDoctrine()->getManager()->getRepository('AppBundle:Stage')->findAll();
 
-        return $this->render('Public/Navigation/Children/nav.child.stages.elements.html.twig', array(
+        return $this->render('Public/Navigation/Links/link.stages.elements.html.twig', array(
             'stages' => $stages,
         ));
     }
 
     /**
-     * @Route("/prestataire/consultation/liste/stages/{prestataire_nom}",name="list_stages")
+     * @Route("/prestataire/dashboard/stages/{prestataire_nom}",name="dashboard_stage")
      */
-    public function listeStageAction(Request $request, $prestataire_nom)
+    public function dashboardStageAction(Request $request, $prestataire_nom)
     {
         $stages = $this->getDoctrine()->getManager()->getRepository('AppBundle:Stage')->findStagesByNomPrestataire($prestataire_nom);
         dump($stages);
-        return $this->render('Public/Prestataires/FrontOffice/Stages/display.list.stages.prestataire.html.twig', array(
+        return $this->render('Public/Prestataires/FrontOffice/Stages/display.dashboard.stage.html.twig', array(
             'stages' => $stages,
         ));
     }
@@ -64,7 +64,7 @@ class StageController extends Controller
             $em->flush();
             $request->getSession()->getFlashBag()->add('notice', 'Stage enregistré.');//TODO : fenêtre popup affichage message succès...
 
-            return $this->redirectToRoute('list_stages',array('prestataire_nom'=>$this->getUser()->getPrestataire()->getNom()));//TODO : ...sur la page de redirection
+            return $this->redirectToRoute('dashboard_stage',array('prestataire_nom'=>$this->getUser()->getPrestataire()->getNom()));//TODO : ...sur la page de redirection
         }
 
         return $this->render('Public/Prestataires/FrontOffice/Stages/create.stage.html.twig', array(
@@ -111,7 +111,7 @@ class StageController extends Controller
         $em->remove($stage[0]);
         $em->flush();
 
-        return $this->redirectToRoute('list_stages',array('prestataire_nom'=>$this->getUser()->getPrestataire()->getNom()));
+        return $this->redirectToRoute('dashboard_stage',array('prestataire_nom'=>$this->getUser()->getPrestataire()->getNom()));
 
     }
 }

@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class PromotionRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Sélection des promotions d'un Prestataire donné
+     */
+    public function findPrestatairePromotions($nomPrestataire){
+        $qb = $this->createQueryBuilder('pr')->leftJoin('pr.prestataire', 'p')->addSelect('p');
+
+        $qb->where('p.nom=:nom')->setParameter('nom', $nomPrestataire);
+
+        return $qb->getQuery()->getResult();
+    }
 }

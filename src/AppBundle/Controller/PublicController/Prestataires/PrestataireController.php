@@ -24,6 +24,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Prestataire;
+use AppBundle\Entity\CategService;
 use AppBundle\Entity\Utilisateur;
 use AppBundle\Entity\Commentaire;
 use AppBundle\Form\PrestataireType;
@@ -37,7 +38,7 @@ class PrestataireController extends Controller
      */
     public function getChildNavPrestatairesElementsAction()
     {
-        if ($this->isGranted('ROLE_INTERNAUTE')) {
+        if (!$this->isGranted('ROLE_ADMIN')&&$this->isGranted('ROLE_INTERNAUTE')) {
             $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')
                 ->findPrestatairesFavoris($this->getUser()->getInternaute()->getNom());
         } else {
@@ -45,7 +46,7 @@ class PrestataireController extends Controller
                 ->findLastPrestataires();
         }
         dump($prestataires);
-        return $this->render('Public/Navigation/Children/nav.child.prestataires.elements.html.twig', array(
+        return $this->render('Public/Navigation/Links/link.prestataires.elements.html.twig', array(
             'prestataires' => $prestataires,
         ));
     }
@@ -91,7 +92,7 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("recherche/prestataire",options={"expose"=true},name="search_prestataire")
+     * @Route("recherche/prestataire",options={"expose"=true},name="form_advanced_search")
      */
     public
     function moteurDeRechercheAction()
@@ -105,15 +106,31 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("recherche/prestataire/resultat",options={"expose"=true},name="search_nom_prestataire")
+     * @Route("recherche/prestataire/resultat",options={"expose"=true},name="simple_search_prestataire")
      */
     public
-    function moteurDeRechercheResultAction(Request $request)
+    function simpleMoteurDeRechercheAction(Request $request)
     {
         dump($request->request);
         $criteria = $request->request->all();
 
-        $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findMyPrestataire($criteria);
+        $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->simpleSearchPrestataire($criteria);
+        dump($prestataires, $criteria);
+
+        return $this->render('Public\Prestataires\FoundPrestataires\display.liste.selected.prestataires.html.twig', array(
+            'prestataires' => $prestataires
+        ));
+    }
+    /**
+     * @Route("recherche/prestataire/resultat",options={"expose"=true},name="advanced_search_prestataire")
+     */
+    public
+    function advancedMoteurDeRechercheAction(Request $request)
+    {
+        dump($request->request);
+        $criteria = $request->request->all();
+
+        $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->advancedSearchPrestataire($criteria);
         dump($prestataires, $criteria);
 
         return $this->render('Public\Prestataires\FoundPrestataires\display.liste.selected.prestataires.html.twig', array(
@@ -191,5 +208,57 @@ class PrestataireController extends Controller
         return $this->render('Public\Prestataires\FoundPrestataires\display.liste.selected.prestataires.html.twig', array(
             'prestataires' => $prestataires
         ));
+    }
+
+    /**
+     * @Route("/prestataire/retirer/service",options={"expose"=true},name="remove_service")
+     */
+    public function removeServiveAction(Request $request)
+    {
+        $service = $request->request->get('service');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $oldService = $em
+            ->getRepository('AppBundle:CategService')
+            ->findByNom($service);
+        $nom = $this->getUser()->getPrestataire()->getNom();
+        echo $nom;
+        $p = $em
+            ->getRepository('AppBundle:Prestataire')
+            ->findPrestataire($nom);
+
+        $oldService[0]->removePrestataire($p[0]);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+        //dump($oldService,$p);
+        return new JsonResponse('ok');//$this->redirectToRoute('prestataire_services');
+    }
+    /**
+     * @Route("/prestataire/add/service",options={"expose"=true},name="ajout_service")
+     */
+    public function addServiveAction(Request $request)
+    {
+        $service = $request->request->get('service');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $oldService = $em
+            ->getRepository('AppBundle:CategService')
+            ->findByNom($service);
+
+        $nom = $this->getUser()->getPrestataire()->getNom();
+
+        $p = $em
+            ->getRepository('AppBundle:Prestataire')
+            ->findPrestataire($nom);
+
+     $oldService[0]->addPrestataire($p[0]);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+        dump($oldService,$p);
+        return new JsonResponse('ok');//$this->redirectToRoute('prestataire_services');
     }
 }

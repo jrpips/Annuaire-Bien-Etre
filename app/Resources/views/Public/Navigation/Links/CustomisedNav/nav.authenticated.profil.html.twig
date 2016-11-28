@@ -1,0 +1,27 @@
+{#
+    Charpente sous-menu utilisateur identifié
+    -----------------------------------------
+
+    info: inclusion en fonction du rôle de l'utilisateur connecté
+
+ #}
+
+<li id="avatar">
+
+    {% if not is_granted('ROLE_ADMIN') %}
+
+        {% if is_granted('ROLE_INTERNAUTE') %}
+
+            {{ include("Public/Navigation/Links/CustomisedNav/Links/internautes.nav.html.twig") }}
+
+        {% else %}
+
+            {{ include("Public/Navigation/Links/CustomisedNav/Links/prestataires.nav.html.twig") }}
+
+        {% endif %}
+
+    {% else %}
+
+        {{ include("Public/Navigation/Links/CustomisedNav/Links/admin.nav.html.twig") }}
+
+    {% endif %}

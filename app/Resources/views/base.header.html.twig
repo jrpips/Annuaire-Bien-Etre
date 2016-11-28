@@ -11,8 +11,8 @@
                 <div class="header-logo">
 
                     <a href="">
-                        <img src="{{asset('image/gp_mini_logo.png')}}" alt="Logo">
-                        <span >Galet</span>
+                        <img src="{{ asset('image/gp_mini_logo.png') }}" alt="Logo">
+                        <span>Galet</span>
                     </a>
 
                 </div><!-- /.header-logo -->
@@ -25,11 +25,20 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        {{ include("Public/Navigation/nav.parent.menu.html.twig") }}
+                        <ul id="myNavbar" class="gp_menu header-nav-primary nav nav-pills collapse navbar-collapse">
+                            {{ include("Public/Navigation/nav.parent.menu.html.twig") }}
+                        </ul>
 
+                        <div id="modale">
+                            <section id="popup">
+
+                                {{ render(controller("AppBundle:PublicController/Internautes/Internaute:getChildNavPreSignupElements")) }}
+
+                            </section>
+                        </div>
                     </div><!-- /.header-bottom -->
 
-                </div><!-- /.header-content-->                        
+                </div><!-- /.header-content-->
 
             </div><!-- /.header-inner-->
 

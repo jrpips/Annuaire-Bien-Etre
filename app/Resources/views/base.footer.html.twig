@@ -9,7 +9,7 @@
             <div class="row">
 
                 <div class="col-sm-6 col-md-3">
-                    
+
                     <h2>Infos légales</h2>
 
                     <p>numéro de T.V.A. 00123457880</p>
@@ -18,48 +18,58 @@
                         rue du Commerce, 13<br>
                         1000 Bruxelles<br>
                         BELGIQUE</p>
-                    
+
                 </div><!-- /.col-* -->
 
                 <div class="col-sm-6 col-md-3">
-                    
+
                     <h2>A propos de Bien-Être</h2>
 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a porttitor sem. 
-                        Morbi et lacinia.Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a porttitor sem.
+                        Morbi et lacinia.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Fusce sit amet faucibus justo, vitae laoreet.<br><br>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Fusce sit amet faucibus justo, vitae laoreet.</p>
-                    
+
                 </div><!-- /.col-* -->
 
                 <div class="col-sm-6 col-md-3">
-                    
+
                     <h2>Contact &amp; Information</h2>
 
                     <p>
                         La rue 123, Liège, Belgique<br>
                         +32 04 247 15 00 <br><a href="#">Contactez-nous</a>
                     </p>
-                    
+
                 </div><!-- /.col-* -->
 
                 <div class="col-sm-6 col-md-3">
-                    
+
                     <h2>Réseaux sociaux</h2>
 
                     <ul class="social-links nav nav-pills">
 
-                        {%set foo=['twitter','facebook','google-plus','linkedin']%} <!-- erzatz chargement DB -->
+                      {# {% set foo=['twitter','facebook','linkedin'] %} <!-- erzatz chargement DB -->
 
-                        {% for item in foo %}   
+                        {% for item in foo %}
                             <li>
-                                <a href="#"><i class="fa fa-{{item}}"></i></a>
-                            </li>                                  
-                        {%endfor%}
+                                <a href="#"><i class="fa fa-{{ item }}"></i></a>
+                            </li>
+
+                        {% endfor %}#}
+                        <li><a href="http://twitter.com/share" class="twitter-share-button" data-count="vertical" data-via="InfoWebMaster"></a>
+
+                        <li><a><g:plusone style="display:inline"></g:plusone></a>
+
+
+                        <li><a name="fb_share" type="box_count" share_url="http://127.0.0.1/Annuaire-Bien-Etre/web/app_dev.php/"><i class="fa fa-facebook"></i></a>
 
                     </ul><!-- /.header-nav-social -->
-                    
+                    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+                    <script type="text/javascript" src="http://platform.linkedin.com/in.js"></script>
+                    <script type="in/share" data-counter="right"></script>
+                    <script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
                 </div><!-- /.col-* -->
 
             </div><!-- /.row -->

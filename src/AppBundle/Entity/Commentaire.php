@@ -35,6 +35,12 @@ class Commentaire {
     private $prestataire;
 
     /**
+     * @ORM\OneToMany(targetEntity="Abus",mappedBy="commentDenonce", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $abus;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="cote", type="float", nullable=true)
@@ -217,4 +223,62 @@ class Commentaire {
         return $this->prestataire;
     }
 
+
+    /**
+     * Set auteur
+     *
+     * @param \AppBundle\Entity\Commentaire $auteur
+     *
+     * @return Commentaire
+     */
+    public function setAuteur(\AppBundle\Entity\Commentaire $auteur)
+    {
+        $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    /**
+     * Get auteur
+     *
+     * @return \AppBundle\Entity\Commentaire
+     */
+    public function getAuteur()
+    {
+        return $this->auteur;
+    }
+
+    /**
+     * Add abus
+     *
+     * @param \AppBundle\Entity\Abus $abus
+     *
+     * @return Commentaire
+     */
+    public function addAbus(\AppBundle\Entity\Abus $abus)
+    {
+        $this->abus[] = $abus;
+
+        return $this;
+    }
+
+    /**
+     * Remove abus
+     *
+     * @param \AppBundle\Entity\Abus $abus
+     */
+    public function removeAbus(\AppBundle\Entity\Abus $abus)
+    {
+        $this->abus->removeElement($abus);
+    }
+
+    /**
+     * Get abus
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAbus()
+    {
+        return $this->abus;
+    }
 }
