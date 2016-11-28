@@ -1,45 +1,30 @@
-{% extends 'Admin/base.admin.html.twig' %}
-{% block body %}
-    <div class="page-wrapper">
-    <div class="main">
-    <div class="main-inner">
-    <div class="container">
-    <div class="content">
-    <div class="row">
-    <div class="page-title">
-        <h2>Gestionnaire des abus</h2>
-    </div>
-    {% if abus is empty %}
-        <p>Pas d'abus à gérer...</p>
-    {% endif %}
+<div class="page-title">
+    <h2>Gestionnaire des abus</h2>
+</div>
+{% if abus is empty %}
+    <p>Pas d'abus à gérer...</p>
+{% endif %}
     {% for a in abus %}
 
-        <div style="border:2px dashed gray;margin:15px auto;padding:15px">
+<div style="border:2px dashed gray;margin:15px auto;padding:15px">
 
-            <h3>Détails du signalement</h3>
-            {{ a.description }}, {{ a.encodage|date("d/m/Y") }}, {{ a.denonceur.username }} <br>
-            <div style="text-align:right">
-                <a href="{{ path('delete_abus',{'abus_id':a.id}) }}" class="btn btn-primary">Ignorer</a><br>
-            </div>
+    <h3>Détails du signalement</h3>
+    {{ a.description }}, {{ a.encodage|date("d/m/Y") }}, {{ a.denonceur.username }} <br>
+    <div style="text-align:right">
+        <a href="{{ path('delete_abus',{'abus_id':a.id}) }}" class="btn btn-primary">Ignorer</a><br>
+    </div>
 
-            <h3>Commentaire</h3>
-            {{ a.commentDenonce.titre }}<br>
-            {{ a.commentDenonce.contenu }}<br>
-            {{ a.commentDenonce.internaute.nom }}<br>
-            <div style="text-align:right">
-                <a href="{{ path('delete_comment',{'commentaire_titre':a.commentDenonce.titre,'abus_id':a.id}) }}"
-                   class="btn btn-primary">Supprimer</a>
-                <a href="{{ path('delete_comment',{'commentaire_titre':a.commentDenonce.titre,'abus_id':a.id,'banni':a.commentDenonce.internaute.id}) }}"
-                   class="btn btn-danger">Supprimer et
-                    Bannir l'auteur</a>
-                <br>
-            </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-    {% endfor %}
-{% endblock %}
+    <h3>Commentaire</h3>
+    {{ a.commentDenonce.titre }}<br>
+    {{ a.commentDenonce.contenu }}<br>
+    {{ a.commentDenonce.internaute.nom }}<br>
+    <div style="text-align:right">
+        <a href="{{ path('delete_comment',{'commentaire_titre':a.commentDenonce.titre,'abus_id':a.id}) }}"
+           class="btn btn-primary">Supprimer</a>
+        <a href="{{ path('delete_comment',{'commentaire_titre':a.commentDenonce.titre,'abus_id':a.id,'banni':a.commentDenonce.internaute.id}) }}"
+           class="btn btn-danger">Supprimer et Bannir l'auteur</a>
+    </div>
+</div>
+{% endfor %}
+
+

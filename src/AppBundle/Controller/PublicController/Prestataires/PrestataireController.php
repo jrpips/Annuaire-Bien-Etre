@@ -100,7 +100,7 @@ class PrestataireController extends Controller
 
         $form = $this->get('form.factory')->create(MoteurDeRechercheType::class);
 
-        return $this->render('Public\Navigation\Children\MoteurDeRecherche\form.moteur.de.recherche.prestataire.html.twig', array(
+        return $this->render('Public\Navigation\Links\MoteurDeRecherche\form.moteur.de.recherche.prestataire.html.twig', array(
             'form' => $form->createView(),
         ));
     }

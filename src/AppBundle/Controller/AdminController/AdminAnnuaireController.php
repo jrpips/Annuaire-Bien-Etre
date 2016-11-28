@@ -8,9 +8,9 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminAnnuaireController extends Controller
 {
     /**
-     * @Route("/admin",name="dashboard")
+     * @Route("/admin/{method}",name="dashboard")
      */
-    public function adminAction()
+    public function adminAction($method='a')
     {
         $countAbus = $this->getDoctrine()->getManager()->getRepository('AppBundle:Abus')->countAbus();
         $countPrestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->countPrestataires();
@@ -20,12 +20,13 @@ class AdminAnnuaireController extends Controller
             'countAbus' => $countAbus,
             'countPrestataires' => $countPrestataires,
             'countInternautes' => $countInternautes,
-            'countBannedUsers' => $countBannedUsers
+            'countBannedUsers' => $countBannedUsers,
+            'method'=>$method
         ));
     }
 
     /**
-     * @Route("/admin/gestion/abus",name="dashboard_abus")
+     * render
      */
     public function gestionAbusAction()
     {
@@ -37,7 +38,7 @@ class AdminAnnuaireController extends Controller
     }
 
     /**
-     * @Route("/admin/gestion/compte/bannis",name="dashboard_banned_account")
+     * render
      */
     public function gestionCompteBannisAction()
     {

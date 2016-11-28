@@ -1,11 +1,12 @@
-{% extends 'Admin/base.admin.html.twig' %}
-{% block body %}
+<div class="page-title">
+    <h2>Liste des utilisateurs bannis</h2>
+</div>
+
 {% for u in users %}
-    {{ u.username }}
+
     {% if u.internaute is not null %}
-        {{ u.internaute.nom }}<br>
+        {{ u.internaute.nom }}<a href=""> Débloquer</a><a href=""> Voir le profil</a><br>
         {% else %}
-        {{ u.prestataire.nom }}<br>
+        {{ u.prestataire.nom }}<a href=""> Débloquer</a><a href=""> Voir le profil</a><br>
         {% endif %}
 {% endfor %}
-{% endblock %}

@@ -1,80 +1,74 @@
 {% extends 'Admin/base.admin.html.twig' %}
 {% block body %}
     <div class="wrapper-admin">
-        <div class="sidebar-admin">
+    <div class="sidebar-admin">
 
-        </div>
-        <div class="sidebar-secondary-admin">
-            <ul>
-                <li>
-                    <a href="{{ path('dashboard_abus') }}">
-                        <span class="icon"><i class="fa fa-exclamation-triangle"></i></span>
-                        <span class="title">Abus signalés <span class="notification">{{ countAbus }}</span></span>
-                        <span class="subtitle">Gestion des abus</span>
-                    </a>
-                </li>
+    </div>
+    <div class="sidebar-secondary-admin">
+        <ul>
+            <li>
+                <a href="{{ path('dashboard',{'method':'gestionAbus'}) }}">
+                    <span class="icon"><i class="fa fa-exclamation-triangle"></i></span>
+                    <span class="title">Abus signalés <span class="notification">{{ countAbus }}</span></span>
+                    <span class="subtitle">Gestion des abus</span>
+                </a>
+            </li>
 
-                <li>
-                    <a href="{{ path('dashboard_banned_account') }}">
+            <li>
+                <a href="{{ path('dashboard',{'method':'gestionCompteBannis'}) }}">
                     <span class="icon"><i class="fa fa-ban"></i></span>
-                        <span class="title">Compte Bannis <span class="notification">{{ countBannedUsers }}</span> </span>
-                        <span class="subtitle">Consulter la liste</span>
-                    </a>
-                </li>
+                    <span class="title">Compte Bannis <span class="notification">{{ countBannedUsers }}</span> </span>
+                    <span class="subtitle">Consulter la liste</span>
+                </a>
+            </li>
 
-                <li >
-                    <a href="">
-                        <span class="icon"><i class="fa fa-pencil"></i></span>
-                        <span class="title">Newsletters</span>
-                        <span class="subtitle">Editer</span>
-                    </a>
-                </li>
+            <li>
+                <a href="">
+                    <span class="icon"><i class="fa fa-file-pdf-o"></i></span>
+                    <span class="title">Newsletters</span>
+                    <span class="subtitle">Editer</span>
+                </a>
+            </li>
 
-                <li>
-                    <a href="">
-                        <span class="icon"><i class="fa fa-handshake"></i></span>
-                        <span class="title">Prestataires <span class="notification">{{ countPrestataires }}</span></span>
-                        <span class="subtitle">Gestion </span>
-                    </a>
-                </li>
+            <li>
+                <a href="">
+                    <span class="icon"><i class="fa fa-cubes"></i></span>
+                    <span class="title">Prestataires <span class="notification">{{ countPrestataires }}</span></span>
+                    <span class="subtitle">Gestion </span>
+                </a>
+            </li>
 
-                <li>
-                    <a href="admin-notifications.html">
-                        <span class="icon"><i class="fa fa-user"></i></span>
-                        <span class="title">Internautes <span class="notification">{{ countInternautes }}</span></span>
-                        <span class="subtitle">Gestion </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="admin-notifications.html">
-                        <span class="icon"><i class="fa fa-envelope"></i></span>
-                        <span class="title">Messages <span class="notification">{{ null }}</span></span>
-                        <span class="subtitle">Consulter </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="admin-notifications.html">
-                        <span class="icon"><i class="fa fa-pushpin"></i></span>
-                        <span class="title">Services <span class="notification">{{ null }}</span></span>
-                        <span class="subtitle">Nouvelles demandes </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="admin-notifications.html">
-                        <span class="icon"><i class="fa fa-commenting-o"></i></span>
-                        <span class="title">Commentaires <span class="notification">{{ null }}</span></span>
-                        <span class="subtitle">Gestion </span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-
-
-
-                            <div>Messages</div>
-
-                            <div>Images</div>
-                            <div>Demande new Service</div>#}
-
+            <li>
+                <a href="admin-notifications.html">
+                    <span class="icon"><i class="fa fa-user"></i></span>
+                    <span class="title">Internautes <span class="notification">{{ countInternautes }}</span></span>
+                    <span class="subtitle">Gestion </span>
+                </a>
+            </li>
+            <li>
+                <a href="admin-notifications.html">
+                    <span class="icon"><i class="fa fa-envelope"></i></span>
+                    <span class="title">Messages <span class="notification">{{ null }}</span></span>
+                    <span class="subtitle">Consulter </span>
+                </a>
+            </li>
+            <li>
+                <a href="admin-notifications.html">
+                    <span class="icon"><i class="fa fa-folder-open-o"></i></span>
+                    <span class="title">Services <span class="notification">{{ null }}</span></span>
+                    <span class="subtitle">Nouvelles demandes </span>
+                </a>
+            </li>
+            <li>
+                <a href="admin-notifications.html">
+                    <span class="icon"><i class="fa fa-commenting-o"></i></span>
+                    <span class="title">Commentaires <span class="notification">{{ null }}</span></span>
+                    <span class="subtitle">Gestion </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    {% if method != 'a' %}
+        {{ render(controller("AppBundle:AdminController/AdminAnnuaire:"~method)) }}
+    {% endif %}
 {% endblock %}
