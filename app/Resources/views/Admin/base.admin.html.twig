@@ -31,14 +31,17 @@
 <div class="page-wrapper">
 
     {{ include("Admin/base.admin.header.html.twig") }}
+    <div class="main">
+        <div class="outer-admin">
+            <div class="wrapper-admin">
+                {% block body %}
+                {% endblock %}
 
-    {% block body %}
-    {% endblock %}
 
-    {{ include("Admin/base.admin.footer.html.twig") }}
-
-</div><!-- /.page-wrapper -->
-
+            </div>
+        </div><!-- /.page-wrapper -->
+    </div>
+</div>
 {% block javascripts %}
 {% endblock %}
 

@@ -53,6 +53,6 @@ class AbusController extends Controller
         $em->remove($abus[0]);
         $em->flush();
 
-        return $this->redirectToRoute('abus');
+        return $this->redirectToRoute('dashboard',array('method'=>'gestionAbus'));
     }
 }

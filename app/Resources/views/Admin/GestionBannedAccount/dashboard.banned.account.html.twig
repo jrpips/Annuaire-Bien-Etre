@@ -1,12 +1,39 @@
-<div class="page-title">
-    <h2>Liste des utilisateurs bannis</h2>
+<div class="content-admin">
+    <div class="content-admin-wrapper">
+        <div class="content-admin-main">
+            <div class="content-admin-main-inner">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="page-title">
+                                <h2>Liste des utilisateurs bannis</h2>
+                            </div>
+                            {% if users is empty %}Il n'y a pas de comptes à débloquer...{% endif %}
+                            {% for u in users %}
+                                <div class="well well-sm">
+                                    {% if u.internaute is not null %}
+                                        <div style="width:19%;display:inline-block;">{{ u.internaute.nom }}</div>
+
+                                        <div style="width:80%;display:inline-block;text-align: right">
+                                            <a href="{{ path('debloquer_account',{'user_id':u.id}) }}"
+                                               class="btn btn-default"> Débloquer</a>
+                                            <a href="" class="btn btn-default"> Voir le profil</a>
+                                        </div>
+                                    {% else %}
+                                        <div style="width:19%;display:inline-block;">{{ u.prestataire.nom }}</div>
+                                        <div style="width:80%;display:inline-block;text-align: right">
+                                            <a href="{{ path('debloquer_account',{'user_id':u.id}) }}"
+                                               class="btn btn-default"> Débloquer</a>
+                                            <a href="" class="btn btn-default"> Voir le profil</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ include("Admin/base.admin.footer.html.twig") }}
+    </div>
 </div>
-
-{% for u in users %}
-
-    {% if u.internaute is not null %}
-        {{ u.internaute.nom }}<a href=""> Débloquer</a><a href=""> Voir le profil</a><br>
-        {% else %}
-        {{ u.prestataire.nom }}<a href=""> Débloquer</a><a href=""> Voir le profil</a><br>
-        {% endif %}
-{% endfor %}

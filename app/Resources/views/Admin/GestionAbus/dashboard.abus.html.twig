@@ -1,30 +1,61 @@
-<div class="page-title">
-    <h2>Gestionnaire des abus</h2>
-</div>
-{% if abus is empty %}
-    <p>Pas d'abus à gérer...</p>
-{% endif %}
-    {% for a in abus %}
+{% extends 'Admin/dashboard.html.twig' %}
+{% block dashboard_body %}
+<div class="content-admin">
+    <div class="content-admin-wrapper">
+        <div class="content-admin-main">
+            <div class="content-admin-main-inner">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
 
-<div style="border:2px dashed gray;margin:15px auto;padding:15px">
 
-    <h3>Détails du signalement</h3>
-    {{ a.description }}, {{ a.encodage|date("d/m/Y") }}, {{ a.denonceur.username }} <br>
-    <div style="text-align:right">
-        <a href="{{ path('delete_abus',{'abus_id':a.id}) }}" class="btn btn-primary">Ignorer</a><br>
+                            <div class="page-title">
+                                <h2>Gestionnaire des abus</h2>
+                            </div>
+                            {% if abus is empty %}
+                                <p>Pas d'abus à gérer...</p>
+                            {% endif %}
+                            {% for a in abus %}
+                                <div class="well well-sm">
+                                    <a data-toggle="collapse"
+                                       data-target="#demo{{ a.id }}">{{ a.commentDenonce.titre |capitalize }}</a>
+                                </div>
+                                <div id="demo{{ a.id }}" class="collapse">
+                                    <div class=" p20 mb50">
+
+
+                                            <h3>Détails du signalement</h3>
+
+                                            {{ a.description }}, {{ a.encodage|date("d/m/Y") }}
+                                            , {{ a.denonceur.username }}
+
+                                            <div style="text-align:right">
+                                                <a href="{{ path('delete_abus',{'abus_id':a.id}) }}"
+                                                   class="btn btn-default">Ignorer</a><br>
+                                            </div>
+
+                                            <h3>Commentaire</h3>
+                                            {{ a.commentDenonce.titre }}<br>
+                                            {{ a.commentDenonce.contenu }}<br>
+                                            {{ a.commentDenonce.internaute.nom }}<br>
+                                            <div style="text-align:right">
+                                                <a href="{{ path('delete_comment',{'commentaire_titre':a.commentDenonce.titre,'abus_id':a.id}) }}"
+                                                   class="btn btn-default">Supprimer</a>
+                                                <a href="{{ path('delete_comment',{'commentaire_titre':a.commentDenonce.titre,'abus_id':a.id,'banni':a.commentDenonce.internaute.id}) }}"
+                                                   class="btn btn-default">Supprimer et Bannir l'auteur</a>
+                                            </div>
+
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ include("Admin/base.admin.footer.html.twig") }}
     </div>
-
-    <h3>Commentaire</h3>
-    {{ a.commentDenonce.titre }}<br>
-    {{ a.commentDenonce.contenu }}<br>
-    {{ a.commentDenonce.internaute.nom }}<br>
-    <div style="text-align:right">
-        <a href="{{ path('delete_comment',{'commentaire_titre':a.commentDenonce.titre,'abus_id':a.id}) }}"
-           class="btn btn-primary">Supprimer</a>
-        <a href="{{ path('delete_comment',{'commentaire_titre':a.commentDenonce.titre,'abus_id':a.id,'banni':a.commentDenonce.internaute.id}) }}"
-           class="btn btn-danger">Supprimer et Bannir l'auteur</a>
-    </div>
 </div>
-{% endfor %}
+{% endblock %}
 
 

@@ -109,6 +109,6 @@ class CommentaireController extends Controller
         $em->remove($commentaire);
         $em->flush();
 
-        return $this->redirectToRoute('dashboard',array('method'=>'abusGestion'));
+        return $this->redirectToRoute('dashboard',array('method'=>'gestionAbus'));
     }
 }

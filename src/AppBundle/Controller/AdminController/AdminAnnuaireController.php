@@ -8,25 +8,59 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminAnnuaireController extends Controller
 {
     /**
-     * @Route("/admin/{method}",name="dashboard")
+     * @Route("/admin",name="dashboard_accueil")
      */
-    public function adminAction($method='a')
+    public function adminAction($method = 'a')
+    {
+        return $this->render('Admin/Accueil/dashboard.accueil.html.twig');
+    }
+
+    /**
+     * Render : retourne le nombre d'Abus signalés --> navigation Dashboard
+     */
+    public function countAbusAction()
     {
         $countAbus = $this->getDoctrine()->getManager()->getRepository('AppBundle:Abus')->countAbus();
-        $countPrestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->countPrestataires();
-        $countInternautes = $this->getDoctrine()->getManager()->getRepository('AppBundle:Internaute')->countInternautes();
-        $countBannedUsers = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->countBannedUsers();
-        return $this->render('Admin/dashboard.html.twig', array(
+        return $this->render('Admin/AdminNavigation/link.count.abus.html.twig', array(
             'countAbus' => $countAbus,
-            'countPrestataires' => $countPrestataires,
-            'countInternautes' => $countInternautes,
-            'countBannedUsers' => $countBannedUsers,
-            'method'=>$method
         ));
     }
 
     /**
-     * render
+     * Render : retourne le nombre de Comptes bannis  --> navigation Dashboard
+     */
+    public function countBannedAccountAction()
+    {
+        $countBannedUsers = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->countBannedUsers();
+        return $this->render('Admin/AdminNavigation/link.banned.account.html.twig', array(
+            'countBannedUsers' => $countBannedUsers,
+        ));
+    }
+
+    /**
+     * Render : retourne le nombre de Prestataires inscrits --> navigation Dashboard
+     */
+    public function countPrestatairesAction()
+    {
+        $countPrestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->countPrestataires();
+        return $this->render('Admin/AdminNavigation/link.count.prestataires.html.twig', array(
+            'countPrestataires' => $countPrestataires,
+        ));
+    }
+
+    /**
+     * Render : retourne le nombre de Internautes inscrits --> navigation Dashboard
+     */
+    public function countInternautesAction()
+    {
+        $countInternautes = $this->getDoctrine()->getManager()->getRepository('AppBundle:Internaute')->countInternautes();
+        return $this->render('Admin/AdminNavigation/link.count.internautes.html.twig', array(
+            'countInternautes' => $countInternautes,
+        ));
+    }
+
+    /**
+     * @Route("/admin/gestion/abus",name="dashboard_abus")
      */
     public function gestionAbusAction()
     {
@@ -38,7 +72,7 @@ class AdminAnnuaireController extends Controller
     }
 
     /**
-     * render
+     * @Route("/admin/gestion/compte/bannis",name="dashboard_banned_account")
      */
     public function gestionCompteBannisAction()
     {
@@ -46,6 +80,22 @@ class AdminAnnuaireController extends Controller
         dump($users);
         return $this->render('Admin/GestionBannedAccount/dashboard.banned.account.html.twig', array(
             'users' => $users
+        ));
+    }
+
+    /**
+     * @Route("/admin/debloquer/utilisateur/{user_id}",name="debloquer_account")
+     */
+    public function debloquerCompteUtilisateurAction($user_id)
+    {
+
+        $user = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->findOneById($user_id);
+        $em = $this->getDoctrine()->getManager();
+        $user->setBanni(false);
+        $em->persist($user);
+        $em->flush();
+        return $this->redirectToRoute('dashboard', array(
+            'method' => 'gestionCompteBannis'
         ));
     }
 }
