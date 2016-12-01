@@ -10,7 +10,7 @@ var GpAnnuaire_Ajax = GpAnnuaire_Ajax || {
             $.ajax({
                 type: param.METHODE,
                 data: param.VALUES,
-                url: Routing.generate(param.ROUTE/*, {values: param.VALUES}*/),
+                url: Routing.generate(param.ROUTE, {'label': param.valueGET}),
                 dataType: param.DATATYPE,
                 beforeSend: param.beforeSEND,
                 success: param.SUCCESS
@@ -38,7 +38,8 @@ var GpAnnuaire_Ajax = GpAnnuaire_Ajax || {
             var param = {};
             param.METHODE = 'POST';
             param.VALUES = values;
-            param.ROUTE = 'add_comment', {'prestataire_nom': $('#nomPrestataire').text()};
+            param.ROUTE = 'add_comment';
+            param.valueGET = $('#nomPrestataire').text();
             param.DATATYPE = 'json';
             param.beforeSEND = null;
             param.SUCCESS = GpAnnuaire_Ajax.successAjaxCommentaire;
@@ -48,11 +49,14 @@ var GpAnnuaire_Ajax = GpAnnuaire_Ajax || {
         'successAjaxCommentaire': function (data) {
 
             if (!data.valide) {
+                console.log(data);
                 $('.errorCommentaire').remove();
                 GpAnnuaire.resetForm('section');
                 for (item in data.errors) {
                     $('#commentaire_' + item).parent().append('<div class="errorCommentaire" >' + data.errors[item][0] + '</div>');
                 }
+            } else {
+                console.log(data);
             }
         },
         /**

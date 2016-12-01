@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Controller\PublicController\CategServices;
 
 use Doctrine\ORM\EntityManager;
@@ -17,12 +18,12 @@ class PrestataireServicesController extends Controller
      */
     public function listeServicesPrestataireAction(Request $request)
     {
-     $nomPrestataire=$this->getUser()->getPrestataire()->getNom();
+        $nomPrestataire=$this->getUser()->getPrestataire()->getNom();
         $listeServicesPrestataire = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')
             ->findServicesByNomPrestataire($nomPrestataire);
 
         $listeServicesAnnuaire = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')
-             ->findAll();
+            ->findAll();
 
         dump($listeServicesPrestataire, $listeServicesAnnuaire);
 

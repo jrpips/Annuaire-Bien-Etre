@@ -35,7 +35,7 @@ class CommentaireController extends Controller
 
         if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {// ne commente pas qui veut...
 
-            $nomPrestataire = $request->get('prestataire_nom');
+            $nomPrestataire = $request->get('label');
             $comment = new Commentaire();
 
             $form = $this->get('form.factory')->create(CommentaireType::class, $comment);
