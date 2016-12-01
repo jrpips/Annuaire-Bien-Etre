@@ -58,7 +58,16 @@ class AdminAnnuaireController extends Controller
             'countInternautes' => $countInternautes,
         ));
     }
-
+    /**
+     * Render : retourne le nombre de Commentaires  --> navigation Dashboard
+     */
+    public function countCommentairesAction()
+    {
+        $countCommentaires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Commentaire')->countCommentaires();
+        return $this->render('Admin/AdminNavigation/link.count.commentaires.html.twig', array(
+            'countCommentaires' => $countCommentaires,
+        ));
+    }
     /**
      * @Route("/admin/gestion/abus",name="dashboard_abus")
      */
@@ -82,7 +91,18 @@ class AdminAnnuaireController extends Controller
             'users' => $users
         ));
     }
-
+    /**
+     * @Route("/admin/gestion/commentaires",name="dashboard_commentaires")
+     */
+    public function gestionCommentairesAction()
+    {
+       /* $users = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->findBannedUsers();
+        dump($users);
+        return $this->render('Admin/GestionCommentaires/dashboard.commentaires.html.twig', array(
+            'users' => $users
+        ));*/
+       return false;
+    }
     /**
      * @Route("/admin/debloquer/utilisateur/{user_id}",name="debloquer_account")
      */

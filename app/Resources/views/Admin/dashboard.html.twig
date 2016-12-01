@@ -44,11 +44,7 @@
                 </a>
 
             <li>
-                <a href="admin-notifications.html">
-                    <span class="icon"><i class="fa fa-commenting-o"></i></span>
-                    <span class="title">Commentaires <span class="notification">{{ null }}</span></span>
-                    <span class="subtitle">Gestion </span>
-                </a>
+                {{ render(controller("AppBundle:AdminController/AdminAnnuaire:countCommentaires")) }}
 
         </ul>
     </div>

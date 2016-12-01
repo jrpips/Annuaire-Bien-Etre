@@ -10,4 +10,13 @@ namespace AppBundle\Repository;
  */
 class CommentaireRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     *  Retourne le nombre de Commentaires publiés
+     */
+    public function countCommentaires() {
+
+        $qb = $this->createQueryBuilder('c')->select('COUNT(c)');
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

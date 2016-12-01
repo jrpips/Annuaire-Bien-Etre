@@ -36,11 +36,24 @@ var GpAnnuaire = GpAnnuaire || {
                 $('.header-wrapper').css('background-color', 'rgba(100, 100, 128,0.4)');
             }//TODO couleur police nav pages != index
         },
+        'successAjaxCommentaire': function (data) {
+
+            if (!data.valide) {
+                console.log(data);
+                $('.errorCommentaire').remove();
+                GpAnnuaire.resetForm('section');
+                for (item in data.errors) {
+                    $('#commentaire_' + item).parent().append('<div class="errorCommentaire" >' + data.errors[item][0] + '</div>');
+                }
+            } else {
+                console.log(data);
+            }
+        },
         /**
          **  view : traitement réponse soumission popup['s'inscrire','se connecter']
          **
          **/
-        subscribe: function (data) {
+        'successAjaxPreSignup': function (data) {
 
             if (data.valide) {
                 console.log(data);
@@ -71,6 +84,46 @@ var GpAnnuaire = GpAnnuaire || {
                 }
             }
         },
+        'beforeSendAjaxAutocompleteAdresse': function () {
+
+            if ($('.loader').length === 0) {
+                $('#' + event_id).parent().append('<div class="loader"><img src="http://127.0.0.1/Annuaire-Bien-Etre/web/image/Loading_icon.gif"/></div>');
+            }
+            $('#' + event_id + ' option').remove();
+        },
+        'successAjaxAutocompleteAdresse':function (data) {
+
+            $('.loader').remove();
+
+            var prefix = event_id;
+            var event_id_length = event_id.length - 10;
+            event_id = prefix.substring(0, event_id_length);
+
+            $('#' + event_id + 'commune option').remove();
+            $.each(data.communes, function (index, value) {
+                $('#' + event_id + 'commune').append($('<option>', {value: value, text: value}));
+            });
+            $('#' + event_id + 'localite').val(data.province);
+
+        },
+        'successAjaxContactPrestataire':function (data) {
+
+            if (data.valide) {
+                $('.errorCommentaire').remove();
+                GpAnnuaire.resetForm('#contactPresta');
+                $('#info').empty().text('Votre message est envoyé!');
+                var back = function () {
+
+                    $('#info').empty().html("Champs obligatoires <span class='required' >*</span>");
+                };
+                setTimeout(back, 5000);
+            } else {
+                $('.errorCommentaire').remove();
+                for (item in data.errors) {
+                    $('#contact_prestataire_' + item).parent().append('<div class="errorCommentaire" >' + data.errors[item][0] + '</div>');
+                }
+            }
+        },
         resetForm: function (element) {// param element --> form.parent()
             tabChildForm = ['input', 'textarea'];
             var form = $(element + ' form');
@@ -85,7 +138,7 @@ var GpAnnuaire = GpAnnuaire || {
          **  view : construction et affichage popup['s'inscrire','se connecter']
          **
          **/
-        'display': function (e) {
+        display: function (e) {
 
             var event = e.currentTarget;
             var eventId = event.id
@@ -132,13 +185,13 @@ var GpAnnuaire = GpAnnuaire || {
          **  view : retrait de la nav popup['s'inscrire','se connecter']
          **
          **/
-        'hide': function () {
+        hide: function () {
 
             $('#modale').hide('slow');
             $('#popup').hide('slow');
         },
 
-        'checkTypeImg': function () {
+        checkTypeImg: function () {
 
             var allowedTypes = ['png', 'jpg', 'jpeg'];//extensions attendues
 
