@@ -76,10 +76,10 @@ class CommentaireController extends Controller
 
                     $em = $this->getDoctrine()->getManager();
                     $em->flush();
-
+                    dump($auteurComment, $prestataireCommented);
                     return new JsonResponse(array(
 
-                        'valide' => false,
+                        'valide' => true,
                     ));
                 }
             }
@@ -88,7 +88,7 @@ class CommentaireController extends Controller
     }
 
     /**
-     * @Route("/admi/supprimer/commentaire/{commentaire_titre}/{abus_id}/{banni}",options={"expose"=true},name="delete_comment")
+     * @Route("/admin/supprimer/commentaire/{commentaire_titre}/{abus_id}/{banni}",options={"expose"=true},name="delete_comment")
      */
     public function deleteCommentAction(Request $request, $commentaire_titre, $abus_id, $banni = null)
     {
@@ -109,6 +109,6 @@ class CommentaireController extends Controller
         $em->remove($commentaire);
         $em->flush();
 
-        return $this->redirectToRoute('dashboard',array('method'=>'gestionAbus'));
+        return $this->redirectToRoute('dashboard_abus');
     }
 }

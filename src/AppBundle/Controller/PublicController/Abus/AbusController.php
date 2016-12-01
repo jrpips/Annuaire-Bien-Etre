@@ -43,16 +43,5 @@ class AbusController extends Controller
             'form' => $form->createView()
         ));
     }
-    /**
-     * @Route("/admi/abus/supprimer{abus_id}",options={"expose"=true},name="delete_abus")
-     */
-    public function deleteAbusAction(Request $request,$abus_id){
-        $abus=$this->getDoctrine()->getManager()->getRepository('AppBundle:Abus')->findById($abus_id);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($abus[0]);
-        $em->flush();
-
-        return $this->redirectToRoute('dashboard',array('method'=>'gestionAbus'));
-    }
 }

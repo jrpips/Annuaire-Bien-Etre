@@ -10,7 +10,7 @@ class AdminAnnuaireController extends Controller
     /**
      * @Route("/admin",name="dashboard_accueil")
      */
-    public function adminAction($method = 'a')
+    public function adminAction()
     {
         return $this->render('Admin/Accueil/dashboard.accueil.html.twig');
     }
@@ -94,8 +94,19 @@ class AdminAnnuaireController extends Controller
         $user->setBanni(false);
         $em->persist($user);
         $em->flush();
-        return $this->redirectToRoute('dashboard', array(
-            'method' => 'gestionCompteBannis'
-        ));
+        return $this->redirectToRoute('dashboard_banned_account');
+    }
+
+    /**
+     * @Route("/admin/abus/supprimer{abus_id}",options={"expose"=true},name="delete_abus")
+     */
+    public function deleteAbusAction(Request $request,$abus_id){
+        $abus=$this->getDoctrine()->getManager()->getRepository('AppBundle:Abus')->findById($abus_id);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($abus[0]);
+        $em->flush();
+
+        return $this->redirectToRoute('dashboard_abus');
     }
 }

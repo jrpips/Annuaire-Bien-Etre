@@ -27,15 +27,15 @@
                                     <i class="fa fa-map-o"></i> {{ prestataire.utilisateur.adresseNumero }}
                                     ,{{ prestataire.utilisateur.adresseRue }}
                                     {{ prestataire.utilisateur.adresseUtilisateur.codePostal }} {{ prestataire.utilisateur.adresseUtilisateur.commune }}
-                                </div><!-- /.detail-banner-address -->
+                                </div>
 
-                                {#///////////////////////////////////////////////////////////////////////////////#}
+
                                 {% set cote = 3.5 %}{# forfait cotation de départ#}
                                 {% for commentaire in prestataire.commentaires %}{# addition des cotes#}
                                     {% set cote=cote+commentaire.cote %}
                                 {% endfor %}
                                 {% set moyenne=cote/((prestataire.commentaires|length)+1|round) %}
-                                {#///////////////////////////////////////////////////////////////////////////////#}
+
 
                                 <div class="detail-banner-rating">
 
@@ -47,7 +47,7 @@
                                         <i class="fa fa-star-o"></i>
                                     {% endfor %}
 
-                                </div><!-- /.detail-banner-rating -->
+                                </div>
                                 {% if is_granted('ROLE_INTERNAUTE') %}
                                     {% if prestataire in app.user.internaute.favoris %}
                                         {% set route,text='remove_favori','Se désabonner' %}
@@ -59,96 +59,141 @@
 
                                             <i class="fa fa-bookmark-o" style="color:burlywood"></i>{{ text }}
 
-                                        </div><!-- /.detail-claim -->
+                                        </div>
                                     </a>
                                     <a href="#coter">
                                         <div class="detail-banner-btn  ">
                                             <i class="fa fa-heart" style="color:red"></i> Coter
-                                        </div><!-- /.detail-claim -->
+                                        </div>
                                     </a>
                                 {% endif %}
-                            </div><!-- /.detail-banner-left -->
-                            <div class="detail-banner-right">
+                            </div>
+                            <div style="background-color:transparent;width:300px;height:150px;"
+                                 class="detail-banner-right">
 
-                                <div class="carte" style="width:400px;height:250px;opacity:0.7;"></div>
+
+                                <div  class="carousel slide" data-ride="carousel">
+                                    <!-- Indicators -->
+
+
+                                    <!-- Wrapper for slides -->
+                                    <div class="carousel-inner" role="listbox">
+                                        <div class="item active">
+                                            <img style="background-color:transparent;width:80px;height:50px;"
+                                                    src="{{ asset('image/admin.png') }}" alt="Flower">
+                                            <div class="carousel-caption" >
+                                                <h3>Flowers</h3>
+                                                <p>Beatiful flowers in Kolymbari, Crete.</p>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <img
+                                                 src="{{ asset('image/gp_mini_logo.png') }}" alt="Flower">
+                                            <div class="carousel-caption" >
+                                                <h3>Flowers</h3>
+                                                <p>Beatiful flowers in Kolymbari, Crete.</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
 
                             </div>
-                        </div><!-- /.container -->
-                    </div><!-- /.detail-banner -->
+                        </div>
+                    </div>
 
                 </div>
 
                 <div class="container" jstcache="0">
                     <div class="row detail-content" jstcache="0">
                         <div class="col-sm-7" jstcache="0">
-
+                            {# google map #}
                             <h2>Nous sommes ici</h2>
                             <div class="background-white p20">
 
                                 <div id="carte" style="height:250px"></div>
 
                             </div>
-
+                            {# end #}
+                            {# prestataire video #}
                             <h2>Video</h2>
                             <div class="detail-video">
                                 <iframe src="https://player.vimeo.com/video/36911719?color=009f8b&amp;byline=0&amp;portrait=0"
                                         width="653" height="366" frameborder="0" webkitallowfullscreen=""
                                         mozallowfullscreen="" allowfullscreen=""></iframe>
-                            </div><!-- /.detail-video -->
-
+                            </div>
+                            {# end #}
+                            {# commentaires des internautes#}
                             <h2 id="reviews">Commentaires et avis</h2>
                             <div class="reviews">
-                                {% for commentaire in prestataire.commentaires %}
-                                    <div class="review">
-                                        <div class="review-image">
-                                            <img src="{{ asset(commentaire.internaute.image.url) }}" alt="">
-                                        </div><!-- /.review-image -->
+                                {% if prestataire.commentaires is not empty %}
+                                    {% for commentaire in prestataire.commentaires %}
+                                        <div class="review">
+                                            <div class="review-image">
+                                                <img src="{{ asset(commentaire.internaute.image.url) }}" alt="">
+                                            </div>
 
-                                        <div class="review-inner">
+                                            <div class="review-inner">
 
-                                            <div class="review-title">
-                                                <h2>{{ commentaire.internaute.nom }}</h2>
+                                                <div class="review-title">
+                                                    <h2>{{ commentaire.internaute.nom }}</h2>
 
-                                                <span class="report">
+                                                    <span class="report">
                                              <span class="separator">•</span>
                                                 <i class="fa fa-flag" title="" data-toggle="tooltip"
                                                    data-placement="top" data-original-title="Report"></i>
                                             </span>
+                                                    {# rating prestataire#}
+                                                    <div class="review-overall-rating">
 
-                                                <div class="review-overall-rating">{# cote individuelle #}
-                                                    <span class="overall-rating-title">Cotation:</span>
-                                                    {% for i in 1..commentaire.cote %}
-                                                        <i class="fa fa-star"></i>
-                                                    {% endfor %}
-                                                    {% set starFinal=(5-commentaire.cote)|round %}
-                                                    {% for i in 1..starFinal %}
-                                                        <i class="fa fa-star-o"></i>
-                                                    {% endfor %}
-                                                </div><!-- /.review-rating -->
-                                            </div><!-- /.review-title -->
+                                                        <span class="overall-rating-title">Cotation:</span>
+                                                        {% for i in 1..commentaire.cote %}
+                                                            <i class="fa fa-star"></i>
+                                                        {% endfor %}
+                                                        {% set starFinal=(5-commentaire.cote)|round %}
+                                                        {% for i in 1..starFinal %}
+                                                            <i class="fa fa-star-o"></i>
+                                                        {% endfor %}
+                                                    </div>
+                                                    {# end #}
+                                                </div>
 
-                                            <div class="review-content-wrapper">
-                                                <div class="review-content">
-                                                    <div class="review-pros">
-                                                        <p>{{ commentaire.titre }}</p>
-                                                        <p>{{ commentaire.contenu }}</p>
-                                                    </div><!-- /.pros -->
-                                                    {# <div class="review-cons">
-                                                         <p>Duis et magna vel est tempus vehicula vitae sit amet enim. Sed
-                                                             vitae ligula congue.</p>
-                                                     </div><!-- /.cons -->#}
-                                                </div><!-- /.review-content -->
+                                                <div class="review-content-wrapper">
+                                                    <div class="review-content">
+                                                        <div class="review-pros">
+                                                            <p>{{ commentaire.titre }}</p>
+                                                            <p>{{ commentaire.contenu }}</p>
+                                                        </div>
+                                                        {# <div class="review-cons">
+                                                             <p>Duis et magna vel est tempus vehicula vitae sit amet enim. Sed
+                                                                 vitae ligula congue.</p>
+                                                         </div><!-- /.cons -->#}
+                                                    </div>
 
                                                     <div class="review-rating">
-                                                        <a class="btn btn-warning" href="{{ path('signaler_abus',{'commentaire_id':commentaire.id,'prestataire_nom':prestataire.nom}) }}">Signaler un abus</a>
-                                                    </div><!-- /.review-rating -->
+                                                        <a class="btn btn-warning"
+                                                           href="{{ path('signaler_abus',{'commentaire_id':commentaire.id,'prestataire_nom':prestataire.nom}) }}">Signaler
+                                                            un abus</a>
+                                                    </div>
 
-                                            </div><!-- /.review-content-wrapper -->
-                                        </div><!-- /.review-inner -->
-                                    </div><!-- /.review -->
-                                {% endfor %}
-                            </div><!-- /.reviews -->
-                        </div><!-- /.col-sm-7 -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="background-white p20">
+
+                                        Aucuns commentaires...
+
+                                    </div>
+                                {% endif %}
+                                {# end #}
+                            </div>
+
+                        </div>
 
                         <div class="col-sm-5">
 
@@ -169,7 +214,7 @@
                                         <div class="btn btn-primary btn-book"><i class="fa fa-shopping-cart"></i> Book
                                             Now
                                         </div>
-                                    </div><!-- /.col-sm-4 -->
+                                    </div>
                                     <div class="col-sm-4">
                                         <div class="btn btn-secondary btn-share"><i class="fa fa-share-square-o"></i>
                                             Share
@@ -183,21 +228,21 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                    </div><!-- /.col-sm-4 -->
+                                    </div>
                                     <div class="col-sm-4">
                                         <div class="btn btn-secondary btn-claim"><i class="fa fa-hand-peace-o"></i>
                                             Claim
                                         </div>
-                                    </div><!-- /.col-sm-4 -->
-                                </div><!-- /.detail-actions -->
+                                    </div>
+                                </div>
                             </div>
-
+                            {# section: A propos de [nom prestataire] #}
                             <h2>A propos de <span class="text-secondary">{{ prestataire.nom }}</span></h2>
-                            <div class="background-white p20">
+                            <section class="background-white p20">
                                 <div class="detail-vcard">
                                     <div class="detail-logo">
                                         <img style="width:100px" src="{{ asset(imgServicePrestataire) }}">
-                                    </div><!-- /.detail-logo -->
+                                    </div>
 
                                     <div class="detail-contact">
                                         <div class="detail-contact-email">
@@ -217,8 +262,8 @@
                                             ,{{ prestataire.utilisateur.adresseRue }}
                                             {{ prestataire.utilisateur.adresseUtilisateur.codePostal }} {{ prestataire.utilisateur.adresseUtilisateur.commune }}
                                         </div>
-                                    </div><!-- /.detail-contact -->
-                                </div><!-- /.detail-vcard -->
+                                    </div>
+                                </div>
 
                                 {% for service in prestataire.categServices %}
                                     <div><span class="text-secondary">{{ service.nom }}</span></div>
@@ -235,42 +280,56 @@
                                         <a class="follow-btn twitter" href="#"><i class="fa fa-twitter"></i></a>
                                         <a class="follow-btn tripadvisor" href="#"><i class="fa fa-tripadvisor"></i></a>
                                         <a class="follow-btn google-plus" href="#"><i class="fa fa-google-plus"></i></a>
-                                    </div><!-- /.follow-wrapper -->
-                                </div><!-- /.detail-follow -->
-                            </div>
-
-                            <div class="widget">
+                                    </div>
+                                </div>
+                            </section>
+                            {# end #}
+                            {# section: Stages proposés #}
+                            <section class="widget">
                                 <h2 class="widgettitle">Stages proposés</h2>
 
                                 <div class="p20 background-white">
-                                    <ul>
-                                        {% for stage in prestataire.stages %}
-                                        <li> {{ stage.nom }}<br>{{ stage.description }}
+                                    <ul class="detail-amenities">
+                                        {% if prestataire.stages is not empty %}
+                                            {% for stage in prestataire.stages %}
+                                                <li class="yes"> {{ stage.nom }}<br>{{ stage.description }}
                                             {% endfor %}
+                                        {% else %}
+                                            <li class="no">Pas de stage organisé actuellement.</li>
+                                        {% endif %}
                                     </ul>
                                 </div>
-                            </div><!-- /.widget -->
-
-                            <div class="widget">
+                            </section>
+                            {# end
+                            {# section: Promotions #}
+                            <section class="widget">
                                 <h2 class="widgettitle">Promotions</h2>
 
                                 <div class="p20 background-white">
-                                    <ul>
-                                        {% for promo in prestataire.promotions %}
-                                        <li> {{ promo.nom }}
-                                            <br>{{ promo.description }}
-                                            <br>Service :
-                                            <a href="{{ path('details_service',{'service_nom':promo.categService}) }}">
-                                                {{ promo.categService }}
-                                            </a>
+                                    <ul class="detail-amenities">
+                                        {% if prestataire.promotions is not empty %}
+                                            {% for promo in prestataire.promotions %}
+                                                <div class="well">
+                                                    <li class="yes"> {{ promo.nom }}
+                                                        <br>{{ promo.description }}
+                                                        <br>Service :
+                                                        <a href="{{ path('details_service',{'service_nom':promo.categService}) }}">
+                                                            {{ promo.categService }}
+                                                        </a>
+                                                </div>
                                             {% endfor %}
+
+                                        {% else %}
+                                            <li class="no">Pas de promotions actuellement.</li>
+                                        {% endif %}
                                     </ul>
                                 </div>
-                            </div><!-- /.widget -->
-
+                            </section>
+                            {# end #}
+                            {# section: Services#}
                             <h2>Services</h2>
 
-                            <div class="background-white p20">
+                            <section class="background-white p20">
                                 <ul class="detail-amenities">
                                     {% for service in categServices %}
 
@@ -280,13 +339,14 @@
                                         {% endif %}
                                     {% endfor %}
                                 </ul>
-                            </div><!-- /.detail-amenities -->
-
+                            </section>
+                            {# end #}
+                            {# form contact prestataire #}
                             <h2 id="contact">Contacter {{ prestataire.nom }}</h2>
 
                             {{ render(controller("AppBundle:PublicController/Prestataires/Prestataire:getFormContactPrestataire")) }}
-
-                        </div><!-- /.col-sm-5 -->
+                            {# end #}
+                        </div>
                         <div style="display:none">
                             <div id="nomPrestataire">{{ prestataire.nom }}</div>
                             <div id="numero">{{ prestataire.utilisateur.adresseNumero }}</div>
@@ -294,16 +354,18 @@
                             <div id="cp">{{ prestataire.utilisateur.adresseUtilisateur.codePostal }}</div>
                             <div id="commune">{{ prestataire.utilisateur.adresseUtilisateur.commune }}</div>
                         </div>
+                        {# form commenter prestataire#}
                         {% if is_granted('ROLE_INTERNAUTE') %}
                             <div class="col-sm-12" id="coter">
                                 <h2>Soumettre un commentaire</h2>
                                 {{ render(controller("AppBundle:PublicController/Commentaires/Commentaire:constructFormCommentaire")) }}
-                            </div><!-- /.col-* -->
+                            </div><
                         {% endif %}
-                    </div><!-- /.row -->
-                </div><!-- /.container -->
-            </div><!-- /.content -->
-        </div><!-- /.main-inner -->
+                        {# end #}
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
     <script src="http://maps.google.com/maps/api/js?Key=AIzaSyCm9IyG4uLCEBqmBl4bCmlHhUvCUB3Xtks&amp;sensor=false;"></script>
