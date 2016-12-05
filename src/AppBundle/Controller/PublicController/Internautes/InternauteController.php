@@ -17,50 +17,55 @@ use AppBundle\Form\UtilisateurType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-class InternauteController extends Controller {
+class InternauteController extends Controller
+{
 
     /**
      * Call by views/Public/Navigation/nav.parent.menu
      */
-    public function getChildNavPreSignupElementsAction() {
+    public function getChildNavPreSignupElementsAction()
+    {
 
         $new_user = new SignUp();
         $form = $this->get('form.factory')->create(SignUpType::class, $new_user);
         // TODO prestataires favoris
         return $this->render('Public/Internautes/Register/form.pre.subscribe.html.twig', array(
-                    'form' => $form->createView(),
+            'form' => $form->createView(),
         ));
     }
 
     /**
      * Get the favorites prestataires on success authenticated internaute (page home)
      */
-    public function getPrestatairesFavorisAction() {
+    public function getPrestatairesFavorisAction()
+    {
         if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {
             $myFavoris = $this
-                    ->getDoctrine()
-                    ->getManager()
-                    ->getRepository('AppBundle:Internaute')
-                    ->getPrestatairesFavoris($this->getUser()->getInternaute()->getId());//récupération Id internaute
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('AppBundle:Internaute')
+                ->getPrestatairesFavoris($this->getUser()->getInternaute()->getId());//récupération Id internaute
         }
         $myFavoris = $myFavoris[0];
         dump($myFavoris);
         return $this->render('Public/Internautes/Favoris/display.prestataires.favoris.html.twig', array(
-                    'favoris' => $myFavoris
+            'favoris' => $myFavoris
         ));
     }
 
     /**
      * @Route("/gestion/favoris/liste",options={"expose"=true},name="display_favoris")
      */
-    public function displayFavorisAction() {
+    public function displayFavorisAction()
+    {
         return $this->render('Public/Internautes/EditProfile/display.liste.favoris.html.twig');
     }
 
     /**
      * @Route("/gestion/favoris/add/{nomPrestataire}",options={"expose"=true},name="add_favori")
      */
-    public function addFavorisAction(Request $request, $nomPrestataire) {
+    public function addFavorisAction(Request $request, $nomPrestataire)
+    {
         if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {
 
             $em = $this->getDoctrine()->getManager();
@@ -78,14 +83,15 @@ class InternauteController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
         }
-            return $this->redirectToRoute('home');
+        return $this->redirectToRoute('home');
 
     }
 
     /**
      * @Route("/gestion/favoris/remove/{nomPrestataire}/{from}",options={"expose"=true},name="remove_favori")
      */
-    public function removeFavorisAction(Request $request, $nomPrestataire = null,$from='home') {
+    public function removeFavorisAction(Request $request, $nomPrestataire = null, $from = 'home')
+    {
         if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {
 
             $em = $this->getDoctrine()->getManager();
@@ -105,12 +111,13 @@ class InternauteController extends Controller {
         }
 
         return $this->redirectToRoute($from);
-   }
+    }
 
     /**
      * @Route("/inscription/internaute/pre-inscription",options={"expose"=true},name="signup")
      */
-    public function preSignupInternauteAction(Request $request) {
+    public function preSignupInternauteAction(Request $request)
+    {
 
         $new_user = new SignUp();
 
@@ -144,15 +151,16 @@ class InternauteController extends Controller {
             }
         }
         return $this->render('Public/Internautes/Register/form.pre.subscribe.html.twig', array(
-                    'form' => $form->createView(),
-                    'user' => $new_user
+            'form' => $form->createView(),
+            'user' => $new_user
         ));
     }
 
     /**
      * @Route("/inscription/internaute/finalisation/{id}",options={"expose"=true},name="signup-final")
      */
-    public function signupInternauteStepFinalAction(Request $request, $id = null) {
+    public function signupInternauteStepFinalAction(Request $request, $id = null)
+    {
 
         if ($id) {
             $first_step_signup = $this->getDoctrine()->getManager()->getRepository('AppBundle:SignUp')->find($id);
@@ -180,16 +188,17 @@ class InternauteController extends Controller {
             }
         }
         return $this->render('Public/Internautes/Register/form.signup.internaute.html.twig', array(
-                    'form' => $form->createView(),
-                    'user' => $internaute,
-                    'signup' => $first_step_signup
+            'form' => $form->createView(),
+            'user' => $internaute,
+            'signup' => $first_step_signup
         ));
     }
 
     /**
      * @Route("/internautes/informations",name="show_internaute")
      */
-    public function displayInfosInternauteAction() {
+    public function displayInfosInternauteAction()
+    {
         dump($this->getUser());
         return $this->render('Public/Internautes/EditProfile/display.informations.internaute.html.twig');
     }
@@ -197,16 +206,17 @@ class InternauteController extends Controller {
     /**
      * @Route("/internautes/mise-a-jour/{id}",options={"expose"=true},name="update_internaute")
      */
-    public function updateIdentityInternauteAction(Request $request, $id = null) {
+    public function updateIdentityInternauteAction(Request $request, $id = null)
+    {
 
         $internaute = $this->getUser();
 
         $form = $this
-                ->get('form.factory')
-                ->create(UtilisateurType::class, $internaute)
-                ->add('internaute', InternauteType::class)
+            ->get('form.factory')
+            ->create(UtilisateurType::class, $internaute)
+            ->add('internaute', InternauteType::class)
 //                ->add('image', ImageType::class)
-                ->remove('password', PasswordType::class, array('required' => false));
+            ->remove('password', PasswordType::class, array('required' => false));
 
         $form->handleRequest($request);
 
@@ -223,35 +233,38 @@ class InternauteController extends Controller {
         }
 
         return $this->render('Public/Internautes/EditProfile/form.identity.internaute.html.twig', array(
-                    'form' => $form->createView(),
-                    'internaute' => $internaute,
+            'form' => $form->createView(),
+            'internaute' => $internaute,
         ));
     }
 
     /**
      * @Route("/internautes/photo/{id}",options={"expose"=true},name="update_photo_internaute")
      */
-    public function updateImageInternauteAction(Request $request, $id = null) {
+    public function updateImageInternauteAction(Request $request, $id = null)
+    {
 
-        $u = $this->getUser()->getInternaute()->getImage()->getUrl();
-        $tabImage = $this->getDoctrine()->getManager()->getRepository('AppBundle:Image')->findByUrl($u);
-        $image = $tabImage[0];
+        $image = $this->getDoctrine()->getManager()->getRepository('AppBundle:Image')->findOneByUrl($this->getUser()->getInternaute()->getImage()->getUrl());
 
         $form = $this
-                ->get('form.factory')
-                ->create(ImageType::class, $image)
-                ->remove('name', TextType::class, array('required' => false))
-                ->add('Envoyer', SubmitType::class, array('attr' => array('class' => 'btn btn-default pull-right')));
+            ->get('form.factory')
+            ->create(ImageType::class, $image)
+            ->remove('name', TextType::class, array('required' => false))
+            ->add('Envoyer', SubmitType::class, array('attr' => array('class' => 'btn btn-default pull-right')));
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
 //           $image->setFile(unserialize($image->getFile()));
-//            unlink(__DIR__ .'/../../../../../web/image/userUploads/'.$image->getUrl());
+
             if ($form->isValid()) {
 
+               /* if (file_exists(__DIR__ . '/../../../../../web/image/userUploads/' . $image->getUrl())) {
+                    unlink(__DIR__ . '/../../../../../web/image/userUploads/' . $image->getUrl());
+                }*/
+                //$image->preUpload();
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($image);
+
                 //$em->persist($user);
                 $em->flush();
 
@@ -260,8 +273,8 @@ class InternauteController extends Controller {
         }
 
         return $this->render('Public/Internautes/EditProfile/form.edit.photo.internaute.html.twig', array(
-                    'form' => $form->createView(),
-                    'image' => $image,
+            'form' => $form->createView(),
+            'image' => $image,
         ));
     }
 

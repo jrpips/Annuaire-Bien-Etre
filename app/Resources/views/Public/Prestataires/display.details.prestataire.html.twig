@@ -39,10 +39,10 @@
 
                                 <div class="detail-banner-rating">
 
-                                    {% for i in 1..moyenne|round %}
+                                    {% for i in 1..moyenne|round(0,'floor') %}
                                         <i class="fa fa-star"></i>
                                     {% endfor %}
-                                    {% set emptyStar=(5-(moyenne|round)) %}
+                                    {% set emptyStar=(5-(moyenne|round(0,'ceil'))) %}
                                     {% for i in 1..emptyStar %}
                                         <i class="fa fa-star-o"></i>
                                     {% endfor %}

@@ -79,3 +79,4 @@ swiftmailer:
   password:  b80c6119ee1b91
   auth_mode: cram-md5
   port: 2525
+
