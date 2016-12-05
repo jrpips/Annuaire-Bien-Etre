@@ -14,32 +14,21 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class CategService {
 
+
+    /**************
+     *
+     * ATTRIBUTS
+     *
+     **************/
+
     /**
-     * @var int
+     * Catégorie de service : id
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Prestataire", inversedBy="categServices")
-     * @ORM\JoinTable(name="prestataire_for_categorie")
-     */
-    private $prestataires;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $image;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Promotion",cascade={"persist"},mappedBy="categService")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $promotions;
 
     /**
      * @var string
@@ -69,210 +58,151 @@ class CategService {
     private $description;
 
     /**
-     * @var bool
      *
      * @ORM\Column(name="enAvant", type="boolean")
      */
     private $enAvant;
 
     /**
-     * @var bool
      *
      * @ORM\Column(name="valide", type="boolean")
      */
     private $valide;
 
-    /**
-     * Get id
+
+
+    /**************
      *
-     * @return int
+     * FOREIGN KEYS
+     *
+     **************/
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Prestataire", inversedBy="categServices")
+     * @ORM\JoinTable(name="prestataire_for_categorie")
      */
+    private $prestataires;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $image;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Promotion",cascade={"persist"},mappedBy="categService")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $promotions;
+
+
+    /**************
+     *
+     * METHODES
+     *
+     **************/
+
+    //getter id
     public function getId() {
         return $this->id;
     }
 
-    /**
-     * Set nom
-     *
-     * @param string $nom
-     *
-     * @return CategService
-     */
+   //setter nom
     public function setNom($nom) {
         $this->nom = $nom;
-
         return $this;
     }
 
-    /**
-     * Get nom
-     *
-     * @return string
-     */
+    //getter nom
     public function getNom() {
         return $this->nom;
     }
 
+    //to display nom du service
     public function __toString() {
         return $this->nom . '';
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return CategService
-     */
+    //setter description
     public function setDescription($description) {
         $this->description = $description;
-
         return $this;
     }
 
-    /**
-     * Get description
-     *
-     * @return string
-     */
+    //getter description
     public function getDescription() {
         return $this->description;
     }
 
-    /**
-     * Set enAvant
-     *
-     * @param boolean $enAvant
-     *
-     * @return CategService
-     */
+    //setter en avant
     public function setEnAvant($enAvant) {
         $this->enAvant = $enAvant;
-
         return $this;
     }
 
-    /**
-     * Get enAvant
-     *
-     * @return bool
-     */
+    //getter en avant
     public function getEnAvant() {
         return $this->enAvant;
     }
 
-    /**
-     * Set valide
-     *
-     * @param boolean $valide
-     *
-     * @return CategService
-     */
+    //setter valide
     public function setValide($valide) {
         $this->valide = $valide;
-
         return $this;
     }
 
-    /**
-     * Get valide
-     *
-     * @return bool
-     */
+   //getter valide
     public function getValide() {
         return $this->valide;
     }
 
-    /**
-     * Set image
-     *
-     * @param \AppBundle\Entity\Image $image
-     *
-     * @return CategService
-     */
+   //setter image
     public function setImage(\AppBundle\Entity\Image $image) {
         $this->image = $image;
 
         return $this;
     }
 
-    /**
-     * Get image
-     *
-     * @return \AppBundle\Entity\Image
-     */
+    //getter image
     public function getImage() {
         return $this->image;
     }
 
-    /**
-     * Constructor
-     */
+    //constructeur
     public function __construct() {
         $this->prestataires = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /**
-     * Add prestataire
-     *
-     * @param \AppBundle\Entity\Prestataire $prestataire
-     *
-     * @return CategService
-     */
+   //add fk prestataire
     public function addPrestataire(\AppBundle\Entity\Prestataire $prestataire) {
         $this->prestataires[] = $prestataire;
-
         return $this;
     }
 
-    /**
-     * Remove prestataire
-     *
-     * @param \AppBundle\Entity\Prestataire $prestataire
-     */
+   //remove fk prestataire
     public function removePrestataire(\AppBundle\Entity\Prestataire $prestataire) {
         $this->prestataires->removeElement($prestataire);
     }
 
-    /**
-     * Get prestataires
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
+   //getter fk prestataires
     public function getPrestataires() {
         return $this->prestataires;
     }
 
-
-    /**
-     * Add promotion
-     *
-     * @param \AppBundle\Entity\Promotion $promotion
-     *
-     * @return CategService
-     */
+    //add fk promotion
     public function addPromotion(\AppBundle\Entity\Promotion $promotion)
     {
         $this->promotions[] = $promotion;
-
         return $this;
     }
 
-    /**
-     * Remove promotion
-     *
-     * @param \AppBundle\Entity\Promotion $promotion
-     */
+    //remove fk promotion
     public function removePromotion(\AppBundle\Entity\Promotion $promotion)
     {
         $this->promotions->removeElement($promotion);
     }
 
-    /**
-     * Get promotions
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
+    //getter fk promotions
     public function getPromotions()
     {
         return $this->promotions;
