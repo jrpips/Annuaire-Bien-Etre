@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
   src/AppBundle/Controller/PublicController/Newsletters/NewsletterController.php
 
@@ -30,7 +30,7 @@ class NewslettersController extends Controller
     public function newsletterSubscribeAction(Request $request, $id_internaute)
     {
         //$this->get('knp_snappy.pdf')->generate('http://127.0.0.1/Annuaire-Bien-Etre/web/app_dev.php/',__DIR__. '/pdf/file.pdf');
-       // return $this->redirectToRoute('home');
+        // return $this->redirectToRoute('home');
         /*$pageUrl = $this->generateUrl('home', array(), true); // use absolute path!
 
         return new Response(
@@ -43,20 +43,31 @@ class NewslettersController extends Controller
         );*/
         $snappy = new Pdf('C:\"Program Files"\EasyPHP-Devserver-16.1\eds-www\Annuaire-Bien-Etre\vendor\wemersonjanuario\wkhtmltopdf-windows\bin\32bit\wkhtmltopdf.exe');
 
-     /*   header('Content-Type: application/pdf');
-        header('Content-Disposition: attachment; filename="file2.pdf"');
-        $snappy->getOutput('https://www.github.com');*/
-        $snappy->generateFromHtml('<a href="https://www.google.com">Bill</a>', 'C:\Users\Chris\Desktop\bill-1243.pdf');
+        /*   header('Content-Type: application/pdf');
+           header('Content-Disposition: attachment; filename="file2.pdf"');
+           $snappy->getOutput('https://www.github.com');*/
+        $snappy->generateFromHtml('<a style="color:red" href="https://www.google.com">Bill</a>', 'C:\Users\Chris\Desktop\bill-12oo3.pdf');
         return new Response('ok');
     }
+
+    /**
+     * @Route("/generatePdf", name="newslettersGeneratePdf")
+     */
+    public function newsletterGeneratePdfAction($content_newsletter)
+    {
+
+       // $pageUrl = $this->generateUrl('home', array(), true); // use absolute path!
+        $this->get('knp_snappy.pdf')->generate('http://127.0.0.1/Annuaire-Bien-Etre/web/app_dev.php/', 'C:\Users\Chris\Desktop\filede.pdf');
+        return new Response('ok');
+           // $this->get('knp_snappy.pdf')->getOutput($pageUrl),
+           // 200,
+           // array(
+          //      'Content-Type' => 'application/pdf',
+         //       'Content-Disposition' => 'attachment; filename="file.pdf"'
+          //  )
+       // );
+    }
 }
-//    /**
-//     * @Route("/newsletters/generatePdf/{content_newsletter}", name="newslettersGeneratePdf")
-//     */
-//    public function newsletterGeneratePdfAction($content_newsletter) {
-//
-//        return false;
-//    }
 //
 //    /**
 //     * @Route("/newsletters/upload/{id_newsletter}", name="newslettersUpload")

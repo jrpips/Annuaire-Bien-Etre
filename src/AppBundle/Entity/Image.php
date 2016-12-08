@@ -54,7 +54,7 @@ class Image {
 
     public function getUploadRootDir() {
         // On retourne le chemin relatif vers l'image pour notre code PHP
-        return __DIR__ . '/../../../../web/image/userUploads';
+        return __DIR__ . '/../../../web/image/userUploads';
     }
 
     public function getAbsolutePath() {
