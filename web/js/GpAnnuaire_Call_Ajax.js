@@ -78,7 +78,7 @@ var GpAnnuaire_Call_Ajax = GpAnnuaire_Call_Ajax || {
 
             if (data.valide) {
                 $('.errorCommentaire').remove();
-                GpAnnuaire.resetForm('#contactPresta');
+                GpAnnuaire.resetForm('#contactPrestataire');
                 $('#info').empty().text('Votre message est envoyé!');
                 var back = function () {
                     $('#info').empty().html("Champs obligatoires <span class='required' >*</span>");
@@ -87,7 +87,27 @@ var GpAnnuaire_Call_Ajax = GpAnnuaire_Call_Ajax || {
             } else {
                 $('.errorCommentaire').remove();
                 for (item in data.errors) {
-                    $('#contact_prestataire_' + item).parent().append('<div class="errorCommentaire" >' + data.errors[item][0] + '</div>');
+                    $('#contact_' + item).parent().append('<div class="errorCommentaire" >' + data.errors[item][0] + '</div>');
+                }
+            }
+        },
+        /**
+         *  call by ajaxContactPrestataire
+         */
+        'successAjaxContact': function (data) {
+
+            if (data.valide) {
+                $('.errorCommentaire').remove();
+                GpAnnuaire.resetForm('#contact');
+                $('#info').empty().text('Votre message est envoyé!');
+                var back = function () {
+                    $('#info').empty().html("Champs obligatoires <span class='required' >*</span>");
+                };
+                setTimeout(back, 5000);
+            } else {
+                $('.errorCommentaire').remove();
+                for (item in data.errors) {
+                    $('#contact_' + item).parent().append('<div class="errorCommentaire" >' + data.errors[item][0] + '</div>');
                 }
             }
         }

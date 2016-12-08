@@ -4,6 +4,8 @@ namespace AppBundle\Controller\PublicController;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Form\ContactType;
 
 class IndexController extends Controller
 {
@@ -64,9 +66,40 @@ class IndexController extends Controller
     /**
      * @Route("/contact",name="contact")
      */
-    public function contactAction()
+    public function contactAction(Request $request)
     {
 
+        $form = $this->get('form.factory')->create(ContactType::class);
+
+        $form->handleRequest($request);
+        //ajax
+        if ($request->getMethod() == 'POST' && $request->isXmlHttpRequest()) {
+
+            if (!$form->isValid()) {
+
+                $errors = $this->get('app.geterrormessages')->getErrorMessages($form);
+
+                return new JsonResponse(array(
+                    'errors' => $errors,
+                    'valide' => false,
+                ));
+            }
+            if ($form->isValid()) {
+
+                $values = $request->request->all();
+
+                $this->get('app.mailerbuilder')->contactBienEtre($values);
+
+                return new JsonResponse(array(
+                    'valide' => true,
+                    'values' => $values,
+
+                ));
+            }
+        }
+        return $this->render('Public/Contact/display.contact.html.twig',array(
+            'form'=>$form->createView()
+        ));
     }
 
 }

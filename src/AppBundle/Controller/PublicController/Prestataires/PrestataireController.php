@@ -28,7 +28,7 @@ use AppBundle\Entity\CategService;
 use AppBundle\Entity\Utilisateur;
 use AppBundle\Entity\Commentaire;
 use AppBundle\Form\PrestataireType;
-use AppBundle\Form\ContactPrestataireType;
+use AppBundle\Form\ContactType;
 use AppBundle\Form\MoteurDeRechercheType;
 
 class PrestataireController extends Controller
@@ -142,9 +142,9 @@ class PrestataireController extends Controller
      *  render formulaire contact Prestataire
      */
     public
-    function getFormContactPrestataireAction()
+    function getFormContactAction()
     {
-        $form = $this->get('form.factory')->create(ContactPrestataireType::class);
+        $form = $this->get('form.factory')->create(ContactType::class);
         return $this->render('Public/Prestataires/form.contact.prestataire.html.twig', array(
             'form' => $form->createView(),
         ));
@@ -166,7 +166,7 @@ class PrestataireController extends Controller
     function sendMailToPrestataireAction(Request $request)
     {
         $emailPrestataire = $request->get('prestataire_email');
-        $form = $this->get('form.factory')->create(ContactPrestataireType::class);
+        $form = $this->get('form.factory')->create(ContactType::class);
 
         $form->handleRequest($request);
         //ajax

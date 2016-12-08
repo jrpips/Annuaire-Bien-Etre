@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}
+    Contact  - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="main">
+        <div class="main-inner">
+            <div class="container">
+                <div class="content">
+
+                    <div class="document-title">
+                        <h1>Contact v2</h1>
+
+                        <ul class="breadcrumb">
+                            <li><a href="#">Superlist</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div><!-- /.document-title -->
+
+
+
+                    <p>
+                        Donec congue egestas nisi id varius. Curabitur ullamcorper consectetur risus, eget dapibus lacus. Maecenas sit amet dui dictum, tincidunt ante vel, semper purus. In hac habitasse platea dictumst. Vivamus hendrerit sem a rutrum ornare. Donec vehicula auctor eros. Etiam et enim tellus.
+                    </p>
+
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>Adresse</h3>
+
+                                    <p>
+                                    <div id="nomPrestataire">Galet s.a.</div>
+                                    <span id="numero">13</span>,
+                                    <span id="rue">rue du Commerce</span><br>
+                                    <span id="cp">1000</span>
+                                    <span id="commune">Bruxelles</span>
+
+                                    </p>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <h3>Contacts</h3>
+
+                                    <p>
+                                        1900-CO-WORKER<br>
+                                        1800-3322-4453
+                                    </p>
+                                </div><!-- /.col-sm-4 -->
+
+                                <div class="col-sm-4">
+                                    <h3>Social Profiles</h3>
+
+                                    <ul class="social-links nav nav-pills">
+                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                    </ul>
+                                </div><!-- /.col-sm-4 -->
+                            </div><!-- /.row -->
+
+                            <div class="background-white p30 mt30">
+
+                                    <div id="carte" style="height:250px"></div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <h3>Nous serons ravis de vous écouter</h3>
+
+                            <div class="contact-form-wrapper clearfix background-white p30" id="contact">
+
+                                    {{ form_start(form) }}
+
+                                    <div class="form-group">
+                                        <label for="">Nom</label>
+                                        {{ form_widget(form.nom) }}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="">Email <span class="required">*</span></label>
+                                        {{ form_widget(form.email) }}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="">Message <span class="required">*</span></label>
+                                        {{ form_widget(form.message) }}
+                                    </div>
+                                    <input type="hidden" id="contact_prestataire_email" name="contact_prestataire[email]" class="form-control" value="wg.wargnier@gmail.com">
+                                    <div id="info">Champs obligatoires <span class="required">*</span></div>
+                                    <p>
+                                        <button class="btn btn-primary btn-block" type="submit"><i
+                                                    class="fa fa-paper-plane"></i>Envoyer
+                                        </button>
+                                    </p>
+                                    {{ form_end(form) }}
+
+
+                            </div><!-- /.contact-form-wrapper -->
+                        </div>
+                    </div><!-- /.row -->
+
+                </div><!-- /.content -->
+            </div><!-- /.container -->
+        </div><!-- /.main-inner -->
+    </div>
+    <script src="http://maps.google.com/maps/api/js?Key=AIzaSyCm9IyG4uLCEBqmBl4bCmlHhUvCUB3Xtks&amp;sensor=false;"></script>
+    <script type="text/javascript" src="{{ asset('js/gpGoogleMap.js') }}"></script>
+{% endblock %}

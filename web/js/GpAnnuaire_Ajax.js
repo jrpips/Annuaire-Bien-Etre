@@ -110,7 +110,7 @@ var GpAnnuaire_Ajax = GpAnnuaire_Ajax || {
 
             e.preventDefault();
 
-            var $form = $('form[name=contact_prestataire]');
+            var $form = $('form[name=contact]');
             var values = {};
 
             var values = GpAnnuaire_Ajax.serializerAjaxValues($form);
@@ -123,6 +123,31 @@ var GpAnnuaire_Ajax = GpAnnuaire_Ajax || {
             param.DATATYPE = 'json';
             param.beforeSEND = null;
             param.SUCCESS = GpAnnuaire_Call_Ajax.successAjaxContactPrestataire;
+
+            GpAnnuaire_Ajax.ajaxBuilder(param);
+
+        },
+        /**
+         **  model : prepare requête Ajax pour formulaire de contact Bien-Être
+         **
+         **/
+        'ajaxContact': function (e) {
+
+            e.preventDefault();
+
+            var $form = $('form[name=contact]');
+            var values = {};
+
+            var values = GpAnnuaire_Ajax.serializerAjaxValues($form);
+
+            var param = {};
+            param.METHODE = 'POST';
+            param.VALUES = values;
+            param.ROUTE = 'contact';
+            param.valueGET = null;
+            param.DATATYPE = 'json';
+            param.beforeSEND = null;
+            param.SUCCESS = GpAnnuaire_Call_Ajax.successAjaxContact;
 
             GpAnnuaire_Ajax.ajaxBuilder(param);
 

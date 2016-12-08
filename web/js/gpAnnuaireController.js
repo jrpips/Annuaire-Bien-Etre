@@ -100,10 +100,15 @@ $(function () {
     /**
      **    Submit form contact Prestataire
      **/
-    $('form[name=contact_prestataire]').on('submit', function (e) {
+    $('form[name=contact]').on('submit', function (e) {
         GpAnnuaire_Ajax.ajaxContactPrestataire(e);
     });
-
+    /**
+     **    Submit form contact Prestataire
+     **/
+    $('#contact form[name=contact]').on('submit', function (e) {
+        GpAnnuaire_Ajax.ajaxContact(e);
+    });
     /**
      **   Soumission du formulaire d'ajout de commentaire
      **/
