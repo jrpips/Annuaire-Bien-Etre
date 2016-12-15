@@ -99,7 +99,7 @@ var GpAnnuaire_Call_Ajax = GpAnnuaire_Call_Ajax || {
             if (data.valide) {
                 $('.errorCommentaire').remove();
                 GpAnnuaire.resetForm('#contact');
-                console.log($('#contact'),'eeeeeeeeeeee');
+                //console.log($('#contact'),'eeeeeeeeeeee');
                 $('#info').empty().text('Votre message est envoyé!');
                 var back = function () {
                     $('#info').empty().html("Champs obligatoires <span class='required' >*</span>");

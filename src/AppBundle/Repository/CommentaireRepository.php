@@ -19,4 +19,15 @@ class CommentaireRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getSingleScalarResult();
     }
+    /**
+     *  Retourne les Commentaires avec les liaisons Internaute & Prestataire
+     */
+    public function getAllCommentaires(){
+        $qb = $this->createQueryBuilder('c')
+            ->leftJoin('c.internaute', 'i')->addSelect('i')
+            ->leftJoin('c.prestataire', 'p')->addSelect('p');
+
+        return $qb->getQuery()->getResult();
+    }
+
 }

@@ -4,6 +4,7 @@ namespace AppBundle\Controller\AdminController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Entity\Commentaire;
 
 class AdminAnnuaireController extends Controller
 {
@@ -99,12 +100,10 @@ class AdminAnnuaireController extends Controller
      */
     public function gestionCommentairesAction()
     {
-       /* $users = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->findBannedUsers();
-        dump($users);
-        return $this->render('Admin/GestionCommentaires/dashboard.commentaires.html.twig', array(
-            'users' => $users
-        ));*/
-       return false;
+        $commentaires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Commentaire')->getAllCommentaires();
+        return $this->render('Admin/GestionCommentaires/dashboard.gestion.commmentaires.html.twig', array(
+            'commentaires' => $commentaires
+        ));
     }
 
     /**
@@ -112,7 +111,6 @@ class AdminAnnuaireController extends Controller
      */
     public function debloquerCompteUtilisateurAction($user_id)
     {
-
         $user = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->findOneById($user_id);
         $em = $this->getDoctrine()->getManager();
         $user->setBanni(false);
@@ -124,11 +122,12 @@ class AdminAnnuaireController extends Controller
     /**
      * @Route("/admin/abus/supprimer/{abus_id}",options={"expose"=true},name="delete_abus")
      */
-    public function deleteAbusAction(Request $request,$abus_id){
-        $abus=$this->getDoctrine()->getManager()->getRepository('AppBundle:Abus')->findById($abus_id);
+    public function deleteAbusAction(Request $request, $abus_id)
+    {
+        $abus = $this->getDoctrine()->getManager()->getRepository('AppBundle:Abus')->findOneById($abus_id);
 
         $em = $this->getDoctrine()->getManager();
-        $em->remove($abus[0]);
+        $em->remove($abus);
         $em->flush();
 
         return $this->redirectToRoute('dashboard_abus');

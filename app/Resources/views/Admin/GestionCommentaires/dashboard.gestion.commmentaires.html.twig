@@ -1,0 +1,47 @@
+{% extends 'Admin/dashboard.html.twig' %}
+{% block dashboard_body %}
+    <div class="content-admin">
+        <div class="content-admin-wrapper">
+            <div class="content-admin-main">
+                <div class="content-admin-main-inner">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="page-title">
+                                    <h2>Liste des commentaires</h2>
+                                </div>
+
+                                {% if commentaires is empty %}
+                                    <p>Pas de commentaires à gérer...</p>
+                                {% endif %}
+                                {% for comment in commentaires %}
+                                    <div class="well well-sm">
+                                        <a data-toggle="collapse"
+                                           data-target="#demo{{ comment.id }}">{{ comment.titre |capitalize }}</a>
+                                    </div>
+                                    <div id="demo{{ comment.id }}" class="collapse">
+                                        <div class=" p20 mb50">
+
+                                            <p>Contenu: {{ comment.contenu }}</p>
+                                            <p>Date:{{ comment.encodage|date("d/m/Y") }}</p>
+                                            <p>Sujet:{{ comment.prestataire.nom }}</p>
+                                            <p>Auteur: {{ comment.internaute.nom }}</p>
+                                            <div style="text-align:right">
+                                                <a href="{#{{ path('delete_comment',{'commentaire_titre':comment.titre}) }}#}"
+                                                   class="btn btn-default">Supprimer</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{ include("Admin/base.admin.footer.html.twig") }}
+        </div>
+    </div>
+{% endblock %}

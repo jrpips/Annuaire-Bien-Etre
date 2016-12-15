@@ -78,7 +78,7 @@ class StageController extends Controller
      */
     public function updateStageAction(Request $request, $nom_stage)
     {
-        $stage = $this->getDoctrine()->getManager()->getRepository('AppBundle:Stage')->findByNom($nom_stage);
+        $stage = $this->getDoctrine()->getManager()->getRepository('AppBundle:Stage')->findOneByNom($nom_stage);
 
         dump($stage);
         $form = $this->get('form.factory')->create(StageType::class, $stage[0]);
@@ -95,7 +95,7 @@ class StageController extends Controller
         }
 
         return $this->render('Public/Prestataires/FrontOffice/Stages/update.stage.html.twig', array(
-            'stage' => $stage[0],
+            'stage' => $stage,
             'form' => $form->createView()
         ));
     }
@@ -104,11 +104,9 @@ class StageController extends Controller
      */
     public function deleteStageAction(Request $request, $nom_stage)
     {
-        //$prestaire_nom =$this->getUser()->getPrestataire()->getNom();
-
-        $stage = $this->getDoctrine()->getManager()->getRepository('AppBundle:Stage')->findByNom($nom_stage);
+        $stage = $this->getDoctrine()->getManager()->getRepository('AppBundle:Stage')->findOneByNom($nom_stage);
         $em = $this->getDoctrine()->getManager();
-        $em->remove($stage[0]);
+        $em->remove($stage);
         $em->flush();
 
         return $this->redirectToRoute('dashboard_stage',array('prestataire_nom'=>$this->getUser()->getPrestataire()->getNom()));

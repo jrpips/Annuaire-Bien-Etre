@@ -32,7 +32,6 @@ class CommentaireController extends Controller
      */
     public function addCommentAction(Request $request)
     {
-
         if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {// ne commente pas qui veut...
 
             $nomPrestataire = $request->get('label');
@@ -55,9 +54,6 @@ class CommentaireController extends Controller
                 }
                 if ($form->isValid()) {
 
-                    //$comment->setCote(3);
-
-                    dump($request->request);
                     $em = $this->getDoctrine()->getManager();
 
                     $auteurComment = $em
@@ -74,11 +70,9 @@ class CommentaireController extends Controller
 
                     $prestataireCommented->addCommentaire($comment);// injection du commentaire
 
-                    $em = $this->getDoctrine()->getManager();
-                    $em->flush();
-                    dump($auteurComment, $prestataireCommented);
-                    return new JsonResponse(array(
+                    $this->getDoctrine()->getManager()->flush();
 
+                    return new JsonResponse(array(
                         'valide' => true,
                     ));
                 }

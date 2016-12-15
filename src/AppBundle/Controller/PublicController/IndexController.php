@@ -16,11 +16,10 @@ class IndexController extends Controller
     public function indexAction()
     {
         $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->myFindValideServices();
-        dump($services);
+
         return $this->render('Public/index.html.twig', array(
             'services' => $services,
         ));
-
     }
 
     /*************
@@ -28,7 +27,6 @@ class IndexController extends Controller
      */
     public function _indexAction()
     {
-
         $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findAll();//TODO : déterminer une limite
 
         /* Tri du tableau des Prestataires par comparaison avec les Favoris de l'Internaute */
@@ -60,7 +58,7 @@ class IndexController extends Controller
      */
     public function aboutAction()
     {
-        return $this->render('Public/index.html.twig');
+        return $this->render('Public/About/about.html.twig');
     }
 
     /**
@@ -68,7 +66,6 @@ class IndexController extends Controller
      */
     public function contactAction(Request $request)
     {
-
         $form = $this->get('form.factory')->create(ContactType::class);
 
         $form->handleRequest($request);
@@ -93,7 +90,6 @@ class IndexController extends Controller
                 return new JsonResponse(array(
                     'valide' => true,
                     'values' => $values,
-
                 ));
             }
         }

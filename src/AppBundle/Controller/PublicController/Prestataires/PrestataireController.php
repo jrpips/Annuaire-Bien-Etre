@@ -64,6 +64,7 @@ class PrestataireController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $new_prestataire->setSalt('')->setRoles('ROLE_PRESTATTAIRE');
             $em->persist($new_prestataire);
             $em->flush();
             $request->getSession()->getFlashBag()->add('notice', 'Profil Prestataire bien enregistré.');
