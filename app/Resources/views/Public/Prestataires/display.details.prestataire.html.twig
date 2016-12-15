@@ -105,9 +105,9 @@
 
                 <div class="container" jstcache="0">
                     <div class="row detail-content" jstcache="0">
-                        <div class="col-sm-7" jstcache="0">
+                        <div class="col-sm-7"  jstcache="0">
                             {# google map #}
-                            <h2>Nous sommes ici</h2>
+                            <h2 style="margin-top:0">Nous sommes ici</h2>
                             <div class="background-white p20">
 
                                 <div id="carte" style="height:250px"></div>
@@ -129,7 +129,8 @@
                                     {% for commentaire in prestataire.commentaires %}
                                         <div class="review">
                                             <div class="review-image">
-                                                <img src="{{ asset(commentaire.internaute.image.url) }}" alt="">
+                                                {% set pathImg=(commentaire.internaute.image.url matches '{^http}')?'':'image/userUploads/' %}
+                                                <img src="{{ asset(pathImg~commentaire.internaute.image.url) }}" alt="">
                                             </div>
 
                                             <div class="review-inner">

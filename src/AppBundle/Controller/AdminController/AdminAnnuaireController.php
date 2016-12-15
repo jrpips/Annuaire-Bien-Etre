@@ -58,6 +58,7 @@ class AdminAnnuaireController extends Controller
             'countInternautes' => $countInternautes,
         ));
     }
+
     /**
      * Render : retourne le nombre de Commentaires  --> navigation Dashboard
      */
@@ -68,6 +69,7 @@ class AdminAnnuaireController extends Controller
             'countCommentaires' => $countCommentaires,
         ));
     }
+
     /**
      * @Route("/admin/gestion/abus",name="dashboard_abus")
      */
@@ -91,6 +93,7 @@ class AdminAnnuaireController extends Controller
             'users' => $users
         ));
     }
+
     /**
      * @Route("/admin/gestion/commentaires",name="dashboard_commentaires")
      */
@@ -103,6 +106,7 @@ class AdminAnnuaireController extends Controller
         ));*/
        return false;
     }
+
     /**
      * @Route("/admin/debloquer/utilisateur/{user_id}",name="debloquer_account")
      */
@@ -118,7 +122,7 @@ class AdminAnnuaireController extends Controller
     }
 
     /**
-     * @Route("/admin/abus/supprimer{abus_id}",options={"expose"=true},name="delete_abus")
+     * @Route("/admin/abus/supprimer/{abus_id}",options={"expose"=true},name="delete_abus")
      */
     public function deleteAbusAction(Request $request,$abus_id){
         $abus=$this->getDoctrine()->getManager()->getRepository('AppBundle:Abus')->findById($abus_id);

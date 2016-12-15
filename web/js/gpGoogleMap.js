@@ -18,7 +18,7 @@ window.onload = function () {
         document.getElementById('carte'),
         myOptions
     );
-    //var nomPrestataire = document.getElementById('nomPrestataire').textContent;
+    var nomPrestataire = document.getElementById('nomPrestataire').textContent;
     var numero = document.getElementById('numero').textContent;
     var rue = document.getElementById('rue').textContent;
     var cp = document.getElementById('cp').textContent;

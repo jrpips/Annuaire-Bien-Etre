@@ -38,7 +38,7 @@ class PrestataireController extends Controller
      */
     public function getChildNavPrestatairesElementsAction()
     {
-        if (!$this->isGranted('ROLE_ADMIN')&&$this->isGranted('ROLE_INTERNAUTE')) {
+        if (!$this->isGranted('ROLE_ADMIN') && $this->isGranted('ROLE_INTERNAUTE')) {
             $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')
                 ->findPrestatairesFavoris($this->getUser()->getInternaute()->getNom());
         } else {
@@ -97,7 +97,6 @@ class PrestataireController extends Controller
     public
     function moteurDeRechercheAction()
     {
-
         $form = $this->get('form.factory')->create(MoteurDeRechercheType::class);
 
         return $this->render('Public\Navigation\Links\MoteurDeRecherche\form.moteur.de.recherche.prestataire.html.twig', array(
@@ -121,6 +120,7 @@ class PrestataireController extends Controller
             'prestataires' => $prestataires
         ));
     }
+
     /**
      * @Route("recherche/prestataire/resultat",options={"expose"=true},name="advanced_search_prestataire")
      */
@@ -151,12 +151,32 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("/prestataire/mise-a-jour",options={"expose"=true},name="update_prestataire")
+     * @Route("/prestataire/mise-a-jour/{nomPrestataire}",options={"expose"=true},name="update_prestataire")
      */
     public
-    function updatePrestataireAction(Request $request)
+    function updatePrestataireAction(Request $request, $nomPrestataire = null)
     {
-        return false;
+        if ($nomPrestataire) {
+            $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findOneByNom($nomPrestataire);
+        } else {
+            $prestataire = $this->getUser()->getPrestataire();
+        }
+
+        $form = $this->get('form.factory')->create(PrestataireType::class, $prestataire)->remove('password', PasswordType::class, array('required' => false));
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($prestataire);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('notice', 'Profil Prestataire bien enregistré.');
+
+            return $this->redirectToRoute('home');
+        }
+        return $this->render('Public\Prestataires\form.signup.prestataire.html.twig', array(
+            'form' => $form->createView(),
+            'prestataire' => $prestataire
+        ));
     }
 
     /**
@@ -235,6 +255,7 @@ class PrestataireController extends Controller
         //dump($oldService,$p);
         return new JsonResponse('ok');//$this->redirectToRoute('prestataire_services');
     }
+
     /**
      * @Route("/prestataire/add/service",options={"expose"=true},name="ajout_service")
      */
@@ -254,11 +275,11 @@ class PrestataireController extends Controller
             ->getRepository('AppBundle:Prestataire')
             ->findPrestataire($nom);
 
-     $oldService[0]->addPrestataire($p[0]);
+        $oldService[0]->addPrestataire($p[0]);
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();
-        dump($oldService,$p);
+        dump($oldService, $p);
         return new JsonResponse('ok');//$this->redirectToRoute('prestataire_services');
     }
 }

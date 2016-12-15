@@ -114,7 +114,7 @@ class Image {
         return $this->url . '';
     }
 
-    public function __sleep() {
+    /*public function __sleep() {
         $ref = new \ReflectionClass(__CLASS__);
         $props = $ref->getProperties(\ReflectionProperty::IS_PROTECTED);
 
@@ -125,7 +125,7 @@ class Image {
         }
 
         return $serialize_fields;
-    }
+    }*/
 
     public function getId() {
         return $this->id;

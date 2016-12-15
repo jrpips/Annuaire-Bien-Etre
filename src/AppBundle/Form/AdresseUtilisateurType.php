@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use AppBundle\Services\SearchCodePostal\SearchCodePostal;
+use AppBundle\Services\SearchPostalCode\SearchPostalCode;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
@@ -24,7 +24,7 @@ class AdresseUtilisateurType extends AbstractType {
         ;
 
         $getNameCommune = function(FormInterface $form, $codePostal) {
-            $beurk = new \AppBundle\Services\SearchPostalCode\SearchPostalCode();
+            $beurk = new SearchPostalCode();
 
             $communes =  $beurk->getData($codePostal); 
                    // $this->container->get('app.searchpostalcode')->getData($codePostal);

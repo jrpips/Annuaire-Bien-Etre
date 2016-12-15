@@ -1,29 +1,28 @@
 {# Customised Intenaute Nav #}
 
-<li id="avatar">
 
-            {% if app.user.internaute.image.url is defined %}
 
-                {% set pathImg=(app.user.internaute.image.url matches '{^http}')?'':'image/userUploads/' %}
 
-                <img src="{{ asset(pathImg~app.user.internaute.image.url) }}"/> {# #}
+<button class="btn btn-default dropdown-toggle" style="height:35px;padding:0 0 0 5px" type="button" id="dropdownMenu1" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+    <div style="display: inline-block;border:none">
+        {% if app.user.internaute.image.url is defined %}
 
-            {% else %}
+            {% set pathImg=(app.user.internaute.image.url matches '{^http}')?'':'image/userUploads/' %}
 
-                <img src="{{ asset('image/user.png') }}" alt=""/>
+            <img src="{{ asset(pathImg~app.user.internaute.image.url) }}"/> {# #}
 
-            {% endif %}
+        {% else %}
 
-<li style="margin-right:80px">
+            <img src="{{ asset('image/user.png') }}" alt=""/>
 
-    <a href="{{ path('home') }}">
+        {% endif %}
 
-        {{ app.user.username }}
-        <i class="fa fa-chevron-down"></i>
+    </div><!-- /.user-image -->
+    <span class="header-nav-user-name">{{ app.user.username }}</span> <i class="fa fa-chevron-down"></i>
+</button>
 
-    </a>
-
-    <ul class="sub-menu">
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 
         <li>
             <a href="{{ path('show_internaute') }}">Infos personnelles</a>
@@ -44,3 +43,4 @@
             </a>
     </ul>
 </li>
+

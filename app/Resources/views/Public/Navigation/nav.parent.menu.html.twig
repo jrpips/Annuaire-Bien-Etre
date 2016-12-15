@@ -1,18 +1,8 @@
 {# views/Public/Navigation/nav.parent.menu.html.twig #}
 
 
-    <li>
-        <form action="{{path('simple_search_prestataire')}}" method="POST" >
-            <div class="input-group" style="margin: 10px 0 0 0 ">
-                <input style="height:36px;border-radius:1px;margin-top:-1px" type="text" id="moteur_de_recherche_nom" name="moteur_de_recherche[nom]" class="form-control" placeholder="Recherche...">
-                <div class="input-group-btn">
-                    <button style="margin-top:0;padding-right:3px" class="btn btn-default navbar-btn">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
-        <a href="{{ path('form_advanced_search') }}" style="display:block;font-size:10px;margin:0" href="">Recherche avancée</a>
+
+
     </li>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
@@ -105,3 +95,15 @@
             </a>
         </li>
     {% endif %}
+<li>
+    <form style="margin-bottom:10px" action="{{path('simple_search_prestataire')}}" method="POST" >
+        <div class="input-group" style="margin: 10px 0 0 10px ">
+            <input style="height:35px;border-radius:0;border-color:white;border-width: 1px" type="text" id="moteur_de_recherche_nom" name="moteur_de_recherche[nom]" class="form-control" placeholder="Recherche...">
+            <div class="input-group-btn">
+                <button style="margin:0;padding-right:3px;border-radius:0" class="btn btn-default navbar-btn">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </div>
+        </div>
+        <a style="margin: 0 0 0 10px;color:gray;font-size:10px" href="{{ path('form_advanced_search') }}" style="display:block;font-size:10px;margin:0" > Recherche avancée</a>
+    </form>

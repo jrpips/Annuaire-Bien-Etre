@@ -23,7 +23,7 @@ class LoadImageData extends AbstractFixture implements OrderedFixtureInterface {
 
             $img = new Image();
             $img->setOrdre($i);
-            $img->setUrl($faker->imageUrl(40, 40, 'business'));
+            $img->setUrl($faker->imageUrl());
             if ($i < 10) {
                 $img->setPrestataire($this->getReference('prestataire' . $j));
                 if ($i % 2 !== 0) {

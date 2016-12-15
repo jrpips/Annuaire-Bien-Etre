@@ -70,13 +70,8 @@ class InternauteController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
-            $newAbonne = $em
-                ->getRepository('AppBundle:Internaute')
-                ->getPrestatairesFavoris($this->getUser()->getInternaute()->getId());// récupération de l'Internaute qui s'abonne
-
-            $newFavori = $em
-                ->getRepository('AppBundle:Prestataire')
-                ->findByNom($nomPrestataire);// récupération du Prestataire choisi
+            $newAbonne = $em->getRepository('AppBundle:Internaute')->getPrestatairesFavoris($this->getUser()->getInternaute()->getId());// récupération de l'Internaute qui s'abonne
+            $newFavori = $em->getRepository('AppBundle:Prestataire')->findByNom($nomPrestataire);// récupération du Prestataire choisi
 
             $newAbonne[0]->addFavori($newFavori[0]);// ajout du nouvel abonné (Internaute) à son favori (Prestataire)
 
@@ -118,7 +113,6 @@ class InternauteController extends Controller
      */
     public function preSignupInternauteAction(Request $request)
     {
-
         $new_user = new SignUp();
 
         $form = $this->get('form.factory')->create(SignUpType::class, $new_user);
@@ -181,7 +175,6 @@ class InternauteController extends Controller
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($internaute);
-
                 $em->flush();
 
                 return $this->redirectToRoute('home');
@@ -208,9 +201,12 @@ class InternauteController extends Controller
      */
     public function updateIdentityInternauteAction(Request $request, $id = null)
     {
-
-        $internaute = $this->getUser();
-
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            $internaute = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->findOneById($id);
+        } else {
+            $internaute = $this->getUser();
+        }
+        dump($internaute);
         $form = $this
             ->get('form.factory')
             ->create(UtilisateurType::class, $internaute)
@@ -222,11 +218,7 @@ class InternauteController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($internaute);
-
-                $em->flush();
+                $this->getDoctrine()->getManager()->persist($internaute)->flush();
 
                 return $this->redirectToRoute('show_internaute');
             }
@@ -243,9 +235,14 @@ class InternauteController extends Controller
      */
     public function updateImageInternauteAction(Request $request, $id = null)
     {
-
-        $image = $this->getDoctrine()->getManager()->getRepository('AppBundle:Image')->findOneByUrl($this->getUser()->getInternaute()->getImage()->getUrl());
-
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            $utilisateur = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->findOneById($id);
+            $image = $this->getDoctrine()->getManager()->getRepository('AppBundle:Image')->findOneByUrl($utilisateur->getInternaute()->getImage()->getUrl());
+            dump($image, $utilisateur);
+        } else {
+            $image = $this->getDoctrine()->getManager()->getRepository('AppBundle:Image')->findOneByUrl($this->getUser()->getInternaute()->getImage()->getUrl());
+            $utilisateur = $this->getUser();
+        }
         $form = $this
             ->get('form.factory')
             ->create(ImageType::class, $image)
@@ -258,24 +255,24 @@ class InternauteController extends Controller
 //           $image->setFile(unserialize($image->getFile()));
 
             if ($form->isValid()) {
-
-               /* if (file_exists(__DIR__ . '/../../../../../web/image/userUploads/' . $image->getUrl())) {
-                    unlink(__DIR__ . '/../../../../../web/image/userUploads/' . $image->getUrl());
-                }*/
+                //unserialize($image->getFile());
+                /* if (file_exists(__DIR__ . '/../../../../../web/image/userUploads/' . $image->getUrl())) {
+                     unlink(__DIR__ . '/../../../../../web/image/userUploads/' . $image->getUrl());
+                 }*/
                 //$image->preUpload();
                 $em = $this->getDoctrine()->getManager();
 
-                //$em->persist($user);
+                $em->persist($image);
                 $em->flush();
 
-                return $this->redirectToRoute('show_internaute');
+                return $this->redirectToRoute('home');
             }
         }
 
         return $this->render('Public/Internautes/EditProfile/form.edit.photo.internaute.html.twig', array(
             'form' => $form->createView(),
             'image' => $image,
+            'internaute' => $utilisateur
         ));
     }
-
 }

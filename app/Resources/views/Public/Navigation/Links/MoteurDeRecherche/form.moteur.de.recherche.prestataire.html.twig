@@ -19,8 +19,7 @@
                                 <h1>Recherche avancée</h1>
                             </div>
 
-
-                            <form action="{{ path('advanced_search_prestataire') }}" method="POST">
+                            <form action="{{ path('advanced_search_prestataire') }}" method="GET">
                                 <div class="form-group">
                                     {{ form_label(form.nom) }}
                                     {{ form_widget(form.nom) }}

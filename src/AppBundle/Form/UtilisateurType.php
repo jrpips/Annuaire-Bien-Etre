@@ -27,7 +27,7 @@ class UtilisateurType extends AbstractType {
                 ->add('username', TextType::class, array('required' => false))
 
                 ->add('adresseUtilisateur', AdresseUtilisateurType::class)
-                ->add('Envoyer', SubmitType::class,array('attr'=>array('class'=>'btn btn-default pull-right')))
+                //->add('Envoyer', SubmitType::class,array('attr'=>array('class'=>'btn btn-default pull-right')))
          
               
         ;

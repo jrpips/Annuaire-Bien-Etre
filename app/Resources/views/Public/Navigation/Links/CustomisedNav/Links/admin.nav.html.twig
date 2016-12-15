@@ -25,20 +25,26 @@
             </a>
     </ul>
 </li>#}
-<button style="width:200px" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <div class="user-image">
-        <img src="{{ asset('image/admin.png') }}" alt=""/>
-        <div class="notification"></div><!-- /.notification-->
-    </div><!-- /.user-image -->
-    <span class="header-nav-user-name">{{ app.user.username }}</span> <i class="fa fa-chevron-down"></i>
-</button>
-<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    <li>
-        <a href="{{ path('dashboard_accueil') }}"> Dashboard</a>
 
-    <li>
-        <a href="{{ path('logout') }}" style="color:rgb(169,39,39)">
-            <span class="glyphicon glyphicon-log-out"></span>
-            Déconnexion
-        </a>
-</ul>
+
+
+
+        <button class="btn btn-default dropdown-toggle" style="height:35px" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            <div style="display: inline-block;border:none">
+                <img style="display: inline-block;border:none" src="{{ asset('image/admin.png') }}" alt=""/>
+
+            </div><!-- /.user-image -->
+            <span class="header-nav-user-name">{{ app.user.username }}</span> <i class="fa fa-chevron-down"></i>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li>
+                <a href="{{ path('dashboard_accueil') }}"> Dashboard</a>
+
+            <li>
+                <a href="{{ path('logout') }}" style="color:rgb(169,39,39)">
+                    <span class="glyphicon glyphicon-log-out"></span>
+                    Déconnexion
+                </a>
+        </ul>
+
