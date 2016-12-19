@@ -68,6 +68,7 @@ class PrestataireController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $new_prestataire->setSalt('')->setRoles('ROLE_PRESTATAIRE');
+            //$this->container->get('security.password_encoder')->encodePassword($new_prestataire,$new_prestataire->getPassword());
             $em->persist($new_prestataire);
 
             $em->flush();
@@ -111,7 +112,7 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("recherche/prestataire",options={"expose"=true},name="simple_search_prestataire")
+     * @Route("recherche/simple/prestataire",options={"expose"=true},name="simple_search_prestataire")
      */
     public
     function simpleMoteurDeRechercheAction(Request $request)

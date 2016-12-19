@@ -26,7 +26,7 @@ class PrestataireType extends AbstractType
             ->add('telephone', TextType::class, array('required' => false,'label_format'=>'Téléphone'))
             ->add('tva', TextType::class, array('required' => false,'label_format'=>'Votre numéro de TVA'))
            // ->add('image', ImageType::class)
-           ->add('Envoyer', SubmitType::class,array('attr'=>array('class'=>'btn btn-default pull-right')))
+          // ->add('Envoyer', SubmitType::class,array('attr'=>array('class'=>'btn btn-default pull-right')))
         ;
     }
     
@@ -37,6 +37,7 @@ class PrestataireType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Prestataire',
+            'allow_extra_fields' => true,
              
         ));
     }

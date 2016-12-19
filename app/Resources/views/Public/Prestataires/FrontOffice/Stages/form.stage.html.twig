@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block title %}
-    Création d'un stage - {{ parent() }}
+    {{ title }} - {{ parent() }}
 {% endblock %}
 
 {% block body %}
@@ -18,7 +18,7 @@
 
                             <section class="background-white p20">
                                 <div class="page-title">
-                                    <h2>Création d'un stage</h2>
+                                    <h2>{{ title }}</h2>
                                 </div>
                                 {{ form_start(form) }}
 

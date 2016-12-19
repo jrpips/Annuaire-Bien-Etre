@@ -27,13 +27,14 @@ class UtilisateurType extends AbstractType {
                 ->add('username', TextType::class, array('required' => false,'label_format'=>'Pseudo'))
 
                 ->add('adresseUtilisateur', AdresseUtilisateurType::class)
-                //->add('Envoyer', SubmitType::class,array('attr'=>array('class'=>'btn btn-default pull-right')))
+                ->add('Envoyer', SubmitType::class,array('attr'=>array('class'=>'btn btn-default pull-right')))
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Utilisateur',
+
         ));
     }
 }

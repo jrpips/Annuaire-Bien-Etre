@@ -3,11 +3,11 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    {{parent()}}
+    {{ parent() }}
 {% endblock %}
 
 {% block title %}
-    Service {{service.nom}} - {{ parent() }}
+    Service {{ service.nom }} - {{ parent() }}
 {% endblock %}
 
 {% block body %}
@@ -15,49 +15,87 @@
 
         <div class="main-inner">
 
-            <div class="content">
-
+            <div class="container">
 
                 <div class="row">
 
-                    <div class="col-md-offset-3" >
-                        <h1>Service {{service.nom}}</h1>
-                        <div class="media">
-                            <div class="media-left">
+                    <div class="col-sm8 col-lg-9">
+                        <div class="content">
+                            <div class="page-title">
+                                <h1>Service {{ service.nom }}</h1>
+                            </div>
+                            <div class="posts" style="text-align: center">
+
                                 {% set pathImg=(service.image.url matches '{^http}')?'':'image/userUploads/' %}
-                                <img  src="{{ asset(pathImg~service.image.url )}}" alt="{{ service.image.name }}"/>
+
+                                <img src="{{ asset(pathImg~service.image.url ) }}" alt="{{ service.image.name }}"/>
+                                <hr>
+                                <div class="background-white p20">{{ service.description }}</div>
 
                             </div>
-                            <div class="media-body">
-
-                                <div>{{service.description}}</div>
-                                {{service.image.url}}
-                            </div>
-                            <h2>Prestataire(s) offrant ce service</h2>
-                            {%for p in service.prestataires%}
-                                <ul>
-                                    <li><a href="{{path('details_prestataire',{'prestataire_nom':p.nom})}}">{{p.nom}}</a>
-                                </ul>
-                            {%endfor%}
-                            <h2>Promo</h2>
-                            {%for promo in service.promotions%}
-                            <ul>
-                                <li>
-                                   {# <a href="{{path('details_prestataire',{'prestataire_nom':p.nom})}}">#}
-                                    Nom promo {{promo.nom}}<br>
-                                    Publiée par {{ promo.prestataire.nom }}<br>
-                                    
-                                    {# </a>#}
-                             </ul>
-                            {%endfor%}
                         </div>
                     </div>
+                    <div class="col-sm-4 col-lg-3">
 
+                        <div class="sidebar">
+
+                            <div class="widget">
+                                <h2 class="widgettitle">Prestataire{{ ((service.prestataires|length)>1?'s':'') }}</h2>
+
+                                {% for p in service.prestataires %}
+                                    {% if p.images|length >0 %}
+                                        {% set img=(p.images is defined)?(p.images)|first.url:'image/prestataire.png' %}
+                                    {% else %}
+                                        {% set img='image/poster.jpg' %}
+                                    {% endif %}
+                                    <div class="cards-small">
+                                        <div class="card-small">
+                                            <div class="card-small-image">
+                                                <a href="listing-detail.html">
+                                                    <img src="{{ img }}" alt="{{ p.nom }}">
+                                                </a>
+                                            </div>
+                                            <div class="card-small-content">
+                                                <h3>
+                                                    <a href="{{ path('details_prestataire',{'prestataire_nom':p.nom}) }}">{{ p.nom }}</a>
+                                                </h3>
+                                                <h4>Lorem ipsum...</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+
+                            <div class="widget">
+                                <h2 class="widgettitle">Promo{{ ((service.promotions|length)>1?'s':'') }}</h2>
+                                {% for promo in service.promotions %}
+                                    <div class="cards-small">
+                                        <div class="card-small">
+                                            <div class="card-small-image">
+                                                <a href="listing-detail.html">
+                                                    <img
+                                                            src="{{ asset('image/promo1.png') }}" alt="Flower">
+                                                </a>
+                                            </div>
+                                            {# <a href="{{path('details_prestataire',{'prestataire_nom':p.nom})}}">#}
+                                            <div class="card-small-content">
+                                                <h3> Nom promo {{ promo.nom }}</h3>
+                                                <h4>Publiée par <a
+                                                            href="{{ path('details_prestataire',{'prestataire_nom':promo.prestataire.nom}) }}">{{ promo.prestataire.nom }}</a>
+                                                </h4>
+                                            </div>
+                                            {# </a>#}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                        </div>{#sidebar#}
+
+                    </div>{# col-sm-4 #}
                 </div>
-
             </div>
-
         </div>
-
     </div>
-{%endblock%}
+{% endblock %}

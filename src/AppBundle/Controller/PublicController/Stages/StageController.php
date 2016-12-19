@@ -67,9 +67,10 @@ class StageController extends Controller
             return $this->redirectToRoute('dashboard_stage',array('prestataire_nom'=>$this->getUser()->getPrestataire()->getNom()));//TODO : ...sur la page de redirection
         }
 
-        return $this->render('Public/Prestataires/FrontOffice/Stages/create.stage.html.twig', array(
+        return $this->render('Public/Prestataires/FrontOffice/Stages/form.stage.html.twig', array(
             'stage' => $stage,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'title'=>"Création d'un stage"
         ));
     }
 
@@ -81,7 +82,7 @@ class StageController extends Controller
         $stage = $this->getDoctrine()->getManager()->getRepository('AppBundle:Stage')->findOneByNom($nom_stage);
 
         dump($stage);
-        $form = $this->get('form.factory')->create(StageType::class, $stage[0]);
+        $form = $this->get('form.factory')->create(StageType::class, $stage);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -94,9 +95,10 @@ class StageController extends Controller
             return $this->redirectToRoute('list_stages',array('prestataire_nom'=>$this->getUser()->getPrestataire()->getNom()));//TODO : ...sur la page de redirection
         }
 
-        return $this->render('Public/Prestataires/FrontOffice/Stages/update.stage.html.twig', array(
+        return $this->render('Public/Prestataires/FrontOffice/Stages/form.stage.html.twig', array(
             'stage' => $stage,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'title'=>'Stage: mise à jour'
         ));
     }
     /**

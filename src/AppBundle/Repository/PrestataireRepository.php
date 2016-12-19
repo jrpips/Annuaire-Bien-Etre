@@ -70,7 +70,7 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository
             $qb->andWhere("s.nom like :service")->setParameter('service', $service);
         }
         if ($cp) {
-            $qb->andWhere("adr.cp like :cp")->setParameter('cp', $cp);
+            $qb->andWhere("adr.codePostal like :cp")->setParameter('cp', $cp);
         }
         if ($localite) {
             $qb->andWhere("adr.localite like :localite")->setParameter('localite', $localite);

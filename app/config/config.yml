@@ -9,7 +9,7 @@ parameters:
     locale: en
 
 framework:
-    #esi:             ~
+    #esi:             ~g
     #translator:      { fallbacks: ["%locale%"] }
     secret:          "%secret%"
     router:
@@ -31,6 +31,7 @@ framework:
     fragments:       ~
     http_method_override: true
     assets: ~
+    #translator: {fallback: %locale%}
 
 # Twig Configuration
 twig:

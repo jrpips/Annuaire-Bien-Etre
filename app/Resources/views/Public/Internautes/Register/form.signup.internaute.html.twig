@@ -2,11 +2,11 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    {{parent()}}
+    {{ parent() }}
 {% endblock %}
 
 {% block title %}
-    Accueil - {{ parent() }}
+    Inscription - {{ parent() }}
 {% endblock %}
 
 {% block body %}
@@ -16,90 +16,98 @@
                 <div class="container">
                     <div class="content">
                         <div class="row">
-                            <div class="col-sm-4 col-sm-offset-4">
+                            <div class="col-sm-12 background-white p20">
 
 
                                 <div class="page-title">
                                     <h1>Inscription</h1>
                                 </div><!-- /.page-title -->
 
-                                {{form_start(form)}}
+                                {{ form_start(form) }}
+                                <div class="col-sm-4 ">
+                                    <div class="form-group">
+                                        {{ form_label(form.internaute.nom) }}
+                                        {{ form_widget(form.internaute.nom,{'attr':{'value':(signup is not null)?signup.lastname:user.internaute.nom}}) }}
+                                        {{ form_errors(form.internaute.nom) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(form.internaute.prenom) }}
+                                        {{ form_widget(form.internaute.prenom,{'attr':{'value':signup is not null ?signup.firstname:user.internaute.prenom}}) }}
+                                        {{ form_errors(form.internaute.prenom) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(form.email) }}
+                                        {{ form_widget(form.email,{'attr':{'value':signup is not null ?signup.email:user.email}}) }}
+                                        {{ form_errors(form.email) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(form.internaute.newsletter) }}
+                                        {{ form_row(form.internaute.newsletter) }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 ">
+                                    <div class="form-group">
+                                        {{ form_label(form.username) }}
+                                        {{ form_widget(form.username) }}
+                                        {{ form_errors(form.username) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(form.password) }}
+                                        {{ form_widget(form.password) }}
+                                        {{ form_errors(form.password) }}
 
-                                <div class="form-group">
-                                    {{form_label(form.internaute.nom)}}
-                                    {{form_widget(form.internaute.nom)}}{#,{'attr':{'value':(signup is not null)?signup.lastname:user.internaute.nom}})}}#}
-                                    {{form_errors(form.internaute.nom)}}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(form.confPwd) }}
+                                        {{ form_widget(form.confPwd) }}
+                                        {{ form_errors(form.confPwd) }}
+                                        {{ form_errors(form) }}
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    {{form_label(form.internaute.prenom)}}
-                                    {{form_widget(form.internaute.prenom)}} {#,{'attr':{'value':signup is not null ?signup.firstname:user.internaute.prenom}})}} #}
-                                    {{form_errors(form.internaute.prenom)}}
+                                <div class="col-sm-4 ">
+                                    <div class="form-group">
+                                        {{ form_label(form.adresseRue) }}
+                                        {{ form_widget(form.adresseRue) }}
+                                        {{ form_errors(form.adresseRue) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(form.adresseNumero) }}
+                                        {{ form_widget(form.adresseNumero) }}
+                                        {{ form_errors(form.adresseNumero) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(form.adresseUtilisateur.codePostal) }}
+                                        {{ form_widget(form.adresseUtilisateur.codePostal) }}
+                                        {{ form_errors(form.adresseUtilisateur.codePostal) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(form.adresseUtilisateur.commune) }}
+                                        {{ form_widget(form.adresseUtilisateur.commune) }}
+                                        {{ form_errors(form.adresseUtilisateur.commune) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(form.adresseUtilisateur.localite) }}
+                                        {{ form_widget(form.adresseUtilisateur.localite) }}
+                                        {{ form_errors(form.adresseUtilisateur.localite) }}
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    {{form_label(form.email)}}
-                                    {{form_widget(form.email)}}{#,{'attr':{'value':signup is not null ?signup.email:user.email}})}} #}
-                                    {{form_errors(form.email)}}
+                                <div class="col-sm-12 ">
+                                    <div class="form-group">
+                                        {{ form_label(form.internaute.image.name) }}
+                                        {{ form_widget(form.internaute.image.name) }}
+                                        {{ form_errors(form.internaute.image.name) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(form.internaute.image.file) }}
+                                        {{ form_widget(form.internaute.image.file) }}
+                                        {{ form_errors(form.internaute.image.file) }}
+                                    </div>
+                                    <div class="form-group"><button type="submit" id="utilisateur_Envoyer" name="utilisateur[Envoyer]" class="btn btn-default pull-right btn">Envoyer</button></div>
                                 </div>
-                                <div class="form-group">
-                                    {{form_label(form.username)}}
-                                    {{form_widget(form.username)}}
-                                    {{form_errors(form.username)}}
-                                </div>
-                                <div class="form-group">
-                                    {{form_label(form.password)}}
-                                    {{form_widget(form.password)}}
-                                    {{form_errors(form.password)}}
-                                </div>
-                                {#<div class="form-group">
-                                     {{form_label(form.utilisateur.confPwd)}}
-                                     {{form_widget(form.utilisateur.confPwd)}}
-                                     {{form_errors(form.utilisateur.confPwd)}}
-                                 </div>#}
-                                <div class="form-group">
-                                    {{form_label(form.adresseRue)}}
-                                    {{form_widget(form.adresseRue)}}
-                                    {{form_errors(form.adresseRue)}}
-                                </div>
-                                <div class="form-group">
-                                    {{form_label(form.adresseNumero)}}
-                                    {{form_widget(form.adresseNumero)}}
-                                    {{form_errors(form.adresseNumero)}}
-                                </div>
-                                <div class="form-group">
-                                    {{form_label(form.adresseUtilisateur.codePostal)}}
-                                    {{form_widget(form.adresseUtilisateur.codePostal)}}
-                                    {{form_errors(form.adresseUtilisateur.codePostal)}}
-                                </div>
-                                <div class="form-group">
-                                    {{form_label(form.adresseUtilisateur.commune)}}
-                                    {{form_widget(form.adresseUtilisateur.commune)}}
-                                    {{form_errors(form.adresseUtilisateur.commune)}}
-                                </div>
-                                <div class="form-group">
-                                    {{form_label(form.adresseUtilisateur.localite)}}
-                                    {{form_widget(form.adresseUtilisateur.localite)}}
-                                    {{form_errors(form.adresseUtilisateur.localite)}}
-                                </div>
-                                <div class="form-group">
-                                    {{form_label(form.internaute.newsletter)}}
-                                    {{form_row(form.internaute.newsletter)}}
-                                </div>
-                                <div class="form-group">
-                                    {{form_label(form.internaute.image.name)}}
-                                    {{form_widget(form.internaute.image.name)}}
-                                    {{form_errors(form.internaute.image.name)}}
-                                </div>
-                                <div class="form-group">
-                                    {{form_label(form.internaute.image.file)}}
-                                    {{form_widget(form.internaute.image.file)}}
-                                    {{form_errors(form.internaute.image.file)}}
-                                </div>
+                                {{ form_rest(form) }}
+                                {{ form_end(form) }}
 
 
-
-                                {{form_rest(form)}}
-                                {{form_end(form)}}
-                                {#{{form(form)}}#}
 
                             </div>
                         </div>
@@ -109,9 +117,7 @@
         </div>
     </div>
     <script>
-//        $.function({
-//            $('#utilisateur_internaute_newsletter').parent().remove();
-//        });
+
     </script>
 {% endblock %}
 
