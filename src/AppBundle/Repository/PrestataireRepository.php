@@ -50,15 +50,16 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository
             $nom = $v['nom'] != '' ? '%' . trim($v['nom']) . '%' :false;
             $commune = $v['commune'] != '' ? trim($v['commune']) :false;
             $service = $v['service'] != '' ? trim($v['service']) :false;
-            $cp = $v['cp'] != '' ? '%' . trim($v['cp']) . '%' :false;
-            $localite = $v['localite'] != '' ? '%' . trim($v['localite']) . '%' :false;
+            $cp = $v['cp'] != '' ?  trim($v['cp'])  :false;
+            $localite = $v['localite'] != '' ?  trim($v['localite'])  :false;
         }
 
         $qb = $this->createQueryBuilder('p')
             ->leftJoin('p.utilisateur', 'u')->addSelect('u')
             ->leftJoin('p.images', 'i')->addSelect('i')
             ->leftJoin('p.categServices', 's')->addSelect('s')
-            ->leftJoin('u.adresseUtilisateur', 'adr')->addSelect('adr');
+            ->leftJoin('u.adresseUtilisateur', 'adr')->addSelect('adr')
+        ;
 
         if ($nom) {
             $qb->andWhere("p.nom like :nom")->setParameter('nom', $nom);

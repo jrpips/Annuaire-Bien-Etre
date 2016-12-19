@@ -68,7 +68,7 @@ class PrestataireController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $new_prestataire->setSalt('')->setRoles('ROLE_PRESTATAIRE');
-            //$this->container->get('security.password_encoder')->encodePassword($new_prestataire,$new_prestataire->getPassword());
+
             $em->persist($new_prestataire);
 
             $em->flush();
@@ -77,9 +77,38 @@ class PrestataireController extends Controller
 
             return $this->redirectToRoute('home');
         }
-        return $this->render('Public\Prestataires\form.signup.prestataire.html.twig', array(
+        return $this->render('Public\Prestataires\Register\form.signup.prestataire.html.twig', array(
             'form' => $form->createView(),
             'prestataire' => $new_prestataire
+        ));
+    }
+
+    /**
+     * @Route("/prestataire/mise-a-jour/{nomPrestataire}",options={"expose"=true},name="update_prestataire")
+     */
+    public
+    function updatePrestataireAction(Request $request, $nomPrestataire = null)
+    {
+        if ($nomPrestataire) {
+            $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findOneByNom($nomPrestataire);
+        } else {
+            $prestataire = $this->getUser();
+        }
+
+        $form = $this->get('form.factory')->create(UtilisateurType::class, $prestataire)->add('prestataire', PrestataireType::class);//->remove('password', PasswordType::class, array('required' => false));
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($prestataire);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('notice', 'Modifications enregistrées.');
+
+            return $this->redirectToRoute('home');
+        }
+        return $this->render('Public\Prestataires\Register\form.signup.prestataire.html.twig', array(
+            'form' => $form->createView(),
+            'prestataire' => $prestataire
         ));
     }
 
@@ -154,35 +183,6 @@ class PrestataireController extends Controller
         $form = $this->get('form.factory')->create(ContactType::class);
         return $this->render('Public/Prestataires/form.contact.prestataire.html.twig', array(
             'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * @Route("/prestataire/mise-a-jour/{nomPrestataire}",options={"expose"=true},name="update_prestataire")
-     */
-    public
-    function updatePrestataireAction(Request $request, $nomPrestataire = null)
-    {
-        if ($nomPrestataire) {
-            $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findOneByNom($nomPrestataire);
-        } else {
-            $prestataire = $this->getUser();
-        }
-
-        $form = $this->get('form.factory')->create(UtilisateurType::class, $prestataire)->add('prestataire', PrestataireType::class);//->remove('password', PasswordType::class, array('required' => false));
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($prestataire);
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('notice', 'Modifications enregistrées.');
-
-            return $this->redirectToRoute('home');
-        }
-        return $this->render('Public\Prestataires\form.signup.prestataire.html.twig', array(
-            'form' => $form->createView(),
-            'prestataire' => $prestataire
         ));
     }
 

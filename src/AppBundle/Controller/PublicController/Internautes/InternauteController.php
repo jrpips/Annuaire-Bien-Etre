@@ -54,61 +54,6 @@ class InternauteController extends Controller
     }
 
     /**
-     * @Route("/gestion/favoris/liste",options={"expose"=true},name="display_favoris")
-     */
-    public function displayFavorisAction()
-    {
-        return $this->render('Public/Internautes/EditProfile/display.liste.favoris.html.twig');
-    }
-
-    /**
-     * @Route("/gestion/favoris/add/{nomPrestataire}",options={"expose"=true},name="add_favori")
-     */
-    public function addFavorisAction(Request $request, $nomPrestataire)
-    {
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {
-
-            $em = $this->getDoctrine()->getManager();
-
-            $newAbonne = $em->getRepository('AppBundle:Internaute')->getPrestatairesFavoris($this->getUser()->getInternaute()->getId());// récupération de l'Internaute qui s'abonne
-            $newFavori = $em->getRepository('AppBundle:Prestataire')->findByNom($nomPrestataire);// récupération du Prestataire choisi
-
-            $newAbonne[0]->addFavori($newFavori[0]);// ajout du nouvel abonné (Internaute) à son favori (Prestataire)
-
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
-        }
-        return $this->redirectToRoute('home');
-
-    }
-
-    /**
-     * @Route("/gestion/favoris/remove/{nomPrestataire}/{from}",options={"expose"=true},name="remove_favori")
-     */
-    public function removeFavorisAction(Request $request, $nomPrestataire = null, $from = 'home')
-    {
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {
-
-            $em = $this->getDoctrine()->getManager();
-
-            $oldAbonne = $em
-                ->getRepository('AppBundle:Internaute')
-                ->findInternaute($this->getUser()->getInternaute()->getId());
-
-            $oldFavori = $em
-                ->getRepository('AppBundle:Prestataire')
-                ->findByNom($nomPrestataire);
-
-            $oldAbonne[0]->removeFavori($oldFavori[0]);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
-        }
-
-        return $this->redirectToRoute($from);
-    }
-
-    /**
      * @Route("/inscription/internaute/pre-inscription",options={"expose"=true},name="signup")
      */
     public function preSignupInternauteAction(Request $request)
@@ -161,7 +106,6 @@ class InternauteController extends Controller
         } catch (Exception $e) {
             return $this->redirectToRoute('home');
         }
-//dump($first_step_signup);die();
         if (($first_step_signup) && ($first_step_signup->getToken() == $token)) {
             $internaute = new Utilisateur();
         } else {
@@ -179,6 +123,7 @@ class InternauteController extends Controller
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($internaute);
+                $em->remove($first_step_signup);
                 $em->flush();
 
                 return $this->redirectToRoute('home');
@@ -189,6 +134,61 @@ class InternauteController extends Controller
             'user' => $internaute,
             'signup' => $first_step_signup
         ));
+    }
+
+    /**
+     * @Route("/gestion/favoris/liste",options={"expose"=true},name="display_favoris")
+     */
+    public function displayFavorisAction()
+    {
+        return $this->render('Public/Internautes/EditProfile/display.liste.favoris.html.twig');
+    }
+
+    /**
+     * @Route("/gestion/favoris/add/{nomPrestataire}",options={"expose"=true},name="add_favori")
+     */
+    public function addFavorisAction(Request $request, $nomPrestataire)
+    {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $newAbonne = $em->getRepository('AppBundle:Internaute')->getPrestatairesFavoris($this->getUser()->getInternaute()->getId());// récupération de l'Internaute qui s'abonne
+            $newFavori = $em->getRepository('AppBundle:Prestataire')->findByNom($nomPrestataire);// récupération du Prestataire choisi
+
+            $newAbonne[0]->addFavori($newFavori[0]);// ajout du nouvel abonné (Internaute) à son favori (Prestataire)
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+        }
+        return $this->redirectToRoute('home');
+
+    }
+
+    /**
+     * @Route("/gestion/favoris/remove/{nomPrestataire}/{from}",options={"expose"=true},name="remove_favori")
+     */
+    public function removeFavorisAction(Request $request, $nomPrestataire = null, $from = 'home')
+    {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $oldAbonne = $em
+                ->getRepository('AppBundle:Internaute')
+                ->findInternaute($this->getUser()->getInternaute()->getId());
+
+            $oldFavori = $em
+                ->getRepository('AppBundle:Prestataire')
+                ->findByNom($nomPrestataire);
+
+            $oldAbonne[0]->removeFavori($oldFavori[0]);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+        }
+
+        return $this->redirectToRoute($from);
     }
 
     /**
