@@ -21,8 +21,8 @@ class LoadAbusData extends AbstractFixture implements OrderedFixtureInterface {
         $abus->setDescription($faker->sentence($nbWords = 6, $variableNbWords = false));
         $abus->setEncodage(new \DateTime());
 
-        $abus->setInternaute($this->getReference('internaute1'));
-        $abus->setCommentaire($this->getReference('commentaire0'));
+        $abus->setDenonceur($this->getReference('utilisateur6'));
+        $abus->setCommentDenonce($this->getReference('commentaire0'));
 
         $manager->persist($abus);
 

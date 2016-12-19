@@ -35,6 +35,7 @@ class LoadUtilisateurData extends AbstractFixture implements OrderedFixtureInter
             $user->setEssaiPwd(0);
             $user->setBanni(false);
             $user->setInscriptionConf(true);
+            $this->addReference('utilisateur' . $i, $user);
             if ($i < 5) {
                 $user->setPrestataire($this->getReference('prestataire' . $i));
                 $user->setRoles('ROLE_PRESTATAIRE');
