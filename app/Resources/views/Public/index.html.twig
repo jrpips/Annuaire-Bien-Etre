@@ -20,8 +20,6 @@
 
                     <div id="myCarousel" class="carousel slide" data-ride="carousel">
 
-                        <!-- Indicators -->
-
                         <ol class="carousel-indicators">
 
                             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -30,12 +28,9 @@
 
                         </ol>
 
-                        <!-- Wrapper for slides -->
-
                         <div class="carousel-inner" role="listbox">
 
-                            {% set slider =['poster.jpg','poster2.jpg','poster3.jpg'] %} <!-- erzatz chargement DB -->
-
+                            {% set slider =['poster.jpg','poster2.jpg','poster3.jpg'] %} {# erzatz chargement DB #}
                             {% for photo in slider %}
 
                                 {% set class=loop.index==1?'active':'' %}
@@ -43,28 +38,25 @@
                                 <div class="item {{ class }}">
                                     <img src="{{ asset("image/"~photo) }}" alt="Chania">
                                 </div>
-
                             {% endfor %}
 
                         </div>
 
                         <div class="container" id="gp_content">
-
                             <div class="row">
 
                                 <div class="col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
-
                                     <h1>Bien-Être</h1>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>Maecenas a porttitor
-                                        sem. Morbi et lacinia. </p>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>Maecenas a
+                                        porttitor
+                                        sem. Morbi et lacinia.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
 
-                                </div><!-- /.col-* -->
-
-                            </div><!-- /.row -->
-
-                        </div><!-- /.container -->
-
-                    </div><!--/# myCarousel -->
+                    </div>
 
                     <div class="container">
 
@@ -72,13 +64,11 @@
 
                             <div class="partners">
                                 {% for i in 1..5 %}
-
                                     <a href="#">
                                         <img src="{{ asset('image/tmp/partner-'~i~'.jpg') }}" alt="">
                                     </a>
-
                                 {% endfor %}
-                            </div><!-- /.partners -->
+                            </div>
 
                         </div>
 
@@ -86,9 +76,10 @@
 
                             <h1>Services</h1>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>Maecenas a porttitor sem.
-                                Morbi et lacinia. </p>
+                                Morbi et lacinia.
+                            </p>
 
-                        </div><!-- /.page-header -->
+                        </div>
 
                         <div class="cards-simple-wrapper">
 
@@ -100,45 +91,35 @@
 
                                     <div class="col-sm-6 col-md-3">
 
-                                            <div class="card-simple">
+                                        <div class="card-simple">
 
-                                                <div class="card-simple-background"
-                                                     style="background:url('{{ asset(pathImg~s.image) }}') no-repeat;background-size:cover">
+                                            <div class="card-simple-background"
+                                                 style="background:url('{{ asset(pathImg~s.image) }}') no-repeat;background-size:cover">
 
-                                                    <div class="card-simple-content">
-                                                        <h2><a href="{{ path('service_prestataires',{'service':s.nom}) }}">{{ s.description }}</a></h2>
+                                                <div class="card-simple-content">
+                                                    <h2>
+                                                        <a href="{{ path('service_prestataires',{'service':s.nom}) }}">{{ s.description|capitalize }}</a>
+                                                    </h2>
 
-                                                        <div class="card-simple-actions">
-                                                            <p>{{ s.description }}</p>
+                                                    <div class="card-simple-actions">
+                                                        <p>
+                                                            <a class="btn btn-primary" href="{{ path('service_prestataires',{'service':s.nom}) }}">Prestataires associés</a>
+                                                        </p>
+                                                    </div>
+                                                </div>
 
-                                                        </div><!-- /.card-simple-actions -->
-
-                                                    </div><!-- /.card-simple-content -->
-
-                                                    <div class="card-simple-label">{{ s.nom }}</div>
-
-                                                </div><!-- /.card-simple-background -->
-
-                                            </div><!-- /.card-simple -->
-
-                                    </div><!-- /.col-* -->
-
+                                                <div class="card-simple-label">{{ s.nom|capitalize }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 {% endfor %}
-
-                            </div><!-- /.row -->
-
-                        </div><!-- /.cards-simple-wrapper -->
-
-                    </div><!-- /.container -->
-
-                </div><!-- /.mt-80 -->
-
-            </div><!-- /.content -->
-
-        </div><!-- /.main-inner -->
-
-    </div><!-- /.main -->
-
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 

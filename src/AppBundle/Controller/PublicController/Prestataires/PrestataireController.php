@@ -27,6 +27,7 @@ use AppBundle\Entity\Prestataire;
 use AppBundle\Entity\CategService;
 use AppBundle\Entity\Utilisateur;
 use AppBundle\Entity\Commentaire;
+use AppBundle\Form\UtilisateurType;
 use AppBundle\Form\PrestataireType;
 use AppBundle\Form\ContactType;
 use AppBundle\Form\MoteurDeRechercheType;
@@ -57,16 +58,20 @@ class PrestataireController extends Controller
     public
     function subscribeNewPrestataireAction(Request $request)
     {
-        $new_prestataire = new Prestataire();
+        $new_prestataire = new Utilisateur();
 
-        $form = $this->get('form.factory')->create(PrestataireType::class, $new_prestataire);
+        $form = $this->get('form.factory')->create(UtilisateurType::class, $new_prestataire)->add('prestataire', PrestataireType::class);
+
         $form->handleRequest($request);
-
+        dump($form);
         if ($form->isSubmitted() && $form->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
-            $new_prestataire->setSalt('')->setRoles('ROLE_PRESTATTAIRE');
+            $new_prestataire->setSalt('')->setRoles('ROLE_PRESTATAIRE');
             $em->persist($new_prestataire);
+
             $em->flush();
+
             $request->getSession()->getFlashBag()->add('notice', 'Profil Prestataire bien enregistré.');
 
             return $this->redirectToRoute('home');
@@ -106,7 +111,7 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("recherche/prestataire/resultat",options={"expose"=true},name="simple_search_prestataire")
+     * @Route("recherche/prestataire",options={"expose"=true},name="simple_search_prestataire")
      */
     public
     function simpleMoteurDeRechercheAction(Request $request)
@@ -123,7 +128,7 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("recherche/prestataire/resultat",options={"expose"=true},name="advanced_search_prestataire")
+     * @Route("recherche/avancee/prestataire",options={"expose"=true},name="advanced_search_prestataire")
      */
     public
     function advancedMoteurDeRechercheAction(Request $request)
@@ -160,17 +165,17 @@ class PrestataireController extends Controller
         if ($nomPrestataire) {
             $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findOneByNom($nomPrestataire);
         } else {
-            $prestataire = $this->getUser()->getPrestataire();
+            $prestataire = $this->getUser();
         }
 
-        $form = $this->get('form.factory')->create(PrestataireType::class, $prestataire)->remove('password', PasswordType::class, array('required' => false));
+        $form = $this->get('form.factory')->create(UtilisateurType::class, $prestataire)->add('prestataire', PrestataireType::class);//->remove('password', PasswordType::class, array('required' => false));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($prestataire);
             $em->flush();
-            $request->getSession()->getFlashBag()->add('notice', 'Profil Prestataire bien enregistré.');
+            $request->getSession()->getFlashBag()->add('notice', 'Modifications enregistrées.');
 
             return $this->redirectToRoute('home');
         }

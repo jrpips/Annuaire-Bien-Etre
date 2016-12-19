@@ -2,7 +2,7 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    {{parent()}}
+    {{ parent() }}
 {% endblock %}
 
 {% block title %}
@@ -14,47 +14,59 @@
 
         <div class="main-inner">
 
-            <div class="content">
+            <div class="container">
 
                 <div class="row">
 
-                    <div class="col-md-offset-3">
-
-                        <h4 class="media-heading">Services</h4>
-                        
-                        <ul class="media-list">
-                            
-                            {% for service in services %}  
-                                
-                                <li class="media">
-                                    
-                                    <div class="media-left">
-                                        {% set pathImg=(service.image.url matches '{^http}')?'':'image/userUploads/' %}
-                                        <img  style="width:100px;" src="{{ asset(pathImg~service.image.url )}}" alt="{{ service.image.name }}"/>
-
-                                    </div>
-
-                                    <div class="media-body">
-
-                                        <a href="{{ path('details_service',{'service_nom':service.nom})}}">{{ service.nom }}</a>                     
-                                        <div>{{service.description}}</div>
-                                        {{service.image.url}}
-
-                                    </div>  
-                                        
-                                </li>
-                                
-                            {% endfor %}
-
-                        </ul>
-
+                    <div class="page-title">
+                        <h2>Les services</h2>
                     </div>
 
+                        <ul class="media-list">
+                        {% for service in services %}
+                            {% set pathImg=(service.image.url matches '{^http}')?'':'image/userUploads/' %}
+                            <div class="post post-boxed">
+                                <div class="post-image"><a
+                                            href="{{ path('details_service',{'service_nom':service.nom}) }}">
+                                        <img src="{{ asset(pathImg~service.image.url ) }}"
+                                             alt="{{ service.image.name }}"/>
+                                    </a>
+                                </div>
+
+                                <div class="post-content">
+                                    <h2>
+                                        <a href="blog-detail.html">{{ service.nom }}</a>
+                                        <a></a>
+                                    </h2>
+                                    <a>
+                                        <p>{{ service.description }}</p>
+                                    </a>
+                                </div>
+                                <a>
+
+                                </a>
+                                <div class="post-meta clearfix"><a>
+                                    </a>
+                                    <div class="post-meta-author"><a>By </a><a href="blog-detail.html">Parnel Herbie</a>
+                                    </div>
+                                    <div class="post-meta-date">06/18/2015</div>
+                                    <div class="post-meta-categories"><i class="fa fa-tags"></i> <a
+                                                href="blog-detail.html">Transport</a>
+                                    </div>
+                                    <div class="post-meta-comments"><i class="fa fa-comments"></i> <a
+                                                href="blog-detail.html">3 comments</a></div>
+
+                                    <div class="post-meta-more"><a
+                                                href="{{ path('details_service',{'service_nom':service.nom}) }}">Voir
+                                            les détails <i
+                                                    class="fa fa-chevron-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </ul>
                 </div>
-
             </div>
-
         </div>
-
     </div>
-{%endblock%}
+{% endblock %}

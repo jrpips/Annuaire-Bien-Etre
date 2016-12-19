@@ -4,8 +4,9 @@
 {% block body %}
     <div class="container">
         <div class="page-header">
-
-            <h1>Résultat de votre recherche</h1>
+{% set nb = prestataires|length %}
+            {% set pluriel=(nb>1)?'Résultats':'Résultat' %}
+            <h2>{{ pluriel }} de votre recherche: {{ nb }}</h2>
 
         </div>
 
@@ -16,9 +17,11 @@
                     <div class="col-sm-6 col-md-3">
 
                         <div class="card-simple">
-
-                            {% set imgServicePrestataire=(prestataire.images is not null)?(prestataire.images)|first.url:'image/prestataire.png' %}
-
+{% if prestataire.images|length >0 %}
+                            {% set imgServicePrestataire=(prestataire.images is defined)?(prestataire.images)|first.url:'image/prestataire.png' %}
+{% else %}
+    {% set imgServicePrestataire='image/poster.jpg' %}
+{% endif %}
                             <div class="card-simple-background" style="background:url('{{asset(imgServicePrestataire)}}') no-repeat;background-size:cover">
 
                                 <div class="card-simple-content">
@@ -33,24 +36,23 @@
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
-                                    </div><!-- /.card-rating -->
+                                    </div>
 
                                     <div class="card-simple-actions">
                                         <a href="#" class="fa fa-bookmark-o"></a>
                                         <a href="listing-detail.html" class="fa fa-search"></a>
                                         <a href="#" class="fa fa-heart-o"></a>{#injecter ID prestataire#}
-                                    </div><!-- /.card-simple-actions -->
+                                    </div>
 
-                                </div><!-- /.card-simple-content -->
+                                </div>
 
                                 {#                                          {% set firstService=(prestataire.categServices is defined)?(prestataire.categServices)|first.nom:'service' %}#}
                                 <div class="card-simple-label">{{ prestataire.siteInternet }}</div>
 
-                            </div><!-- /.card-simple-background -->
+                            </div>
+                        </div>
 
-                        </div><!-- /.card-simple -->
-
-                    </div><!-- /.col-* -->
+                    </div>
 
                 {% endfor %}
             </div>

@@ -7,20 +7,25 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use AppBundle\Form\ImageType;
 
-class MoteurDeRechercheType extends AbstractType {
+class MoteurDeRechercheType extends AbstractType
+{
 
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         $builder
-                ->add('nom', TextType::class, array('required' => false))
-                ->add('commune', TextType::class, array('required' => false))
-                ->add('service', TextType::class, array('required' => false))
-                ->add('rechercher', SubmitType::class);
+            ->add('nom', TextType::class, array('required' => false))
+            ->add('service', TextType::class, array('required' => false))
+            ->add('commune', TextType::class, array('required' => false))
+            ->add('cp', IntegerType::class, array('required' => false,'label_format'=>'Code postal'))
+            ->add('localite', TextType::class, array('required' => false,'label_format'=>'Province'))
+            ->add('rechercher', SubmitType::class);
     }
 
-    public function getName() {
+    public function getName()
+    {
         return 'moteur_de_recherche';
     }
 

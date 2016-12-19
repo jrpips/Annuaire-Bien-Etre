@@ -13,7 +13,11 @@
         <div class="main-inner" jstcache="0">
             <div class="content" jstcache="0">
                 <div class="mt-80 mb80">
-                    {% set imgServicePrestataire=(prestataire.images is not null)?(prestataire.images)|first.url:'image/prestataire.png' %}
+                    {% if prestataire.images|length >0 %}
+                        {% set imgServicePrestataire=(prestataire.images is defined)?(prestataire.images)|first.url:'image/prestataire.png' %}
+                    {% else %}
+                        {% set imgServicePrestataire='image/poster.jpg' %}
+                    {% endif %}
                     <div class="detail-banner"
                          style="background:url('{{ asset(imgServicePrestataire) }}') no-repeat;background-size:cover">
                         <div class="container">
@@ -68,36 +72,39 @@
                                     </a>
                                 {% endif %}
                             </div>
-                            <div style="background-color:transparent;width:300px;height:150px;"
+                            <div style="background-color:transparent;width:200px;height:150px;"
                                  class="detail-banner-right">
 
                                 {% if prestataire.promotions is not empty and prestataire.stages is not empty %}
-                                <div class="carousel slide" data-ride="carousel">
+                                    <div class="carousel slide" data-ride="carousel">
 
-                                    <div class="carousel-inner" role="listbox">
-{#https://www.google.be/search?q=promotion&espv=2&biw=528&bih=938&site=webhp&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiRn_bh7d3QAhUGXRoKHbV8B1AQ_AUIBigB#imgrc=0w5_lqL-xuHJhM%3A#}
-                                        <div class="item active">
-                                            <img
-                                                    src="{{ asset('image/admin.png') }}" alt="Flower">
-                                            <div class="carousel-caption">
-                                                <h3>{{ prestataire.promotions|first.nom }}</h3>
-                                                <p>{{ prestataire.promotions|first.description }}
-                                                    <br>du: {{ prestataire.promotions|first.dateDebut|date('d/m') }} au: {{ prestataire.promotions|first.dateFin|date('d/m') }}
-                                                </p>
+                                        <div class="carousel-inner" role="listbox">
+                                            {#https://www.google.be/search?q=promotion&espv=2&biw=528&bih=938&site=webhp&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiRn_bh7d3QAhUGXRoKHbV8B1AQ_AUIBigB#imgrc=0w5_lqL-xuHJhM%3A#}
+                                            <div class="item active">
+                                                <div id="vignette-promo">
+                                                    <h3>{{ prestataire.promotions|first.nom }}</h3>
+                                                    <p>{{ prestataire.promotions|first.description }}
+                                                        <br>du: {{ prestataire.promotions|first.dateDebut|date('d/m') }}
+                                                        au: {{ prestataire.promotions|first.dateFin|date('d/m') }}
+
+                                                    </p>
+                                                    <img style="width: 150px"
+                                                         src="{{ asset('image/promo1.png') }}" alt="Flower">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="item">
-                                            <img
-                                                    src="{{ asset('image/gp_mini_logo.png') }}" alt="Flower">
-                                            <div class="carousel-caption">
-                                                <h3>Flowers</h3>
-                                                <p>Beatiful flowers in Kolymbari, Crete.</p>
+
+                                            <div class="item">
+                                                <div id="vignette-promo">
+
+                                                        <h3>Flowers</h3>
+                                                        <p>Beatiful flowers in Kolymbari, Crete.</p>
+                                                        <img style="width: 150px;"
+                                                             src="{{ asset('image/promo.png') }}" alt="Flower">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 {% endif %}
-
                             </div>
                         </div>
                     </div>
@@ -105,7 +112,7 @@
 
                 <div class="container" jstcache="0">
                     <div class="row detail-content" jstcache="0">
-                        <div class="col-sm-7"  jstcache="0">
+                        <div class="col-sm-7" jstcache="0">
                             {# google map #}
                             <h2 style="margin-top:0">Nous sommes ici</h2>
                             <div class="background-white p20">
@@ -183,7 +190,7 @@
                                 {% else %}
                                     <div class="background-white p20">
 
-                                        Aucuns commentaires...
+                                        Aucuns commentaires à propos de ce prestataire ...
 
                                     </div>
                                 {% endif %}
@@ -192,44 +199,53 @@
                         </div>
 
                         <div class="col-sm-5">
-
                             <div class="background-white p20">
                                 <div class="detail-overview-hearts">
-                                    <i class="fa fa-bookmark" style="color:burlywood"></i>
-                                    <strong>{{ prestataire.abonnes|length }} </strong>abonné{% if  prestataire.abonnes|length>1 %}s{% endif %}
-                                </div>
-                                <div class="detail-overview-rating">
                                     <i class="fa fa-heart"></i>
                                     <strong>{{ (cote/ (prestataire.commentaires|length + 1))|round(1, 'common') }}
-                                        / 5 </strong>from {{ prestataire.commentaires|length }}
-                                    vote{% if  prestataire.commentaires|length>1 %}s{% endif %}
+                                        / 5 </strong>from {{ (prestataire.commentaires|length)+1 }}
+                                    vote{% if  prestataire.commentaires|length>0 %}s{% endif %}
                                 </div>
 
+                                <div class="detail-overview-rating">
+                                    <i class="fa fa-bookmark"></i>
+                                    <strong>{{ prestataire.abonnes|length }} </strong>abonné{% if  prestataire.abonnes|length>1 %}s{% endif %}
+                                </div>
+
+
                                 <div class="detail-actions row">
-                                    <div class="col-sm-4">
-                                        <div class="btn btn-primary btn-book"><i class="fa fa-shopping-cart"></i> Book
-                                            Now
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="btn btn-secondary btn-share"><i class="fa fa-share-square-o"></i>
+
+                                    <div class="col-sm-12">
+                                        <div style="background-color:gainsboro;color:white"
+                                             class="btn  btn-default btn-share"><i class="fa fa-share-square-o"></i>
                                             Share
                                             <div class="share-wrapper">
                                                 <ul class="share">
-                                                    <li><i class="fa fa-facebook"></i> Facebook</li>
-                                                    <li><i class="fa fa-twitter"></i> Twitter</li>
-                                                    <li><i class="fa fa-google-plus"></i> Google+</li>
-                                                    <li><i class="fa fa-pinterest"></i> Pinterest</li>
-                                                    <li><i class="fa fa-chain"></i> Link</li>
+                                                    <li>
+                                                        <div class="fb-share-button"
+                                                             data-href="https://developers.facebook.com/docs/plugins/"
+                                                             data-layout="button" data-mobile-iframe="false">
+                                                            <a href='http://www.facebook.com/sharer.php?u='
+                                                               ~app.request.uri><i class="fa fa-facebook"></i> Facebook</a>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <a href="http://twitter.com/share" data-count="vertical"
+                                                           data-via="InfoWebMaster"><i class="fa fa-twitter"></i>
+                                                            Twitter</a>
+                                                    </li>
+                                                    <li>
+                                                        <script type="text/javascript"
+                                                                src="http://platform.linkedin.com/in.js"></script>
+                                                        <script type="in/share" data-counter="right"></script>
+
+                                                    </li>
+
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <div class="btn btn-secondary btn-claim"><i class="fa fa-hand-peace-o"></i>
-                                            Claim
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
                             {# section: A propos de [nom prestataire] #}
@@ -262,9 +278,9 @@
                                 </div>
 
                                 {% for service in prestataire.categServices %}
-                                    <div><span class="text-secondary">{{ service.nom }}</span></div>
+                                    <div><span class="text-secondary">{{ service.nom|capitalize }}</span></div>
                                     <div class="detail-description">
-                                        <div>{{ service.description }}</div>
+                                        <div>{{ service.description|capitalize }}</div>
                                     </div>
                                 {% endfor %}
 
@@ -288,7 +304,8 @@
                                     <ul class="detail-amenities">
                                         {% if prestataire.stages is not empty %}
                                             {% for stage in prestataire.stages %}
-                                                <li class="yes"> {{ stage.nom }}<br>{{ stage.description }}
+                                                <li class="yes"> {{ stage.nom|capitalize }}
+                                                <br>{{ stage.description|capitalize }}
                                             {% endfor %}
                                         {% else %}
                                             <li class="no">Pas de stage organisé actuellement.</li>
@@ -306,8 +323,8 @@
                                         {% if prestataire.promotions is not empty %}
                                             {% for promo in prestataire.promotions %}
                                                 <div class="well">
-                                                    <li class="yes"> {{ promo.nom }}
-                                                        <br>{{ promo.description }}
+                                                    <li class="yes"> {{ promo.nom|capitalize }}
+                                                        <br>{{ promo.description|capitalize }}
                                                         <br>Service :
                                                         <a href="{{ path('details_service',{'service_nom':promo.categService}) }}">
                                                             {{ promo.categService }}
@@ -331,7 +348,9 @@
 
                                         {% set match=(service in  prestataire.categServices)?'yes':'no' %}
                                         {% if service.valide %}
-                                            <li class="{{ match }}">{{ service.nom }}</li>
+                                            <li class="{{ match }}"><a
+                                                        href="{{ path('details_service',{'service_nom':service.nom}) }}">{{ service.nom|capitalize }}</a>
+                                            </li>
                                         {% endif %}
                                     {% endfor %}
                                 </ul>
@@ -365,4 +384,7 @@
     </div>
     <script src="http://maps.google.com/maps/api/js?Key=AIzaSyCm9IyG4uLCEBqmBl4bCmlHhUvCUB3Xtks&amp;sensor=false;"></script>
     <script type="text/javascript" src="{{ asset('js/gpGoogleMap.js') }}"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+
+
 {% endblock %}

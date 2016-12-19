@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -11,7 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="stage")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\StageRepository")
  */
-class Stage {
+class Stage
+{
 
     /**
      * @var int
@@ -99,11 +101,44 @@ class Stage {
     private $affichageFin;
 
     /**
+     * @Assert\IsTrue(message="La date du début est inférieure à celle d'aujourd'hui")
+     */
+    public function isDateDebutValid()
+    {
+        $today = new \DateTime();
+        return $today <= $this->getDateDebut();
+    }
+
+    /**
+     * @Assert\IsTrue(message="La date de fin est inférieure à celle du début.")
+     */
+    public function isDateFinValid()
+    {
+        return $this->getDateDebut() >= $this->getDateFin();
+    }
+    /**
+     * @Assert\IsTrue(message="La date d'affichage du début est inférieure à celle d'aujourd'hui")
+     */
+    public function isDebutAffichageValid()
+    {
+        $today = new \DateTime();
+        return $today <= $this->getAffichageDebut();
+    }
+    /**
+     * @Assert\IsTrue(message="La date de fin d'affichage est inférieure à celle du début.")
+     */
+    public function isAffichageFinValid()
+    {
+        return $this->getAffichageDebut() <= $this->getAffichageFin();
+    }
+
+    /**
      * Get id
      *
      * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -114,7 +149,8 @@ class Stage {
      *
      * @return Stage
      */
-    public function setNom($nom) {
+    public function setNom($nom)
+    {
         $this->nom = $nom;
 
         return $this;
@@ -125,7 +161,8 @@ class Stage {
      *
      * @return string
      */
-    public function getNom() {
+    public function getNom()
+    {
         return $this->nom;
     }
 
@@ -136,7 +173,8 @@ class Stage {
      *
      * @return Stage
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
 
         return $this;
@@ -147,7 +185,8 @@ class Stage {
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
@@ -158,7 +197,8 @@ class Stage {
      *
      * @return Stage
      */
-    public function setTarif($tarif) {
+    public function setTarif($tarif)
+    {
         $this->tarif = $tarif;
 
         return $this;
@@ -169,7 +209,8 @@ class Stage {
      *
      * @return string
      */
-    public function getTarif() {
+    public function getTarif()
+    {
         return $this->tarif;
     }
 
@@ -180,7 +221,8 @@ class Stage {
      *
      * @return Stage
      */
-    public function setInfo($info) {
+    public function setInfo($info)
+    {
         $this->info = $info;
 
         return $this;
@@ -191,7 +233,8 @@ class Stage {
      *
      * @return string
      */
-    public function getInfo() {
+    public function getInfo()
+    {
         return $this->info;
     }
 
@@ -202,7 +245,8 @@ class Stage {
      *
      * @return Stage
      */
-    public function setDateDebut($dateDebut) {
+    public function setDateDebut($dateDebut)
+    {
         $this->dateDebut = $dateDebut;
 
         return $this;
@@ -213,7 +257,8 @@ class Stage {
      *
      * @return \DateTime
      */
-    public function getDateDebut() {
+    public function getDateDebut()
+    {
         return $this->dateDebut;
     }
 
@@ -224,7 +269,8 @@ class Stage {
      *
      * @return Stage
      */
-    public function setDateFin($dateFin) {
+    public function setDateFin($dateFin)
+    {
         $this->dateFin = $dateFin;
 
         return $this;
@@ -235,7 +281,8 @@ class Stage {
      *
      * @return \DateTime
      */
-    public function getDateFin() {
+    public function getDateFin()
+    {
         return $this->dateFin;
     }
 
@@ -246,7 +293,8 @@ class Stage {
      *
      * @return Stage
      */
-    public function setAffichageDebut($affichageDebut) {
+    public function setAffichageDebut($affichageDebut)
+    {
         $this->affichageDebut = $affichageDebut;
 
         return $this;
@@ -257,7 +305,8 @@ class Stage {
      *
      * @return \DateTime
      */
-    public function getAffichageDebut() {
+    public function getAffichageDebut()
+    {
         return $this->affichageDebut;
     }
 
@@ -268,7 +317,8 @@ class Stage {
      *
      * @return Stage
      */
-    public function setAffichageFin($affichageFin) {
+    public function setAffichageFin($affichageFin)
+    {
         $this->affichageFin = $affichageFin;
 
         return $this;
@@ -279,7 +329,8 @@ class Stage {
      *
      * @return \DateTime
      */
-    public function getAffichageFin() {
+    public function getAffichageFin()
+    {
         return $this->affichageFin;
     }
 

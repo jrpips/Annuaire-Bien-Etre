@@ -16,18 +16,17 @@ class ImageType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('name', TextType::class, array('required' => false))
-                ->add('file', FileType::class, array('required' => false,'label'=>'Déposer votre image'))
+                ->add('name', TextType::class, array('required' => false,'label_format'=>'Titre de la photo'))
+                ->add('file', FileType::class, array('required' => false,'label_format'=>'Déposer votre image'))
         ;
     }
-
     /**
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Image',
-//             'cascade_validation' => true
+            //'cascade_validation' => true
         ));
     }
 

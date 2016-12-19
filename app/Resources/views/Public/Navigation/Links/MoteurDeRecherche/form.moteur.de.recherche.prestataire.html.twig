@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block title %}
-    Signaler un abus - {{ parent() }}
+    Recherche avancée - {{ parent() }}
 {% endblock %}
 
 {% block body %}
@@ -15,26 +15,50 @@
                 <div class="container">
                     <div class="content">
                         <div class="row">
-                            <div class="page-title">
-                                <h1>Recherche avancée</h1>
+                            <div class="p20 background-black-light">
+                                <h4>{{ 'Recherche avancée'|upper }}</h4>
                             </div>
+                            <form class="filter" action="{{ path('advanced_search_prestataire') }}" method="POST">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                {{ form_label(form.nom) }}
+                                                {{ form_widget(form.nom) }}
+                                            </div>
+                                            <div class="col-sm-6">
+                                                {{ form_label(form.service) }}
+                                                {{ form_widget(form.service) }}
+                                            </div>
+                                        </div>
+                                    </div>
 
-                            <form action="{{ path('advanced_search_prestataire') }}" method="GET">
-                                <div class="form-group">
-                                    {{ form_label(form.nom) }}
-                                    {{ form_widget(form.nom) }}
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <div class="col-sm-4">
+                                                {{ form_label(form.commune) }}
+                                                {{ form_widget(form.commune) }}
+                                            </div>
+                                            <div class="col-sm-4">
+                                                {{ form_label(form.cp) }}
+                                                {{ form_widget(form.cp) }}
+                                            </div>
+                                            <div class="col-sm-4">
+                                                {{ form_label(form.localite) }}
+                                                {{ form_widget(form.localite) }}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    {{ form_label(form.commune) }}
-                                    {{ form_widget(form.commune) }}
+                                <div class="row p20">
+                                    <div class="col-sm-12">
+                                        <button type="submit" id="moteur_de_recherche_rechercher"
+                                                name="moteur_de_recherche[rechercher]" class="btn  pull-right">
+                                            Rechercher
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    {{ form_label(form.service) }}
-                                    {{ form_widget(form.service) }}
-                                </div>
-                                {{ form_rest(form) }}
                             </form>
-
                         </div>
                     </div>
                 </div>

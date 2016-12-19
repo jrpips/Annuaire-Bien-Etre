@@ -132,6 +132,7 @@ class InternauteController extends Controller
             }
             if ($form->isValid()) {
                 $values = $request->request->all();
+                $new_user->setToken();
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($new_user);
                 $em->flush();
@@ -151,18 +152,21 @@ class InternauteController extends Controller
     }
 
     /**
-     * @Route("/inscription/internaute/finalisation/{id}",options={"expose"=true},name="signup-final")
+     * @Route("/inscription/internaute/finalisation/{id}/{token}",options={"expose"=true},name="signup-final")
      */
-    public function signupInternauteStepFinalAction(Request $request, $id = null)
+    public function signupInternauteStepFinalAction(Request $request, $id, $token)
     {
-
-        if ($id) {
-            $first_step_signup = $this->getDoctrine()->getManager()->getRepository('AppBundle:SignUp')->find($id);
-        } else {
-            $first_step_signup = null;
+        try {
+            $first_step_signup = $this->getDoctrine()->getManager()->getRepository('AppBundle:SignUp')->findOneById($id);
+        } catch (Exception $e) {
+            return $this->redirectToRoute('home');
         }
-
-        $internaute = new Utilisateur();
+//dump($first_step_signup);die();
+        if (($first_step_signup) && ($first_step_signup->getToken() == $token)) {
+            $internaute = new Utilisateur();
+        } else {
+            return $this->redirectToRoute('about');
+        }
 
         $form = $this->get('form.factory')->create(UtilisateurType::class, $internaute)->add('internaute', InternauteType::class);
 

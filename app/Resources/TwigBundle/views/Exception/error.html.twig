@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}
+    About us  - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="main">
+        <div class="main-inner">
+            <div class="container">
+                <div class="content">
+
+                    <div class="caution">
+                        <h1>{{ status_code }}</h1>
+                        <h2>{{ status_text }}</h2>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

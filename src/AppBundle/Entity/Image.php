@@ -50,6 +50,8 @@ class Image {
      * 
      */
     protected $path;
+
+
     protected $file;
 
     public function getUploadRootDir() {

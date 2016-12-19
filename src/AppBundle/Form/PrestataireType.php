@@ -21,15 +21,11 @@ class PrestataireType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom', TextType::class, array('required' => false))
+            ->add('nom', TextType::class, array('required' => false,'label_format'=>'Nom de votre société'))
             ->add('siteInternet', TextType::class, array('required' => false))
-
-            ->add('telephone', TextType::class, array('required' => false))
-            ->add('tva', TextType::class, array('required' => false))
-            ->add('utilisateur', UtilisateurType::class)
-//            ->add('image', ImageType::class)
-            //->add('internautes', TextType::class, array('required' => false))
-//            ->add('categServices', EntityType::class, array('required' => false))
+            ->add('telephone', TextType::class, array('required' => false,'label_format'=>'Téléphone'))
+            ->add('tva', TextType::class, array('required' => false,'label_format'=>'Votre numéro de TVA'))
+           // ->add('image', ImageType::class)
            ->add('Envoyer', SubmitType::class,array('attr'=>array('class'=>'btn btn-default pull-right')))
         ;
     }

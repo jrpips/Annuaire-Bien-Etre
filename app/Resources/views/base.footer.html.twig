@@ -14,7 +14,7 @@
 
                     <p>numéro de T.V.A. 00123457880</p>
                     <h3>Siège social</h3>
-                    <p><a href="#">GALET s.a.</a><br>
+                    <p><a href="{{ path('contact') }}">GALET s.a.</a><br>
                         rue du Commerce, 13<br>
                         1000 Bruxelles<br>
                         BELGIQUE</p>
@@ -50,30 +50,19 @@
 
                     <ul class="social-links nav nav-pills">
 
-                      {# {% set foo=['twitter','facebook','linkedin'] %} <!-- erzatz chargement DB -->
+                      {% set foo=['twitter','facebook','linkedin'] %}<!-- erzatz chargement DB -->
 
                         {% for item in foo %}
                             <li>
-                                <a href="#"><i class="fa fa-{{ item }}"></i></a>
+                                <a href="https://www.{{ item }}.com" alt="{{ item }}"><i class="fa fa-{{ item }}"></i></a>
                             </li>
 
-                        {% endfor %}#}
-                        <li><a href="http://twitter.com/share"  data-count="vertical" data-via="InfoWebMaster"><i class="fa fa-twitter"></i></a>
+                        {% endfor %}
+
+                    </ul>
 
 
 
-
-                        <li>
-                            <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-mobile-iframe="false">
-                                <a  href='http://www.facebook.com/sharer.php?u='~app.request.uri ><i class="fa fa-facebook"></i></a>
-                            </div>
-
-                    </ul><!-- /.header-nav-social -->
-
-
-                    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-                    <script type="text/javascript" src="http://platform.linkedin.com/in.js"></script>
-                    <script type="in/share" data-counter="right"></script>
 
                 </div><!-- /.col-* -->
 
@@ -88,16 +77,16 @@
         <div class="container">
 
             <div class="footer-bottom-left">
-                &copy; {{ "now"|date("Y") }} All rights reserved. Created by <a href="#">Wargnier Christophe</a>.
+                &copy; {{ "now"|date("Y") }} All rights reserved. Created by <a href="https://www.linkedin.com/profile/preview?locale=fr_FR&trk=prof-0-sb-preview-primary-button">Wargnier Christophe</a>.
             </div><!-- /.footer-bottom-left -->
 
             <div class="footer-bottom-right">
 
                 <ul class="nav nav-pills">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="pricing.html">FAQ</a></li>
-                    <li><a href="terms-conditions.html">Termes &amp; Conditions</a></li>
-                    <li><a href="contact-1.html">Contact</a></li>
+                    <li><a href="{{ path('home') }}">Home</a></li>
+                    <li><a href="{{ path('about') }}">About us</a></li>
+                    <li><a href="{{ app.request.uri }}">Termes &amp; Conditions</a></li>
+                    <li><a href="{{ path('contact') }}">Contact</a></li>
                 </ul><!-- /.nav -->
 
             </div><!-- /.footer-bottom-right -->

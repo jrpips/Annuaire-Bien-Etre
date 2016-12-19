@@ -32,7 +32,7 @@ class CategServiceController extends Controller {
     }
 
     /**
-     * @Route("/services/details/du/service/{service_nom}", name="details_service")
+     * @Route("/services/details/service/{service_nom}", name="details_service")
      */
     public function getDetailsServiceAction($service_nom) {
 

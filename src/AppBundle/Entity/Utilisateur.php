@@ -12,7 +12,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="utilisateur")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UtilisateurRepository")
  */
-class Utilisateur implements UserInterface {
+class Utilisateur implements UserInterface
+{
 
     /**
      * @ORM\Column(name="id", type="integer")
@@ -40,7 +41,7 @@ class Utilisateur implements UserInterface {
      * @Assert\Valid
      */
     private $adresseUtilisateur;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Abus", cascade={"persist"},mappedBy="denonceur")
      * @ORM\JoinColumn(nullable=false)
@@ -66,7 +67,7 @@ class Utilisateur implements UserInterface {
      *      maxMessage = "Le pseudo ne peut contenir plus de 50 caractères."
      * )
      * @Assert\NotBlank(message="Un pseudo est requis")
-     * 
+     *
      * @ORM\Column(name="username", type="string", length=50)
      */
     private $username;
@@ -81,14 +82,16 @@ class Utilisateur implements UserInterface {
      * @Assert\Regex(
      *     pattern="/^[a-zA-Z0-9]+$/",
      *     match=true,
-     *     message="Le mot de passe ne peut contenir des caractères spéciaux." 
+     *     message="Le mot de passe ne peut contenir des caractères spéciaux."
      * )
      * @Assert\NotBlank(message="Minimun 3 caractères alphanumériques.")
-     * 
+     *
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
-    //private $confPwd;
+
+
+    private $confPwd;
 
     /**
      * @ORM\Column(name="roles", type="array")
@@ -104,10 +107,10 @@ class Utilisateur implements UserInterface {
      * @Assert\Regex(
      *     pattern="/^[0-9]+$/",
      *     match=true,
-     *     message="Le numéro est invalide." 
+     *     message="Le numéro est invalide."
      * )
      * @Assert\NotBlank(message="Un numéro est requis.")
-     * 
+     *
      * @ORM\Column(name="adresseNumero", type="float")
      */
     private $adresseNumero;
@@ -115,7 +118,7 @@ class Utilisateur implements UserInterface {
     /**
      * @Assert\NotBlank(message="Un nom de rue est requis.")
      *
-     * @ORM\Column(name="adresseRue", type="string", length=150)    
+     * @ORM\Column(name="adresseRue", type="string", length=150)
      */
     private $adresseRue;
 
@@ -139,11 +142,13 @@ class Utilisateur implements UserInterface {
      */
     private $inscriptionConf;
 
-    public function eraseCredentials() {
-        
+    public function eraseCredentials()
+    {
+
     }
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->setInscription(new \DateTime());
         $this->setBanni(false);
         $this->setInscriptionConf(true);
@@ -162,14 +167,16 @@ class Utilisateur implements UserInterface {
     /**
      * Get id
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
      * Set email
      */
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         $this->email = $email;
 
         return $this;
@@ -178,14 +185,16 @@ class Utilisateur implements UserInterface {
     /**
      * Get email
      */
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->email;
     }
 
     /**
      * Set pwd
      */
-    public function setPassword($password) {
+    public function setPassword($password)
+    {
         $this->password = $password;
 
         return $this;
@@ -194,25 +203,35 @@ class Utilisateur implements UserInterface {
     /**
      * Get pwd
      */
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
     }
 
-//    public function setConfPwd($confPwd) {
-//        $this->email = $confPwd;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get confPwd
-//     *
-//     * @return string
-//     */
-//    public function getConfPwd() {
-//        return $this->confPwd;
-//    }
+    public function setConfPwd($confPwd)
+    {
+        $this->confPwd = $confPwd;
 
+        return $this;
+    }
+
+    /**
+     * Get confPwd
+     *
+     * @return string
+     */
+    public function getConfPwd()
+    {
+        return $this->confPwd;
+    }
+
+    /**
+     *
+     * @Assert\IsTrue(message="La confirmation n'est pas identique au mot de passe.")
+     */
+    public function isConfPwdValid(){
+        return $this->password==$this->confPwd;
+    }
     /**
      * Set roles
      *
@@ -220,7 +239,8 @@ class Utilisateur implements UserInterface {
      *
      * @return User
      */
-    public function setRoles($roles) {
+    public function setRoles($roles)
+    {
         $this->roles = array($roles);
 
         return $this;
@@ -231,7 +251,8 @@ class Utilisateur implements UserInterface {
      *
      * @return array
      */
-    public function getRoles() {
+    public function getRoles()
+    {
         return $this->roles;
     }
 
@@ -242,7 +263,8 @@ class Utilisateur implements UserInterface {
      *
      * @return User
      */
-    public function setSalt($salt) {
+    public function setSalt($salt)
+    {
         $this->salt = $salt;
 
         return $this;
@@ -253,7 +275,8 @@ class Utilisateur implements UserInterface {
      *
      * @return string
      */
-    public function getSalt() {
+    public function getSalt()
+    {
         return $this->salt;
     }
 
@@ -264,7 +287,8 @@ class Utilisateur implements UserInterface {
      *
      * @return User
      */
-    public function setUsername($username) {
+    public function setUsername($username)
+    {
         $this->username = $username;
 
         return $this;
@@ -275,7 +299,8 @@ class Utilisateur implements UserInterface {
      *
      * @return string
      */
-    public function getUsername() {
+    public function getUsername()
+    {
         return $this->username;
     }
 
@@ -286,7 +311,8 @@ class Utilisateur implements UserInterface {
      *
      * @return Utilisateur
      */
-    public function setAdresseNumero($adresseNumero) {
+    public function setAdresseNumero($adresseNumero)
+    {
         $this->adresseNumero = $adresseNumero;
 
         return $this;
@@ -297,7 +323,8 @@ class Utilisateur implements UserInterface {
      *
      * @return float
      */
-    public function getAdresseNumero() {
+    public function getAdresseNumero()
+    {
         return $this->adresseNumero;
     }
 
@@ -308,7 +335,8 @@ class Utilisateur implements UserInterface {
      *
      * @return Utilisateur
      */
-    public function setAdresseRue($adresseRue) {
+    public function setAdresseRue($adresseRue)
+    {
         $this->adresseRue = $adresseRue;
 
         return $this;
@@ -319,7 +347,8 @@ class Utilisateur implements UserInterface {
      *
      * @return string
      */
-    public function getAdresseRue() {
+    public function getAdresseRue()
+    {
         return $this->adresseRue;
     }
 
@@ -330,7 +359,8 @@ class Utilisateur implements UserInterface {
      *
      * @return Utilisateur
      */
-    public function setEssaiPwd($essaiPwd) {
+    public function setEssaiPwd($essaiPwd)
+    {
         $this->essaiPwd = $essaiPwd;
 
         return $this;
@@ -341,7 +371,8 @@ class Utilisateur implements UserInterface {
      *
      * @return float
      */
-    public function getEssaiPwd() {
+    public function getEssaiPwd()
+    {
         return $this->essaiPwd;
     }
 
@@ -352,7 +383,8 @@ class Utilisateur implements UserInterface {
      *
      * @return Utilisateur
      */
-    public function setBanni($banni) {
+    public function setBanni($banni)
+    {
         $this->banni = $banni;
 
         return $this;
@@ -363,7 +395,8 @@ class Utilisateur implements UserInterface {
      *
      * @return bool
      */
-    public function getBanni() {
+    public function getBanni()
+    {
         return $this->banni;
     }
 
@@ -374,7 +407,8 @@ class Utilisateur implements UserInterface {
      *
      * @return Utilisateur
      */
-    public function setInscriptionConf($inscriptionConf) {
+    public function setInscriptionConf($inscriptionConf)
+    {
         $this->inscriptionConf = $inscriptionConf;
 
         return $this;
@@ -385,7 +419,8 @@ class Utilisateur implements UserInterface {
      *
      * @return bool
      */
-    public function getInscriptionConf() {
+    public function getInscriptionConf()
+    {
         return $this->inscriptionConf;
     }
 
@@ -396,7 +431,8 @@ class Utilisateur implements UserInterface {
      *
      * @return Utilisateur
      */
-    public function setInscription($inscription) {
+    public function setInscription($inscription)
+    {
         $this->inscription = $inscription;
 
         return $this;
@@ -407,7 +443,8 @@ class Utilisateur implements UserInterface {
      *
      * @return \DateTime
      */
-    public function getInscription() {
+    public function getInscription()
+    {
         return $this->inscription;
     }
 
@@ -418,7 +455,8 @@ class Utilisateur implements UserInterface {
      *
      * @return Utilisateur
      */
-    public function setInternaute(\AppBundle\Entity\Internaute $internaute) {
+    public function setInternaute(\AppBundle\Entity\Internaute $internaute)
+    {
         $this->internaute = $internaute;
 
         return $this;
@@ -429,7 +467,8 @@ class Utilisateur implements UserInterface {
      *
      * @return \AppBundle\Entity\Internaute
      */
-    public function getInternaute() {
+    public function getInternaute()
+    {
         return $this->internaute;
     }
 
@@ -440,7 +479,8 @@ class Utilisateur implements UserInterface {
      *
      * @return Utilisateur
      */
-    public function setAdresseUtilisateur(\AppBundle\Entity\AdresseUtilisateur $adresseUtilisateur = null) {
+    public function setAdresseUtilisateur(\AppBundle\Entity\AdresseUtilisateur $adresseUtilisateur = null)
+    {
         $this->adresseUtilisateur = $adresseUtilisateur;
 
         return $this;
@@ -451,7 +491,8 @@ class Utilisateur implements UserInterface {
      *
      * @return \AppBundle\Entity\AdresseUtilisateur
      */
-    public function getAdresseUtilisateur() {
+    public function getAdresseUtilisateur()
+    {
         return $this->adresseUtilisateur;
     }
 
@@ -462,7 +503,8 @@ class Utilisateur implements UserInterface {
      *
      * @return Utilisateur
      */
-    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire = null) {
+    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire = null)
+    {
         $this->prestataire = $prestataire;
 
         return $this;
@@ -473,7 +515,8 @@ class Utilisateur implements UserInterface {
      *
      * @return \AppBundle\Entity\Prestataire
      */
-    public function getPrestataire() {
+    public function getPrestataire()
+    {
         return $this->prestataire;
     }
 

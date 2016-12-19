@@ -8,6 +8,6 @@
         font-size:12px;
     }
 </style>
-<p>Bonjour {{ user.firstName }} {{ user.lastName }}!</p>
-<a href="http://127.0.0.1{{ path('signup-final',{'id':user.id}) }}">Valider mon inscription</a>
+<p>Bonjour {{ user.firstName|capitalize }} {{ user.lastName|capitalize }}!</p>
+<a href="http://127.0.0.1{{ path('signup-final',{'id':user.id,'token':user.token}) }}">Valider mon inscription</a>
 
