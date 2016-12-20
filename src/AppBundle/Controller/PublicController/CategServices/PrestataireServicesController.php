@@ -14,7 +14,7 @@ use AppBundle\Form\CategServiceType;
 class PrestataireServicesController extends Controller
 {
     /**
-     * @Route("/prestataire/consultation/liste/services",name="prestataire_services")
+     * @Route("/prestataire/liste/services",name="prestataire_services")
      */
     public function listeServicesPrestataireAction(Request $request)
     {
@@ -34,7 +34,7 @@ class PrestataireServicesController extends Controller
     }
 
     /**
-     * @Route("/prestataire/ajouter/service",name="add_service")
+     * @Route("/prestataire/ajout/service",name="add_service")
      */
     public function addNewServiveAction(Request $request)
     {

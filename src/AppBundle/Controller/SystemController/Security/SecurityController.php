@@ -28,7 +28,7 @@ class SecurityController extends Controller {
     }
 
     /**
-     * @Route("/mot-de-passe/modification", name="change_password",options={"expose"=true})
+     * @Route("/gestion/login", name="change_password",options={"expose"=true})
      */
     public function passwordModificationAction(Request $request) {
         $new_pwd = new PasswordModification();

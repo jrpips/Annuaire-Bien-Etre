@@ -33,8 +33,6 @@
         "knplabs/knp-snappy": "^0.4.3",
         "knplabs/knp-snappy-bundle": "~1.4",
         "wemersonjanuario/wkhtmltopdf-windows": "0.12.2.3"
-
-
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

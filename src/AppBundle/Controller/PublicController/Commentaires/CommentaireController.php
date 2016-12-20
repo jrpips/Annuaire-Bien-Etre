@@ -28,7 +28,7 @@ class CommentaireController extends Controller
     }
 
     /**
-     * @Route("/internaute/commentaire/prestataire",options={"expose"=true},name="add_comment")
+     * @Route("/internaute/commentaire",options={"expose"=true},name="add_comment")
      */
     public function addCommentAction(Request $request)
     {

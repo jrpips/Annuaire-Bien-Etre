@@ -53,7 +53,7 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("/inscription/prestataires",name="signupPrestataire")
+     * @Route("/inscription",name="signupPrestataire")
      */
     public
     function subscribeNewPrestataireAction(Request $request)
@@ -113,7 +113,7 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("/details/prestataire/{prestataire_nom}",name="details_prestataire")
+     * @Route("/profil/{prestataire_nom}",name="details_prestataire")
      */
     public
     function getPrestataireDetailsAction($prestataire_nom)
@@ -128,7 +128,7 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("recherche/prestataire",options={"expose"=true},name="form_advanced_search")
+     * @Route("recherche",options={"expose"=true},name="form_advanced_search")
      */
     public
     function moteurDeRechercheAction()
@@ -141,7 +141,7 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("recherche/simple/prestataire",options={"expose"=true},name="simple_search_prestataire")
+     * @Route("recherche/simple",options={"expose"=true},name="simple_search_prestataire")
      */
     public
     function simpleMoteurDeRechercheAction(Request $request)
@@ -158,7 +158,7 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("recherche/avancee/prestataire",options={"expose"=true},name="advanced_search_prestataire")
+     * @Route("recherche/avancee",options={"expose"=true},name="advanced_search_prestataire")
      */
     public
     function advancedMoteurDeRechercheAction(Request $request)
@@ -187,7 +187,7 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("internaute/contact/prestataire",options={"expose"=true},name="send_mail_prestataire")
+     * @Route("internaute/message",options={"expose"=true},name="send_mail_prestataire")
      */
     public
     function sendMailToPrestataireAction(Request $request)
@@ -224,7 +224,7 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("/utilisateur/selection/prestataires/proposant/service/{service}",name="service_prestataires")
+     * @Route("/selection/service/{service}",name="service_prestataires")
      */
     public
     function getListePrestatairesByService($service)
@@ -238,7 +238,7 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("/prestataire/retirer/service",options={"expose"=true},name="remove_service")
+     * @Route("/prestataire/retrait/service",options={"expose"=true},name="remove_service")
      */
     public function removeServiveAction(Request $request)
     {
@@ -264,7 +264,7 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("/prestataire/add/service",options={"expose"=true},name="ajout_service")
+     * @Route("/prestataire/ajout/service",options={"expose"=true},name="ajout_service")
      */
     public function addServiveAction(Request $request)
     {

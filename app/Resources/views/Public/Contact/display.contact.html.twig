@@ -16,13 +16,10 @@
                 <div class="content">
 
                     <div class="document-title">
-                        <h1>Contact v2</h1>
+                        <h1>Contact</h1>
 
-                        <ul class="breadcrumb">
-                            <li><a href="#">Superlist</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </div><!-- /.document-title -->
+
+                    </div>
 
 
 
@@ -49,28 +46,25 @@
                                 <div class="col-sm-4">
                                     <h3>Contacts</h3>
 
-                                    <p>
-                                        1900-CO-WORKER<br>
-                                        1800-3322-4453
-                                    </p>
+                                  <p><i class="fa fa-phone"> 04 247 89 56</i></p>
                                 </div><!-- /.col-sm-4 -->
 
                                 <div class="col-sm-4">
                                     <h3>Social Profiles</h3>
-
+<p>
                                     <ul class="social-links nav nav-pills">
                                         <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                                         <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                                         <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
                                         <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
                                         <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                    </ul>
-                                </div><!-- /.col-sm-4 -->
-                            </div><!-- /.row -->
+                                    </ul></p>
+                                </div>
+                            </div>
                             <h3>Notre siège social</h3>
                             <div class="background-white p30 mt30">
 
-                                    <div id="carte" style="height:250px"></div>
+                                    <div id="carte" style="height:340px"></div>
 
                             </div>
                         </div>
@@ -78,7 +72,7 @@
                         <div class="col-sm-4">
                             <h3>Nous sommes à votre écoute</h3>
 
-                            <div class="contact-form-wrapper clearfix background-white p30" id="contact">
+                            <div class="contact-form-wrapper clearfix background-white p30 mt30" id="contact">
 
                                     {{ form_start(form) }}
 
@@ -106,14 +100,14 @@
                                     {{ form_end(form) }}
 
 
-                            </div><!-- /.contact-form-wrapper -->
+                            </div>
                         </div>
-                    </div><!-- /.row -->
+                    </div>
 
-                </div><!-- /.content -->
-            </div><!-- /.container -->
-        </div><!-- /.main-inner -->
+                </div>
+            </div>
+        </div>
     </div>
-    <script src="http://maps.google.com/maps/api/js?Key=AIzaSyCm9IyG4uLCEBqmBl4bCmlHhUvCUB3Xtks&amp;sensor=false;"></script>
+    <script src="http://maps.google.com/maps/api/js?Key=AIzaSyCm9IyG4uLCEBqmBl4bCmlHhUvCUB3Xtks&amp;"></script>
     <script type="text/javascript" src="{{ asset('js/gpGoogleMap.js') }}"></script>
 {% endblock %}

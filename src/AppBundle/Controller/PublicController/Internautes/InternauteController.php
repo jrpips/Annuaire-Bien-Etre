@@ -54,7 +54,7 @@ class InternauteController extends Controller
     }
 
     /**
-     * @Route("/inscription/internaute/pre-inscription",options={"expose"=true},name="signup")
+     * @Route("/pre-inscription",options={"expose"=true},name="signup")
      */
     public function preSignupInternauteAction(Request $request)
     {
@@ -97,7 +97,7 @@ class InternauteController extends Controller
     }
 
     /**
-     * @Route("/inscription/internaute/finalisation/{id}/{token}",options={"expose"=true},name="signup-final")
+     * @Route("/inscription-finale/{id}/{token}",options={"expose"=true},name="signup-final")
      */
     public function signupInternauteStepFinalAction(Request $request, $id, $token)
     {
@@ -137,7 +137,7 @@ class InternauteController extends Controller
     }
 
     /**
-     * @Route("/gestion/favoris/liste",options={"expose"=true},name="display_favoris")
+     * @Route("/internaute/gestion/liste/favoris",options={"expose"=true},name="display_favoris")
      */
     public function displayFavorisAction()
     {
@@ -145,7 +145,7 @@ class InternauteController extends Controller
     }
 
     /**
-     * @Route("/gestion/favoris/add/{nomPrestataire}",options={"expose"=true},name="add_favori")
+     * @Route("/internaute/ajout/favori/{nomPrestataire}",options={"expose"=true},name="add_favori")
      */
     public function addFavorisAction(Request $request, $nomPrestataire)
     {
@@ -166,7 +166,7 @@ class InternauteController extends Controller
     }
 
     /**
-     * @Route("/gestion/favoris/remove/{nomPrestataire}/{from}",options={"expose"=true},name="remove_favori")
+     * @Route("/internaute/retrait/favori/{nomPrestataire}/{from}",options={"expose"=true},name="remove_favori")
      */
     public function removeFavorisAction(Request $request, $nomPrestataire = null, $from = 'home')
     {
@@ -192,7 +192,7 @@ class InternauteController extends Controller
     }
 
     /**
-     * @Route("/internautes/informations",name="show_internaute")
+     * @Route("/internaute/profil",name="show_internaute")
      */
     public function displayInfosInternauteAction()
     {
@@ -201,7 +201,7 @@ class InternauteController extends Controller
     }
 
     /**
-     * @Route("/internautes/mise-a-jour/{id}",options={"expose"=true},name="update_internaute")
+     * @Route("/internaute/mise-a-jour/{id}",options={"expose"=true},name="update_internaute")
      */
     public function updateIdentityInternauteAction(Request $request, $id = null)
     {
@@ -235,7 +235,7 @@ class InternauteController extends Controller
     }
 
     /**
-     * @Route("/internautes/photo/{id}",options={"expose"=true},name="update_photo_internaute")
+     * @Route("/internaute/photo/{id}",options={"expose"=true},name="update_photo_internaute")
      */
     public function updateImageInternauteAction(Request $request, $id = null)
     {

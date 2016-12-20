@@ -46,7 +46,7 @@ class NewslettersController extends Controller
         /*   header('Content-Type: application/pdf');
            header('Content-Disposition: attachment; filename="file2.pdf"');
            $snappy->getOutput('https://www.github.com');*/
-        $snappy->generateFromHtml('<a style="color:red" href="https://www.google.com">Bill</a>', 'C:\Users\Chris\Desktop\bill-12oo3.pdf');
+        $snappy->generateFromHtml('<a style="color:red" href="https://www.google.com">Bill</a>', 'C:\Users\Chris\Desktop\bill-12oo345.pdf');
         return new Response('ok');
     }
 
@@ -56,9 +56,19 @@ class NewslettersController extends Controller
     public function newsletterGeneratePdfAction($content_newsletter)
     {
 
-       // $pageUrl = $this->generateUrl('home', array(), true); // use absolute path!
-        $this->get('knp_snappy.pdf')->generate('http://127.0.0.1/Annuaire-Bien-Etre/web/app_dev.php/', 'C:\Users\Chris\Desktop\filede.pdf');
-        return new Response('ok');
+
+        //$this->get('knp_snappy.pdf')->generate('http://127.0.0.1/Annuaire-Bien-Etre/web/app_dev.php/', 'C:\Users\Chris\Desktop\file4.pdf');
+        //return new Response('ok');
+        $html = $this->renderView('pdf.html.twig');
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="dossiercandidat.pdf"'
+            )
+        );
+        // $pageUrl = $this->generateUrl('home', array(), true); // use absolute path!
            // $this->get('knp_snappy.pdf')->getOutput($pageUrl),
            // 200,
            // array(

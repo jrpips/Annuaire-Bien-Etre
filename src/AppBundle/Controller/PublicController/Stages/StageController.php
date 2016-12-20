@@ -102,7 +102,7 @@ class StageController extends Controller
         ));
     }
     /**
-     * @Route("/prestataire/suppression/stage/{nom_stage}",name="delete_stage")
+     * @Route("/prestataire/retrait/stage/{nom_stage}",name="delete_stage")
      */
     public function deleteStageAction(Request $request, $nom_stage)
     {

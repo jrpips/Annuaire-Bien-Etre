@@ -45,7 +45,7 @@ class PromotionController extends Controller
     }
 
     /**
-     * @Route("/prestataire/promotion/ajouter",options={"expose"=true},name="new_promotion")
+     * @Route("/prestataire/ajout/promotion",options={"expose"=true},name="new_promotion")
      */
     public function addNewPromotionAction(Request $request)
     {
@@ -102,7 +102,7 @@ class PromotionController extends Controller
     }
 
     /**
-     * @Route("/prestataire/suppression/promotion/{nom_promotion}",name="delete_promotion")
+     * @Route("/prestataire/retrait/promotion/{nom_promotion}",name="delete_promotion")
      */
     public function deletepromotionAction(Request $request, $nom_promotion)
     {
