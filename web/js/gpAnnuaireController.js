@@ -31,6 +31,10 @@ $(function () {
         GpAnnuaire.display(e)
     });
 
+    $('#sub').on('click', function (e) {
+        GpAnnuaire.display(e)
+        console.log(e);
+    });
     //$('.gp_menu #connection').on('click', GpAnnuaire.display());
 
     /**
@@ -101,14 +105,16 @@ $(function () {
      **    Submit form contact Prestataire
      **/
     $('form[name=contact]').on('submit', function (e) {
-        GpAnnuaire_Ajax.ajaxContactPrestataire(e);
+        console.log('ok');
+        GpAnnuaire_Ajax.ajaxContact(e);
     });
     /**
      **    Submit form contact Prestataire
      **/
-    $('#contact form[name=contact]').on('submit', function (e) {
+   /* $('#contact form[name=contact]').on('submit', function (e) {
+        console.log(e);
         GpAnnuaire_Ajax.ajaxContact(e);
-    });
+    });*/
     /**
      **   Soumission du formulaire d'ajout de commentaire
      **/
@@ -128,7 +134,7 @@ $(function () {
     /**
      **   Gestion listes services Prestataire
      **/
-    /* $('#test select[name=right]').on('change',function(){
+   /* $('#test select[name=right]').on('change',function(){
      $('button[name=droite]').on('click',GpAnnuaire.rightChangeService);
      })
      $('#test select[name=left]').on('change',function(){

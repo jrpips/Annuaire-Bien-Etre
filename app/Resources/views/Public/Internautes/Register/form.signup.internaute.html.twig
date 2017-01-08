@@ -17,12 +17,9 @@
                     <div class="content">
                         <div class="row">
                             <div class="col-sm-12 background-white p20">
-
-
                                 <div class="page-title">
                                     <h1>Inscription</h1>
-                                </div><!-- /.page-title -->
-
+                                </div>
                                 {{ form_start(form) }}
                                 <div class="col-sm-4 ">
                                     <div class="form-group">
@@ -92,11 +89,11 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12 ">
-                                    <div class="form-group">
+                                  {#  <div class="form-group">
                                         {{ form_label(form.internaute.image.name) }}
                                         {{ form_widget(form.internaute.image.name) }}
                                         {{ form_errors(form.internaute.image.name) }}
-                                    </div>
+                                    </div>#}
                                     <div class="form-group">
                                         {{ form_label(form.internaute.image.file) }}
                                         {{ form_widget(form.internaute.image.file) }}
@@ -106,9 +103,6 @@
                                 </div>
                                 {{ form_rest(form) }}
                                 {{ form_end(form) }}
-
-
-
                             </div>
                         </div>
                     </div>
@@ -116,8 +110,5 @@
             </div>
         </div>
     </div>
-    <script>
-
-    </script>
 {% endblock %}
 

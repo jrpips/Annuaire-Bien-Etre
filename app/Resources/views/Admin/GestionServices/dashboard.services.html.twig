@@ -1,0 +1,56 @@
+{% extends 'Admin/dashboard.html.twig' %}
+{% block dashboard_body %}
+    <div class="content-admin">
+        <div class="content-admin-wrapper">
+            <div class="content-admin-main">
+                <div class="content-admin-main-inner">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="page-title">
+                                    <h2>Demande de création de service</h2>
+                                </div>
+
+                                {% if services is empty %}
+                                    <p>Pas de demandes à gérer...</p>
+                                {% endif %}
+                                {% for s in services %}
+                                    <div class="well well-sm">
+                                        <a data-toggle="collapse"
+                                           data-target="#demo{{ s.id }}">{{ s.nom |capitalize }}</a>
+                                    </div>
+                                    <div id="demo{{ s.id }}" class="collapse">
+                                        <div class=" p20 mb50">
+
+                                            <p>Description: {{ s.description }}</p>
+                                            <p>Auteur: {{ s.prestataires|first.nom }}</p>
+                                            {% set path=(s.image.path matches '{^http}')?'':'image/userUploads/' %}
+                                            <img src="{{ asset(path~s.image.path) }}" alt="{{ s.nom }}"
+                                                 style="width:250px"/>
+
+                                            <div style="text-align:right">
+                                                <a href="{#{{ path('valid_service',{'service':s.id}) }}#}"
+                                                   class="btn btn-default">Valider</a>
+                                                <a href="{{ path('cu_service',{'service':s.id}) }}"
+                                                   class="btn btn-default">Modifier et valider</a>
+                                                <a href="{{ path('delete_service',{'service':s.id}) }}"
+                                                   class="btn btn-default">Supprimer</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                {% endfor %}<hr>
+                                <div style="text-align: right">
+                                    <a href="{{ path('cu_service') }}"
+                                       class="btn btn-default">Création d'un service</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{ include("Admin/base.admin.footer.html.twig") }}
+        </div>
+    </div>
+{% endblock %}

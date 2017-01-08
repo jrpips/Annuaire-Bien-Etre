@@ -34,17 +34,16 @@
                                                    class="btn btn-default">Ignorer</a><br>
                                             </div>
 
-                                            <h3>Commentaire</h3>
+                                            <h3>Commentaire signalé</h3>
                                             {{ a.commentDenonce.titre }}<br>
                                             {{ a.commentDenonce.contenu }}<br>
-                                            {{ a.commentDenonce.internaute.nom }}<br>
+                                            <b>Auteur:</b> {{ a.commentDenonce.internaute.nom }} ,le {{ a.commentDenonce.encodage|date("d/m/Y") }}<br>
                                             <div style="text-align:right">
-                                                <a href="{{ path('delete_comment',{'commentaire_titre':a.commentDenonce.titre,'abus_id':a.id}) }}"
+                                                <a href="{{ path('delete_comment',{'commentaire':a.commentDenonce.id,'abus':a.id}) }}"
                                                    class="btn btn-default">Supprimer</a>
-                                                <a href="{{ path('delete_comment',{'commentaire_titre':a.commentDenonce.titre,'abus_id':a.id,'banni':a.commentDenonce.internaute.id}) }}"
+                                                <a href="{{ path('delete_comment',{'commentaire':a.commentDenonce.id,'abus':a.id,'banni':a.commentDenonce.internaute.id}) }}"
                                                    class="btn btn-default">Supprimer et Bannir l'auteur</a>
                                             </div>
-
                                     </div>
                                 </div>
                             {% endfor %}

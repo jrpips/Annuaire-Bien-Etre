@@ -87,7 +87,7 @@
 
                                 {% for s in services %}
 
-                                    {% set pathImg=(s.image.url matches '{^http}')?'':'image/userUploads/' %}
+                                    {% set pathImg=(s.image.path matches '{^http}')?'':'image/userUploads/' %}
 
                                     <div class="col-sm-6 col-md-3">
 

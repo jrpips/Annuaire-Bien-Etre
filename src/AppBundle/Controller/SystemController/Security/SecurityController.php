@@ -13,12 +13,11 @@ class SecurityController extends Controller {
     /**
      * @Route("/login", name="login",options={"expose"=true})
      */
-    public function loginAction(Request $request) {
+    public function loginAction() {
         //redirection si l'user est déjà connecté
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('home');
         }
-
         $authenticationUtils = $this->get('security.authentication_utils');
 
         return $this->render('Public/form.login.html.twig', array(
@@ -39,13 +38,25 @@ class SecurityController extends Controller {
 
         if ($new_pwd->getNewPassword() === $new_pwd->getConfNewPassword() && $new_pwd->getNewPassword() !== null) {
             if ($form->isValid()) {
-                $u = $this->getUser()->setPassword($new_pwd->getNewPassword());
-                dump($u);
+
+                $u = $this->getUser();
+
+                $plainPassword = $new_pwd->getNewPassword();
+                $encoder = $this->container->get('security.password_encoder');
+                $encoded = $encoder->encodePassword($u, $plainPassword);
+
+                $u->setPassword($encoded);
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($u);
-                $em->flush();
 
-                return $this->redirectToRoute('show_internaute');
+                $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'La modification de votre mot de passe est enregistrée!',true);
+                try {
+                    $em->flush();
+                } catch (\Exception $e) {
+                    $this->get('app.addmsgflash')->addMsgFlash($request, 'danger', "Une erreur est survenue l'enregistrement de votre mot de passe!",true);
+                }
+                return $this->redirectToRoute('home');
             }
         } elseif ($new_pwd->getPassword() === null) {
             $error = '';

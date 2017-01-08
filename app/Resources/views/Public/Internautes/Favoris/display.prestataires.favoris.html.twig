@@ -6,7 +6,7 @@
 
         <div class="card-simple"> 
 
-            {% set imgServicePrestataire=(prestataire.images is not null)?(prestataire.images)|first.url:'image/prestataire.png' %}
+            {% set imgServicePrestataire=(prestataire.images is not null)?(prestataire.images)|first.path:'image/prestataire.png' %}
 
             <div class="card-simple-background" style="background:url('{{asset(imgServicePrestataire)}}') no-repeat;background-size:cover">
 

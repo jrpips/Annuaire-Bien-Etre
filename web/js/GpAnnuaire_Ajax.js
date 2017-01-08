@@ -83,9 +83,12 @@ var GpAnnuaire_Ajax = GpAnnuaire_Ajax || {
             event_id = e.currentTarget.id;
 
             if ($('#' + event_id).val().length === 4) {
+
+                var values = {'valeur': $('#' + event_id).val()}
                 var param = {};
+
                 param.METHODE = 'POST';
-                param.VALUES = {'valeur': $('#' + event_id).val()};
+                param.VALUES = values;
                 param.ROUTE = 'autocomplete';
                 param.valueGET = null;
                 param.DATATYPE = 'json';
@@ -106,7 +109,7 @@ var GpAnnuaire_Ajax = GpAnnuaire_Ajax || {
          **  model : prepare requête Ajax pour formulaire de contact Prestataire
          **
          **/
-        'ajaxContactPrestataire': function (e) {
+       /* 'ajaxContactPrestataire': function (e) {
 
             e.preventDefault();
 
@@ -122,11 +125,11 @@ var GpAnnuaire_Ajax = GpAnnuaire_Ajax || {
             param.valueGET = null;
             param.DATATYPE = 'json';
             param.beforeSEND = null;
-            param.SUCCESS = GpAnnuaire_Call_Ajax.successAjaxContactPrestataire;
+            param.SUCCESS = GpAnnuaire_Call_Ajax.successAjaxContact;
 
             GpAnnuaire_Ajax.ajaxBuilder(param);
 
-        },
+        },*/
         /**
          **  model : prepare requête Ajax pour formulaire de contact Bien-Être
          **
@@ -143,7 +146,7 @@ var GpAnnuaire_Ajax = GpAnnuaire_Ajax || {
             var param = {};
             param.METHODE = 'POST';
             param.VALUES = values;
-            param.ROUTE = 'contact';
+            param.ROUTE = 'send_mail_prestataire';
             param.valueGET = null;
             param.DATATYPE = 'json';
             param.beforeSEND = null;

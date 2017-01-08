@@ -13,13 +13,13 @@
         <div class="main-inner" jstcache="0">
             <div class="content" jstcache="0">
                 <div class="mt-80 mb80">
-                    {% if prestataire.images|length >0 %}
-                        {% set imgServicePrestataire=(prestataire.images is defined)?(prestataire.images)|first.url:'image/prestataire.png' %}
-                    {% else %}
-                        {% set imgServicePrestataire='image/poster.jpg' %}
-                    {% endif %}
+
+
+                    {% set path=(prestataire.cover.path matches '{^http}')?'':'image/userUploads/' %}
+
+
                     <div class="detail-banner"
-                         style="background:url('{{ asset(imgServicePrestataire) }}') no-repeat;background-size:cover">
+                         style="background:url('{{ asset(path~prestataire.cover.path) }}') no-repeat;background-size:cover">
                         <div class="container">
                             <div class="detail-banner-left">
 
@@ -52,7 +52,7 @@
                                     {% endfor %}
 
                                 </div>
-                                {% if is_granted('ROLE_INTERNAUTE') %}
+                                {% if is_granted('ROLE_INTERNAUTE') and not is_granted('ROLE_ADMIN') %}
                                     {% if prestataire in app.user.internaute.favoris %}
                                         {% set route,text='remove_favori','Se désabonner' %}
                                     {% else %}
@@ -96,10 +96,10 @@
                                             <div class="item">
                                                 <div id="vignette-promo">
 
-                                                        <h3>Flowers</h3>
-                                                        <p>Beatiful flowers in Kolymbari, Crete.</p>
-                                                        <img style="width: 150px;"
-                                                             src="{{ asset('image/promo.png') }}" alt="Flower">
+                                                    <h3>Flowers</h3>
+                                                    <p>Beatiful flowers in Kolymbari, Crete.</p>
+                                                    <img style="width: 150px;"
+                                                         src="{{ asset('image/promo.png') }}" alt="Flower">
                                                 </div>
                                             </div>
                                         </div>
@@ -136,8 +136,9 @@
                                     {% for commentaire in prestataire.commentaires %}
                                         <div class="review">
                                             <div class="review-image">
-                                                {% set pathImg=(commentaire.internaute.image.url matches '{^http}')?'':'image/userUploads/' %}
-                                                <img src="{{ asset(pathImg~commentaire.internaute.image.url) }}" alt="">
+                                                {% set pathImg=(commentaire.internaute.image.path matches '{^http}')?'':'image/userUploads/' %}
+                                                <img src="{{ asset(pathImg~commentaire.internaute.image.path) }}"
+                                                     alt="">
                                             </div>
 
                                             <div class="review-inner">
@@ -151,13 +152,15 @@
                                                    data-placement="top" data-original-title="Report"></i>
                                             </span>
                                                     {# rating prestataire#}
-                                                    <div class="review-overall-rating">
 
+                                                    {% set starFinal=(5-commentaire.cote)|round %}
+
+                                                    <div class="review-overall-rating">
                                                         <span class="overall-rating-title">Cotation:</span>
                                                         {% for i in 1..commentaire.cote %}
                                                             <i class="fa fa-star"></i>
                                                         {% endfor %}
-                                                        {% set starFinal=(5-commentaire.cote)|round %}
+
                                                         {% for i in 1..starFinal %}
                                                             <i class="fa fa-star-o"></i>
                                                         {% endfor %}
@@ -253,7 +256,8 @@
                             <section class="background-white p20">
                                 <div class="detail-vcard">
                                     <div class="detail-logo">
-                                        <img style="width:100px" src="{{ asset(imgServicePrestataire) }}">
+                                        <img style="width:100px"
+                                             src="{{ asset('image/userUploads/'~prestataire.logo.path) }}">
                                     </div>
 
                                     <div class="detail-contact">
@@ -358,8 +362,9 @@
                             {# end #}
                             {# form contact prestataire #}
                             <h2 id="contact">Contacter {{ prestataire.nom }}</h2>
-
-                            {{ render(controller("AppBundle:PublicController/Prestataires/Prestataire:getFormContact")) }}
+                            <div class="detail-enquire-form background-white p20" id="contact">
+                                {{ render(controller("AppBundle:PublicController/Prestataires/Prestataire:getFormContact")) }}
+                            </div>
                             {# end #}
                         </div>
                         <div style="display:none">

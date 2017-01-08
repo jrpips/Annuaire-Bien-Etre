@@ -26,7 +26,7 @@ class PromotionController extends Controller
     {
 
         $promotions = $this->getDoctrine()->getManager()->getRepository('AppBundle:Promotion')->findBy(array(), array('dateDebut' => 'desc'), 5);
-        dump($promotions);
+
         return $this->render('Public/Navigation/Links/link.promotions.elements.html.twig', array(
             'promotions' => $promotions,
         ));
@@ -38,7 +38,7 @@ class PromotionController extends Controller
     public function promotionDashboardAction(Request $request)
     {
         $promotions = $this->getDoctrine()->getManager()->getRepository('AppBundle:Promotion')->findPrestatairePromotions($this->getUser()->getPrestataire()->getNom());
-        dump($promotions);
+
         return $this->render('Public/Prestataires/FrontOffice/Promotions/display.dashboard.promotion.html.twig', array(
             'promotions' => $promotions,
         ));
@@ -63,12 +63,10 @@ class PromotionController extends Controller
             $em->persist($promotion);
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add('notice', 'Profil Prestataire bien enregistré.');
-
             return $this->redirectToRoute('home');
         }
 
-        return $this->render('Public/Prestataires/FrontOffice/Promotions/form.add.promotion.html.twig', array(
+        return $this->render('Public/Prestataires/FrontOffice/Promotions/form.promotion.html.twig', array(
             'promotion' => $promotion,
             'form' => $form->createView()
         ));
@@ -81,7 +79,7 @@ class PromotionController extends Controller
     {
         $promotion = $this->getDoctrine()->getManager()->getRepository('AppBundle:promotion')->findByNom($nom_promotion);
 
-        dump($promotion);
+
         $form = $this->get('form.factory')->create(promotionType::class, $promotion[0]);
         $form->handleRequest($request);
 
@@ -95,7 +93,7 @@ class PromotionController extends Controller
             return $this->redirectToRoute('dashboard_promotion');//TODO : ...sur la page de redirection
         }
 
-        return $this->render('Public/Prestataires/FrontOffice/Promotions/update.promotion.html.twig', array(
+        return $this->render('Public/Prestataires/FrontOffice/Promotions/form.promotion.html.twig', array(
             'promotion' => $promotion[0],
             'form' => $form->createView()
         ));

@@ -66,12 +66,6 @@
                     {{ form_errors(form.adresseUtilisateur.commune) }}
                 </div>
 
-              {#  <div class="form-group">
-                    {{ form_label(form.adresseUtilisateur.commune) }}
-                    {{ form_widget(form.adresseUtilisateur.commune) }}
-                    {{ form_errors(form.adresseUtilisateur.commune) }}
-                </div>#}
-
                 <div class="form-group">
                     {{ form_label(form.adresseUtilisateur.localite) }}
                     {{ form_widget(form.adresseUtilisateur.localite) }}
@@ -94,9 +88,9 @@
                             class="btn btn-default pull-right btn">Envoyer
                     </button>
                 </div>
-                {#                <input type="hidden" id="internaute__token" name="internaute[_token]" value="vPzaVycLhfmvjjg3xPoNMTKeQfhtTg6nWcg5t0d71Kg">#}
-                {#                {{form_rest(form)}}#}
-                {#                {{form_end(form)}}#}
+                <div style="display:none">
+                              {{form_end(form)}}
+                </div>
             </div>
         </div>
     </div>

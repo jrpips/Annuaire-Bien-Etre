@@ -114,7 +114,7 @@ class Stage
      */
     public function isDateFinValid()
     {
-        return $this->getDateDebut() >= $this->getDateFin();
+        return $this->getDateDebut() <= $this->getDateFin();
     }
     /**
      * @Assert\IsTrue(message="La date d'affichage du début est inférieure à celle d'aujourd'hui")

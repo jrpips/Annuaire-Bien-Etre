@@ -1,4 +1,4 @@
-<div class="detail-enquire-form background-white p20" id="contactPrestataire">
+
     {{ form_start(form) }}
 
     <div class="form-group">
@@ -15,7 +15,7 @@
         <label for="">Message <span class="required">*</span></label>
         {{ form_widget(form.message) }}
     </div>
-    <input type="hidden" id="contact_prestataire_email" name="contact_prestataire[email]" class="form-control" value="wg.wargnier@gmail.com">
+    {#<input type="hidden" id="contact_prestataire_email" name="contact_prestataire[email]" class="form-control" value="wg.wargnier@gmail.com">#}
     <div id="info">Champs obligatoires <span class="required">*</span></div>
     <p>
         <button class="btn btn-primary btn-block" type="submit"><i
@@ -23,4 +23,4 @@
         </button>
     </p>
     {{ form_end(form) }}
-</div>
+

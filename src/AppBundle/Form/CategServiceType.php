@@ -23,7 +23,7 @@ class CategServiceType extends AbstractType
             //->add('valide', CheckboxType::class, array('required' => false))
             //->add('prestataires')
             ->add('image', ImageType::class, array('required' => false))
-            ->add('Envoyer',SubmitType::class)
+            ->add('Envoyer', SubmitType::class,array('attr'=>array('class'=>'btn btn-default pull-right')))
         ;
     }
 

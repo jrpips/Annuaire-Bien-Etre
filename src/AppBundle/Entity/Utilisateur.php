@@ -68,7 +68,7 @@ class Utilisateur implements UserInterface
      * )
      * @Assert\NotBlank(message="Un pseudo est requis")
      *
-     * @ORM\Column(name="username", type="string", length=50)
+     * @ORM\Column(name="username", type="string", length=50,unique=true)
      */
     private $username;
 

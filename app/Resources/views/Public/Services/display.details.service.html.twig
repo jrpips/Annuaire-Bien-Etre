@@ -26,9 +26,9 @@
                             </div>
                             <div class="posts" style="text-align: center">
 
-                                {% set pathImg=(service.image.url matches '{^http}')?'':'image/userUploads/' %}
+                                {% set pathImg=(service.image.path matches '{^http}')?'':'image/userUploads/' %}
 
-                                <img src="{{ asset(pathImg~service.image.url ) }}" alt="{{ service.image.name }}"/>
+                                <img src="{{ asset(pathImg~service.image.path ) }}" alt="{{ service.image.name }}"/>
                                 <hr>
                                 <div class="background-white p20">{{ service.description }}</div>
 
@@ -43,16 +43,13 @@
                                 <h2 class="widgettitle">Prestataire{{ ((service.prestataires|length)>1?'s':'') }}</h2>
 
                                 {% for p in service.prestataires %}
-                                    {% if p.images|length >0 %}
-                                        {% set img=(p.images is defined)?(p.images)|first.url:'image/prestataire.png' %}
-                                    {% else %}
-                                        {% set img='image/poster.jpg' %}
-                                    {% endif %}
+
                                     <div class="cards-small">
                                         <div class="card-small">
                                             <div class="card-small-image">
                                                 <a href="listing-detail.html">
-                                                    <img src="{{ img }}" alt="{{ p.nom }}">
+                                                    <img src="{{ asset('image/userUploads/'~p.logo.path) }}"
+                                                         alt="{{ p.nom }}">
                                                 </a>
                                             </div>
                                             <div class="card-small-content">
@@ -69,26 +66,30 @@
 
                             <div class="widget">
                                 <h2 class="widgettitle">Promo{{ ((service.promotions|length)>1?'s':'') }}</h2>
-                                {% for promo in service.promotions %}
-                                    <div class="cards-small">
-                                        <div class="card-small">
-                                            <div class="card-small-image">
-                                                <a href="listing-detail.html">
-                                                    <img
-                                                            src="{{ asset('image/promo1.png') }}" alt="Flower">
-                                                </a>
+                                {% if service.promotions is empty %}
+                                    <div class="background-white p20">Pas de promotions liées à ce service ...</div>
+                                {% else %}
+                                    {% for promo in service.promotions %}
+                                        <div class="cards-small">
+                                            <div class="card-small">
+                                                <div class="card-small-image">
+                                                    <a href="listing-detail.html">
+                                                        <img
+                                                                src="{{ asset('image/promo1.png') }}" alt="Flower">
+                                                    </a>
+                                                </div>
+                                                {# <a href="{{path('details_prestataire',{'prestataire_nom':p.nom})}}">#}
+                                                <div class="card-small-content">
+                                                    <h3> Nom promo {{ promo.nom }}</h3>
+                                                    <h4>Publiée par <a
+                                                                href="{{ path('details_prestataire',{'prestataire_nom':promo.prestataire.nom}) }}">{{ promo.prestataire.nom }}</a>
+                                                    </h4>
+                                                </div>
+                                                {# </a>#}
                                             </div>
-                                            {# <a href="{{path('details_prestataire',{'prestataire_nom':p.nom})}}">#}
-                                            <div class="card-small-content">
-                                                <h3> Nom promo {{ promo.nom }}</h3>
-                                                <h4>Publiée par <a
-                                                            href="{{ path('details_prestataire',{'prestataire_nom':promo.prestataire.nom}) }}">{{ promo.prestataire.nom }}</a>
-                                                </h4>
-                                            </div>
-                                            {# </a>#}
                                         </div>
-                                    </div>
-                                {% endfor %}
+                                    {% endfor %}
+                                {% endif %}
                             </div>
 
                         </div>{#sidebar#}

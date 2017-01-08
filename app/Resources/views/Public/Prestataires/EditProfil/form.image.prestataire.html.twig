@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}
+    {{ type|capitalize }}   - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="main">
+        <div class="main-inner">
+            <div class="container">
+                <div class="content">
+                    <div class="document-title">
+                        <h1>Modification de votre {{ type }}</h1>
+                    </div>
+                    <div class="col-sm-12 background-white">
+                        <div class="col-sm-6 p20">
+                            <div class="page-title">
+                                {% if type=='cover' %}
+                                    <h3>Image Cover actuelle</h3>
+                                {% else %}
+                                    <h3>Logo actuel</h3>
+                                {% endif %}
+                            </div>
+                            <img style="height:200px;width:100%;border:4px dashed #e9e9e9"
+                                 src="{{ asset('image/userUploads/'~image.path) }}"/>
+                        </div>
+                        <div>
+                            {{ form_start(form) }}
+                            <div class="col-sm-6 p20">
+                                <div class="page-title">
+                                    {% if type=='cover' %}
+                                        <h3>Nouvelle image Cover</h3>
+                                    {% else %}
+                                        <h3>Nouveau Logo</h3>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_label(form.file) }}
+                                    {{ form_widget(form.file,{'attr':{'style':'padding:85px 0'}}) }}
+                                    {{ form_errors(form.file) }}
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                {{ form_rest(form) }}
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

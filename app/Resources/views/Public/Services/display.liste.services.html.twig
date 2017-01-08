@@ -24,11 +24,11 @@
 
                         <ul class="media-list">
                         {% for service in services %}
-                            {% set pathImg=(service.image.url matches '{^http}')?'':'image/userUploads/' %}
+                            {% set pathImg=(service.image.path matches '{^http}')?'':'image/userUploads/' %}
                             <div class="post post-boxed">
                                 <div class="post-image"><a
                                             href="{{ path('details_service',{'service_nom':service.nom}) }}">
-                                        <img src="{{ asset(pathImg~service.image.url ) }}"
+                                        <img src="{{ asset(pathImg~service.image.path ) }}"
                                              alt="{{ service.image.name }}"/>
                                     </a>
                                 </div>

@@ -18,42 +18,64 @@
                             <div class="page-title">
                                 <h1>Gestionnaire des services </h1>
                             </div>
-                            <form action="javascript:void(0)">
-
-                                    <select style="overflow:hidden" multiple="" size="10" name="s1">
-                                        {% for service in servicesP %}
-                                            <option style="border:1px dashed lightslategray;margin:5px" value="{{ service.nom }}">{{ service.nom }}</option>
-                                        {% endfor %}
-                                    </select>
-
-                                <button class="btn btn-primary" name="gauche" id="gauche2"><span
-                                            class="glyphicon glyphicon-chevron-left"></span>Ajout
-                                </button>
-                                <button class="btn btn-primary" name="droite" id="droite2">Retrait<span
-                                            class="glyphicon glyphicon-chevron-right"></span></button>
-
-                                    <select style="overflow:hidden" multiple size="10" name="s2">
-                                        {% for service in servicesA %}
-                                            {% if service not in servicesP %}
+                            <section class="col-sm-12 background-white p20 mb30">
+                                <form action="javascript:void(0)">
+                                    <div class="col-sm-6" style="border-right:2px dashed #b6b7b8">
+                                        <div class="page-title">
+                                            <h2>Vos services </h2>
+                                        </div>
+                                        <select style="overflow:hidden;border:none;width:100%" multiple="" size="10"
+                                                name="s1">
+                                            {% for service in servicesP %}
                                                 <option style="border:1px dashed lightslategray;margin:5px"
                                                         value="{{ service.nom }}">{{ service.nom }}</option>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </select>
+                                            {% endfor %}
+                                        </select>
 
-                            </form>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="page-title">
+                                            <h2>Services disponibles</h2>
+                                        </div>
+                                        <select style="overflow:hidden;border:none;width:100%" multiple size="10"
+                                                name="s2">
+                                            {% for service in servicesA %}
+                                                {% if service not in servicesP %}
+                                                    <option style="border:1px dashed lightslategray;margin:5px;"
+                                                            value="{{ service.nom }}">{{ service.nom }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+                                    <div class="col-sm-12 p20">
+                                        <div class="col-sm-6">
+                                            <button style="float:right" class="btn btn-primary" name="gauche"
+                                                    id="gauche2"><span
+                                                        class="glyphicon glyphicon-chevron-left"></span>Ajout
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <button class="btn btn-primary" name="droite" id="droite2">Retrait<span
+                                                        class="glyphicon glyphicon-chevron-right"></span></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </section>
                             <a class="btn btn-primary" href="{{ path('add_service') }}">Créer un nouveau service</a>
                             <script>{#TODO : js dans fichier js ;) #}
                                 window.onload = function () {
                                     $('form').on('change', function () {
 
-                                        $('form [name=droite]').on('click', function () {
+                                        $('button[name=droite]').on('click', function () {
                                             if ($('form [name=s1] option:selected')) {
 
                                                 var item = $('form [name=s1] option:selected');
 
                                                 for (var i = 0; i < item.length; i++) {
                                                     ajaxGestionService(item[i].value, 'remove_service');
+                                                    console.log('remove');
                                                 }
                                                 $('form [name=s1] option:selected').remove();
                                                 item.removeAttr('selected');
@@ -61,12 +83,13 @@
                                             }
                                         });
 
-                                        $('form [name=gauche]').on('click', function () {
+                                        $('button[name=gauche]').on('click', function () {
                                             if ($('form [name=s2] option:selected')) {
                                                 var item = $('form [name=s2] option:selected');
 
                                                 for (var i = 0; i < item.length; i++) {
                                                     ajaxGestionService(item[i].value, 'ajout_service');
+                                                    console.log('ajout');
                                                 }
 
                                                 $('form [name=s2] option:selected').remove();

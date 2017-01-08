@@ -16,6 +16,9 @@ services:
          
     app.searchpostalcode:
          class: AppBundle\Services\SearchPostalCode\SearchPostalCode
+
+    app.addmsgflash:
+        class: AppBundle\Services\AddFlash\AddFlash
          
    # app.from.type.gender:
 #    acme.security.authentication_handler:

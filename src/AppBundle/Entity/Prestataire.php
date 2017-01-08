@@ -30,9 +30,18 @@ class Prestataire {
     private $utilisateur;
 
     /**
-     * @ORM\OneToMany(targetEntity="Image",mappedBy="prestataire")
+     * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid
      */
-    private $images;
+    private $logo;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid
+     */
+    private $cover;
 
     /**
      *
@@ -48,7 +57,7 @@ class Prestataire {
 
     /**
      * @ORM\OneToMany(targetEntity="Stage", cascade={"persist"},mappedBy="prestataire")
-     * @Assert\Valid
+     *
      */
     private $stages;
 
@@ -200,44 +209,6 @@ class Prestataire {
      */
     public function getTva() {
         return $this->tva;
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add image
-     *
-     * @param \AppBundle\Entity\Image $image
-     *
-     * @return Prestataire
-     */
-    public function addImage(\AppBundle\Entity\Image $image) {
-        $this->images[] = $image;
-
-        return $this;
-    }
-
-    /**
-     * Remove image
-     *
-     * @param \AppBundle\Entity\Image $image
-     */
-    public function removeImage(\AppBundle\Entity\Image $image) {
-        $this->images->removeElement($image);
-    }
-
-    /**
-     * Get images
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getImages() {
-        return $this->images;
     }
 
     /**
@@ -457,4 +428,64 @@ class Prestataire {
     {
         return $this->commentaires;
     }
+
+    /**
+     * Set logo
+     *
+     * @param \AppBundle\Entity\Image $logo
+     *
+     * @return Prestataire
+     */
+    public function setLogo(\AppBundle\Entity\Image $logo = null)
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    /**
+     * Get logo
+     *
+     * @return \AppBundle\Entity\Image
+     */
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
+    /**
+     * Set cover
+     *
+     * @param \AppBundle\Entity\Image $cover
+     *
+     * @return Prestataire
+     */
+    public function setCover(\AppBundle\Entity\Image $cover = null)
+    {
+        $this->cover = $cover;
+
+        return $this;
+    }
+
+    /**
+     * Get cover
+     *
+     * @return \AppBundle\Entity\Image
+     */
+    public function getCover()
+    {
+        return $this->cover;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->abonnes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categServices = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->stages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->promotions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 }

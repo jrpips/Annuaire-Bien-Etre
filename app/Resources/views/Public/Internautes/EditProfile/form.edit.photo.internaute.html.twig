@@ -3,12 +3,7 @@
 {% extends 'Public/Internautes/EditProfile/nav.edit.profile.internaute.html.twig' %}
 
 {% block edit %}
-    {% if  is_granted('ROLE_ADMIN') %}
-        {% set imageURL = internaute.internaute.image.url %}
-    {% else %}
-        {% set imageURL = app.user.internaute.image.url %}
-    {% endif %}
-    {% set pathImg=(imageURL matches '{^http}')?'':'image/userUploads/' %} {# retire le chemin du dossier si image chargée en ligne (fixture)#}
+
     <div class="col-sm-8 col-lg-9">
 
         <div class="content">
@@ -19,8 +14,11 @@
                     <h1>
                         Photo actuelle
                     </h1>
-                    <img style="width:150px" src="{{ asset(pathImg~imageURL) }}"/>
-
+                    {% if app.user.internaute.image.path is defined %}
+                        <img style="width:150px" src="{{ asset('image/userUploads/'~app.user.internaute.image.path) }}"/> {# #}
+                    {% else %}
+                        <img style="width:150px" src="{{ asset('image/userUploads/user.png') }}" alt=""/>
+                    {% endif %}
                     {{ form(form) }}
                 </div>
             </div>

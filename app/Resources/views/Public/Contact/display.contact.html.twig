@@ -22,9 +22,11 @@
                     </div>
 
 
-
                     <p>
-                        Donec congue egestas nisi id varius. Curabitur ullamcorper consectetur risus, eget dapibus lacus. Maecenas sit amet dui dictum, tincidunt ante vel, semper purus. In hac habitasse platea dictumst. Vivamus hendrerit sem a rutrum ornare. Donec vehicula auctor eros. Etiam et enim tellus.
+                        Donec congue egestas nisi id varius. Curabitur ullamcorper consectetur risus, eget dapibus
+                        lacus. Maecenas sit amet dui dictum, tincidunt ante vel, semper purus. In hac habitasse platea
+                        dictumst. Vivamus hendrerit sem a rutrum ornare. Donec vehicula auctor eros. Etiam et enim
+                        tellus.
                     </p>
 
                     <div class="row">
@@ -46,25 +48,26 @@
                                 <div class="col-sm-4">
                                     <h3>Contacts</h3>
 
-                                  <p><i class="fa fa-phone"> 04 247 89 56</i></p>
+                                    <p><i class="fa fa-phone"> 04 247 89 56</i></p>
                                 </div><!-- /.col-sm-4 -->
 
                                 <div class="col-sm-4">
                                     <h3>Social Profiles</h3>
-<p>
+                                    <p>
                                     <ul class="social-links nav nav-pills">
                                         <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                                         <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                                         <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
                                         <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
                                         <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                    </ul></p>
+                                    </ul>
+                                    </p>
                                 </div>
                             </div>
                             <h3>Notre siège social</h3>
                             <div class="background-white p30 mt30">
 
-                                    <div id="carte" style="height:340px"></div>
+                                <div id="carte" style="height:340px"></div>
 
                             </div>
                         </div>
@@ -73,31 +76,31 @@
                             <h3>Nous sommes à votre écoute</h3>
 
                             <div class="contact-form-wrapper clearfix background-white p30 mt30" id="contact">
+                                {{ render(controller("AppBundle:PublicController/Prestataires/Prestataire:getFormContact")) }}
+                                {# {{ form_start(form) }}
 
-                                    {{ form_start(form) }}
+                                 <div class="form-group">
+                                     <label for="">Nom</label>
+                                     {{ form_widget(form.nom) }}
+                                 </div>
 
-                                    <div class="form-group">
-                                        <label for="">Nom</label>
-                                        {{ form_widget(form.nom) }}
-                                    </div>
+                                 <div class="form-group">
+                                     <label for="">Email <span class="required">*</span></label>
+                                     {{ form_widget(form.email) }}
+                                 </div>
 
-                                    <div class="form-group">
-                                        <label for="">Email <span class="required">*</span></label>
-                                        {{ form_widget(form.email) }}
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="">Message <span class="required">*</span></label>
-                                        {{ form_widget(form.message) }}
-                                    </div>
-                                    <input type="hidden" id="contact_email" name="contact[email]" class="form-control" value="wg.wargnier@gmail.com">
-                                    <div id="info">Champs obligatoires <span class="required">*</span></div>
-                                    <p>
-                                        <button class="btn btn-primary btn-block" type="submit"><i
-                                                    class="fa fa-paper-plane"></i>Envoyer
-                                        </button>
-                                    </p>
-                                    {{ form_end(form) }}
+                                 <div class="form-group">
+                                     <label for="">Message <span class="required">*</span></label>
+                                     {{ form_widget(form.message) }}
+                                 </div>
+                                 <input type="hidden" id="contact_email" name="contact[email]" class="form-control" value="wg.wargnier@gmail.com">
+                                 <div id="info">Champs obligatoires <span class="required">*</span></div>
+                                 <p>
+                                     <button class="btn btn-primary btn-block" type="submit"><i
+                                                 class="fa fa-paper-plane"></i>Envoyer
+                                     </button>
+                                 </p>
+                                 {{ form_end(form) }}#}
 
 
                             </div>

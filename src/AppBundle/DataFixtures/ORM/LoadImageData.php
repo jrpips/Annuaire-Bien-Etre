@@ -10,27 +10,43 @@ use Faker\Factory;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\Prestataire;
 
-class LoadImageData extends AbstractFixture implements OrderedFixtureInterface {
+class LoadImageData extends AbstractFixture implements OrderedFixtureInterface
+{
 
     private $nb = 19;
 
-    public function load(ObjectManager $manager) {
-        
-        $j = 0;
+    public function load(ObjectManager $manager)
+    {
+
+        //$j = 0;
         $faker = Factory::create('fr_BE');
-        
+
         for ($i = 0; $i < $this->nb; $i++) {
 
             $img = new Image();
-            $img->setOrdre($i);
-            $img->setUrl($faker->imageUrl());
+
+            $img->setPath($faker->imageUrl());
             if ($i < 10) {
-                $img->setPrestataire($this->getReference('prestataire' . $j));
+
+                //$img->setCover($this->getReference('prestataire' . $j));
                 if ($i % 2 !== 0) {
-                    $j++;
-                }
+                    $img->setPath('prestataire.png');
+                    //$j++;
+                } /*else {
+                    $img->setType('cover');
+                }*/
             }
-            $img->setName($faker->firstName($gender = null | 'male' | 'female'));
+            $img->setName('img' . $i);
+            if ($i > 9 && $i < 13) {
+                $img->setPath('user.png');
+
+            }
+            if ($i > 13) {
+                //$img->setType('service');
+            }
+            if ($i == 13) {
+                $img->setPath('admin.png');
+            }
             $manager->persist($img);
 
             $this->addReference('img' . $i, $img);
@@ -38,9 +54,10 @@ class LoadImageData extends AbstractFixture implements OrderedFixtureInterface {
         $manager->flush();
     }
 
-    public function getOrder() {
+    public function getOrder()
+    {
         // l'ordre ds lequel les fixtures seront chargées         
-        return 6;
+        return 5;
     }
 
 }

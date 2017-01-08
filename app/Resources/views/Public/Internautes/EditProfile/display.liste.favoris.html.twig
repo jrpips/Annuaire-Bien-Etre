@@ -13,9 +13,14 @@
                 </h1>
             </div>
             <div class="background-white p20 mb30">
+                {% if app.user.internaute.favoris|length >0 %}
                     {%for favori in app.user.internaute.favoris%}
                         <div>{{favori}} <a style="color:rosybrown" href="{{path('remove_favori',{'nomPrestataire':favori,'from':'show_internaute'})}}">X</a></div>
                     {%endfor%}
+                    {% else %}
+                    <div>Vous n'avez pas de prestataires dans vos favoris ...</div>
+                    <a style="" href="{{ path('simple_search_prestataire',{'mot':'liste'}) }}" >Consulter la liste des Prestataires</a>
+                        {% endif %}
             </div>
         </div>
     </div>

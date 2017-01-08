@@ -5,12 +5,9 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\EntityType;
-use AppBundle\Form\UtilisateurType;
-use AppBundle\Form\ImageType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class PrestataireType extends AbstractType
 {
@@ -25,7 +22,8 @@ class PrestataireType extends AbstractType
             ->add('siteInternet', TextType::class, array('required' => false))
             ->add('telephone', TextType::class, array('required' => false,'label_format'=>'Téléphone'))
             ->add('tva', TextType::class, array('required' => false,'label_format'=>'Votre numéro de TVA'))
-           // ->add('image', ImageType::class)
+          /* ->add('logo', FileType::class)
+            ->add('cover', FileType::class)*/
           // ->add('Envoyer', SubmitType::class,array('attr'=>array('class'=>'btn btn-default pull-right')))
         ;
     }

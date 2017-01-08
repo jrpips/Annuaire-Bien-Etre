@@ -18,23 +18,21 @@ class PrestataireServicesController extends Controller
      */
     public function listeServicesPrestataireAction(Request $request)
     {
-        $nomPrestataire=$this->getUser()->getPrestataire()->getNom();
+        $nomPrestataire = $this->getUser()->getPrestataire()->getNom();
         $listeServicesPrestataire = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')
             ->findServicesByNomPrestataire($nomPrestataire);
 
         $listeServicesAnnuaire = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')
             ->findAll();
 
-        dump($listeServicesPrestataire, $listeServicesAnnuaire);
-
-        return $this->render('Public/Prestataires/FrontOffice/Services/display.list.services.prestataire.html.twig', array(
+        return $this->render('Public/Prestataires/FrontOffice/Services/display.liste.services.prestataire.html.twig', array(
             'servicesP' => $listeServicesPrestataire,
             'servicesA' => $listeServicesAnnuaire
         ));
     }
 
     /**
-     * @Route("/prestataire/ajout/service",name="add_service")
+     * @Route("/prestataire/creation/service",name="add_service")
      */
     public function addNewServiveAction(Request $request)
     {
@@ -46,9 +44,17 @@ class PrestataireServicesController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($newService);
-            $em->flush();
+            try {
+                $em->flush();
 
-            $this->get('app.mailerbuilder')->addNewServiceMailer(null);
+            } catch (\Exception $e) {
+                $this->get('app.addmsgflash')->addMsgFlash($request, 'danger', 'Une erreur est survenue lors de la création du service ' . $newService->getNom() . '!', true);
+                return $this->redirectToRoute('add_service');
+            }
+            $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'Votre demande est enregistrée et en attente de validation!', true);
+            $this->get('app.mailerbuilder')->addNewServiceMailer($newService);
+
+            return $this->redirectToRoute('prestataire_services');
         }
         //dump($newService);
         return $this->render('Public/Prestataires/FrontOffice/Services/form.new.service.html.twig', array(

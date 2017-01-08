@@ -56,7 +56,8 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository
 
         $qb = $this->createQueryBuilder('p')
             ->leftJoin('p.utilisateur', 'u')->addSelect('u')
-            ->leftJoin('p.images', 'i')->addSelect('i')
+            ->leftJoin('p.logo', 'l')->addSelect('l')
+            ->leftJoin('p.cover', 'c')->addSelect('c')
             ->leftJoin('p.categServices', 's')->addSelect('s')
             ->leftJoin('u.adresseUtilisateur', 'adr')->addSelect('adr')
         ;
@@ -87,7 +88,8 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('p')
             ->leftJoin('p.utilisateur', 'u')->addSelect('u')
             ->leftJoin('u.adresseUtilisateur', 'adr')->addSelect('adr')
-            ->leftJoin('p.images', 'i')->addSelect('i')
+            ->leftJoin('p.logo', 'l')->addSelect('l')
+            ->leftJoin('p.cover', 'c')->addSelect('c')
             ->leftJoin('p.categServices', 's')->addSelect('s')
             ->leftJoin('p.promotions', 'pr')->addSelect('pr')
             ->leftJoin('p.stages', 'st')->addSelect('st');

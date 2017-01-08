@@ -13,11 +13,11 @@ class CategServiceRepository extends \Doctrine\ORM\EntityRepository
     /**
      *   Sélection des services validés par l'admin Bien-Etre
      **/
-    public function myFindValideServices()
+    public function myFindValideServices($bool=true)
     {
         $qb = $this->createQueryBuilder('cs')
             ->andWhere('cs.valide like :boolean')
-            ->setParameter('boolean', true);
+            ->setParameter('boolean', $bool);
 
         return $qb->getQuery()->getResult();
     }
@@ -34,6 +34,7 @@ class CategServiceRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
     /**
      *   Sélection des Services non-proposés par le Prestataire reçu en paramêtre
      **/
@@ -45,6 +46,23 @@ class CategServiceRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('nom', $nom);
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     *  Sélection des demandes de nouveaux servives
+     */
+    public function findNewService()
+    {
+
+    }
+
+    /**
+     *  Retourne le nombre de Commentaires publiés
+     */
+    public function countServices()
+    {
+        $qb = $this->createQueryBuilder('cs')->select('COUNT(cs)')->andWhere('cs.valide like :bool')->setParameter('bool', false);
+        return $qb->getQuery()->getSingleScalarResult();
     }
 
 }

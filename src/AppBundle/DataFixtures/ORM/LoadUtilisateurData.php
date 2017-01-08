@@ -24,8 +24,8 @@ class LoadUtilisateurData extends AbstractFixture implements OrderedFixtureInter
             $user = new Utilisateur();
             $user->setEmail($faker->email);
 
-            $user->setPassword('1234');
-            $user->setUsername($faker->firstName($gender = null | 'male' | 'female'));
+            $user->setPassword('$2y$12$AkpYQZ7Vyjd.ZyL1qFJI6uOzsXDc8zpx0v4E4BH2Cp66ovO4BM4H.');//plaintext password = 1234
+            $user->setUsername('user'.$i);
             $user->setSalt('');
 
             $user->setAdresseNumero($faker->buildingNumber);

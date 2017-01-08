@@ -34,6 +34,7 @@ class UtilisateurType extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Utilisateur',
+            'allow_extra_fields' => true,
 
         ));
     }

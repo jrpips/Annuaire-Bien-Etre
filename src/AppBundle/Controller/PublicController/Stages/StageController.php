@@ -61,10 +61,16 @@ class StageController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($stage);
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('notice', 'Stage enregistré.');//TODO : fenêtre popup affichage message succès...
+            try {
+                $em->flush();
 
-            return $this->redirectToRoute('dashboard_stage',array('prestataire_nom'=>$this->getUser()->getPrestataire()->getNom()));//TODO : ...sur la page de redirection
+            } catch (\Exception $e) {
+                $this->get('app.addmsgflash')->addMsgFlash($request, 'danger', 'Une erreur est survenue lors de la création de votre stage!',true);
+                return $this->redirectToRoute('create_stage');
+            }
+            $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'Votre nouveau stage est enregistré!');
+
+            return $this->redirectToRoute('dashboard_stage',array('prestataire_nom'=>$this->getUser()->getPrestataire()->getNom()));
         }
 
         return $this->render('Public/Prestataires/FrontOffice/Stages/form.stage.html.twig', array(
@@ -81,7 +87,6 @@ class StageController extends Controller
     {
         $stage = $this->getDoctrine()->getManager()->getRepository('AppBundle:Stage')->findOneByNom($nom_stage);
 
-        dump($stage);
         $form = $this->get('form.factory')->create(StageType::class, $stage);
         $form->handleRequest($request);
 
@@ -89,16 +94,21 @@ class StageController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('notice', 'Stage modifié.');//TODO : fenêtre popup affichage message succès...
+            $statut='success';
+            try {
+                $em->flush();
 
-            return $this->redirectToRoute('list_stages',array('prestataire_nom'=>$this->getUser()->getPrestataire()->getNom()));//TODO : ...sur la page de redirection
+            } catch (\Exception $e) {
+               $statut='danger';
+            }
+            $this->get('app.addmsgflash')->addMsgFlash($request, $statut, 'votre stage');
+
+            return $this->redirectToRoute('list_stages',array('prestataire_nom'=>$this->getUser()->getPrestataire()->getNom()));
         }
 
         return $this->render('Public/Prestataires/FrontOffice/Stages/form.stage.html.twig', array(
             'stage' => $stage,
             'form' => $form->createView(),
-            'title'=>'Stage: mise à jour'
         ));
     }
     /**

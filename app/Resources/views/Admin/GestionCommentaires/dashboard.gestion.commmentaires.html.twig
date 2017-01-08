@@ -27,7 +27,7 @@
                                             <p>Sujet:{{ comment.prestataire.nom }}</p>
                                             <p>Auteur: {{ comment.internaute.nom }}</p>
                                             <div style="text-align:right">
-                                                <a href="{#{{ path('delete_comment',{'commentaire_titre':comment.titre}) }}#}"
+                                                <a href="{{ path('delete_comment',{'commentaire':comment.id}) }}"
                                                    class="btn btn-default">Supprimer</a>
                                             </div>
 

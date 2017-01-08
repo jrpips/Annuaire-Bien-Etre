@@ -21,7 +21,11 @@
 
 
                                 <div class="page-title">
-                                    <h1>Inscription Prestataire</h1>
+                                    {% if is_granted('ROLE_PRESTATAIRE') %}
+                                        <h1>Modification de vos données</h1>
+                                    {% else %}
+                                        <h1>Inscription Prestataire</h1>
+                                    {% endif %}
                                 </div>
 
                                 {{ form_start(form) }}
@@ -109,30 +113,43 @@
                                         </div>
                                     {% endif %}
                                 </div>
-                              {#  <div class="col-sm-8">
-                                    <div class="form-group">
-                                        {{ form_label(form.prestataire.image.name) }}
-                                        {{ form_widget(form.prestataire.image.name) }}
-                                        {{ form_errors(form.prestataire.image.name) }}
-                                    </div>
-                                    <div class="form-group">
-                                        {{ form_label(form.prestataire.image.name) }}
-                                        {{ form_widget(form.prestataire.image.file) }}
-                                        {{ form_errors(form.prestataire.image.file) }}
-                                    </div>
-                                </div>#}
+                                {#  <div class="col-sm-8">
+                                       <div class="form-group">
+                                          #}{# {{ form_label(form.prestataire.image.name) }}
+                                           {{ form_widget(form.prestataire.image.name) }}
+                                           {{ form_errors(form.prestataire.image.name) }}#}{#
+                                       </div>
+                                       <div class="form-group">
+                                           {{ form_label(form.prestataire.logo) }}
+                                           {{ form_widget(form.prestataire.logo) }}
+                                           {{ form_errors(form.prestataire.logo) }}
+                                       </div>
+                                      <div class="form-group">
+                                        #}{#  {{ form_label(form.prestataire.image2.name) }}
+                                          {{ form_widget(form.prestataire.image2.name) }}
+                                          {{ form_errors(form.prestataire.image2.name) }}#}{#
+                                      </div>
+                                      <div class="form-group">
+                                         {{ form_label(form.prestataire.cover) }}
+                                          {{ form_widget(form.prestataire.cover) }}
+                                          {{ form_errors(form.prestataire.cover) }}
+                                      </div>
+                                   </div>#}
 
                                 <div class="form-group">
 
                                     {{ form_widget(form._token) }}
 
                                 </div>
+                                {#    <div class="form-group">{{ form_rest(form) }}</div>#}
 
                                 <div class="col-sm-12">
                                     <button type="submit" id="prestataire_Envoyer" name="prestataire[Envoyer]"
                                             class="btn  pull-right">Envoyer
                                     </button>
                                 </div>
+                                {#  <div class="col-sm-4">{{ form(formLogo) }}</div>
+                                  <div class="col-sm-4">{{ form(formCover) }}</div>#}
                             </section>
                         </div>
                     </div>

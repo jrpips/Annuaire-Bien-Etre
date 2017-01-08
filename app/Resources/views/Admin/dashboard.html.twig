@@ -4,17 +4,17 @@
     <div class="sidebar-admin">
         <ul>
             <li>
-                <a href="#"><i class="fa fa-file"></i></a>
+                <a href="{{ path('dashboard_accueil') }}"><i class="fa fa-file"></i></a>
         </ul>
     </div>
     <div class="sidebar-secondary-admin">
 
         <ul>
             <li>
-                {{ render(controller("AppBundle:AdminController/AdminAnnuaire:countAbus")) }}
+                {{ render(controller("AppBundle:AdminController/AdminDashboard:countAbus")) }}
 
             <li>
-                {{ render(controller("AppBundle:AdminController/AdminAnnuaire:countBannedAccount")) }}
+                {{ render(controller("AppBundle:AdminController/AdminDashboard:countBannedAccount")) }}
 
             <li>
                 <a href="">
@@ -24,10 +24,10 @@
                 </a>
 
             <li>
-                {{ render(controller("AppBundle:AdminController/AdminAnnuaire:countPrestataires")) }}
+                {{ render(controller("AppBundle:AdminController/AdminDashboard:countPrestataires")) }}
 
             <li>
-                {{ render(controller("AppBundle:AdminController/AdminAnnuaire:countInternautes")) }}
+                {{ render(controller("AppBundle:AdminController/AdminDashboard:countInternautes")) }}
 
             <li>
                 <a href="admin-notifications.html">
@@ -37,14 +37,15 @@
                 </a>
 
             <li>
-                <a href="admin-notifications.html">
+                {{ render(controller("AppBundle:AdminController/AdminDashboard:countServicesToBeValide")) }}
+                {#<a href="admin-notifications.html">
                     <span class="icon"><i class="fa fa-folder-open-o"></i></span>
                     <span class="title">Services <span class="notification">{{ null }}</span></span>
                     <span class="subtitle">Nouvelles demandes </span>
-                </a>
+                </a>#}
 
             <li>
-                {{ render(controller("AppBundle:AdminController/AdminAnnuaire:countCommentaires")) }}
+                {{ render(controller("AppBundle:AdminController/AdminDashboard:countCommentaires")) }}
 
         </ul>
     </div>

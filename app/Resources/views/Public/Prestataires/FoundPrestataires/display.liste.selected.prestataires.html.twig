@@ -4,7 +4,7 @@
 {% block body %}
     <div class="container">
         <div class="page-header">
-{% set nb = prestataires|length %}
+            {% set nb = prestataires|length %}
             {% set pluriel=(nb>1)?'Résultats':'Résultat' %}
             <h2>{{ pluriel }} de votre recherche: {{ nb }}</h2>
 
@@ -17,19 +17,28 @@
                     <div class="col-sm-6 col-md-3">
 
                         <div class="card-simple">
-{% if prestataire.images|length >0 %}
-                            {% set imgServicePrestataire=(prestataire.images is defined)?(prestataire.images)|first.url:'image/prestataire.png' %}
-{% else %}
-    {% set imgServicePrestataire='image/poster.jpg' %}
-{% endif %}
-                            <div class="card-simple-background" style="background:url('{{asset(imgServicePrestataire)}}') no-repeat;background-size:cover">
+
+                            {% set path=(prestataire.cover.path matches '{^http}')?'':'image/userUploads/' %}
+
+                            <div class="card-simple-background"
+                                 style="background:url('{{ asset(path~prestataire.cover.path) }}') no-repeat;background-size:cover">
 
                                 <div class="card-simple-content">
-                                    <h2><a href="{{ path('details_prestataire',{'prestataire_nom':prestataire.nom}) }}">{{ prestataire.nom }}</a></h2>
+
+                                    <h2>
+                                        <a href="{{ path('details_prestataire',{'prestataire_nom':prestataire.nom}) }}">{{ prestataire.nom }}</a>
+                                    </h2>
+
                                     <h3 style="text-align:center">
-                                       {# <a href="{{ path('add_favori',{'nomPrestataire':prestataire.nom,'from':'home'}) }}"
-                                           class="fa fa-heart-o"></a>#}
+                                        {% if app.user.internaute is defined %}
+                                            {% if app.user.internaute in prestataire.abonnes %}
+                                                <i style="color:yellow" class="fa fa-star"></i>
+                                                {# <a href="{{ path('add_favori',{'nomPrestataire':prestataire.nom,'from':'home'}) }}"
+                                                    class="fa fa-heart-o"></a>#}
+                                            {% endif %}
+                                        {% endif %}
                                     </h3>
+
                                     <div class="card-simple-rating">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>

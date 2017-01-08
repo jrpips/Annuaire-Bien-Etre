@@ -25,7 +25,6 @@ class ContactType extends AbstractType
             ->add('email', EmailType::class, array(
                 'constraints' => array(
                     new NotBlank(array('message' => 'Une adresse email est requise')),
-
                 ),
             ))
             ->add('message', TextareaType::class, array(

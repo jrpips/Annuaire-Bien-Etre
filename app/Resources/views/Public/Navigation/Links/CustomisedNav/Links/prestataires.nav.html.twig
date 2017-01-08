@@ -3,11 +3,11 @@
 <button class="btn btn-default dropdown-toggle" style="height:35px;padding:0 0 0 5px" type="button" id="dropdownMenu1" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
     <div style="display: inline-block;border:none">
-        {% if app.user.prestataire.image.url is defined %}
+        {% if app.user.prestataire.logo.path is defined %}
 
-            {% set pathImg=(app.user.prestataire.image.url matches '{^http}')?'':'image/userUploads/' %}
+            {% set pathImg=(app.user.prestataire.logo.path matches '{^http}')?'':'image/userUploads/' %}
 
-            <img src="{{ asset(pathImg~app.user.prestataire.image.url) }}"/>
+            <img src="{{ asset(pathImg~app.user.prestataire.logo.path) }}"/>
 
         {% else %}
 
@@ -37,7 +37,12 @@
 
         <li>
             <a href="{{ path('update_prestataire') }}">Modifier mes données</a>
-
+        <li>
+            <a href="{{ path('image_prestataire',{'type':'logo'}) }}"><span
+                        class="glyphicon glyphicon-pencil"></span> Modifier le Logo</a>
+        <li>
+            <a href="{{ path('image_prestataire',{'type':'cover'}) }}"><span
+                        class="glyphicon glyphicon-pencil"></span> Modifier la Cover</a>
         <li>
             <a href="{{ path('logout') }}" style="color:rgb(169,39,39)">
                 <span class="glyphicon glyphicon-log-out"></span>

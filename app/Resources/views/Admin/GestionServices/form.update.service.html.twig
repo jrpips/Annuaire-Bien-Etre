@@ -1,0 +1,27 @@
+{% extends 'Admin/dashboard.html.twig' %}
+{% block dashboard_body %}
+    <div class="content-admin">
+        <div class="content-admin-wrapper">
+            <div class="content-admin-main">
+                <div class="content-admin-main-inner">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="page-title">
+                                    {% if service is null %}
+                                        <h2>Création d'un service</h2>
+                                    {% else %}
+                                       <h2>Modification du service {{ service.nom }}</h2>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-12">
+                                    {% include('Form/form.service.html.twig') %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

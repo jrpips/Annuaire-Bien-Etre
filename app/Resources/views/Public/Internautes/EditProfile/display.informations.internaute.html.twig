@@ -5,74 +5,69 @@
 {% block edit %}
     <div class="col-sm-8 col-lg-9">
         <div class="content">
+
             <div class="page-title">
                 <h1>Mon compte</h1>
-            </div><!-- /.page-title -->
-
-            <div class="background-white p20 mb30">
-                <h3 class="page-title">
-                    Mes informations              
-                </h3>
             </div>
-            <div class="background-white p20 mb30">
-                {#                <div class="row p20 ">#}
-                <h4 class="page-title ">
-                    <i class="fa fa-tasks"></i> Identité              
-                </h4>
-                <div>
-                    {{app.user.internaute.nom}}
+            <div class="col-sm-12">
+                <div class="background-white p20 mb30 col-sm-6">
+                    {% for flash_message in app.session.flashBag.get('msg') %}
+
+                        <div class="{{ flash_message.class }}" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </button>
+                          {{ flash_message.text }}
+                        </div>
+                    {% endfor %}
+                    <h4 class="page-title ">
+                        <i class="fa fa-tasks"></i> Identité
+                    </h4>
+
+                    <div>
+                        {{ app.user.internaute.nom }}  {{ app.user.internaute.prenom }}
+                    </div>
                 </div>
-                <div >
-                    {{app.user.internaute.prenom}}
+
+                <div class="background-white p20 mb30 col-sm-6">
+                    <h4 class="page-title ">
+                        <i class="fa fa-envelope-o"></i> Email
+                    </h4>
+                    <div>
+                        {{ app.user.email }}
+                    </div>
                 </div>
             </div>
-            <div class="background-white p20 mb30">
-                <h4 class="page-title ">
-                    <i class="fa fa-envelope-o"></i> Email             
-                </h4>
-                <div>
-                    {{app.user.email}}
-                </div>
-                {#  <div>
-                      {{app.user.internaute.newsletter}}
-                  </div>#}
-            </div>
-            <div class="background-white p20 mb30">
-                <h4 class="page-title ">
-                    <i class="fa fa-home"></i> Adresse
-                </h4>
-                <div>
-                    {{app.user.adresseUtilisateur.codePostal}}
-                </div>
-                <div>
-                    {{app.user.adresseUtilisateur.localite}}
-                </div>
-                <div>
-                    {{app.user.adresseUtilisateur.commune}}
-                </div>
-                <div>
-                    {{app.user.adresseRue}}
-                </div>
-                <div>
-                    {{app.user.adresseNumero}}
+            <div class="col-sm-12">
+                <div class="background-white p20 mb30 col-sm-6">
+                    <h4 class="page-title ">
+                        <i class="fa fa-home"></i> Adresse
+                    </h4>
+                    <div>
+                        {{ app.user.adresseNumero }}, {{ app.user.adresseRue }}
+                    </div>
+                    <div>
+                        {{ app.user.adresseUtilisateur.codePostal }} {{ app.user.adresseUtilisateur.commune }}
+                    </div>
+                    <div>
+                        {{ app.user.adresseUtilisateur.localite }}
+                    </div>
                 </div>
 
-                {#                </div><!-- /.row -->#}
+                <div class="background-white p20 mb30  col-sm-6">
 
-            </div><!-- /.content -->
-
-            <div class="background-white p20 mb30">
-                <h4 class="page-title ">
-                    <i class="fa fa-home"></i> Favoris
-                </h4>
-
-                {%for favori in app.user.internaute.favoris%}
-                    <div>{{favori}}</div>
-                {%endfor%}
-                
+                    <h4 class="page-title ">
+                        <i class="fa fa-star"></i> Favoris
+                    </h4>
+                    {% if app.user.internaute.favoris is empty %}
+                        Vous n'avez pas de prestataires en favoris ...
+                    {% else %}
+                        {% for favori in app.user.internaute.favoris %}
+                            <div>{{ favori }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
-
-
 {% endblock %}

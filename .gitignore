@@ -16,6 +16,9 @@
 /web/bundles/
 /web/image/tmp/
 /web/image/userUploads/
+!/web/image/userUploads/user.png
+!/web/image/userUploads/prestataire.png
+!/web/image/userUploads/admin.png
 /nbproject
 .idea
 # Backup entities generated with doctrine:generate:entities command

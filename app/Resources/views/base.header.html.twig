@@ -3,7 +3,16 @@
 <header class="header header-transparent ">
 
     <div class="header-wrapper" style="width:100%;">
-
+        <div id="flash_msg">
+            {% for flash_message in app.session.flashBag.get('msg') %}
+                <div class="{{ flash_message.class }}" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                    {{ flash_message.text }}
+                </div>
+            {% endfor %}
+        </div>
         <div class="container">
 
             <div class="header-inner">

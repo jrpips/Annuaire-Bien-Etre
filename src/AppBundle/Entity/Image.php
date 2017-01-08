@@ -13,7 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Image {
+class Image
+{
 
     /**
      * @ORM\Column(name="id", type="integer")
@@ -22,169 +23,224 @@ class Image {
      */
     private $id;
 
+    private $temp;
+
     /**
      * @ORM\ManyToOne(targetEntity="Prestataire",inversedBy="images")
      */
-    private $prestataire;
+   // private $prestataire;
 
     /**
      * @ORM\Column(name="ordre", type="float", nullable=true)
      */
-    private $ordre;
+    //private $ordre;
 
     /**
-     * @ORM\Column(type="string",length=255)
-     * @Assert\NotBlank(message="Un nom d'image est requis")
+     * @ORM\Column(type="string",length=55,nullable=true)
+     *
      * @Assert\Valid
      */
-    private $name;
+     private $name;
+
+    /**
+     * @ORM\Column(type="string",length=25)
+     */
+    //private $type;
 
     /**
      * @ORM\Column(type="string",length=255,nullable=true)
-     * 
+     *
      */
-    private $url;
+    // private $url;
 
     /**
      * @ORM\Column(type="string",length=255,nullable=true)
-     * 
+     *
      */
-    protected $path;
+    public $path;
 
-
-    protected $file;
-
-    public function getUploadRootDir() {
-        // On retourne le chemin relatif vers l'image pour notre code PHP
-        return __DIR__ . '/../../../web/image/userUploads';
-    }
-
-    public function getAbsolutePath() {
-        return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->path;
-    }
+    private $file;
 
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
-     * 
      */
-    public function preUpload() {
-        $this->tempFile = $this->getAbsolutePath();
-        $this->oldFile = $this->getPath();
-
-        if (null !== $this->file) {
-            $this->path = sha1(uniqid(mt_rand(), true)) . '.' . $this->file->guessExtension();
-            $this->url = $this->path;
+    public function preUpload()
+    {
+        if (null !== $this->getFile()) {
+            // crée un nom unique
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->path = $filename . '.' . $this->getFile()->guessExtension();
         }
     }
 
     /**
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
-     * 
      */
-    public function upload() {
-        if (null !== $this->file) {
-            $this->file->move($this->getUploadRootDir(), $this->path);
-            unset($this->file);
+    public function upload()
+    {
+        if (null === $this->getFile()) {
+            return;
+        }
+        $this->getFile()->move($this->getUploadRootDir(), $this->path);
 
-            if ($this->oldFile != null) {
-                unlink($this->tempFile);
+        if (isset($this->temp)) {
+            if ($this->unlinkCheck($this->temp)) {
+                unlink($this->getUploadRootDir() . '/' . $this->temp);
+                $this->temp = null;
+            }
+        }
+        $this->file = null;
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadRootDir() . '/' . $this->path;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadDir() . '/' . $this->path;
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__ . '/../../../web/' . $this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        return 'image/userUploads';
+    }
+
+    protected function unlinkCheck($element)
+    {
+        $patterns = ['/http/', '/user/', '/prestataire/', '/admin/'];
+        $match = true;
+        for ($i = 0; $i < count($patterns); $i++) {
+            if (!preg_match($patterns[$i], $element)) {
+                $match = false;
+            }
+        }
+        return $match;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        if ($file = $this->getAbsolutePath()) {
+            if ($this->unlinkCheck($file)) {
+                unlink($file);
             }
         }
     }
 
     /**
-     * @ORM\PreRemove()
-     * 
+     * Sets file.
+     *
+     * @param UploadedFile $file
      */
-    public function preRemoveUpload() {
-        $this->tempFile = $this->getAbsolutePath();
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+        // check if we have an old image path
+        if (isset($this->path)) {
+            // store the old name to delete after the update
+            $this->temp = $this->path;
+            $this->path = null;
+        } else {
+            $this->path = 'initial';
+        }
     }
 
     /**
-     * @ORM\PostRemove()
-     * 
+     * return string path
      */
-    public function removeUpload() {
-        if (file_exists($this->tempFile)) {
-            unlink($this->tempFile);
-        }
+    public function __toString()
+    {
+        return $this->path . '';
     }
 
-    public function __toString() {
-        return $this->url . '';
-    }
-
-    /*public function __sleep() {
-        $ref = new \ReflectionClass(__CLASS__);
-        $props = $ref->getProperties(\ReflectionProperty::IS_PROTECTED);
-
-        $serialize_fields = array();
-
-        foreach ($props as $prop) {
-            $serialize_fields[] = $prop->name;
-        }
-
-        return $serialize_fields;
-    }*/
-
-    public function getId() {
-        return $this->id;
-    }
-
-    public function setOrdre($ordre) {
-        $this->ordre = $ordre;
-        return $this;
-    }
-
-    public function getOrdre() {
-        return $this->ordre;
-    }
-
-    public function setPrestataire(\AppBundle\Entity\Prestataire $prestataire = null) {
-        $this->prestataire = $prestataire;
-        return $this;
-    }
-
-    public function getPrestataire() {
-        return $this->prestataire;
-    }
-
-    public function setUrl($url) {
-        $this->url = $url;
-        return $this;
-    }
-
-    public function getUrl() {
-        return $this->url;
-    }
-
-    public function getName() {
-        return $this->name;
-    }
-
-    public function getFile() {
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
         return $this->file;
     }
 
-    public function setFile($file) {
-        $this->file = $file;
-        return $this;
+    public function getId()
+    {
+        return $this->id;
     }
 
-    public function setName($name) {
-        $this->name = $name;
-        return $this;
-    }
 
-    public function setPath($path) {
+    public function setPath($path)
+    {
         $this->path = $path;
         return $this;
     }
 
-    public function getPath() {
+    public function getPath()
+    {
         return $this->path;
     }
 
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Image
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Image
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 }

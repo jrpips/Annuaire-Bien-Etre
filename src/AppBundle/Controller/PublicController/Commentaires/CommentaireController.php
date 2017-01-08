@@ -38,7 +38,6 @@ class CommentaireController extends Controller
             $comment = new Commentaire();
 
             $form = $this->get('form.factory')->create(CommentaireType::class, $comment);
-
             $form->handleRequest($request);
 
             if ($request->getMethod() == 'POST' && $request->isXmlHttpRequest()) {
@@ -67,6 +66,7 @@ class CommentaireController extends Controller
                     $comment
                         ->setInternaute($auteurComment[0])
                         ->setPrestataire($prestataireCommented);// ajout de l'auteur (internaute) et du sujet (prestataire)
+                    if($comment->getCote()==null) $comment->setCote(2);
 
                     $prestataireCommented->addCommentaire($comment);// injection du commentaire
 
@@ -81,28 +81,5 @@ class CommentaireController extends Controller
         return $this->redirectToRoute('details_prestataire', array('prestataire_nom' => $nomPrestataire));
     }
 
-    /**
-     * @Route("/admin/supprimer/commentaire/{commentaire_titre}/{abus_id}/{banni}",options={"expose"=true},name="delete_comment")
-     */
-    public function deleteCommentAction(Request $request, $commentaire_titre, $abus_id, $banni = null)
-    {
-        $commentaire = $this->getDoctrine()->getManager()->getRepository('AppBundle:Commentaire')->findOneByTitre($commentaire_titre);
-        $abus = $this->getDoctrine()->getManager()->getRepository('AppBundle:Abus')->findOneById($abus_id);
-        if ($banni) {
-            $user = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->findUtilisateur($banni);
-        }
 
-        $em = $this->getDoctrine()->getManager();
-
-        if ($banni) {
-            $user[0]->setBanni(true);
-            $em->persist($user[0]);
-        }
-        $em->remove($abus);
-        $em->flush();
-        $em->remove($commentaire);
-        $em->flush();
-
-        return $this->redirectToRoute('dashboard_abus');
-    }
 }

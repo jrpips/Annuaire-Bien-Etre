@@ -11,21 +11,16 @@
         <link href="http://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet" type="text/css">
         <link href="{{ asset('css/libraries/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"
               type="text/css">
-        {#             <link href="{{asset('css/libraries/owl.carousel/assets/owl.carousel.css')}}" rel="stylesheet" type="text/css" >#}
-        {#             <link href="assets/libraries/colorbox/example1/colorbox.css" rel="stylesheet" type="text/css" >#}
-        {#             <link href="{{asset('css/libraries/bootstrap-select/bootstrap-select.min.css')}}" rel="stylesheet" type="text/css">#}
-        {#             <link href="assets/libraries/bootstrap-fileinput/fileinput.min.css" rel="stylesheet" type="text/css">#}
         <link href="{{ asset('css/gp_annuaire_bootstrap.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('css/gp_annuaire.css') }}" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        {#            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>#}
         <link rel="icon" type="image/x-icon" href="{{ asset('image/gp_logo.png') }}"/>
 
         <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     {% endblock %}
-
 </head>
+
 <body>
 
 <div class="page-wrapper">
@@ -36,20 +31,18 @@
             <div class="wrapper-admin">
                 {% block body %}
                 {% endblock %}
-
-
             </div>
-        </div><!-- /.page-wrapper -->
+        </div>
     </div>
 </div>
 {% block javascripts %}
 {% endblock %}
 
 <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
-{#<script type="text/javascript" src="{{ asset('js/GpAnnuaire.js') }}"></script>#}
+<script type="text/javascript" src="{{ asset('js/GpAnnuaire.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/gpAnnuaireController.js') }}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-
 </body>
 </html>

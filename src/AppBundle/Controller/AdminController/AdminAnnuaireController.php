@@ -3,74 +3,13 @@ namespace AppBundle\Controller\AdminController;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Commentaire;
+use AppBundle\Entity\Abus;
 
 class AdminAnnuaireController extends Controller
 {
-    /**
-     * @Route("/admin",name="dashboard_accueil")
-     */
-    public function adminAction()
-    {
-        return $this->render('Admin/Accueil/dashboard.accueil.html.twig');
-    }
-
-    /**
-     * Render : retourne le nombre d'Abus signalés --> navigation Dashboard
-     */
-    public function countAbusAction()
-    {
-        $countAbus = $this->getDoctrine()->getManager()->getRepository('AppBundle:Abus')->countAbus();
-        return $this->render('Admin/AdminNavigation/link.count.abus.html.twig', array(
-            'countAbus' => $countAbus,
-        ));
-    }
-
-    /**
-     * Render : retourne le nombre de Comptes bannis  --> navigation Dashboard
-     */
-    public function countBannedAccountAction()
-    {
-        $countBannedUsers = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->countBannedUsers();
-        return $this->render('Admin/AdminNavigation/link.banned.account.html.twig', array(
-            'countBannedUsers' => $countBannedUsers,
-        ));
-    }
-
-    /**
-     * Render : retourne le nombre de Prestataires inscrits --> navigation Dashboard
-     */
-    public function countPrestatairesAction()
-    {
-        $countPrestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->countPrestataires();
-        return $this->render('Admin/AdminNavigation/link.count.prestataires.html.twig', array(
-            'countPrestataires' => $countPrestataires,
-        ));
-    }
-
-    /**
-     * Render : retourne le nombre de Internautes inscrits --> navigation Dashboard
-     */
-    public function countInternautesAction()
-    {
-        $countInternautes = $this->getDoctrine()->getManager()->getRepository('AppBundle:Internaute')->countInternautes();
-        return $this->render('Admin/AdminNavigation/link.count.internautes.html.twig', array(
-            'countInternautes' => $countInternautes,
-        ));
-    }
-
-    /**
-     * Render : retourne le nombre de Commentaires  --> navigation Dashboard
-     */
-    public function countCommentairesAction()
-    {
-        $countCommentaires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Commentaire')->countCommentaires();
-        return $this->render('Admin/AdminNavigation/link.count.commentaires.html.twig', array(
-            'countCommentaires' => $countCommentaires,
-        ));
-    }
-
     /**
      * @Route("/admin/gestion/abus",name="dashboard_abus")
      */
@@ -94,6 +33,7 @@ class AdminAnnuaireController extends Controller
             'users' => $users
         ));
     }
+
 
     /**
      * @Route("/admin/gestion/commentaires",name="dashboard_commentaires")
@@ -128,6 +68,32 @@ class AdminAnnuaireController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($abus);
+        $em->flush();
+
+        return $this->redirectToRoute('dashboard_abus');
+    }
+
+    /**
+     * @Route("/admin/supprimer/commentaire/{commentaire}/{abus}/{banni}",options={"expose"=true},name="delete_comment")
+     */
+    public function deleteCommentAction(Request $request,Commentaire $commentaire,Abus $abus=null, $banni = null)
+    {
+        //$commentaire = $this->getDoctrine()->getManager()->getRepository('AppBundle:Commentaire')->findOneByTitre($commentaire_titre);
+        //$abus = $this->getDoctrine()->getManager()->getRepository('AppBundle:Abus')->findOneById($abus_id);
+        if ($banni) {
+            $user = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->findUtilisateur($banni);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        if ($banni) {
+            $user[0]->setBanni(true);
+            $em->persist($user[0]);
+        }
+        if($abus){
+        $em->remove($abus);
+        $em->flush();}
+        $em->remove($commentaire);
         $em->flush();
 
         return $this->redirectToRoute('dashboard_abus');

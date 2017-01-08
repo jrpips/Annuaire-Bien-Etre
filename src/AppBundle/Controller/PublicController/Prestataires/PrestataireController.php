@@ -27,10 +27,13 @@ use AppBundle\Entity\Prestataire;
 use AppBundle\Entity\CategService;
 use AppBundle\Entity\Utilisateur;
 use AppBundle\Entity\Commentaire;
+use AppBundle\Entity\Image;
+use AppBundle\Form\ImageType;
 use AppBundle\Form\UtilisateurType;
 use AppBundle\Form\PrestataireType;
 use AppBundle\Form\ContactType;
 use AppBundle\Form\MoteurDeRechercheType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class PrestataireController extends Controller
 {
@@ -39,14 +42,13 @@ class PrestataireController extends Controller
      */
     public function getChildNavPrestatairesElementsAction()
     {
-        if (!$this->isGranted('ROLE_ADMIN') && $this->isGranted('ROLE_INTERNAUTE')) {
+        if ($this->isGranted('ROLE_INTERNAUTE') && !$this->isGranted('ROLE_ADMIN')) {
             $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')
                 ->findPrestatairesFavoris($this->getUser()->getInternaute()->getNom());
         } else {
             $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')
                 ->findLastPrestataires();
         }
-        dump($prestataires);
         return $this->render('Public/Navigation/Links/link.prestataires.elements.html.twig', array(
             'prestataires' => $prestataires,
         ));
@@ -61,26 +63,75 @@ class PrestataireController extends Controller
         $new_prestataire = new Utilisateur();
 
         $form = $this->get('form.factory')->create(UtilisateurType::class, $new_prestataire)->add('prestataire', PrestataireType::class);
-
         $form->handleRequest($request);
-        dump($form);
+
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
             $new_prestataire->setSalt('')->setRoles('ROLE_PRESTATAIRE');
 
+            $em = $this->getDoctrine()->getManager();
             $em->persist($new_prestataire);
+            try {
+                $em->flush();
 
-            $em->flush();
+            } catch (\Exception $e) {
 
-            $request->getSession()->getFlashBag()->add('notice', 'Profil Prestataire bien enregistré.');
+                $this->get('app.addmsgflash')->addMsgFlash($request, 'danger', 'Une erreur est survenue lors de votre inscription!',true);
+                return $this->redirectToRoute('signupPrestataire');
+            }
+            $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'Votre inscription est enregistrée!',true);
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('details_prestataire', array('prestataire_nom' => $new_prestataire->getNom()));
         }
         return $this->render('Public\Prestataires\Register\form.signup.prestataire.html.twig', array(
             'form' => $form->createView(),
             'prestataire' => $new_prestataire
         ));
+    }
+
+    /**
+     * @Route("/prestataire/image/{type}/{prestataire}",options={"expose"=true},name="image_prestataire")
+     */
+    public
+    function logoPrestataireAction(Request $request, Prestataire $prestataire = null, $type = null)
+    {
+        $prestataire = (!$this->isGranted('ROLE_ADMIN')) ? $this->getUser()->getPrestataire() : $prestataire;
+
+        if ($type == 'logo' && $prestataire->getLogo()) {
+            $img = $prestataire->getLogo();
+        } elseif ($type == 'cover' && $prestataire->getCover()) {
+            $img = $prestataire->getCover();
+        } else {
+            $img = new Image();
+        }
+
+        $form = $this->get('form.factory')->create(ImageType::class, $img)->add('Envoyer', SubmitType::class, array('attr' => array('class' => 'btn btn-default pull-right')));
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $img->setName($prestataire->getNom());
+            ($type == 'logo') ? $prestataire->setLogo($img) : $prestataire->setCover($img);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($img);
+            try {
+                $em->flush();
+
+            } catch (\Exception $e) {
+
+                $this->get('app.addmsgflash')->addMsgFlash($request, 'danger', 'votre ' . $type);
+                return $this->redirectToRoute('image_prestataire', array('type' => $type));
+            }
+            $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'votre ' . $type);
+            return $this->redirectToRoute('details_prestataire', array('prestataire_nom' => $prestataire->getNom()));
+
+        }
+        return $this->render('Public\Prestataires\EditProfil\form.image.prestataire.html.twig', array(
+            'form' => $form->createView(),
+            'image'=>$img,
+            'type' => $type
+        ));
+
     }
 
     /**
@@ -90,21 +141,30 @@ class PrestataireController extends Controller
     function updatePrestataireAction(Request $request, $nomPrestataire = null)
     {
         if ($nomPrestataire) {
-            $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findOneByNom($nomPrestataire);
+            $prestataire = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findOneByNom($nomPrestataire);
         } else {
             $prestataire = $this->getUser();
         }
 
-        $form = $this->get('form.factory')->create(UtilisateurType::class, $prestataire)->add('prestataire', PrestataireType::class);//->remove('password', PasswordType::class, array('required' => false));
+        $prestataire->setConfPwd($prestataire->getPassword());
+
+        $form = $this->get('form.factory')->create(UtilisateurType::class, $prestataire)->add('prestataire', PrestataireType::class)
+            ->remove('password', PasswordType::class, array('required' => false))->remove('confPwd', PasswordType::class, array('required' => false));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($prestataire);
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('notice', 'Modifications enregistrées.');
 
-            return $this->redirectToRoute('home');
+            try {
+                $em->flush();
+
+            } catch (\Exception $e) {
+                $this->get('app.addmsgflash')->addMsgFlash($request, 'danger', 'votre profil');
+                return $this->redirectToRoute('update_prestataire', array('nomPrestataire' => $prestataire->getNom()));
+            }
+            $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'votre profil');
+            return $this->redirectToRoute('details_prestataire', array('prestataire_nom' => $prestataire->getNom()));
+
         }
         return $this->render('Public\Prestataires\Register\form.signup.prestataire.html.twig', array(
             'form' => $form->createView(),
@@ -120,7 +180,7 @@ class PrestataireController extends Controller
     {
         $prestataire = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->getCompleteProfilePrestataire($prestataire_nom);
         $categServices = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findAll();
-        dump($prestataire, $categServices);
+
         return $this->render('Public/Prestataires/display.details.prestataire.html.twig', array(
             'prestataire' => $prestataire,
             'categServices' => $categServices
@@ -128,7 +188,7 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("recherche",options={"expose"=true},name="form_advanced_search")
+     * @Route("/recherche",options={"expose"=true},name="form_advanced_search")
      */
     public
     function moteurDeRechercheAction()
@@ -141,33 +201,30 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("recherche/simple",options={"expose"=true},name="simple_search_prestataire")
+     * @Route("/resultat/recherche/simple/{mot}",options={"expose"=true},name="simple_search_prestataire")
      */
     public
-    function simpleMoteurDeRechercheAction(Request $request)
+    function simpleMoteurDeRechercheAction(Request $request, $mot = null)
     {
-        dump($request->request);
-        $criteria = $request->request->all();
-
-        $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->simpleSearchPrestataire($criteria);
-        dump($prestataires, $criteria);
-
+        if ($mot) {
+            $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findAll();
+        } else {
+            $criteria = $request->request->all();
+            $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->simpleSearchPrestataire($criteria);
+        }
         return $this->render('Public\Prestataires\FoundPrestataires\display.liste.selected.prestataires.html.twig', array(
             'prestataires' => $prestataires
         ));
     }
 
     /**
-     * @Route("recherche/avancee",options={"expose"=true},name="advanced_search_prestataire")
+     * @Route("/resultat/recherche/avancee",options={"expose"=true},name="advanced_search_prestataire")
      */
     public
     function advancedMoteurDeRechercheAction(Request $request)
     {
-        dump($request->request);
         $criteria = $request->request->all();
-
         $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->advancedSearchPrestataire($criteria);
-        dump($prestataires, $criteria);
 
         return $this->render('Public\Prestataires\FoundPrestataires\display.liste.selected.prestataires.html.twig', array(
             'prestataires' => $prestataires
@@ -181,13 +238,14 @@ class PrestataireController extends Controller
     function getFormContactAction()
     {
         $form = $this->get('form.factory')->create(ContactType::class);
-        return $this->render('Public/Prestataires/form.contact.prestataire.html.twig', array(
+
+        return $this->render('Form/form.contact.html.twig', array(
             'form' => $form->createView(),
         ));
     }
 
     /**
-     * @Route("internaute/message",options={"expose"=true},name="send_mail_prestataire")
+     * @Route("/contacter/prestataire",options={"expose"=true},name="send_mail_prestataire")
      */
     public
     function sendMailToPrestataireAction(Request $request)
@@ -230,7 +288,6 @@ class PrestataireController extends Controller
     function getListePrestatairesByService($service)
     {
         $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findPrestatairesByService($service);
-        dump($prestataires);
 
         return $this->render('Public\Prestataires\FoundPrestataires\display.liste.selected.prestataires.html.twig', array(
             'prestataires' => $prestataires
@@ -248,25 +305,21 @@ class PrestataireController extends Controller
 
         $oldService = $em
             ->getRepository('AppBundle:CategService')
-            ->findByNom($service);
-        $nom = $this->getUser()->getPrestataire()->getNom();
-        echo $nom;
-        $p = $em
-            ->getRepository('AppBundle:Prestataire')
-            ->findPrestataire($nom);
+            ->findOneByNom($service);
 
-        $oldService[0]->removePrestataire($p[0]);
+        $p = $this->getUser()->getPrestataire();
 
-        $em = $this->getDoctrine()->getManager();
+        $oldService->removePrestataire($p);
+
         $em->flush();
-        //dump($oldService,$p);
-        return new JsonResponse('ok');//$this->redirectToRoute('prestataire_services');
+
+        return new JsonResponse('ok');
     }
 
     /**
      * @Route("/prestataire/ajout/service",options={"expose"=true},name="ajout_service")
      */
-    public function addServiveAction(Request $request)
+    public function addServiceAction(Request $request)
     {
         $service = $request->request->get('service');
 
@@ -274,19 +327,14 @@ class PrestataireController extends Controller
 
         $oldService = $em
             ->getRepository('AppBundle:CategService')
-            ->findByNom($service);
+            ->findOneByNom($service);
 
-        $nom = $this->getUser()->getPrestataire()->getNom();
+        $p = $this->getUser()->getPrestataire();
 
-        $p = $em
-            ->getRepository('AppBundle:Prestataire')
-            ->findPrestataire($nom);
+        $oldService->addPrestataire($p);
 
-        $oldService[0]->addPrestataire($p[0]);
-
-        $em = $this->getDoctrine()->getManager();
         $em->flush();
-        dump($oldService, $p);
-        return new JsonResponse('ok');//$this->redirectToRoute('prestataire_services');
+
+        return new JsonResponse('ok');
     }
 }
