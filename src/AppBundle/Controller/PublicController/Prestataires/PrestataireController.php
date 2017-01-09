@@ -94,7 +94,7 @@ class PrestataireController extends Controller
      */
     public
     function logoPrestataireAction(Request $request, Prestataire $prestataire = null, $type = null)
-    {
+    {//TODO :NE PAS FAIRE PEUR AUX PRESTATAIRES -> FORMULAIRE TROP CONSéQUENT
         $prestataire = (!$this->isGranted('ROLE_ADMIN')) ? $this->getUser()->getPrestataire() : $prestataire;
 
         if ($type == 'logo' && $prestataire->getLogo()) {
@@ -205,7 +205,7 @@ class PrestataireController extends Controller
      */
     public
     function simpleMoteurDeRechercheAction(Request $request, $mot = null)
-    {
+    {//TODO : FAIRE UN CONTROLLER POUR LE MOTEUR RECHERCHE
         if ($mot) {
             $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findAll();
         } else {

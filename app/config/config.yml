@@ -81,9 +81,9 @@ swiftmailer:
   auth_mode: cram-md5
   port: 2525
 
-knp_snappy:
-    temporary_folder: 'C:\Users\Chris\Desktop\snappy'
-    pdf:
-        enabled:    true
-        binary:     'C:\"Program Files"\EasyPHP-Devserver-16.1\eds-www\Annuaire-Bien-Etre\vendor\wemersonjanuario\wkhtmltopdf-windows\bin\32bit\wkhtmltopdf.exe'
-        options:    []
+#knp_snappy:
+    #temporary_folder: 'C:\Users\Chris\Desktop\snappy'
+    #pdf:
+        #enabled:    true
+        #binary:     'C:\"Program Files"\EasyPHP-Devserver-16.1\eds-www\Annuaire-Bien-Etre\vendor\wemersonjanuario\wkhtmltopdf-windows\bin\32bit\wkhtmltopdf.exe'
+        #options:    []

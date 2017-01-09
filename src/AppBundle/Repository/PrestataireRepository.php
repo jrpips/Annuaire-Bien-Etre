@@ -46,7 +46,7 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository
     public function advancedSearchPrestataire($criteria)
     {
 
-        foreach ($criteria as $k => $v) {
+        foreach ($criteria as $k => $v) {//TODO: récupération des valeurs
             $nom = $v['nom'] != '' ? '%' . trim($v['nom']) . '%' :false;
             $commune = $v['commune'] != '' ? trim($v['commune']) :false;
             $service = $v['service'] != '' ? trim($v['service']) :false;

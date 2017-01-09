@@ -9,5 +9,5 @@
     }
 </style>
 <p>Bonjour {{ user.firstName|capitalize }} {{ user.lastName|capitalize }}!</p>
-<a href="http://127.0.0.1{{ path('signup-final',{'signup':user.id,'token':user.token}) }}">Valider mon inscription</a>
-
+<a href="{{ url('signup-final',{'signup':user.id,'token':user.token}) }}">Valider mon inscription</a>
+{# attention utiliser la fonction 'url' -> pas écrire partie d'url dans le dur #}

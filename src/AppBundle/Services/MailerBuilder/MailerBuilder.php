@@ -2,7 +2,7 @@
 
 namespace AppBundle\Services\MailerBuilder;
 
-class MailerBuilder {
+class MailerBuilder {//TODO / ATTENTION AUX REDONDANCES
 
     protected $twig;
     protected $mailer;
