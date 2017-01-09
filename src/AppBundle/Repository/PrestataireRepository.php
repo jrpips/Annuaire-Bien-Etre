@@ -101,9 +101,7 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository
 
     public function findPrestataire($nom)
     {
-
         $qb = $this->createQueryBuilder('p')->leftJoin('p.utilisateur', 'u')->addSelect('u');
-
         $qb->where('p.nom=:nom')->setParameter('nom', $nom);
 
         return $qb->getQuery()->getResult();
@@ -156,7 +154,6 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository
      */
     public function countPrestataires()
     {
-
         $qb = $this->createQueryBuilder('p')->select('COUNT(p)');
 
         return $qb->getQuery()->getSingleScalarResult();

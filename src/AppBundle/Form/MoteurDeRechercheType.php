@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use AppBundle\Form\ImageType;
 
 class MoteurDeRechercheType extends AbstractType
@@ -17,7 +18,12 @@ class MoteurDeRechercheType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, array('required' => false))
-            ->add('service', TextType::class, array('required' => false))
+            //->add('service', TextType::class, array('required' => false))
+            ->add('service',EntityType::class,array(
+                'class' => 'AppBundle:CategService',
+                'choice_label' => 'nom',
+                'choice_value'=>'nom'
+            ))
             ->add('commune', TextType::class, array('required' => false))
             ->add('cp', IntegerType::class, array('required' => false,'label_format'=>'Code postal'))
             ->add('localite', TextType::class, array('required' => false,'label_format'=>'Province'))

@@ -14,7 +14,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Promotion;
+use AppBundle\Entity\CategService;
 use AppBundle\Form\PromotionType;
+//use Symfony\Component\Form\Extension\Core\Type\EntityType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class PromotionController extends Controller
 {
@@ -51,7 +54,13 @@ class PromotionController extends Controller
     {
         $promotion = new Promotion();
 
-        $form = $this->get('form.factory')->create(PromotionType::class, $promotion);
+        $form = $this->get('form.factory')->create(PromotionType::class, $promotion)->add('categService', EntityType::class, array(
+            'class' => 'AppBundle:CategService',
+            //'query_builder' =>  $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findServicesByNomPrestataire($this->getUser()->getPrestataire()->getNom()),
+            'choice_label' => 'nom',
+            'label' => 'Service associé'
+        ));
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -61,11 +70,20 @@ class PromotionController extends Controller
             $promotion->setPrestataire($this->getUser()->getPrestataire());
 
             $em->persist($promotion);
-            $em->flush();
 
-            return $this->redirectToRoute('home');
+            $statut = 'success';
+            $text = 'Votre promotion a été créée!';
+
+            try {
+                $em->flush();
+
+            } catch (\Exception $e) {
+                $statut = 'danger';
+                $text = 'Une erreur est survenue lors de la création de votre promotion!';
+            }
+            $this->get('app.addmsgflash')->addMsgFlash($request, $statut, $text, true);
+            return $this->redirectToRoute('dashboard_promotion');
         }
-
         return $this->render('Public/Prestataires/FrontOffice/Promotions/form.promotion.html.twig', array(
             'promotion' => $promotion,
             'form' => $form->createView()
@@ -77,24 +95,40 @@ class PromotionController extends Controller
      */
     public function updatepromotionAction(Request $request, $nom_promotion)
     {
-        $promotion = $this->getDoctrine()->getManager()->getRepository('AppBundle:promotion')->findByNom($nom_promotion);
+        $promotion = $this->getDoctrine()->getManager()->getRepository('AppBundle:promotion')->findOneByNom($nom_promotion);
 
 
-        $form = $this->get('form.factory')->create(promotionType::class, $promotion[0]);
+        $form = $this->get('form.factory')->create(promotionType::class, $promotion)->add('categService', EntityType::class, array(
+            'class' => 'AppBundle:CategService',
+            /*'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('cs')
+                    ->leftJoin('cs.prestataires', 'p')
+                    ->andWhere('p.id like :id')
+                    ->setParameter('id', $this->getUser()->getPrestaire()->getId());
+            },*/
+            'choice_label' => 'nom',
+            'label' => 'Service associé'
+        ));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
 
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('notice', 'promotion modifiée.');//TODO : fenêtre popup affichage message succès...
+            $statut = 'success';
 
-            return $this->redirectToRoute('dashboard_promotion');//TODO : ...sur la page de redirection
+            try {
+                $em->flush();
+
+            } catch (\Exception $e) {
+                $statut = 'danger';
+            }
+            $this->get('app.addmsgflash')->addMsgFlash($request, $statut, 'votre promotion');
+            return $this->redirectToRoute('dashboard_promotion');
         }
 
         return $this->render('Public/Prestataires/FrontOffice/Promotions/form.promotion.html.twig', array(
-            'promotion' => $promotion[0],
+            'promotion' => $promotion,
             'form' => $form->createView()
         ));
     }
@@ -106,9 +140,9 @@ class PromotionController extends Controller
     {
         //$prestaire_nom =$this->getUser()->getPrestataire()->getNom();
 
-        $promotion = $this->getDoctrine()->getManager()->getRepository('AppBundle:Promotion')->findByNom($nom_promotion);
+        $promotion = $this->getDoctrine()->getManager()->getRepository('AppBundle:Promotion')->findOneByNom($nom_promotion);
         $em = $this->getDoctrine()->getManager();
-        $em->remove($promotion[0]);
+        $em->remove($promotion);
         $em->flush();
 
         return $this->redirectToRoute('dashboard_promotion');

@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PromotionType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
@@ -25,29 +24,29 @@ class PromotionType extends AbstractType
             ->add('nom', TextType::class, array('required' => false))
             ->add('description', TextareaType::class, array('required' => false))
             //->add('pdf')
-            ->add('dateDebut',  DateType::class, array('required' => false))
+            ->add('dateDebut', DateType::class, array('required' => false))
             ->add('dateFin', DateType::class, array('required' => false))
             ->add('affichageDebut', DateType::class, array('required' => false))
             ->add('affichageFin', DateType::class, array('required' => false))
             //->add('prestataire')
             ->add('categService',EntityType::class,array(
-                'class' => 'AppBundle:CategService',
-               /* 'query_builder'=>function(EntityRepository $er){
-                    return $er->createQueryBuilder('cs')->leftJoin('cs.prestataires','p')->andWhere('p.id like :id')->setParameter('id',$request->getUser()->getPrestataire()->getId());
-                },*/
-                'choice_label' => 'nom',
-                'label'=>'Service associé'))
-            ->add('Envoyer', SubmitType::class,array('attr'=>array('class'=>'btn btn-default pull-right')))
-        ;
+                 'class' => 'AppBundle:CategService',
+                 /*'query_builder'=>function(EntityRepository $er){
+                     return $er->createQueryBuilder('cs')->leftJoin('cs.prestataires','p')->andWhere('p.id like :id')->setParameter('id',4);
+                 },*/
+                 'choice_label' => 'nom',
+                 'label'=>'Service associé'))
+            ->add('Envoyer', SubmitType::class, array('attr' => array('class' => 'btn btn-default pull-right')));
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Promotion'
+            'data_class' => 'AppBundle\Entity\Promotion',
+            'allow_extra_fields' => true
         ));
     }
 }

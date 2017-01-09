@@ -141,14 +141,14 @@ class PrestataireController extends Controller
     function updatePrestataireAction(Request $request, $nomPrestataire = null)
     {
         if ($nomPrestataire) {
-            $prestataire = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findOneByNom($nomPrestataire);
+            $userP = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findOneByNom($nomPrestataire);
         } else {
-            $prestataire = $this->getUser();
+            $userP = $this->getUser();
         }
 
-        $prestataire->setConfPwd($prestataire->getPassword());
+        $userP->setConfPwd($userP->getPassword());
 
-        $form = $this->get('form.factory')->create(UtilisateurType::class, $prestataire)->add('prestataire', PrestataireType::class)
+        $form = $this->get('form.factory')->create(UtilisateurType::class, $userP)->add('prestataire', PrestataireType::class)
             ->remove('password', PasswordType::class, array('required' => false))->remove('confPwd', PasswordType::class, array('required' => false));
         $form->handleRequest($request);
 
@@ -160,15 +160,15 @@ class PrestataireController extends Controller
 
             } catch (\Exception $e) {
                 $this->get('app.addmsgflash')->addMsgFlash($request, 'danger', 'votre profil');
-                return $this->redirectToRoute('update_prestataire', array('nomPrestataire' => $prestataire->getNom()));
+                return $this->redirectToRoute('update_prestataire', array('nomPrestataire' => $userP->getPrestataire()->getNom()));
             }
             $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'votre profil');
-            return $this->redirectToRoute('details_prestataire', array('prestataire_nom' => $prestataire->getNom()));
+            return $this->redirectToRoute('details_prestataire', array('prestataire_nom' => $userP->getPrestataire()->getNom()));
 
         }
         return $this->render('Public\Prestataires\Register\form.signup.prestataire.html.twig', array(
             'form' => $form->createView(),
-            'prestataire' => $prestataire
+            'prestataire' => $userP
         ));
     }
 
@@ -224,6 +224,7 @@ class PrestataireController extends Controller
     function advancedMoteurDeRechercheAction(Request $request)
     {
         $criteria = $request->request->all();
+        dump($criteria);
         $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->advancedSearchPrestataire($criteria);
 
         return $this->render('Public\Prestataires\FoundPrestataires\display.liste.selected.prestataires.html.twig', array(
