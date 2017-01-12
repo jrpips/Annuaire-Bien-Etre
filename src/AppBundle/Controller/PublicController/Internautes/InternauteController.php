@@ -49,7 +49,7 @@ class InternauteController extends Controller
                 ->getPrestatairesFavoris($this->getUser()->getInternaute()->getId());//récupération Id internaute
         }
         $myFavoris = $myFavoris[0];
-        dump($myFavoris);
+
         return $this->render('Public/Internautes/Favoris/display.prestataires.favoris.html.twig', array(
             'favoris' => $myFavoris
         ));
@@ -243,8 +243,7 @@ class InternauteController extends Controller
             ->get('form.factory')
             ->create(UtilisateurType::class, $utilisateur)
             ->add('internaute', InternauteType::class)
-            ->remove('password', PasswordType::class, array('required' => false))->remove('confPwd', PasswordType::class, array('required' => false));
-
+           ;
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

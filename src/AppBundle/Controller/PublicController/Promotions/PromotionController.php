@@ -38,7 +38,7 @@ class PromotionController extends Controller
     /**
      * @Route("/prestataire/promotion",options={"expose"=true},name="dashboard_promotion")
      */
-    public function promotionDashboardAction(Request $request)
+    public function promotionDashboardAction(/*Request $request*/)
     {
         $promotions = $this->getDoctrine()->getManager()->getRepository('AppBundle:Promotion')->findPrestatairePromotions($this->getUser()->getPrestataire()->getNom());
 
@@ -54,12 +54,7 @@ class PromotionController extends Controller
     {
         $promotion = new Promotion();
 
-        $form = $this->get('form.factory')->create(PromotionType::class, $promotion)->add('categService', EntityType::class, array(
-            'class' => 'AppBundle:CategService',
-            //'query_builder' =>  $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findServicesByNomPrestataire($this->getUser()->getPrestataire()->getNom()),
-            'choice_label' => 'nom',
-            'label' => 'Service associé'
-        ));
+        $form = $this->get('form.factory')->create(PromotionType::class, $promotion,['user'=>$this->getUser()->getPrestataire()->getId()]);//->add('categService', EntityType::class, array(
 
         $form->handleRequest($request);
 
@@ -98,17 +93,7 @@ class PromotionController extends Controller
         $promotion = $this->getDoctrine()->getManager()->getRepository('AppBundle:promotion')->findOneByNom($nom_promotion);
 
 
-        $form = $this->get('form.factory')->create(promotionType::class, $promotion)->add('categService', EntityType::class, array(
-            'class' => 'AppBundle:CategService',
-            /*'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('cs')
-                    ->leftJoin('cs.prestataires', 'p')
-                    ->andWhere('p.id like :id')
-                    ->setParameter('id', $this->getUser()->getPrestaire()->getId());
-            },*/
-            'choice_label' => 'nom',
-            'label' => 'Service associé'
-        ));
+        $form = $this->get('form.factory')->create(promotionType::class, $promotion);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -136,7 +121,7 @@ class PromotionController extends Controller
     /**
      * @Route("/prestataire/retrait/promotion/{nom_promotion}",name="delete_promotion")
      */
-    public function deletepromotionAction(Request $request, $nom_promotion)
+    public function deletepromotionAction(/*Request $request,*/ $nom_promotion)
     {
         //$prestaire_nom =$this->getUser()->getPrestataire()->getNom();
 

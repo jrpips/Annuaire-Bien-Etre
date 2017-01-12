@@ -13,10 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class StageType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -39,10 +36,7 @@ class StageType extends AbstractType
             ->add('Envoyer', SubmitType::class,array('attr'=>array('class'=>'btn btn-default pull-right')))
         ;
     }
-    
-    /**
-     * @param OptionsResolver $resolver
-     */
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(

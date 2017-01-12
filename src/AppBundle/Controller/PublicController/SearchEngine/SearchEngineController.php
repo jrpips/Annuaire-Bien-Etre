@@ -50,7 +50,7 @@ class SearchEngineController extends Controller
     public
     function advancedSearcheAction(Request $request)
     {
-        $criteria = $request->request->all();
+        $criteria = $request->request->get('search_engine');
         dump($criteria);
         $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->advancedSearchPrestataire($criteria);
 

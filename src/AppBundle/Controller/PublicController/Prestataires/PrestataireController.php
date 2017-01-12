@@ -148,8 +148,7 @@ class PrestataireController extends Controller
 
         $userP->setConfPwd($userP->getPassword());
 
-        $form = $this->get('form.factory')->create(UtilisateurType::class, $userP)->add('prestataire', PrestataireType::class)
-            ->remove('password', PasswordType::class, array('required' => false))->remove('confPwd', PasswordType::class, array('required' => false));
+        $form = $this->get('form.factory')->create(UtilisateurType::class, $userP)->add('prestataire', PrestataireType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
