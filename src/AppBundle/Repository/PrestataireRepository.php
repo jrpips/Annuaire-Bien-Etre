@@ -15,9 +15,9 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository
      **/
     public function simpleSearchPrestataire($mot_cle)
     {
-        foreach ($mot_cle as $k => $v) {
-            $mot = '%' . $v['nom'] . '%';
-        }
+        //foreach ($mot_cle as $k => $v) {
+            $mot = '%' . $mot_cle['moteur_de_recherche']['nom'] . '%';
+        //}
 
         $qb = $this->createQueryBuilder('p')
             ->leftJoin('p.utilisateur', 'u')->addSelect('u')
@@ -45,14 +45,12 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository
      **/
     public function advancedSearchPrestataire($criteria)
     {
-
-        foreach ($criteria as $k => $v) {//TODO: récupération des valeurs
-            $nom = $v['nom'] != '' ? '%' . trim($v['nom']) . '%' :false;
-            $commune = $v['commune'] != '' ? trim($v['commune']) :false;
-            $service = $v['service'] != '' ? trim($v['service']) :false;
-            $cp = $v['cp'] != '' ?  trim($v['cp'])  :false;
-            $localite = $v['localite'] != '' ?  trim($v['localite'])  :false;
-        }
+        //boucle Foreach PAS INUTILE au vu de la structure de $criteria ;)
+        $nom = $criteria['moteur_de_recherche']['nom'] != '' ? '%' . trim($criteria['moteur_de_recherche']['nom']) . '%' :false;
+        $commune = $criteria['moteur_de_recherche']['commune'] != '' ? trim($criteria['moteur_de_recherche']['commune']) :false;
+        $service = $criteria['moteur_de_recherche']['service'] != '' ? trim($criteria['moteur_de_recherche']['service']) :false;
+        $cp = $criteria['moteur_de_recherche']['cp'] != '' ?  trim($criteria['moteur_de_recherche']['cp'])  :false;
+        $localite = $criteria['moteur_de_recherche']['localite'] != '' ?  trim($criteria['moteur_de_recherche']['localite'])  :false;
 
         $qb = $this->createQueryBuilder('p')
             ->leftJoin('p.utilisateur', 'u')->addSelect('u')

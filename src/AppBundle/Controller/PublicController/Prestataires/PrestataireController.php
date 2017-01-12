@@ -188,51 +188,6 @@ class PrestataireController extends Controller
     }
 
     /**
-     * @Route("/recherche",options={"expose"=true},name="form_advanced_search")
-     */
-    public
-    function moteurDeRechercheAction()
-    {
-        $form = $this->get('form.factory')->create(MoteurDeRechercheType::class);
-
-        return $this->render('Public\Navigation\Links\MoteurDeRecherche\form.moteur.de.recherche.prestataire.html.twig', array(
-            'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * @Route("/resultat/recherche/simple/{mot}",options={"expose"=true},name="simple_search_prestataire")
-     */
-    public
-    function simpleMoteurDeRechercheAction(Request $request, $mot = null)
-    {//TODO : FAIRE UN CONTROLLER POUR LE MOTEUR RECHERCHE
-        if ($mot) {
-            $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findAll();
-        } else {
-            $criteria = $request->request->all();
-            $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->simpleSearchPrestataire($criteria);
-        }
-        return $this->render('Public\Prestataires\FoundPrestataires\display.liste.selected.prestataires.html.twig', array(
-            'prestataires' => $prestataires
-        ));
-    }
-
-    /**
-     * @Route("/resultat/recherche/avancee",options={"expose"=true},name="advanced_search_prestataire")
-     */
-    public
-    function advancedMoteurDeRechercheAction(Request $request)
-    {
-        $criteria = $request->request->all();
-        dump($criteria);
-        $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->advancedSearchPrestataire($criteria);
-
-        return $this->render('Public\Prestataires\FoundPrestataires\display.liste.selected.prestataires.html.twig', array(
-            'prestataires' => $prestataires
-        ));
-    }
-
-    /**
      *  render formulaire contact Prestataire
      */
     public

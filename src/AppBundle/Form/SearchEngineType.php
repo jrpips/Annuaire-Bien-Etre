@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use AppBundle\Form\ImageType;
 
-class MoteurDeRechercheType extends AbstractType
+class SearchEngineType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -32,7 +32,7 @@ class MoteurDeRechercheType extends AbstractType
 
     public function getName()
     {
-        return 'moteur_de_recherche';
+        return 'search_engine';
     }
 
 }

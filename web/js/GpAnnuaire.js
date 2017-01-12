@@ -38,7 +38,7 @@ var GpAnnuaire = GpAnnuaire || {
             } else {//scroll actif
 
                 //$('header').removeAttr('header-transparent');
-                $('.header-wrapper').css('background-color', 'rgba(100, 100, 128,0.4)');
+                $('.header-wrapper').css({'background-color': 'rgba(100, 100, 128,0.6)'});
             }//TODO couleur police nav pages != index
         },
         resetForm: function (element) {// param element --> form.parent()

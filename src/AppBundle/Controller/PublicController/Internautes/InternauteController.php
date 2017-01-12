@@ -132,7 +132,7 @@ class InternauteController extends Controller
                 try {
                     $em->flush();
                 } catch (\Exception $e) {
-                    $this->get('app.addmsgflash')->addMsgFlash($request, 'danger', 'Une erreur est survenue lors de votre inscription!Veuillez réessayer plus tard.',true);
+                    $this->get('app.addmsgflash')->addMsgFlash($request, 'danger', 'Une erreur est survenue lors de votre inscription! Veuillez réessayer plus tard.',true);
                 }
                 return $this->redirectToRoute('home');
             }

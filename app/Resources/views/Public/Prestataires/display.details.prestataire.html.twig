@@ -180,13 +180,13 @@
                                                          </div><!-- /.cons -->#}
                                                     </div>
                                                 </div>
-                                                <div style="text-align:right">
-                                                    <a class="btn btn-link"
-                                                       href="{{ path('signaler_abus',{'commentaire_id':commentaire.id,'prestataire_nom':prestataire.nom}) }}">Signaler
-                                                        un abus</a>
-
-                                                </div>
-
+                                                {% if not is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+                                                    <div style="text-align:right">
+                                                        <a class="btn btn-link"
+                                                           href="{{ path('signaler_abus',{'commentaire_id':commentaire.id,'prestataire_nom':prestataire.nom}) }}">Signaler
+                                                            un abus</a>
+                                                    </div>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     {% endfor %}
@@ -281,12 +281,12 @@
                                     </div>
                                 </div>
 
-                                {% for service in prestataire.categServices %}
+                               {# {% for service in prestataire.categServices %}
                                     <div><span class="text-secondary">{{ service.nom|capitalize }}</span></div>
                                     <div class="detail-description">
                                         <div>{{ service.description|capitalize }}</div>
                                     </div>
-                                {% endfor %}
+                                {% endfor %}#}
 
                                 <div class="detail-follow">
                                     <h5>Follow Us:</h5>
@@ -326,7 +326,7 @@
                                     <ul class="detail-amenities">
                                         {% if prestataire.promotions is not empty %}
                                             {% for promo in prestataire.promotions %}
-                                                <div class="well">
+                                                <div class="well" style="margin-bottom:0;border-radius:0">
                                                     <li class="yes"> {{ promo.nom|capitalize }}
                                                         <br>{{ promo.description|capitalize }}
                                                         <br>Service :
