@@ -52,7 +52,7 @@ class PrestataireServicesController extends Controller
                 return $this->redirectToRoute('add_service');
             }
             $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'Votre demande est enregistrée et en attente de validation!', true);
-            $this->get('app.mailerbuilder')->addNewServiceMailer($newService);
+            $this->get('app.mailerbuilder')->mailConstruct($newService,'service','to','Demande de création d\'un service',$this->getUser()->getEmail());
 
             return $this->redirectToRoute('prestataire_services');
         }

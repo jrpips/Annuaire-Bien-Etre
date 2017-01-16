@@ -44,6 +44,12 @@ class Prestataire {
     private $cover;
 
     /**
+     * @ORM\OneToMany(targetEntity="Image",mappedBy="sliderItems", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $slider;
+
+    /**
      *
      * @ORM\ManyToMany(targetEntity="Internaute",mappedBy="favoris",cascade={"persist"})
      */
@@ -488,4 +494,38 @@ class Prestataire {
         $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+
+    /**
+     * Add slider
+     *
+     * @param \AppBundle\Entity\Image $slider
+     *
+     * @return Prestataire
+     */
+    public function addSlider(\AppBundle\Entity\Image $slider)
+    {
+        $this->slider[] = $slider;
+
+        return $this;
+    }
+
+    /**
+     * Remove slider
+     *
+     * @param \AppBundle\Entity\Image $slider
+     */
+    public function removeSlider(\AppBundle\Entity\Image $slider)
+    {
+        $this->slider->removeElement($slider);
+    }
+
+    /**
+     * Get slider
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSlider()
+    {
+        return $this->slider;
+    }
 }

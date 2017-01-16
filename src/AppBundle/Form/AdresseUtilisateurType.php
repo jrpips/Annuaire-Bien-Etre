@@ -23,20 +23,40 @@ class AdresseUtilisateurType extends AbstractType {
         //->add('utilisateur')
         ;
 
-        $getNameCommune = function(FormInterface $form, $codePostal) {
-            $beurk = new SearchPostalCode();
+       $getNameCommune = function(FormInterface $form, $codePostal) {
+          /* $addr = $event->getData();
+           if ($addr->__isInitialized()) {*/
+                $beurk = new SearchPostalCode();
 
-            $communes =  $beurk->getData($codePostal); 
-                   // $this->container->get('app.searchpostalcode')->getData($codePostal);
+                $communes = $beurk->getData($codePostal);
+                //$this->container->get('app.searchpostalcode')->getData($codePostal);
 
-            $options = $communes['communes'];
-            $form->add('commune', ChoiceType::class, array('attr' => array('class' => 'commune'),
-                'choices' => $options));
+                $options = $communes['communes'];
+                $form->add('commune', ChoiceType::class, array('attr' => array('class' => 'commune'),
+                    'choices' => $options));
+           // }
         };
 
         $builder->get('codePostal')->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) use ($getNameCommune) {
             $getNameCommune($event->getForm()->getParent(), $event->getForm()->getData());
         });
+
+      /*  $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event,$codePostal) {
+
+            $addr = $event->getData();
+            $form = $event->getForm()->getParent();
+//echo '<pre/>';var_dump($addr);die();
+            if ($addr->__isInitialized()) {
+                $beurk = new SearchPostalCode();
+
+                $communes = $beurk->getData($codePostal);
+                //$this->container->get('app.searchpostalcode')->getData($codePostal);
+
+                $options = $communes['communes'];
+                $form->add('commune', ChoiceType::class, array('attr' => array('class' => 'commune'),
+                    'choices' => $options));
+                }
+        });*/
     }
 
     public function configureOptions(OptionsResolver $resolver) {

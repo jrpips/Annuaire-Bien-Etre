@@ -28,17 +28,15 @@ class SearchEngineController extends Controller
     }
 
     /**
-     * @Route("/resultat/recherche/simple/{mot}",options={"expose"=true},name="simple_search_prestataire")
+     * @Route("/resultat/recherche/simple",options={"expose"=true},name="simple_search_prestataire")
      */
     public
-    function simpleSearchAction(Request $request, $mot = null)
-    {//TODO : FAIRE UN CONTROLLER POUR LE MOTEUR RECHERCHE
-        if ($mot) {
-            $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findAll();
-        } else {
-            $criteria = $request->request->all();
+    function simpleSearchAction(Request $request)
+    {
+
+            $criteria = $request->request->get('moteur_de_recherche');
             $prestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->simpleSearchPrestataire($criteria);
-        }
+
         return $this->render('Public\Prestataires\FoundPrestataires\display.liste.selected.prestataires.html.twig', array(
             'prestataires' => $prestataires
         ));

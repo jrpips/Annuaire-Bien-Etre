@@ -7,21 +7,23 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-12">
+                                {% set user= (type=='prestataire')?utilisateur.prestataire.nom:utilisateur.internaute.nom %}
                                 <div class="page-title">
-                                    {% if service is null %}
-                                        <h2>Création d'un service</h2>
-                                    {% else %}
-                                        <h2>Modification du service {{ service.nom }}</h2>
-                                    {% endif %}
+                                    <h2>Edition du {{ type }}: {{ user }} </h2>
                                 </div>
-                                <div class="col-sm-12">
-                                    {% include('Form/form.service.html.twig') %}
-                                </div>
+                                {% if type=='prestataire' %}
+                                    {{ include('Form/form.edit.prestataire.html.twig') }}
+                                {% else %}
+                                    {{ include('Form/form.edit.internaute.html.twig') }}
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {{ include("Admin/base.admin.footer.html.twig") }}
         </div>
     </div>
 {% endblock %}
+
+

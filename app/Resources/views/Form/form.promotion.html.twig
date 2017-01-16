@@ -1,0 +1,40 @@
+{{ form_start(form) }}
+<div class="col-sm-12 form-group background-white p20">
+    <div class="col-sm-8">
+        {{ form_label(form.nom) }}
+        {{ form_widget(form.nom) }}
+        {{ form_errors(form.nom) }}
+
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+        {{ form_errors(form.description) }}
+
+        {{ form_label(form.categService) }}
+        {{ form_widget(form.categService) }}
+        {{ form_errors(form.categService) }}
+    </div>
+    <div class="col-sm-4 " {#style="padding-left: 40px"#}>
+
+        {{ form_label(form.dateDebut) }}
+        {{ form_widget(form.dateDebut) }}
+        {{ form_errors(form.dateDebut) }}
+
+        {{ form_label(form.dateFin) }}
+        {{ form_widget(form.dateFin) }}
+        {{ form_errors(form.dateFin) }}
+
+        {{ form_label(form.affichageDebut) }}
+        {{ form_widget(form.affichageDebut) }}
+        {{ form_errors(form.affichageDebut) }}
+
+        {{ form_label(form.affichageFin) }}
+        {{ form_widget(form.affichageFin) }}
+        {{ form_errors(form.affichageFin) }}
+
+
+    </div>
+    <div class="col-sm-12 background-white">
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+</div>

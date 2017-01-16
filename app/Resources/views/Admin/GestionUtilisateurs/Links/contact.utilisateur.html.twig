@@ -1,0 +1,32 @@
+{% extends 'Admin/dashboard.html.twig' %}
+{% block dashboard_body %}
+    <div class="content-admin">
+        <div class="content-admin-wrapper">
+            <div class="content-admin-main">
+                <div class="content-admin-main-inner">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="background-white p20">
+                                    <h2 class="page-title">Contacter <span
+                                                style="color:darkgoldenrod">{{ utilisateur.username|capitalize }}</span>
+                                    </h2>
+
+                                    <form method="POST" action="{{ path('contact_user',{'utilisateur':utilisateur.id}) }}" name="contact_user">
+                                        <div class="form-group">
+                                            <label style="display: block" for="message">Votre message</label>
+                                            <textarea style="display: block;width:100%"  name="contact_user[message]"></textarea>
+                                            <button style="display: block" type="submit" class="btn btn-primary mt30">Envoyer</button>
+                                        </div>
+                                    </form>
+                                    <div style="color: red">{{ error }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ include("Admin/base.admin.footer.html.twig") }}
+    </div>
+{% endblock %}

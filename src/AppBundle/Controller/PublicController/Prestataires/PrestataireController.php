@@ -38,6 +38,20 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class PrestataireController extends Controller
 {
     /**
+     * @Route("/slider",name="slider")
+     */
+    public
+    function sliderAction(Request $request)
+    {
+        $slider=$this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findImagesSlider(1);
+        dump($slider);
+        return $this->render('test.slider.html.twig', array(
+            'slider' => $slider[0],
+        ));
+    }
+
+
+    /**
      * call by views/Public/Navigation/nav.parent.menu
      */
     public function getChildNavPrestatairesElementsAction()
@@ -76,10 +90,10 @@ class PrestataireController extends Controller
 
             } catch (\Exception $e) {
 
-                $this->get('app.addmsgflash')->addMsgFlash($request, 'danger', 'Une erreur est survenue lors de votre inscription!',true);
+                $this->get('app.addmsgflash')->addMsgFlash($request, 'danger', 'Une erreur est survenue lors de votre inscription!', true);
                 return $this->redirectToRoute('signupPrestataire');
             }
-            $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'Votre inscription est enregistrée!',true);
+            $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'Votre inscription est enregistrée!', true);
 
             return $this->redirectToRoute('details_prestataire', array('prestataire_nom' => $new_prestataire->getNom()));
         }
@@ -128,7 +142,7 @@ class PrestataireController extends Controller
         }
         return $this->render('Public\Prestataires\EditProfil\form.image.prestataire.html.twig', array(
             'form' => $form->createView(),
-            'image'=>$img,
+            'image' => $img,
             'type' => $type
         ));
 
@@ -225,7 +239,7 @@ class PrestataireController extends Controller
 
                 $values = $request->request->all();
 
-                $this->get('app.mailerbuilder')->contactPrestataireMailer($values);
+                $this->get('app.mailerbuilder')->mailConstruct($values);
 
                 return new JsonResponse(array(
                     'valide' => true,

@@ -24,7 +24,6 @@ class Internaute {
 
     /**
      * @ORM\OneToOne(targetEntity="Utilisateur", cascade={"persist"},mappedBy="internaute")
-     * @ORM\JoinColumn(nullable=true)
      * @Assert\Valid
      */
     private $utilisateur;

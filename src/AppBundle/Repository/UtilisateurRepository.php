@@ -14,7 +14,6 @@ class UtilisateurRepository extends \Doctrine\ORM\EntityRepository
      * Sélection de l'Utilisateur correspondant à un Internaute donné
      *
      * @param $id_internaute
-     * @return array
      */
     public function findUtilisateur($id_internaute)
     {
@@ -23,6 +22,19 @@ class UtilisateurRepository extends \Doctrine\ORM\EntityRepository
 
         $qb->where('i.id=:id')->setParameter('id', $id_internaute);
 
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return array
+     */
+    public function findUtilisateurs()//TODO: retourne que le premier Internaute??
+    {
+        $qb = $this->createQueryBuilder('u')->leftJoin('u.internaute','i')->andWhere('i.id like :id')->setParameter('id',!null);
+       /* $qb=$this->createQueryBuilder('u')
+            ->from('AppBundle:Utilisateur','i')
+            ->where('i.id = ?6')
+           ;*/
         return $qb->getQuery()->getResult();
     }
 

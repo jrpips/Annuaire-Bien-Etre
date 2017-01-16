@@ -1,0 +1,68 @@
+{{ form_start(form) }}
+<div class="col-sm-12 background-white p20">
+    <div class="form-group col-sm-6">
+        {{ form_label(form.internaute.nom) }}
+        {{ form_widget(form.internaute.nom) }}
+        {{ form_errors(form.internaute.nom) }}
+
+        {{ form_label(form.internaute.prenom) }}
+        {{ form_widget(form.internaute.prenom) }}
+        {{ form_errors(form.internaute.prenom) }}
+    </div>
+
+    <div class="form-group col-sm-6">
+        {{ form_label(form.username) }}
+        {{ form_widget(form.username) }}
+        {{ form_errors(form.username) }}
+
+        {{ form_label(form.email) }}
+        {{ form_widget(form.email) }}
+    </div>
+</div>
+<div class="col-sm-12 background-white p20">
+    <div class="form-group col-sm-4">
+    {{ form_label(form.adresseRue) }}
+    {{ form_widget(form.adresseRue) }}
+    {{ form_errors(form.adresseRue) }}
+
+    {{ form_label(form.adresseNumero) }}
+    {{ form_widget(form.adresseNumero) }}
+    {{ form_errors(form.adresseNumero) }}
+</div>
+
+<div class="form-group col-sm-4">
+    {{ form_label(form.adresseUtilisateur.codePostal) }}
+    {{ form_widget(form.adresseUtilisateur.codePostal) }}
+    {{ form_errors(form.adresseUtilisateur.codePostal) }}
+
+    {{ form_label(form.adresseUtilisateur.commune) }}
+    {{ form_widget(form.adresseUtilisateur.commune,{'value':'eee'}) }}
+    {#  <select id="utilisateur_adresseUtilisateur_commune" name="utilisateur[adresseUtilisateur][commune]" class="form-control">
+          <option value="{{ app.user.adresseUtilisateur.commune }}">{{ app.user.adresseUtilisateur.commune }}</option>
+      </select>#}
+    {{ form_errors(form.adresseUtilisateur.commune) }}
+</div>
+
+<div class="form-group col-sm-4">
+    {{ form_label(form.adresseUtilisateur.localite) }}
+    {{ form_widget(form.adresseUtilisateur.localite) }}
+    {{ form_errors(form.adresseUtilisateur.localite) }}
+
+    {{ form_label(form.internaute.newsletter) }}
+    {{ form_row(form.internaute.newsletter) }}
+</div>
+</div>
+<div class="form-group">
+
+    {{ form_widget(form._token) }}
+
+</div>
+
+<div class="form-group col-sm-12 background-white p20">
+    <button type="submit" id="internaute_Envoyer" name="internaute[Envoyer]"
+            class="btn btn-default pull-right btn">Envoyer
+    </button>
+</div>
+<div style="display:none">
+    {{ form_end(form) }}
+</div>

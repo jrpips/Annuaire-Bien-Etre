@@ -25,6 +25,7 @@ class AdminDashboardController extends Controller
     public function countAbusAction()
     {
         $countAbus = $this->getDoctrine()->getManager()->getRepository('AppBundle:Abus')->countAbus();
+
         return $this->render('Admin/AdminNavigation/link.count.abus.html.twig', array(
             'countAbus' => $countAbus,
         ));
@@ -36,6 +37,7 @@ class AdminDashboardController extends Controller
     public function countBannedAccountAction()
     {
         $countBannedUsers = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->countBannedUsers();
+
         return $this->render('Admin/AdminNavigation/link.banned.account.html.twig', array(
             'countBannedUsers' => $countBannedUsers,
         ));
@@ -47,6 +49,7 @@ class AdminDashboardController extends Controller
     public function countPrestatairesAction()
     {
         $countPrestataires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->countPrestataires();
+
         return $this->render('Admin/AdminNavigation/link.count.prestataires.html.twig', array(
             'countPrestataires' => $countPrestataires,
         ));
@@ -58,6 +61,7 @@ class AdminDashboardController extends Controller
     public function countInternautesAction()
     {
         $countInternautes = $this->getDoctrine()->getManager()->getRepository('AppBundle:Internaute')->countInternautes();
+
         return $this->render('Admin/AdminNavigation/link.count.internautes.html.twig', array(
             'countInternautes' => $countInternautes,
         ));
@@ -69,6 +73,7 @@ class AdminDashboardController extends Controller
     public function countCommentairesAction()
     {
         $countCommentaires = $this->getDoctrine()->getManager()->getRepository('AppBundle:Commentaire')->countCommentaires();
+
         return $this->render('Admin/AdminNavigation/link.count.commentaires.html.twig', array(
             'countCommentaires' => $countCommentaires,
         ));
@@ -80,8 +85,20 @@ class AdminDashboardController extends Controller
     public function countServicesToBeValideAction()
     {
         $countServices = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->countServices();
+
         return $this->render('Admin/AdminNavigation/link.count.newServices.html.twig', array(
             'countServices' => $countServices,
+        ));
+    }
+    /**
+     * Render : retourne le nombre de demandes de création de Services --> navigation Dashboard
+     */
+    public function countNewsletterSubscriberAction()
+    {
+        $count = $this->getDoctrine()->getManager()->getRepository('AppBundle:Internaute')->countInternautes(true);
+
+        return $this->render('Admin/AdminNavigation/link.count.newsletterSubscriber.html.twig', array(
+            'count' => $count,
         ));
     }
 }

@@ -13,8 +13,14 @@ class IndexController extends Controller
     /**
      * @Route("/", name="home")
      */
-    public function indexAction()
-    {
+    public function indexAction(Request $request)
+    {   //déconnection d'un User banni
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            if($this->getUser() !=null && $this->getUser()->getBanni()){
+                //$this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'Votre compte est désactiver! Veuillez contacter le webmestre du site.', true);
+                return $this->redirectToRoute('logout');
+            }
+        }
         $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->myFindValideServices();
 
         return $this->render('Public/index.html.twig', array(
@@ -68,7 +74,8 @@ class IndexController extends Controller
     {
         $form = $this->get('form.factory')->create(ContactType::class);
 
-        $form->handleRequest($request);
+        $form->handleRequest($request); $values = $request->request->get('contact');
+        dump($values);
         //ajax
         if ($request->getMethod() == 'POST' && $request->isXmlHttpRequest()) {
 
@@ -83,9 +90,9 @@ class IndexController extends Controller
             }
             if ($form->isValid()) {
 
-                $values = $request->request->all();
-
-                $this->get('app.mailerbuilder')->contactBienEtre($values);
+               /* $values = $request->request->get('contact');
+dump($values);*/
+                $this->get('app.mailerbuilder')->mailConstruct($values,'contact','to','Demande infos B to C','wg.wargnier@gmail.com');
 
                 return new JsonResponse(array(
                     'valide' => true,
@@ -93,8 +100,8 @@ class IndexController extends Controller
                 ));
             }
         }
-        return $this->render('Public/Contact/display.contact.html.twig',array(
-            'form'=>$form->createView()
+        return $this->render('Public/Contact/display.contact.html.twig', array(
+            'form' => $form->createView()
         ));
     }
 

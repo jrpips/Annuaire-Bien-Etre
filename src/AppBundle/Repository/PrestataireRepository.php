@@ -16,7 +16,7 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository
     public function simpleSearchPrestataire($mot_cle)
     {
         //foreach ($mot_cle as $k => $v) {
-            $mot = '%' . $mot_cle['search_engine']['nom'] . '%';
+            $mot = '%' . $mot_cle/*['moteur_de_recherche']*/['nom'] . '%';
         //}
 
         $qb = $this->createQueryBuilder('p')
@@ -154,5 +154,15 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('p')->select('COUNT(p)');
 
         return $qb->getQuery()->getSingleScalarResult();
+    }
+    /**
+     *  Récupération des images slider d'un Prestataire donné
+     */
+    public function findImagesSlider($idPrestataire){
+        $qb = $this->createQueryBuilder('p')->leftJoin('p.slider', 'ps')->addSelect('ps');
+
+        $qb->andWhere('ps.sliderItems=:id')->setParameter('id', $idPrestataire);
+
+        return $qb->getQuery()->getResult();
     }
 }

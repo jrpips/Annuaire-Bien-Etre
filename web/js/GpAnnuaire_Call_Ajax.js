@@ -67,7 +67,7 @@ var GpAnnuaire_Call_Ajax = GpAnnuaire_Call_Ajax || {
             $('.loader').remove();
 
             var prefix = event_id;
-            var event_id_length = event_id.length - 10;
+            var event_id_length = event_id.length - 10;//TODO: retrait dynamique (-10)
             event_id = prefix.substring(0, event_id_length);
 
             $('#' + event_id + 'commune option').remove();

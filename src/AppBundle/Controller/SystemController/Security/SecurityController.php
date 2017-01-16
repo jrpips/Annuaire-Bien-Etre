@@ -18,6 +18,7 @@ class SecurityController extends Controller {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('home');
         }
+
         $authenticationUtils = $this->get('security.authentication_utils');
 
         return $this->render('Public/form.login.html.twig', array(

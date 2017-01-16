@@ -1,0 +1,54 @@
+{% extends 'Admin/dashboard.html.twig' %}
+{% block dashboard_body %}
+    <div class="content-admin">
+        <div class="content-admin-wrapper">
+            <div class="content-admin-main">
+                <div class="content-admin-main-inner">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12 background-white ">
+                                <div class="page-title p20">
+
+                                    <h2>Gestion des images</h2>
+
+                                </div>
+
+                                <div class="col-sm-12" style="text-align: center">
+                                    <div class="col-sm-12 mb50 p20">
+                                        <div class="col-sm-8">
+
+                                        </div>
+                                        <div class="col-sm-4"
+                                             style=" border: dashed 4px lightgray;height: 200px;vertical-align: middle;overflow: hidden"
+                                             id="receptacle">
+                                            <img style="width: 100%"/>
+                                        </div>
+                                    </div>
+                                    <ul style="margin:0;padding: 0">
+                                        {% for img in finder %}
+                                        <li
+                                                id="conteneur" style="
+
+                                        width:18%;
+                                        display: inline-block;
+                                        text-align: center;
+                                        border: dashed 2px lightgray;
+                                        vertical-align: middle;
+                                        overflow: hidden;
+                                        margin:0 5px 15px;
+
+                                        ">
+                                            <img src="{{ asset(img) }}" style="height:100px"/>
+
+                                            {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

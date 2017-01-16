@@ -1,13 +1,47 @@
 {# empty Twig template #}
 
 <style>
-    a{
-        text-transform:uppercase;
-        color:rgb(159,139,0);
-        text-decoration:none;
-        font-size:12px;
+    a {
+        text-decoration: none;
+    }
+
+    p a {
+        text-transform: uppercase;
+        color: rgb(159, 139, 0);
+        font-size: 12px;
+    }
+
+    header img {
+        width: 50px;
+    }
+
+    header a {
+        color: black;
+        font-size: 16px;
     }
 </style>
-<p>Bonjour {{ user.firstName|capitalize }} {{ user.lastName|capitalize }}!</p>
-<a href="{{ url('signup-final',{'signup':user.id,'token':user.token}) }}">Valider mon inscription</a>
-{# attention utiliser la fonction 'url' -> pas écrire partie d'url dans le dur #}
+<header>
+    <a href="{{ url('home') }}">
+        <img src="http://img11.hostingpics.net/thumbs/mini_723863gpminilogo2.png" alt="Galet"/>
+        <span>Galet s.a.</span>
+    </a>
+</header>
+<section>
+    {% if type=='signup' %}
+
+        <p>Bonjour {{ values.firstName|capitalize }} {{ values.lastName|capitalize }}!</p>
+        <a href="{{ url('signup-final',{'signup':values.id,'token':values.token}) }}">Valider mon inscription</a>
+
+    {% elseif type=='service' %}
+
+        <p>Une demande de création d'un service a été soumise.</p>
+
+    {% elseif type=='admin' %}
+
+        {{ values.message }}
+
+    {% endif %}
+</section>
+<footer>
+
+</footer>

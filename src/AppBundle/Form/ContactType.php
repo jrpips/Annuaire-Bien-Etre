@@ -39,5 +39,9 @@ class ContactType extends AbstractType
     {
 
     }
+    public function getName()
+    {
+        return 'contact';
+    }
 
 }

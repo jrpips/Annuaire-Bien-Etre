@@ -27,6 +27,21 @@ var GpAnnuaire_Ajax = GpAnnuaire_Ajax || {
             });
             return values;
         },
+        'ajaxImage':function(srcImg){
+
+            console.log(srcImg);
+            var values = {'path': srcImg}
+            var param = {};
+            param.METHODE = 'POST';
+            param.VALUES = values;
+            param.ROUTE = 'get_infos_img';
+            param.valueGET = null;
+            param.DATATYPE = 'json';
+            param.beforeSEND = null;
+            param.SUCCESS = function(data){console.log(data);}//GpAnnuaire_Call_Ajax.successAjaxImg;
+
+            GpAnnuaire_Ajax.ajaxBuilder(param);
+        },
         /**
          **  model : prepare requête Ajax pour gestion commentaires internautes -> prestataires
          **

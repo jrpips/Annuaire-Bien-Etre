@@ -1,0 +1,59 @@
+{% extends 'Admin/dashboard.html.twig' %}
+{% block dashboard_body %}
+    <div class="content-admin">
+        <div class="content-admin-wrapper">
+            <div class="content-admin-main">
+                <div class="content-admin-main-inner">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="background-white p20 mb50">
+                                    <h2 class="page-title">Liste des {{ type|capitalize }}s</h2>
+
+                                    <table class="table table-striped mb0">{##}
+                                        <thead>
+                                        <tr>
+                                            <th>Logo</th>
+                                            <th>Nom</th>
+                                            <th>Username</th>
+                                            <th style="text-align: right">Options</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        {% for u in utilisateurs %}
+                                            {% set img=(type=='prestataire')?u.logo.path:u.image.path %}
+                                            <tr>
+                                                <th scope="row"><img style="width:30px"
+                                                                     src="{{ asset('image/userUploads/'~img) }}"/>
+                                                </th>
+                                                <td>{{ u.nom }}</td>
+                                                <td>{{ u.utilisateur.username }}</td>
+                                                <td style="text-align: right">
+                                                    <a href="{{ path('contact_user',{'utilisateur':u.utilisateur.id}) }}"
+                                                       title="contacter"><i class="fa fa-envelope-o"></i> </a>
+                                                    <a href="{{ path('ad_edit_utilisateur',{'utilisateur':u.utilisateur.id,'type':type}) }}"
+                                                       title="éditer"><i class="fa fa-edit"></i> </a>
+                                                    {% if type=='prestataire' %}
+                                                        <a href="{{ path('details_prestataire',{'prestataire_nom':u.nom}) }}"
+                                                           title="visionner"><i class="fa fa-eye"></i> </a>
+                                                    {% endif %}
+                                                    <a href="{{ path('ban_utilisateur',{'utilisateur':u.utilisateur.id,'type':type}) }}"
+                                                       title="bannir"><i class="fa fa-ban"></i> </a>
+                                                    <a href="{#{{ path('delete_utilisateur',{'utilisateur':u.utilisateur.id,'type':type}) }}#}"
+                                                       title="supprimer"><i class="fa fa-times"></i> </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{ include("Admin/base.admin.footer.html.twig") }}
+        </div>
+    </div>
+{% endblock %}

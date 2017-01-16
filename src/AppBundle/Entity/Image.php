@@ -26,9 +26,9 @@ class Image
     private $temp;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Prestataire",inversedBy="images")
+     * @ORM\ManyToOne(targetEntity="Prestataire",inversedBy="slider")
      */
-   // private $prestataire;
+    private $sliderItems;
 
     /**
      * @ORM\Column(name="ordre", type="float", nullable=true)
@@ -242,5 +242,29 @@ class Image
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set sliderItems
+     *
+     * @param \AppBundle\Entity\Prestataire $sliderItems
+     *
+     * @return Image
+     */
+    public function setSliderItems(\AppBundle\Entity\Prestataire $sliderItems = null)
+    {
+        $this->sliderItems = $sliderItems;
+
+        return $this;
+    }
+
+    /**
+     * Get sliderItems
+     *
+     * @return \AppBundle\Entity\Prestataire
+     */
+    public function getSliderItems()
+    {
+        return $this->sliderItems;
     }
 }

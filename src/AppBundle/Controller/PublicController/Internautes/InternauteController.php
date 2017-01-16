@@ -84,7 +84,7 @@ class InternauteController extends Controller
                 $em->persist($new_user);
                 $em->flush();
 
-                $this->get('app.mailerbuilder')->signupMailer($new_user);
+                $this->get('app.mailerbuilder')->mailConstruct($new_user,'signup','from','Valider votre inscription!');
 
                 return new JsonResponse(array(
                     'valide' => true,

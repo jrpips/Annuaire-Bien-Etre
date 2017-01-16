@@ -24,7 +24,7 @@ class AdminServiceController extends Controller
     public function gestionDemandeServiceAction()
     {
         $services = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->myFindValideServices(false);
-        dump($services);
+
         return $this->render('Admin/GestionServices/dashboard.services.html.twig', array(
             'services' => $services
         ));
@@ -63,7 +63,10 @@ class AdminServiceController extends Controller
 
         $form = $this->get('form.factory')->create(CategServiceType::class, $service);
         $form->handleRequest($request);
+
         if ($form->isValid()) {
+
+
             $service->setValide(true);
 
             $em = $this->getDoctrine()->getManager();
@@ -71,13 +74,13 @@ class AdminServiceController extends Controller
             $em->flush();
 
             return $this->redirectToRoute('dashboard_services');
+
         }
-        //dump($newService);
+
         return $this->render('Admin/GestionServices/form.update.service.html.twig', array(
             'form' => $form->createView(),
             'service' => $service
         ));
-
 
     }
 }

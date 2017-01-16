@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}
+    Prestataire  - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="page-wrapper" jstcache="0">
+        <div class="main" jstcache="0">
+            <div class="main-inner" jstcache="0">
+                <div class="content" jstcache="0">
+                    <div class="mt-80 mb80">
+                        <div class="container" jstcache="0">
+                            <div class="row detail-content" jstcache="0">
+                                <div class="col-sm-7" jstcache="0">
+                                    <div class="detail-gallery">
+                                        <div class="detail-gallery-preview">
+                                            <a href="{{ asset('image/userUploads/prestataire.png') }}"
+                                               class="cboxElement">
+                                                <img src="{{ asset('image/userUploads/prestataire.png') }}">
+                                            </a>
+                                        </div>
+
+                                        <ul class="detail-gallery-index owl-carousel owl-theme owl-loaded">
+
+                                            <div class="owl-stage-outer">
+                                                <div class="owl-stage"
+                                                     style="transform: translate3d(-212.8px, 0px, 0px); transition: 0s; width: 851.2px;">
+                                                    <div class="owl-item" style="width: 106.4px; margin-right: 0px;"><li class="detail-gallery-list-item active">
+                                                            <a data-target="assets/img/tmp/gallery-2.jpg">
+                                                                <img src="assets/img/tmp/gallery-2.jpg" alt="...">
+                                                            </a>
+                                                        </li></div>
+                                                    {% for img in slider.slider %}
+                                                        <div class="owl-item"
+                                                             style="width: 106.4px; margin-right: 0px;">
+                                                            <li class="detail-gallery-list-item active">
+                                                                <a data-target="{{ asset('image/userUploads/'~img.path) }}">
+                                                                    <img src="{{ asset('image/userUploads/'~img.path) }}"
+                                                                         alt="...">
+                                                                </a>
+                                                            </li>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="owl-controls">
+                                                <div class="owl-nav">
+                                                    <div class="owl-prev" style=""><i class="fa fa-chevron-left"></i>
+                                                    </div>
+                                                    <div class="owl-next" style=""><i class="fa fa-chevron-right"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="owl-dots" style="">
+                                                    <div class="owl-dot active"><span></span></div>
+                                                    <div class="owl-dot"><span></span></div>
+                                                </div>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div><!-- /.col-sm-7 -->
+                            </div><!-- /.row -->
+                        </div><!-- /.col-* -->
+                    </div><!-- /.row -->
+                </div><!-- /.container -->
+            </div><!-- /.content -->
+        </div><!-- /.main-inner -->
+    </div><!-- /.main -->
+    {#<div id="cboxOverlay" style="opacity: 0.9; cursor: pointer; visibility: visible; display: block;"></div>
+    <div id="colorbox" class="" role="dialog" tabindex="-1"
+         style="display: block; visibility: visible; top: 625px; left: 0px; position: absolute; width: 1182px; height: 802px;">
+        <div id="cboxWrapper" style="height: 802px; width: 1182px;">
+            <div>
+                <div id="cboxTopLeft" style="float: left;"></div>
+                <div id="cboxTopCenter" style="float: left; width: 1140px;"></div>
+                <div id="cboxTopRight" style="float: left;"></div>
+            </div>
+            <div style="clear: left;">
+                <div id="cboxMiddleLeft" style="float: left; height: 760px;"></div>
+                <div id="cboxContent" style="float: left; width: 1140px; height: 760px;">
+                    <div id="cboxLoadedContent" style="width: 1140px; overflow: auto; height: 760px;"><img
+                                class="cboxPhoto" src="assets/img/tmp/gallery-5.jpg"
+                                style="width: 1140px; height: 760px; float: none;"></div>
+                    <div id="cboxTitle" style="float: left; display: block;"></div>
+                    <div id="cboxCurrent" style="float: left; display: none;"></div>
+                    <button type="button" id="cboxPrevious" style="display: none;"></button>
+                    <button type="button" id="cboxNext" style="display: none;"></button>
+                    <button id="cboxSlideshow" style="display: none;"></button>
+                    <div id="cboxLoadingOverlay" style="float: left; display: none;"></div>
+                    <div id="cboxLoadingGraphic" style="float: left; display: none;"></div>
+                    <button type="button" id="cboxClose">close</button>
+                </div>
+                <div id="cboxMiddleRight" style="float: left; height: 760px;"></div>
+            </div>
+            <div style="clear: left;">
+                <div id="cboxBottomLeft" style="float: left;"></div>
+                <div id="cboxBottomCenter" style="float: left; width: 1140px;"></div>
+                <div id="cboxBottomRight" style="float: left;"></div>
+            </div>
+        </div>
+        <div style="position: absolute; width: 9999px; visibility: hidden; max-width: none; display: none;"></div>
+    </div>#}
+{% endblock %}
