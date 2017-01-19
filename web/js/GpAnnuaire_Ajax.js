@@ -38,7 +38,7 @@ var GpAnnuaire_Ajax = GpAnnuaire_Ajax || {
             param.valueGET = null;
             param.DATATYPE = 'json';
             param.beforeSEND = null;
-            param.SUCCESS = function(data){console.log(data);}//GpAnnuaire_Call_Ajax.successAjaxImg;
+            param.SUCCESS = /*function(data){console.log(data);}*/GpAnnuaire_Call_Ajax.successAjaxImg;
 
             GpAnnuaire_Ajax.ajaxBuilder(param);
         },

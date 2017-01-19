@@ -11,7 +11,9 @@ var GpAnnuaire_Call_Ajax = GpAnnuaire_Call_Ajax || {
 
                 for (item in data.errors) {
 
-                    $('#commentaire_' + item).parent().append('<div class="errorCommentaire" >' + data.errors[item][0] + '</div>');
+                    $('#commentaire_' + item).parent().append(
+                        '<div class="errorCommentaire" >' + data.errors[item][0] + '</div>'
+                    );
                 }
             } else {
 
@@ -21,7 +23,9 @@ var GpAnnuaire_Call_Ajax = GpAnnuaire_Call_Ajax || {
                 $('#statut').empty().text('Votre commentaire est publiée!');
 
                 var back = function () {
-                    $('#statut').empty().html("Champs obligatoires <span class='required' >*</span>");
+                    $('#statut').empty().html(
+                        "Champs obligatoires <span class='required' >*</span>"
+                    );
                 };
                 setTimeout(back, 5000);
             }
@@ -38,8 +42,13 @@ var GpAnnuaire_Call_Ajax = GpAnnuaire_Call_Ajax || {
                 $('[type=submit]')//ajout de la balise contenant le message de validation
                     .parent()
                     .parent()
-                    .append('<div class="message"><i class="glyphicon glyphicon-send"></i> Un email de confirmation a été envoyé l\'adresse <br><span>' + data.values.sign_up.email + '</span></div>')
-                ;
+                    .append(''
+                        + '<div class="message">'
+                        + '<i class="glyphicon glyphicon-send"></i> Un email de confirmation a été envoyé l\'adresse <br>'
+                        + '<span>'
+                        + data.values.sign_up.email + '</span></div>'
+                    );
+
                 $('#body div.message').css({'display': 'block'}).slideDown('slow');
 
                 setTimeout(function () {//aprés 5s
@@ -69,16 +78,25 @@ var GpAnnuaire_Call_Ajax = GpAnnuaire_Call_Ajax || {
             if ($('.loader').length === 0) {
 
 
-                $('#' + event_id).parent().append('<div class="loader" ><img src="http://127.0.0.1/Annuaire-Bien-Etre/web/image/Loading_icon.gif"/></div>');
+                $('#' + event_id)
+                    .parent()
+                    .append('<div class="loader" >'
+                        + '<img src="http://127.0.0.1/Annuaire-Bien-Etre/web/image/Loading_icon.gif"/></div>'
+                    );
             }
+
             $('#' + event_id + ' option').remove();
         },
+        /**
+         *
+         */
         'successAjaxAutocompleteAdresse': function (data) {
 
             $('.loader').remove();
 
             var prefix = event_id;
             var event_id_length = event_id.length - 10;//TODO: retrait dynamique (-10)
+
             event_id = prefix.substring(0, event_id_length);
 
             $('#' + event_id + 'commune option').remove();
@@ -86,6 +104,7 @@ var GpAnnuaire_Call_Ajax = GpAnnuaire_Call_Ajax || {
             $.each(data.communes, function (index, value) {
                 $('#' + event_id + 'commune').append($('<option>', {value: value, text: value}));
             });
+
             $('#' + event_id + 'localite').val(data.province);
         },
         /**
@@ -117,14 +136,23 @@ var GpAnnuaire_Call_Ajax = GpAnnuaire_Call_Ajax || {
             }
         },
         'successAjaxImg': function (data) {
-            $('#info div').text('');
-            if (data.path) {
-                $('#info').append('<div>' + data.path + '</div>');
-                console.log('propiétaire');
-            } else {
-                $('#info').append('<div>orpheline</div>');
 
-                console.log('orphelint');
+            $('#info div').text('');
+
+            if (!$.isEmptyObject(data)) {
+
+
+                for (item in data[0]) {
+
+                    $('#info').append('<div>' + item + ':' + data[0][item] + '</div>');
+                    console.log('propiétaire');
+                }
+
+            } else {
+
+
+                $('#info').append('<div>Cette image n\'a pas de propriétaire!</div>');
             }
         }
-    }
+
+}

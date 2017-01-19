@@ -30,11 +30,11 @@ class UtilisateurRepository extends \Doctrine\ORM\EntityRepository
      */
     public function findUtilisateurs()
     {
-        $qb = $this->createQueryBuilder('u')->leftJoin('u.internaute','i')->andWhere('i.id like :id')->setParameter('id',!null);
-       /* $qb=$this->createQueryBuilder('u')
-            ->from('AppBundle:Utilisateur','i')
-            ->where('i.id = ?6')
-           ;*/
+        $qb = $this->createQueryBuilder('u')->leftJoin('u.internaute', 'i')->andWhere('i.id like :id')->setParameter('id', !null);
+        /* $qb=$this->createQueryBuilder('u')
+             ->from('AppBundle:Utilisateur','i')
+             ->where('i.id = ?6')
+            ;*/
         return $qb->getQuery()->getResult();
     }
 
@@ -63,21 +63,21 @@ class UtilisateurRepository extends \Doctrine\ORM\EntityRepository
     /**
      *  Récupération de l'Utilisateur propriétaire de l'Image du 'path' en param
      */
-    public function findOwnerImage($path){
-        $qb = $this->createQueryBuilder('u')->leftJoin('u.internaute','i')->addSelect('i')
-            ->leftJoin('u.prestataire','p')->addSelect('p')
-            ->leftJoin('i.image','img')->addselect('img')
-            ->leftJoin('p.logo','logo')->addSelect('logo')
-            ->leftJoin('p.cover','cover')->addSelect('cover')//->select('img.path')
+    public function findOwnerImage($path)
+    {
+        $qb = $this->createQueryBuilder('u')->leftJoin('u.internaute', 'i')->addSelect('i')
+            ->leftJoin('u.prestataire', 'p')->addSelect('p')
+            ->leftJoin('i.image', 'img')->addselect('img')
+            ->leftJoin('p.logo', 'logo')->addSelect('logo')
+            ->leftJoin('p.cover', 'cover')->addSelect('cover')//->select('img.path')
 
-          ->andWhere("img.path = :path")
+            ->orWhere("img.path = :path")
             ->orWhere("logo.path = :path")
             ->orWhere("cover.path = :path");
 
-        $qb->setParameter('path', $path)->select('u.username','img.path','cover.path','logo.path')/*->select('img.path')*/;
+        $qb->setParameter('path', $path)->select('u.roles','u.email','i.nom','i.prenom');//,'img.path'/*,'cover.path','logo.path'*/)/*->select('img.path')*/;
 
         return $qb->getQuery()->getResult();
-
 
     }
 }

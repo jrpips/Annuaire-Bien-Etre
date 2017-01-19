@@ -179,7 +179,8 @@ class AdminAnnuaireController extends Controller
 
                 $statut = 'danger';
 
-            }$this->get('app.addmsgflash')->addMsgFlash($request, $statut, $text);
+            }
+            $this->get('app.addmsgflash')->addMsgFlash($request, $statut, $text);
 
             return $this->redirectToRoute('ad_utilisateurs', array('type' => $type));
 
@@ -278,14 +279,18 @@ class AdminAnnuaireController extends Controller
     /**
      * @Route("/admin/infos/image",options={"expose"=true},name="get_infos_img")
      */
-    public function autoCompleteAjaxAction(Request $request) {
-       if ($request->getMethod() == 'POST' && $request->isXmlHttpRequest()) {
+    public function autoCompleteAjaxAction(Request $request)
+    {
+
+        if ($request->getMethod() == 'POST' && $request->isXmlHttpRequest()) {
 
 
             $val = $request->request->get('path');
             $response = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->findOwnerImage($val);//->findOneByPath($val);
-
-            dump($response);
+            //$email = $response[0]['email'];
+            //var_dump($response);die();
+            //$user = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->findByEmail($email);
+            //dump(/*$email*/);
 
             return new JsonResponse($response);
         }
