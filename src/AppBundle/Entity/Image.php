@@ -43,9 +43,12 @@ class Image
      private $name;
 
     /**
-     * @ORM\Column(type="string",length=25)
+     * @ORM\OneToOne(targetEntity="Internaute",mappedBy="image")
+     * @ORM\JoinColumn(nullable=true)
+     * @ORM\Column(type="string",length=255)
+     *
      */
-    //private $type;
+    //private $avatar;
 
     /**
      * @ORM\Column(type="string",length=255,nullable=true)
@@ -266,5 +269,29 @@ class Image
     public function getSliderItems()
     {
         return $this->sliderItems;
+    }
+
+    /**
+     * Set avatar
+     *
+     * @param string $avatar
+     *
+     * @return Image
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * Get avatar
+     *
+     * @return string
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
     }
 }

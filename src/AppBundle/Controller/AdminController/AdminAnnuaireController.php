@@ -279,11 +279,13 @@ class AdminAnnuaireController extends Controller
      * @Route("/admin/infos/image",options={"expose"=true},name="get_infos_img")
      */
     public function autoCompleteAjaxAction(Request $request) {
-        if ($request->getMethod() == 'POST' && $request->isXmlHttpRequest()) {
+       if ($request->getMethod() == 'POST' && $request->isXmlHttpRequest()) {
 
 
             $val = $request->request->get('path');
-            $response = $this->getDoctrine()->getManager()->getRepository('AppBundle:Image')->findOneByPath($val);
+            $response = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->findOwnerImage($val);//->findOneByPath($val);
+
+            dump($response);
 
             return new JsonResponse($response);
         }

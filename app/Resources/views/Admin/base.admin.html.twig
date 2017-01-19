@@ -46,28 +46,6 @@
 <script type="text/javascript" src="{{ asset('js/GpAnnuaire_Call_Ajax.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/gpAnnuaireController.js') }}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script>
-
-    window.onload = function () {
-
-        var tabImg = document.querySelectorAll("ul li img");
-        console.log(tabImg);
-        for (var i = 0; i < tabImg.length; i++) {
-            tabImg[i].setAttribute("onclick", "diapo(event)");
-        }
-
-
-    }
-    function diapo(photo) {
-
-        var img = photo.currentTarget;
-        var src = img.getAttribute("src");
-        var relativePath=src.substr(42,src.length-42);
-        GpAnnuaire_Ajax.ajaxImage(relativePath);
-        //console.log(relativePath);
-        document.getElementsByTagName("img")[2].setAttribute("src", src);
-
-    }
-</script>
+<script type="text/javascript" src="{{ asset('js/gpDiapo.js') }}"></script>
 </body>
 </html>

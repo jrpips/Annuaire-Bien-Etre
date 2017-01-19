@@ -16,7 +16,8 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository
     public function simpleSearchPrestataire($mot_cle)
     {
         //foreach ($mot_cle as $k => $v) {
-            $mot = '%' . $mot_cle/*['moteur_de_recherche']*/['nom'] . '%';
+        $mot = '%' . $mot_cle/*['moteur_de_recherche']*/
+            ['nom'] . '%';
         //}
 
         $qb = $this->createQueryBuilder('p')
@@ -45,19 +46,18 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository
      **/
     public function advancedSearchPrestataire($criteria)
     {
-        $nom = $criteria['nom'] != '' ? '%' . trim($criteria['nom']) . '%' :false;
-        $commune = $criteria['commune'] != '' ? trim($criteria['commune']) :false;
-        $service = $criteria['service'] != '' ? trim($criteria['service']) :false;
-        $cp = $criteria['cp'] != '' ?  trim($criteria['cp'])  :false;
-        $localite = $criteria['localite'] != '' ?  trim($criteria['localite'])  :false;
+        $nom = $criteria['nom'] != '' ? '%' . trim($criteria['nom']) . '%' : false;
+        $commune = $criteria['commune'] != '' ? trim($criteria['commune']) : false;
+        $service = $criteria['service'] != '' ? trim($criteria['service']) : false;
+        $cp = $criteria['cp'] != '' ? trim($criteria['cp']) : false;
+        $localite = $criteria['localite'] != '' ? trim($criteria['localite']) : false;
 
         $qb = $this->createQueryBuilder('p')
             ->leftJoin('p.utilisateur', 'u')->addSelect('u')
             ->leftJoin('p.logo', 'l')->addSelect('l')
             ->leftJoin('p.cover', 'c')->addSelect('c')
             ->leftJoin('p.categServices', 's')->addSelect('s')
-            ->leftJoin('u.adresseUtilisateur', 'adr')->addSelect('adr')
-        ;
+            ->leftJoin('u.adresseUtilisateur', 'adr')->addSelect('adr');
 
         if ($nom) {
             $qb->andWhere("p.nom like :nom")->setParameter('nom', $nom);
@@ -155,14 +155,40 @@ class PrestataireRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getSingleScalarResult();
     }
+
     /**
      *  Récupération des images slider d'un Prestataire donné
      */
-    public function findImagesSlider($idPrestataire){
+    public function findImagesSlider($idPrestataire)
+    {
         $qb = $this->createQueryBuilder('p')->leftJoin('p.slider', 'ps')->addSelect('ps');
 
         $qb->andWhere('ps.sliderItems=:id')->setParameter('id', $idPrestataire);
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     *  Récupération de l'Utilisateur propriétaire de l'Image du 'path' en param
+     */
+    public function findOwnerImage($path)
+    {
+        $qb = $this->createQueryBuilder('p')
+
+            ->leftJoin('u.internaute', 'i')->addSelect('i')
+            ->leftJoin('p.cover', 'cover')->addSelect('cover')
+            ->leftJoin('p.image', 'pi')->addselect('img')
+            ->leftJoin('p.logo')->addSelect('logo')
+            ->leftJoin('p.cover')->addSelect('cover')
+
+            ->orWhere("img.path like :path")
+            ->orWhere("logo.path like :path")
+            ->orWhere("cover.path like :path");
+
+        $qb->setParameter('path', $path);
+
+        return $qb->getQuery()->getResult();
+
+
     }
 }

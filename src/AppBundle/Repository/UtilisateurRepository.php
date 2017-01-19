@@ -28,7 +28,7 @@ class UtilisateurRepository extends \Doctrine\ORM\EntityRepository
     /**
      * @return array
      */
-    public function findUtilisateurs()//TODO: retourne que le premier Internaute??
+    public function findUtilisateurs()
     {
         $qb = $this->createQueryBuilder('u')->leftJoin('u.internaute','i')->andWhere('i.id like :id')->setParameter('id',!null);
        /* $qb=$this->createQueryBuilder('u')
@@ -58,5 +58,26 @@ class UtilisateurRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('u')->andWhere('u.banni=:bool')->setParameter('bool', true);
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     *  Récupération de l'Utilisateur propriétaire de l'Image du 'path' en param
+     */
+    public function findOwnerImage($path){
+        $qb = $this->createQueryBuilder('u')->leftJoin('u.internaute','i')->addSelect('i')
+            ->leftJoin('u.prestataire','p')->addSelect('p')
+            ->leftJoin('i.image','img')->addselect('img')
+            ->leftJoin('p.logo','logo')->addSelect('logo')
+            ->leftJoin('p.cover','cover')->addSelect('cover')//->select('img.path')
+
+          ->andWhere("img.path = :path")
+            ->orWhere("logo.path = :path")
+            ->orWhere("cover.path = :path");
+
+        $qb->setParameter('path', $path)->select('u.username','img.path','cover.path','logo.path')/*->select('img.path')*/;
+
+        return $qb->getQuery()->getResult();
+
+
     }
 }
