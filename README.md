@@ -8,7 +8,7 @@ Format: ![Alt Text](url)
 <table>
     <tr><th>Itération</th><th>Cas d'utilisation</th><th>Etat</th><th>Remarque</th></tr>
     <tr><th>Priorité 1.1</th></tr>
-    <tr><td></td><td>Consulter la description d'un service</td><td></td><td></td></tr>
+    <tr><td></td><td>Consulter la description d'un service</td><td>:+1:</td><td></td></tr>
     <tr><td></td><td>Rechercher des Prestataires</td><td></td><td></td></tr>
     <tr><td></td><td>Consulter la fiche signalétique d'un prestataire</td><td></td><td></td></tr>
     <tr><td></td><td>Consulter les catégories de services </td><td></td><td></td></tr>
