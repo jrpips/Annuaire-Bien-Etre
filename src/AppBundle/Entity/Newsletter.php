@@ -37,16 +37,21 @@ class Newsletter {
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="publication", type="date")
+     * @ORM\Column(name="publication", type="date",nullable=true)
      */
     private $publication;
 
     /**
      * @var string
-     *  TODO : stoker le pdf sur le serveur
-     * @ORM\Column(name="pdf",type="blob", nullable=true)
+     * @ORM\Column(name="contenu",type="string",length=255, nullable=true)
      */
-    private $pdf;
+    private $contenu;
+
+    /**
+     * @var string
+     * @ORM\Column(name="path",type="string",length=255, nullable=true)
+     */
+    private $path;
 
     /**
      * Get id
@@ -56,7 +61,9 @@ class Newsletter {
     public function getId() {
         return $this->id;
     }
-
+    public function __toString() {
+        return $this->publication . '';
+    }
     /**
      * Set titre
      *
@@ -123,4 +130,52 @@ class Newsletter {
         return $this->pdf;
     }
 
+
+    /**
+     * Set contenu
+     *
+     * @param string $contenu
+     *
+     * @return Newsletter
+     */
+    public function setContenu($contenu)
+    {
+        $this->contenu = $contenu;
+
+        return $this;
+    }
+
+    /**
+     * Get contenu
+     *
+     * @return string
+     */
+    public function getContenu()
+    {
+        return $this->contenu;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     *
+     * @return Newsletter
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
 }

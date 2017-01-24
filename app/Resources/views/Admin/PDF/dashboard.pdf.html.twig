@@ -1,0 +1,60 @@
+{% extends 'Admin/dashboard.html.twig' %}
+{% block dashboard_body %}
+    <div class="content-admin">
+        <div class="content-admin-wrapper">
+            <div class="content-admin-main">
+                <div class="content-admin-main-inner">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12 background-white ">
+                                <div class="page-title p20">
+
+                                    <h2>Gestion des Newsletters</h2>
+
+                                </div>
+                                <div class="col-sm-12">
+                                    <table class="table table-striped mb0">{##}
+                                        <thead>
+                                        <tr>
+
+                                            <th>Réf</th>
+
+                                            <th style="text-align: right">Options</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        {% for pdf in finder %}
+
+                                            <tr>
+
+                                                <td><i class="fa fa-file-pdf-o"></i>{{ pdf }} </td>
+
+                                                <td style="text-align: right">
+
+                                                    <a href="{#{{ path('ad_edit_utilisateur',{'utilisateur':u.utilisateur.id,'type':type}) }}#}"
+                                                       title="éditer"><i class="fa fa-edit"></i> </a>
+
+                                                    <a href="{#{{ path('details_prestataire',{'prestataire_nom':u.nom}) }}#}"
+                                                       title="visionner"><i class="fa fa-eye"></i> </a>
+
+                                                    <a href="{#{{ path('delete_utilisateur',{'utilisateur':u.utilisateur.id,'type':type}) }}#}"
+                                                       title="supprimer"><i class="fa fa-times"></i> </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <div style="padding-bottom: 20px">
+                                        <a href="{{ path('generate_pdf') }}">Editer</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

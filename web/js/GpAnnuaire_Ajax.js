@@ -29,7 +29,6 @@ var GpAnnuaire_Ajax = GpAnnuaire_Ajax || {
         },
         'ajaxImage':function(srcImg){
 
-            console.log(srcImg);
             var values = {'path': srcImg}
             var param = {};
             param.METHODE = 'POST';

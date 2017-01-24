@@ -16,12 +16,15 @@ class SecurityController extends Controller {
     public function loginAction() {
         //redirection si l'user est déjà connecté
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+
+
             return $this->redirectToRoute('home');
+
         }
 
         $authenticationUtils = $this->get('security.authentication_utils');
 
-        return $this->render('Public/form.login.html.twig', array(
+        return $this->render('Public/Utilisateurs/login.html.twig', array(
                     'last_username' => $authenticationUtils->getLastUsername(),
                     'error' => $authenticationUtils->getLastAuthenticationError(),
         ));
@@ -31,14 +34,19 @@ class SecurityController extends Controller {
      * @Route("/gestion/login", name="change_password",options={"expose"=true})
      */
     public function passwordModificationAction(Request $request) {
+
         $new_pwd = new PasswordModification();
+
         $form = $this->get('form.factory')->create(PasswordModificationType::class, $new_pwd);
         $form->handleRequest($request);
 
         $error = '';
 
         if ($new_pwd->getNewPassword() === $new_pwd->getConfNewPassword() && $new_pwd->getNewPassword() !== null) {
+
+
             if ($form->isValid()) {
+
 
                 $u = $this->getUser();
 
@@ -52,22 +60,35 @@ class SecurityController extends Controller {
                 $em->persist($u);
 
                 $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'La modification de votre mot de passe est enregistrée!',true);
+
                 try {
+
+
                     $em->flush();
+
                 } catch (\Exception $e) {
+
+
                     $this->get('app.addmsgflash')->addMsgFlash($request, 'danger', "Une erreur est survenue l'enregistrement de votre mot de passe!",true);
                 }
+
                 return $this->redirectToRoute('home');
             }
         } elseif ($new_pwd->getPassword() === null) {
+
+
             $error = '';
+
         } else {
+
+
             $error = 'has-error';//class Bootstrap
+
         }
 
-        dump($new_pwd);
+       $route=($this->get('security.authorization_checker')->isGranted('ROLE_PRESTATAIRE'))?'Public/Utilisateurs/new.pwd.html.twig':'Public/Utilisateurs/new.password.html.twig';
 
-        return $this->render('Public/form.new.password.html.twig', array(
+        return $this->render($route, array(
                     'form' => $form->createView(),
                     'error' => $error,
         ));

@@ -57,17 +57,25 @@ class StageController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+
             $stage->setPrestataire($prestataire);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($stage);
+
             try {
+
+
                 $em->flush();
 
             } catch (\Exception $e) {
+
+
                 $this->get('app.addmsgflash')->addMsgFlash($request, 'danger', 'Une erreur est survenue lors de la création de votre stage!',true);
+
                 return $this->redirectToRoute('create_stage');
             }
+
             $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'Votre nouveau stage est enregistré!');
 
             return $this->redirectToRoute('dashboard_stage',array('prestataire_nom'=>$this->getUser()->getPrestataire()->getNom()));
@@ -92,21 +100,28 @@ class StageController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+
             $em = $this->getDoctrine()->getManager();
 
             $statut='success';
+
             try {
+
+
                 $em->flush();
 
             } catch (\Exception $e) {
+
+
                $statut='danger';
             }
             $this->get('app.addmsgflash')->addMsgFlash($request, $statut, 'votre stage');
 
-            return $this->redirectToRoute('list_stages',array('prestataire_nom'=>$this->getUser()->getPrestataire()->getNom()));
+            return $this->redirectToRoute('dashboard_stage',array('prestataire_nom'=>$this->getUser()->getPrestataire()->getNom()));
         }
 
         return $this->render('Public/Prestataires/FrontOffice/Stages/form.stage.html.twig', array(
+            'title'=> $nom_stage,
             'stage' => $stage,
             'form' => $form->createView(),
         ));
@@ -117,6 +132,7 @@ class StageController extends Controller
     public function deleteStageAction(Request $request, $nom_stage)
     {
         $stage = $this->getDoctrine()->getManager()->getRepository('AppBundle:Stage')->findOneByNom($nom_stage);
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($stage);
         $em->flush();

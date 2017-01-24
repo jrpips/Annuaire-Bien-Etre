@@ -75,33 +75,25 @@
                             <div style="background-color:transparent;width:200px;height:150px;"
                                  class="detail-banner-right">
 
-                                {% if prestataire.promotions is not empty and prestataire.stages is not empty %}
+                                {% if prestataire.promotions is not empty %}
                                     <div class="carousel slide" data-ride="carousel">
 
                                         <div class="carousel-inner" role="listbox">
-                                            {#https://www.google.be/search?q=promotion&espv=2&biw=528&bih=938&site=webhp&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiRn_bh7d3QAhUGXRoKHbV8B1AQ_AUIBigB#imgrc=0w5_lqL-xuHJhM%3A#}
-                                            <div class="item active">
+                                            {% for promo in prestataire.promotions %}
+                                                {% set active=(loop.first)?'active':'' %}
+                                            <div class="item {{ active }}">
                                                 <div id="vignette-promo">
-                                                    <h3>{{ prestataire.promotions|first.nom }}</h3>
-                                                    <p>{{ prestataire.promotions|first.description }}
-                                                        <br>du: {{ prestataire.promotions|first.dateDebut|date('d/m') }}
-                                                        au: {{ prestataire.promotions|first.dateFin|date('d/m') }}
+                                                    <h3>{{ promo.nom|capitalize }}</h3>
+                                                    <p>{{ promo.description }}
+                                                        <br>du {{ promo.dateDebut|date('d/m') }}
+                                                        au {{ promo.dateFin|date('d/m') }}
 
                                                     </p>
-                                                    <img style="width: 150px"
+                                                    <img style="width: 70px"
                                                          src="{{ asset('image/promo1.png') }}" alt="Flower">
                                                 </div>
                                             </div>
-
-                                            <div class="item">
-                                                <div id="vignette-promo">
-
-                                                    <h3>Flowers</h3>
-                                                    <p>Beatiful flowers in Kolymbari, Crete.</p>
-                                                    <img style="width: 150px;"
-                                                         src="{{ asset('image/promo.png') }}" alt="Flower">
-                                                </div>
-                                            </div>
+                                            {%  endfor %}
                                         </div>
                                     </div>
                                 {% endif %}
@@ -121,14 +113,26 @@
 
                             </div>
                             {# end #}
-                            {# prestataire video #}
-                            <h2>Video</h2>
-                            <div class="detail-video">
-                                <iframe src="https://player.vimeo.com/video/36911719?color=009f8b&amp;byline=0&amp;portrait=0"
-                                        width="653" height="366" frameborder="0" webkitallowfullscreen=""
-                                        mozallowfullscreen="" allowfullscreen=""></iframe>
-                            </div>
+
+                            {# prestataire slider #}
+                            {% if prestataire.slider is not empty %}
+                                <h2><span class="text-secondary"> {{ prestataire.nom|capitalize }}</span> en images...</h2>
+                                <div style="height:250px;overflow: hidden" class="carousel slide background-white" data-ride="carousel">
+
+                                    <div class="carousel-inner" role="listbox">
+                                        {% for img in prestataire.slider %}
+                                            {% set active=(loop.first)?'active':'' %}
+                                            <div class="item {{ active }}">
+                                                <div class="item {{ active }}" >
+                                                    <img src="{{ asset("image/userUploads/"~img.path) }}" alt="slider">
+                                                </div>
+                                            </div>
+                                        {%  endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
                             {# end #}
+
                             {# commentaires des internautes#}
                             <h2 id="reviews">Commentaires et avis</h2>
                             <div class="reviews">
@@ -152,7 +156,6 @@
                                                    data-placement="top" data-original-title="Report"></i>
                                             </span>
                                                     {# rating prestataire#}
-
                                                     {% set starFinal=(5-commentaire.cote)|round %}
 
                                                     <div class="review-overall-rating">
@@ -169,24 +172,21 @@
                                                 </div>
 
                                                 <div class="review-content-wrapper">
-                                                    <div class="review-content">
-                                                        <div class="review-pros">
-                                                            <p>{{ commentaire.titre }}</p>
-                                                            <p>{{ commentaire.contenu }}</p>
+
+                                                        <div class="p20">
+                                                            <p>{{ commentaire.titre|capitalize }}</p>
+                                                            <p>{{ commentaire.contenu|capitalize }}</p>
                                                         </div>
-                                                        {# <div class="review-cons">
-                                                             <p>Duis et magna vel est tempus vehicula vitae sit amet enim. Sed
-                                                                 vitae ligula congue.</p>
-                                                         </div><!-- /.cons -->#}
-                                                    </div>
-                                                </div>
-                                                {% if not is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+
+                                              {# {% if not is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}#}
+
                                                     <div style="text-align:right">
-                                                        <a class="btn btn-link"
+                                                        <a class=""
                                                            href="{{ path('signaler_abus',{'commentaire_id':commentaire.id,'prestataire_nom':prestataire.nom}) }}">Signaler
                                                             un abus</a>
                                                     </div>
-                                                {% endif %}
+                                                {#{% endif %}#}
+                                                </div>
                                             </div>
                                         </div>
                                     {% endfor %}
@@ -281,13 +281,6 @@
                                     </div>
                                 </div>
 
-                               {# {% for service in prestataire.categServices %}
-                                    <div><span class="text-secondary">{{ service.nom|capitalize }}</span></div>
-                                    <div class="detail-description">
-                                        <div>{{ service.description|capitalize }}</div>
-                                    </div>
-                                {% endfor %}#}
-
                                 <div class="detail-follow">
                                     <h5>Follow Us:</h5>
                                     <div class="follow-wrapper">
@@ -308,8 +301,10 @@
                                     <ul class="detail-amenities">
                                         {% if prestataire.stages is not empty %}
                                             {% for stage in prestataire.stages %}
+                                        <div class="well background-white" style="margin-bottom:0;border-radius:0">
                                                 <li class="yes"> {{ stage.nom|capitalize }}
                                                 <br>{{ stage.description|capitalize }}
+                                                    </div>
                                             {% endfor %}
                                         {% else %}
                                             <li class="no">Pas de stage organisé actuellement.</li>

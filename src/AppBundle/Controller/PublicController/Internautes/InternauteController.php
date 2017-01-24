@@ -42,12 +42,15 @@ class InternauteController extends Controller
     public function getPrestatairesFavorisAction()
     {
         if ($this->get('security.authorization_checker')->isGranted('ROLE_INTERNAUTE')) {
+
+
             $myFavoris = $this
                 ->getDoctrine()
                 ->getManager()
                 ->getRepository('AppBundle:Internaute')
                 ->getPrestatairesFavoris($this->getUser()->getInternaute()->getId());//récupération Id internaute
         }
+
         $myFavoris = $myFavoris[0];
 
         return $this->render('Public/Internautes/Favoris/display.prestataires.favoris.html.twig', array(
@@ -63,12 +66,13 @@ class InternauteController extends Controller
         $new_user = new SignUp();
 
         $form = $this->get('form.factory')->create(SignUpType::class, $new_user);
-
         $form->handleRequest($request);
-        //ajax
+
         if ($request->getMethod() == 'POST' && $request->isXmlHttpRequest()) {
 
+
             if (!$form->isValid()) {
+
 
                 $errors = $this->get('app.geterrormessages')->getErrorMessages($form);
 
@@ -78,8 +82,11 @@ class InternauteController extends Controller
                 ));
             }
             if ($form->isValid()) {
+
+
                 $values = $request->request->all();
                 $new_user->setToken();
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($new_user);
                 $em->flush();
@@ -104,24 +111,30 @@ class InternauteController extends Controller
     public function signupInternauteStepFinalAction(Request $request, SignUp $signup, $token)
     {
         if (($signup) && ($signup->getToken() == $token)) {
+
+
             $internaute = new Utilisateur();
+
         } else {
+
+
             return $this->redirectToRoute('about');
         }
 
         $form = $this->get('form.factory')->create(UtilisateurType::class, $internaute)->add('internaute', InternauteType::class);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
+
+
             if ($form->isValid()) {
+
 
                 $plainPassword = $internaute->getPassword();
                 $encoder = $this->container->get('security.password_encoder');
                 $encoded = $encoder->encodePassword($internaute, $plainPassword);
 
                 $internaute->setPassword($encoded);
-
                 $internaute->setSalt('')->setRoles("ROLE_INTERNAUTE");
 
                 $em = $this->getDoctrine()->getManager();
@@ -129,11 +142,16 @@ class InternauteController extends Controller
                 $em->remove($signup);
 
                 $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'Votre inscription est validée!',true);
+
                 try {
+
                     $em->flush();
+
                 } catch (\Exception $e) {
+
                     $this->get('app.addmsgflash')->addMsgFlash($request, 'danger', 'Une erreur est survenue lors de votre inscription! Veuillez réessayer plus tard.',true);
                 }
+
                 return $this->redirectToRoute('home');
             }
         }

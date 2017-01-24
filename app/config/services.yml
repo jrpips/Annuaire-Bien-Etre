@@ -20,23 +20,10 @@ services:
     app.addmsgflash:
         class: AppBundle\Services\AddFlash\AddFlash
 
-    #app.form.promotion:
-          #  class: AppBundle\Form\Type\PromotionType
-          #  arguments: ['@security.token_storage']
-          #  tags:
-          #      - { name: form.type }
-   # app.from.type.gender:
-#    acme.security.authentication_handler:
-#        class: AppBundle\Services\LoginCheckAjax\LoginCheckAjax
-#        public: false
-#        arguments:
-#            - "@router"
-#            - "@session"    
-         
     form:  
         class: AppBundle\Form\AdresseUtilisateurType
         arguments:          
-##             - "@doctrine.orm.entity_manager"
+
              - "@app.searchpostalcode"
 #        abstract: true
 #    service_name:

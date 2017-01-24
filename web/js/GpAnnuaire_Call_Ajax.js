@@ -136,15 +136,18 @@ var GpAnnuaire_Call_Ajax = GpAnnuaire_Call_Ajax || {
             }
         },
         'successAjaxImg': function (data) {
-
+            console.log(data);
             $('#info div').text('');
+            $('#info a').remove();
 
-            if (!$.isEmptyObject(data)) {
+            var owner=1;
+
+            if (!$.isEmptyObject(data.data)) {
 
 
-                for (item in data[0]) {
+                for (item in data.data[0]) {
 
-                    $('#info').append('<div>' + item + ':' + data[0][item] + '</div>');
+                    $('#info').append('<div>' + item + ':' + data.data[0][item] + '</div>');
                     console.log('propiétaire');
                 }
 
@@ -152,7 +155,13 @@ var GpAnnuaire_Call_Ajax = GpAnnuaire_Call_Ajax || {
 
 
                 $('#info').append('<div>Cette image n\'a pas de propriétaire!</div>');
+                owner=0;
             }
+            var url = Routing.generate('delete_img',{'path':data.path,'owner':owner});
+
+            console.log(url, data);
+
+            $('#info').append("<a href=" + url + " class='btn btn-primary'>Supprimer</a>");
         }
 
-}
+    }

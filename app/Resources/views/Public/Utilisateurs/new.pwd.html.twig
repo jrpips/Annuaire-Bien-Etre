@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}
+    Prestataire  - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="col-sm-12 p20 ">
+        <div class="content">
+            <div class="row">
+                <div id="connectConteneur" class="col-sm-8 col-sm-offset-2 background-white p20">
+                    <div class="page-title">
+                        <h1>
+                            Changer de mot de passe
+                        </h1>
+                    </div>
+                    <div class="col-sm-8 ">
+
+                        {{ include('Form/form.new.pwd.html.twig') }}
+
+                    </div>
+
+                    <div class="col-sm-4" style="text-align:center;padding-top:40px">
+                        <img src="{{ asset('/image/userUploads/'~app.user.prestataire.logo.path) }}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

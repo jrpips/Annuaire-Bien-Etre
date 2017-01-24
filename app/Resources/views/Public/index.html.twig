@@ -33,10 +33,10 @@
                             {% set slider =['poster.jpg','poster2.jpg','poster3.jpg'] %} {# erzatz chargement DB #}
                             {% for photo in slider %}
 
-                                {% set class=loop.index==1?'active':'' %}
+                                {% set class=loop.first?'active':'' %}
 
                                 <div class="item {{ class }}">
-                                    <img src="{{ asset("image/"~photo) }}" alt="Chania">
+                                    <img src="{{ asset("image/"~photo) }}" alt="slider">
                                 </div>
                             {% endfor %}
 

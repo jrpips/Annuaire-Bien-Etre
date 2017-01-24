@@ -7,16 +7,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Finder\Finder;
+use Knp\Snappy\Pdf;
 
 use AppBundle\Entity\Prestataire;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\Utilisateur;
 use AppBundle\Entity\Commentaire;
 use AppBundle\Entity\Abus;
+use AppBundle\Entity\Newsletter;
 
 use AppBundle\Form\UtilisateurType;
 use AppBundle\Form\PrestataireType;
 use AppBundle\Form\InternauteType;
+use AppBundle\Form\NewsletterType;
 
 class AdminAnnuaireController extends Controller
 {
@@ -239,7 +242,6 @@ class AdminAnnuaireController extends Controller
                 $values['contact']['email'] = $utilisateur->getEmail();
 
                 $this->get('app.mailerbuilder')->mailConstruct($values, 'admin', 'from');
-
                 $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'Message envoyé!', true);
 
                 return $this->redirectToRoute('dashboard_accueil');
@@ -279,21 +281,152 @@ class AdminAnnuaireController extends Controller
     /**
      * @Route("/admin/infos/image",options={"expose"=true},name="get_infos_img")
      */
-    public function autoCompleteAjaxAction(Request $request)
+    public function getOwnerImageAction(Request $request)
     {
-
         if ($request->getMethod() == 'POST' && $request->isXmlHttpRequest()) {
 
 
             $val = $request->request->get('path');
-            $response = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->findOwnerImage($val);//->findOneByPath($val);
-            //$email = $response[0]['email'];
-            //var_dump($response);die();
-            //$user = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->findByEmail($email);
-            //dump(/*$email*/);
+
+            $response['data'] = $this->getDoctrine()->getManager()->getRepository('AppBundle:Utilisateur')->findOwnerImage($val);//->findOneByPath($val);
+            $response['path'] = $val;
 
             return new JsonResponse($response);
         }
     }
 
+    /**
+     * @Route("/admin/supprimer/image/{path}/{owner}",options={"expose"=true},name="delete_img")
+     */
+    public function deleteImageAction(Request $request, $path, $owner)
+    {
+        if ($owner) {
+
+
+            $img = $this->getDoctrine()->getManager()->getRepository('AppBundle:Image')->findOneByPath($path);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($img);
+
+            $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'Suppression de l\'image effectuée!', true);
+
+            try {
+
+
+                $em->flush;
+
+            } catch (\Exception $e) {
+
+
+                $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'Une erreur est survenue lors de la suppression de l\'image!', true);
+
+            }
+
+        } else {
+
+
+            unlink(__DIR__ . '/../../../../web/image/userUploads/' . $path);
+            $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'Suppression de l\'image effectuée!', true);
+
+        }
+
+        return $this->redirectToRoute('image_dashboard');
+    }
+
+    /**
+     * @Route("/admin/pdf/generation",options={"expose"=true},name="generate_pdf")
+     */
+    public function generatePdfAction(Request $request)
+    {
+
+        $newsletter = new Newsletter();
+
+        $form = $this->get('form.factory')->create(NewsletterType::class, $newsletter);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+
+            $generatePdf = true;
+            $em = $this->getDoctrine()->getManager();
+
+            $html = $this->renderView('pdf.html.twig', array(
+                'newsletter' => $newsletter
+            ));
+
+            $snappy = new Pdf(__DIR__ . '\..\..\..\..\vendor\wemersonjanuario\wkhtmltopdf-windows\bin\32bit\wkhtmltopdf.exe');
+
+            $search = 'Program Files';
+            $replace = '"Program Files"';
+            $snappy->setBinary(str_replace($search, $replace, $snappy->getBinary()));
+
+            $dirname = date("m-Y");
+            $filename = sha1(uniqid(mt_rand(), true)).'.pdf';
+
+            try {//generation du pdf
+
+
+                $snappy->generateFromHtml($html, __DIR__ . '/pdf/' .$dirname.'/'.$filename);
+
+                $statut = 'success';
+                $message = 'La Newsletter est enregistrée et son pdf généré!';
+
+            } catch (\Exeption $e) {
+
+
+                $statut = 'danger';
+                $message = 'Erreur SERVEUR! Commande incompatible';
+                $generatePdf=false;
+
+            }
+
+            if ($generatePdf) {
+
+                $newsletter->setPublication(new \DateTime('now'));
+                $newsletter->setPath($dirname.'/'.$filename);
+
+                try {//enregistrement en DB
+
+                    $em->persist($newsletter);
+                    $em->flush();
+
+                    $message = 'La Newsletter est enregistrée et son pdf généré!';
+
+                } catch (\Exception $e) {
+
+
+                    $generatePdf = false;
+                    $statut = 'danger';
+                    $message = 'Une erreur est survenue lors de la création de la Newsletter!';
+
+                    unlink('pdf/'.$newsletter->getPath());
+                }
+            }
+            $this->get('app.addmsgflash')->addMsgFlash($request, $statut, $message, true);
+            return $this->redirectToRoute('dashboard_pdf');
+        }
+
+        return $this->render('Admin/PDF/generate.pdf.html.twig', array(
+            'form' => $form->createView(),
+        ));
+
+    }
+
+    /**
+     * @Route("/admin/pdf/dashboard",options={"expose"=true},name="dashboard_pdf")
+     */
+    public function dashboardPdfAction(Request $request)
+    {
+        $finder = new Finder();
+        $finder->files()->in(__DIR__ . '/pdf');
+        $files = [];
+        foreach ($finder as $file) {
+
+            $files[] = $file->getRelativePathname();
+        }
+
+        return $this->render('Admin/PDF/dashboard.pdf.html.twig', array(
+            'finder' => $files,
+        ));
+    }
 }

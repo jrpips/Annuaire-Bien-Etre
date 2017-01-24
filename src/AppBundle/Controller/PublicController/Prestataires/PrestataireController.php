@@ -108,35 +108,52 @@ class PrestataireController extends Controller
      */
     public
     function logoPrestataireAction(Request $request, Prestataire $prestataire = null, $type = null)
-    {//TODO :NE PAS FAIRE PEUR AUX PRESTATAIRES -> FORMULAIRE TROP CONSéQUENT
+    {
         $prestataire = (!$this->isGranted('ROLE_ADMIN')) ? $this->getUser()->getPrestataire() : $prestataire;
 
         if ($type == 'logo' && $prestataire->getLogo()) {
+
+
             $img = $prestataire->getLogo();
+
         } elseif ($type == 'cover' && $prestataire->getCover()) {
+
+
             $img = $prestataire->getCover();
+
         } else {
+
+
             $img = new Image();
+
         }
 
         $form = $this->get('form.factory')->create(ImageType::class, $img)->add('Envoyer', SubmitType::class, array('attr' => array('class' => 'btn btn-default pull-right')));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
             $img->setName($prestataire->getNom());
             ($type == 'logo') ? $prestataire->setLogo($img) : $prestataire->setCover($img);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($img);
+
             try {
+
+
                 $em->flush();
 
             } catch (\Exception $e) {
 
+
                 $this->get('app.addmsgflash')->addMsgFlash($request, 'danger', 'votre ' . $type);
                 return $this->redirectToRoute('image_prestataire', array('type' => $type));
             }
+
             $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'votre ' . $type);
+
             return $this->redirectToRoute('details_prestataire', array('prestataire_nom' => $prestataire->getNom()));
 
         }
@@ -155,9 +172,15 @@ class PrestataireController extends Controller
     function updatePrestataireAction(Request $request, $nomPrestataire = null)
     {
         if ($nomPrestataire) {
+
+
             $userP = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->findOneByNom($nomPrestataire);
+
         } else {
+
+
             $userP = $this->getUser();
+
         }
 
         $userP->setConfPwd($userP->getPassword());
@@ -166,16 +189,24 @@ class PrestataireController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
             $em = $this->getDoctrine()->getManager();
 
             try {
+
+
                 $em->flush();
 
             } catch (\Exception $e) {
+
+
                 $this->get('app.addmsgflash')->addMsgFlash($request, 'danger', 'votre profil');
                 return $this->redirectToRoute('update_prestataire', array('nomPrestataire' => $userP->getPrestataire()->getNom()));
+
             }
             $this->get('app.addmsgflash')->addMsgFlash($request, 'success', 'votre profil');
+
             return $this->redirectToRoute('details_prestataire', array('prestataire_nom' => $userP->getPrestataire()->getNom()));
 
         }
@@ -193,7 +224,7 @@ class PrestataireController extends Controller
     {
         $prestataire = $this->getDoctrine()->getManager()->getRepository('AppBundle:Prestataire')->getCompleteProfilePrestataire($prestataire_nom);
         $categServices = $this->getDoctrine()->getManager()->getRepository('AppBundle:CategService')->findAll();
-
+dump($prestataire);
         return $this->render('Public/Prestataires/display.details.prestataire.html.twig', array(
             'prestataire' => $prestataire,
             'categServices' => $categServices
