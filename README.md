@@ -37,7 +37,7 @@ Pour les serveurs Linux charger l'exécutable correspondant à votre serveur:
 </ul>
 ...et modifier la ligne suivante ( \src\AppBundle\Controller\AdminController\AdminAnnuaireController.php line 357 )
 
-<code>$snappy = new Pdf(__DIR__ . '\..\..\..\..\vendor\wemersonjanuario\wkhtmltopdf-windows\bin\32bit\wkhtmltopdf.exe');</code>
+<p><code>$snappy = new Pdf(__DIR__ . '\..\..\..\..\vendor\wemersonjanuario\wkhtmltopdf-windows\bin\32bit\wkhtmltopdf.exe');</code></p>
 
 
 <h3 id="etat">3. Etat d'avancement:</h3>
