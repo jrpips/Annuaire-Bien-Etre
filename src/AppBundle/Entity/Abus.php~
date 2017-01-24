@@ -4,16 +4,25 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Abus
  *
  * @ORM\Table(name="abus")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AbusRepository")
  */
-class Abus {
+class Abus
+{
+
+    /**************
+     *
+     * ATTRIBUTS
+     *
+     **************/
+
 
     /**
-     * @var int
+     * Abus : id
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -22,7 +31,7 @@ class Abus {
     private $id;
 
     /**
-     * @var string
+     * Abus : description de l'abus
      *
      * @ORM\Column(name="description", type="string", length=255)
      * @Assert\NotBlank()
@@ -30,122 +39,123 @@ class Abus {
     private $description;
 
     /**
-     * @var \DateTime
+     * Abus : date de l'encodage du signalement
      *
      * @ORM\Column(name="encodage", type="date")
      */
     private $encodage;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Internaute", cascade={"persist"})
+     * FK Internaute (signale un abus)
+     *
+     * @ORM\ManyToOne(targetEntity="Utilisateur", cascade={"persist"},inversedBy="msgAbus")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $internaute;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="Commentaire", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $commentaire;
+    private $denonceur;
 
     /**
-     * Get id
+     * FK Commentaire (commentaire jugé abusif par l'internaute)
      *
-     * @return int
+     * @ORM\ManyToOne(targetEntity="Commentaire",inversedBy="abus", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
-    public function getId() {
+    private $commentDenonce;
+
+
+    /**************
+     *
+     * METHODES
+     *
+     **************/
+
+    // getter id
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Abus
+     * Abus : construction de la date du signalement.
      */
-    public function setDescription($description) {
+    public function __construct()
+    {
+        $this->setEncodage(new \DateTime());
+    }
+    // setter description
+    public function setDescription($description)
+    {
         $this->description = $description;
-
         return $this;
     }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription() {
+    //getter description
+    public function getDescription()
+    {
         return $this->description;
     }
-
-    /**
-     * Set encodage
-     *
-     * @param \DateTime $encodage
-     *
-     * @return Abus
-     */
-    public function setEncodage($encodage) {
+    //setter encodage
+    public function setEncodage($encodage)
+    {
         $this->encodage = $encodage;
-
         return $this;
     }
-
-    /**
-     * Get encodage
-     *
-     * @return \DateTime
-     */
-    public function getEncodage() {
+    //getter encodage
+    public function getEncodage()
+    {
         return $this->encodage;
     }
 
-    /**
-     * Set internaute
-     *
-     * @param \AppBundle\Entity\Internaute $internaute
-     *
-     * @return Abus
-     */
     public function setInternaute(\AppBundle\Entity\Internaute $internaute)
     {
         $this->internaute = $internaute;
-
         return $this;
     }
 
-    /**
-     * Get internaute
-     *
-     * @return \AppBundle\Entity\Internaute
-     */
     public function getInternaute()
     {
         return $this->internaute;
     }
 
-    /**
-     * Set commentaire
-     *
-     * @param \AppBundle\Entity\Commentaire $commentaire
-     *
-     * @return Abus
-     */
     public function setCommentaire(\AppBundle\Entity\Commentaire $commentaire)
     {
         $this->commentaire = $commentaire;
-
         return $this;
     }
 
-    /**
-     * Get commentaire
-     *
-     * @return \AppBundle\Entity\Commentaire
-     */
     public function getCommentaire()
     {
         return $this->commentaire;
+    }
+
+    public function setAuteur(\AppBundle\Entity\Utilisateur $auteur)
+    {
+        $this->auteur = $auteur;
+        return $this;
+    }
+
+    public function getAuteur()
+    {
+        return $this->auteur;
+    }
+
+    public function setDenonceur(\AppBundle\Entity\Utilisateur $denonceur)
+    {
+        $this->denonceur = $denonceur;
+        return $this;
+    }
+
+    public function getDenonceur()
+    {
+        return $this->denonceur;
+    }
+
+    public function setCommentDenonce(\AppBundle\Entity\Commentaire $commentDenonce)
+    {
+        $this->commentDenonce = $commentDenonce;
+        return $this;
+    }
+
+    public function getCommentDenonce()
+    {
+        return $this->commentDenonce;
     }
 }

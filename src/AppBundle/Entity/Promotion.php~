@@ -24,7 +24,7 @@ class Promotion {
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Prestataire", cascade={"persist"},inversedBy="promotions")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $prestataire;
 
@@ -61,33 +61,33 @@ class Promotion {
     /**
      * @var string
      *
-     * @ORM\Column(name="pdf",type="string", length=255)
+     * @ORM\Column(name="pdf",type="string", length=255,nullable=true)
      */
     private $pdf;
 
     /**
-     * @var \DateTime
+     * @Assert\NotBlank(message="Une date est requise")
      *
      * @ORM\Column(name="dateDebut", type="date")
      */
     private $dateDebut;
 
     /**
-     * @var \DateTime
+     * @Assert\NotBlank(message="Une date est requise")
      *
      * @ORM\Column(name="dateFin", type="date")
      */
     private $dateFin;
 
     /**
-     * @var \DateTime
+     * @Assert\NotBlank(message="Une date est requise")
      *
      * @ORM\Column(name="affichageDebut", type="date")
      */
     private $affichageDebut;
 
     /**
-     * @var \DateTime
+     * @Assert\NotBlank(message="Une date est requise")
      *
      * @ORM\Column(name="affichageFin", type="date")
      */

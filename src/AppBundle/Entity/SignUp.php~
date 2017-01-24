@@ -11,7 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="sign_up")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SignUpRepository")
  */
-class SignUp {
+class SignUp
+{
 
     /**
      * @ORM\Column(name="id", type="integer")
@@ -64,24 +65,32 @@ class SignUp {
      */
     private $email;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="token", type="string", length=255, unique=true,nullable=true)
+     */
+    private $token;
 //    /**
 //     * @var string
 //     *
-//     * @ORM\Column(name="_token", type="string", length=255, unique=true)
+//     * @ORM\Column(name="_token", type="string", length=255, unique=true,)
 //     */
 //    private $_token;
 
     /**
      * Get id
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
      * Set firstname
      */
-    public function setFirstname($firstname) {
+    public function setFirstname($firstname)
+    {
         $this->firstname = $firstname;
 
         return $this;
@@ -90,14 +99,16 @@ class SignUp {
     /**
      * Get firstname
      */
-    public function getFirstname() {
+    public function getFirstname()
+    {
         return $this->firstname;
     }
 
     /**
      * Set lastname
      */
-    public function setLastname($lastname) {
+    public function setLastname($lastname)
+    {
         $this->lastname = $lastname;
 
         return $this;
@@ -106,14 +117,16 @@ class SignUp {
     /**
      * Get lastname
      */
-    public function getLastname() {
+    public function getLastname()
+    {
         return $this->lastname;
     }
 
     /**
      * Set email
      */
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         $this->email = $email;
 
         return $this;
@@ -122,8 +135,33 @@ class SignUp {
     /**
      * Get email
      */
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->email;
     }
 
+
+    /**
+     * Set token
+     *
+     * @param string $token
+     *
+     * @return SignUp
+     */
+    public function setToken()
+    {
+        $this->token = sha1(uniqid(mt_rand(), true));
+
+        return $this;
+    }
+
+    /**
+     * Get token
+     *
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
 }
