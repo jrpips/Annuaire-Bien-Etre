@@ -14,8 +14,6 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
-/web/image/tmp/
-/web/image/userUploads/
 !/web/image/userUploads/user.png
 !/web/image/userUploads/prestataire.png
 !/web/image/userUploads/admin.png
