@@ -35,9 +35,9 @@ Pour les serveurs Linux charger l'exécutable correspondant à votre serveur:
 <li><a href="https://packagist.org/packages/h4cc/wkhtmltopdf-amd64">wkhtmltopdf-amd64</a></li>
 <li><a href="https://packagist.org/packages/h4cc/wkhtmltopdf-i386">wkhtmltopdf-i386</a></li>
 </ul>
-...et modifier la ligne suivante ( \src\AppBundle\Controller\AdminController\AdminAnnuaireController.php line 357 )
+...et modifier la ligne suivante ( \src\AppBundle\Controller\AdminController\AdminAnnuaireController.php line 357 )<br>
 
-<p><code>$snappy = new Pdf(__DIR__ . '\..\..\..\..\vendor\wemersonjanuario\wkhtmltopdf-windows\bin\32bit\wkhtmltopdf.exe');</code></p>
+<p><code>$snappy = new Pdf(__DIR__ . '\..\..\..\..<b>\vendor\wemersonjanuario\wkhtmltopdf-windows\bin\32bit\wkhtmltopdf.exe</b>');</code></p>
 
 
 <h3 id="etat">3. Etat d'avancement:</h3>
