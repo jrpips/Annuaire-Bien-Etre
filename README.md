@@ -1,6 +1,7 @@
 
 <h1 >Gestion de projet</h1>
 <h2>Annuaire Bien-Être</h2>
+<br>
 <h3>Etat d'avancement du Projet:</h3>
 
 
@@ -18,7 +19,7 @@
     <tr><th>Priorité 1.1</th></tr>
     <tr><td></td><td>Gérer fiche Internaute</td><td>:+1:</td><td><b>*</b></td></tr>
     <tr><td></td><td>Gérer fiche Prestataire</td><td>:+1:</td><td><b>*</b></td></tr>
-    <tr><td></td><td>Tenir à jour sa liste de catégories de Services</td><td>:+1:</td><td>bug javascript lors de la première sélection d'un service</td></tr>
+    <tr><td></td><td>Tenir à jour sa liste de catégories de Services</td><td>:+1:</td><td>bug js lors de la première sélection d'un service</td></tr>
     <tr><td></td><td>Ajouter un Stage</td><td>:+1:</td><td>affichage sans respecter les dates</td></tr>
     <tr><th>Priorité 2</th></tr>
     <tr><td></td><td>Réécriture des URL</td><td>:+1:</td><td>merci symfony!</td></tr>
