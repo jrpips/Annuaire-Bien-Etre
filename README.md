@@ -1,8 +1,9 @@
-<h1 style="color:red">Gestion de projet</h1>
-<h2>Annuaire Bien-Être</h2>
-  <h2>Etat d'avancement du Projet Bien-Être</h2>
-
 <img src = "http://www.psycho-bien-etre.be/wp-content/uploads/2012/02/praticiens_bien_etre.jpg" title = "google logo" alt = "Google logo">
+<span >Gestion de projet</span>
+<span>Annuaire Bien-Être</span>
+  <span>Etat d'avancement du Projet Bien-Être</span>
+
+
 <table>
     <tr><th>Itération</th><th>Cas d'utilisation</th><th>Etat</th><th>Remarque(s)</th></tr>
     <tr><th>Priorité 1.1</th></tr>
