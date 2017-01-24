@@ -13,8 +13,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class AdresseUtilisateur {
 
+    /**************
+     *
+     * ATTRIBUTS
+     *
+     **************/
+
     /**
-     * @var int
+     * AdresseUtilisateur : id
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -23,97 +29,70 @@ class AdresseUtilisateur {
     private $id;
 
     /**
-     * @var int
+     * AdresseUtilisateur : code postal
+     *
      * @Assert\NotBlank(message="Un code postal est requis")
      * @ORM\Column(name="codePostal", type="integer")
      */
     private $codePostal;
 
     /**
-     * @var string
+     * AdresseUtilisateur : localité
+     *
      * @Assert\NotBlank(message="Une localité est requise")
      * @ORM\Column(name="localite", type="string", length=100)
      */
     private $localite;
 
     /**
-     * @var string
+     * AdresseUtilisateur : commune
+     *
      * @Assert\NotBlank(message="Une commune est requise")
      * @ORM\Column(name="commune", type="string", length=100)
      */
     private $commune;
 
-    /**
-     * Get id
+
+    /**************
      *
-     * @return int
-     */
+     * METHODES
+     *
+     **************/
+
+    //getter id
     public function getId() {
         return $this->id;
     }
 
-    /**
-     * Set codePostal
-     *
-     * @param integer $codePostal
-     *
-     * @return AdresseUtilisateur
-     */
+    //setter code postal
     public function setCodePostal($codePostal) {
         $this->codePostal = $codePostal;
-
         return $this;
     }
 
-    /**
-     * Get codePostal
-     *
-     * @return int
-     */
+   //getter code postal
     public function getCodePostal() {
         return $this->codePostal;
     }
 
-    /**
-     * Set localite
-     *
-     * @param string $localite
-     *
-     * @return AdresseUtilisateur
-     */
+    //setter localité
     public function setLocalite($localite) {
         $this->localite = $localite;
-
         return $this;
     }
 
-    /**
-     * Get localite
-     *
-     * @return string
-     */
+    //getter localité
     public function getLocalite() {
         return $this->localite;
     }
 
-    /**
-     * Set commune
-     *
-     * @param string $commune
-     *
-     * @return AdresseUtilisateur
-     */
+    //setter commune
     public function setCommune($commune) {
         $this->commune = $commune;
-
         return $this;
     }
 
-    /**
-     * Get commune
-     *
-     * @return string
-     */
+   //getter commune
     public function getCommune() {
         return $this->commune;
     }

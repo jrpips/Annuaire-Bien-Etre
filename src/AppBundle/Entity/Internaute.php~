@@ -24,7 +24,6 @@ class Internaute {
 
     /**
      * @ORM\OneToOne(targetEntity="Utilisateur", cascade={"persist"},mappedBy="internaute")
-     * @ORM\JoinColumn(nullable=true)
      * @Assert\Valid
      */
     private $utilisateur;
@@ -288,4 +287,38 @@ class Internaute {
         return $this->favoris;
     }
 
+
+    /**
+     * Add commentaire
+     *
+     * @param \AppBundle\Entity\Commentaire $commentaire
+     *
+     * @return Internaute
+     */
+    public function addCommentaire(\AppBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires[] = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove commentaire
+     *
+     * @param \AppBundle\Entity\Commentaire $commentaire
+     */
+    public function removeCommentaire(\AppBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires->removeElement($commentaire);
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
+    }
 }
