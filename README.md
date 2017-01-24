@@ -7,6 +7,7 @@
 <ol>
 <li><a href="#fixture">Fixtures</a></li>
 <li><a href="#pdf">PDF</a></li>
+<li><a href="#mail">Mailtrap</a></li>
 <li><a href="#etat">Etat d'avancement</a></li>
 </ol>
 
@@ -39,15 +40,17 @@ Pour les serveurs Linux charger l'exécutable correspondant à votre serveur:
 <li><a href="https://packagist.org/packages/h4cc/wkhtmltopdf-amd64">wkhtmltopdf-amd64</a></li>
 <li><a href="https://packagist.org/packages/h4cc/wkhtmltopdf-i386">wkhtmltopdf-i386</a></li>
 </ul>
-...et modifier la partie en gras de la ligne suivante ( \src\AppBundle\Controller\AdminController\AdminAnnuaireController.php line 357 )<br><br>
+...et modifier la partie en gras de la ligne suivante ( \src\AppBundle\Controller\AdminController\AdminAnnuaireController.php ligne 357 )<br><br>
 
 <p><code>$snappy = new Pdf(__DIR__ . '\..\..\..\..<b>\vendor\wemersonjanuario\wkhtmltopdf-windows\bin\32bit\wkhtmltopdf.exe</b>');</code></p><br>
 
 par: <code>/vendor/h4cc/wkhtmltopdf-i386/bin/wkhtmltopdf-i386</code> 
 
+<h3 id="mail">3. Mailtrap:</h3><a href="#top"> top link</a><br>
 
+<p>Insérer votre login et password de votre compte <a href="https://mailtrap.io/signin">Maitrap</a> au fichier config.yml du projet! (ligne 79 et 80)
 
-<h3 id="etat">3. Etat d'avancement:</h3><a href="#top"> top link</a><br><br>
+<h3 id="etat">4. Etat d'avancement:</h3><a href="#top"> top link</a><br><br>
 
 <table>
     <tr><th>Itération</th><th>Cas d'utilisation</th><th>Etat</th><th>Remarque(s)</th></tr>
@@ -93,8 +96,9 @@ par: <code>/vendor/h4cc/wkhtmltopdf-i386/bin/wkhtmltopdf-i386</code>
     <tr><td></td><td>S'inscrire à la newsletter</td><td>:+1:</td><td></td></tr>
     <tr><td></td><td>Consulter les newsletters précédentes</td><td>:-1:</td><td></td></tr>
     <tr><td></td><td>Consulter la page "A propos"</td><td>:-1:</td><td></td></tr>
-    <tr><td></td><td>Contacter Bien-Être</td><td>:+1:</td><td></td></tr>
+    <tr><td></td><td>Contacter Bien-Être</td><td>:+1:</td><td></td></tr>********
     <tr><td></td><td>Choisir sa langue</td><td>:-1:</td><td></td></tr>
 </table>
+<a href="#etat">haut du tableau</a><br>
 <br>
 <p><b>*</b> bug: la commune ne s'affiche pas dans son champ, il faut resélectionner un code postal pour charger la commune (Ajax)</p>
