@@ -12,7 +12,7 @@
 
 
 
-<h3 id="fixture">1. Fixtures (utilisateurs générés)</h3><a href="#top"> top page</a>
+<h3 id="fixture">1. Fixtures (utilisateurs générés)</h3><a href="#top"> top link</a>
 <table>
 <tr>
 <th>Nom utilisateur</th><th>Type</th><th>Mot de passe</th>
@@ -30,7 +30,7 @@
 
 
 
-<h3 id="pdf">2. Pdf</h3><a href="#top"> top page</a>
+<h3 id="pdf">2. Pdf</h3><a href="#top"> top link</a>
 
 <p>Utilisation du bundles <a href="https://packagist.org/packages/knplabs/knp-snappy">knp-snappy</a></p>
 <p>Génération des pdf configurée pour un système Windows.<br><br>
@@ -41,13 +41,13 @@ Pour les serveurs Linux charger l'exécutable correspondant à votre serveur:
 </ul>
 ...et modifier la partie en gras de la ligne suivante ( \src\AppBundle\Controller\AdminController\AdminAnnuaireController.php line 357 )<br><br>
 
-<p><code>$snappy = new Pdf(__DIR__ . '\..\..\..\..<b>\vendor\wemersonjanuario\wkhtmltopdf-windows\bin\32bit\wkhtmltopdf.exe</b>');</code></p><br><br>
+<p><code>$snappy = new Pdf(__DIR__ . '\..\..\..\..<b>\vendor\wemersonjanuario\wkhtmltopdf-windows\bin\32bit\wkhtmltopdf.exe</b>');</code></p><br>
 
 par: <code>/vendor/h4cc/wkhtmltopdf-i386/bin/wkhtmltopdf-i386</code> 
 
 
 
-<h3 id="etat">3. Etat d'avancement:</h3><a href="#top"> top page</a><br><br>
+<h3 id="etat">3. Etat d'avancement:</h3><a href="#top"> top link</a><br><br>
 
 <table>
     <tr><th>Itération</th><th>Cas d'utilisation</th><th>Etat</th><th>Remarque(s)</th></tr>
