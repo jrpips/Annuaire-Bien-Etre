@@ -3,14 +3,14 @@
 <h2>Annuaire Bien-Être</h2>
 <br>
 
-<h3>Sommaire</h3>
+<h3 id="top">Sommaire</h3>
 <ol>
 <li><a href="#fixture">Fixtures</a></li>
 <li><a href="#pdf">PDF</a></li>
 <li><a href="#etat">Etat d'avancement</a></li>
 </ol>
 
-<h3 id="fixture">1. Fixtures</h3>
+<h3 id="fixture">1. Fixtures</h3><a href="#top"> top page</a>
 <table>
 <tr>
 <th>Nom utilisateur</th><th>Type</th><th>Mot de passe</th>
@@ -26,21 +26,24 @@
 <tr><td>user8</td><td>ADMIN</td><td>1234</td></tr>
 </table>
 
-<h3 id="pdf">2. Pdf</h3>
+<h3 id="pdf">2. Pdf</h3><a href="#top"> top page</a>
 
 <p>Utilisation du bundles <a href="https://packagist.org/packages/knplabs/knp-snappy">knp-snappy</a></p>
-<p>Génération des pdf configurée pour un système Windows.<br>
+<p>Génération des pdf configurée pour un système Windows.<br><br>
 Pour les serveurs Linux charger l'exécutable correspondant à votre serveur:
 <ul>
 <li><a href="https://packagist.org/packages/h4cc/wkhtmltopdf-amd64">wkhtmltopdf-amd64</a></li>
 <li><a href="https://packagist.org/packages/h4cc/wkhtmltopdf-i386">wkhtmltopdf-i386</a></li>
 </ul>
-...et modifier la ligne suivante ( \src\AppBundle\Controller\AdminController\AdminAnnuaireController.php line 357 )<br>
+...et modifier la partie en gras de la ligne suivante ( \src\AppBundle\Controller\AdminController\AdminAnnuaireController.php line 357 )<br><br>
 
-<p><code>$snappy = new Pdf(__DIR__ . '\..\..\..\..<b>\vendor\wemersonjanuario\wkhtmltopdf-windows\bin\32bit\wkhtmltopdf.exe</b>');</code></p>
+<p><code>$snappy = new Pdf(__DIR__ . '\..\..\..\..<b>\vendor\wemersonjanuario\wkhtmltopdf-windows\bin\32bit\wkhtmltopdf.exe</b>');</code></p><br><br>
+
+par:<br><br> <code>/vendor/h4cc/wkhtmltopdf-i386/bin/wkhtmltopdf-i386</code> 
 
 
-<h3 id="etat">3. Etat d'avancement:</h3>
+
+<h3 id="etat">3. Etat d'avancement:</h3><a href="#top"> top page</a>
 <table>
     <tr><th>Itération</th><th>Cas d'utilisation</th><th>Etat</th><th>Remarque(s)</th></tr>
     <tr><th>Priorité 1.1</th></tr>
