@@ -2,7 +2,6 @@
 <h1 id="top">Gestion de projet</h1>
 <h2>Annuaire Bien-Être</h2>
 <br>
-
 <h3 >Sommaire</h3>
 <ol>
 <li><a href="#fixture">Fixtures</a></li>
