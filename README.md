@@ -1,7 +1,8 @@
-<img src = "http://www.psycho-bien-etre.be/wp-content/uploads/2012/02/praticiens_bien_etre.jpg" title = "google logo" alt = "Google logo">
+<tr><td><img src = "http://www.psycho-bien-etre.be/wp-content/uploads/2012/02/praticiens_bien_etre.jpg" title = "google logo" alt = "Google logo"></td></tr>
+<tr><td>
 <span >Gestion de projet</span>
 <span>Annuaire Bien-Être</span>
-  <span>Etat d'avancement du Projet Bien-Être</span>
+<span>Etat d'avancement du Projet Bien-Être</span></td></tr>
 
 
 <table>
