@@ -10,6 +10,8 @@
 <li><a href="#etat">Etat d'avancement</a></li>
 </ol>
 
+
+
 <h3 id="fixture">1. Fixtures</h3><a href="#top"> top page</a>
 <table>
 <tr>
@@ -26,6 +28,8 @@
 <tr><td>user8</td><td>ADMIN</td><td>1234</td></tr>
 </table>
 
+
+
 <h3 id="pdf">2. Pdf</h3><a href="#top"> top page</a>
 
 <p>Utilisation du bundles <a href="https://packagist.org/packages/knplabs/knp-snappy">knp-snappy</a></p>
@@ -39,11 +43,12 @@ Pour les serveurs Linux charger l'exécutable correspondant à votre serveur:
 
 <p><code>$snappy = new Pdf(__DIR__ . '\..\..\..\..<b>\vendor\wemersonjanuario\wkhtmltopdf-windows\bin\32bit\wkhtmltopdf.exe</b>');</code></p><br><br>
 
-par:<br><br> <code>/vendor/h4cc/wkhtmltopdf-i386/bin/wkhtmltopdf-i386</code> 
+par: <code>/vendor/h4cc/wkhtmltopdf-i386/bin/wkhtmltopdf-i386</code> 
 
 
 
-<h3 id="etat">3. Etat d'avancement:</h3><a href="#top"> top page</a>
+<h3 id="etat">3. Etat d'avancement:</h3><a href="#top"> top page</a><br>
+
 <table>
     <tr><th>Itération</th><th>Cas d'utilisation</th><th>Etat</th><th>Remarque(s)</th></tr>
     <tr><th>Priorité 1.1</th></tr>
