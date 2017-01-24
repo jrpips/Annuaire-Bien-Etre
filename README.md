@@ -1,9 +1,9 @@
 
-<h1 >Gestion de projet</h1>
+<h1 id="top">Gestion de projet</h1>
 <h2>Annuaire Bien-Être</h2>
 <br>
 
-<h3 id="top">Sommaire</h3>
+<h3 >Sommaire</h3>
 <ol>
 <li><a href="#fixture">Fixtures</a></li>
 <li><a href="#pdf">PDF</a></li>
@@ -12,7 +12,7 @@
 
 
 
-<h3 id="fixture">1. Fixtures</h3><a href="#top"> top page</a>
+<h3 id="fixture">1. Fixtures (utilisateurs générés)</h3><a href="#top"> top page</a>
 <table>
 <tr>
 <th>Nom utilisateur</th><th>Type</th><th>Mot de passe</th>
@@ -47,7 +47,7 @@ par: <code>/vendor/h4cc/wkhtmltopdf-i386/bin/wkhtmltopdf-i386</code>
 
 
 
-<h3 id="etat">3. Etat d'avancement:</h3><a href="#top"> top page</a><br>
+<h3 id="etat">3. Etat d'avancement:</h3><a href="#top"> top page</a><br><br>
 
 <table>
     <tr><th>Itération</th><th>Cas d'utilisation</th><th>Etat</th><th>Remarque(s)</th></tr>
