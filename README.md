@@ -2,9 +2,31 @@
 <h1 >Gestion de projet</h1>
 <h2>Annuaire Bien-Être</h2>
 <br>
-<h3>Etat d'avancement du Projet:</h3>
+<h3>Sommaire</h3>
+<ol>
+<li><a href="#fixture">Fixtures</a></li>
+<li><a href="#etat">Etat d'avancement</a></li>
 
+</ol>
 
+<h3 id="fixture">Fixtures</h3>
+<table>
+<tr>
+<th>Nom utilisateur</th><th>Type</th><th>Mot de passe</th>
+</tr>
+<tr>
+<td>user0</td><td>prestataire</td><td>1234</td>
+<td>user1</td><td>prestataire</td><td>1234</td>
+<td>user2</td><td>prestataire</td><td>1234</td>
+<td>user3</td><td>prestataire</td><td>1234</td>
+<td>user4</td><td>prestataire</td><td>1234</td>
+<td>user5</td><td>internaute</td><td>1234</td>
+<td>user6</td><td>internaute</td><td>1234</td>
+<td>user7</td><td>internaute</td><td>1234</td>
+<td>user8</td><td>ADMIN</td><td>1234</td>
+</tr>
+</table>
+<h3 id="etat">Etat d'avancement:</h3>
 <table>
     <tr><th>Itération</th><th>Cas d'utilisation</th><th>Etat</th><th>Remarque(s)</th></tr>
     <tr><th>Priorité 1.1</th></tr>
